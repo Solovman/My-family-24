@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bitrix\Person;
+namespace Up\Tree\Model;
 
 use Bitrix\Family\TreeTable;
 use Bitrix\Main\Localization\Loc,

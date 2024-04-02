@@ -5,9 +5,9 @@ use Bitrix\Main\ModuleManager;
 
 Loc::loadMessages(__FILE__);
 
-class up_familyTree extends CModule
+class up_tree extends CModule
 {
-	public $MODULE_ID = 'up.familyTree';
+	public $MODULE_ID = 'up.tree';
 	public $MODULE_VERSION;
 	public $MODULE_VERSION_DATE;
 	public $MODULE_NAME;
@@ -32,7 +32,7 @@ class up_familyTree extends CModule
 	{
 		global $DB;
 
-		$DB->RunSQLBatch($_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.familyTree/install/db/install.sql');
+		$DB->RunSQLBatch($_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.tree/install/db/install.sql');
 
 		ModuleManager::registerModule($this->MODULE_ID);
 	}
@@ -41,7 +41,7 @@ class up_familyTree extends CModule
 	{
 		global $DB;
 
-		$DB->RunSQLBatch($_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.familyTree/install/db/uninstall.sql');
+		$DB->RunSQLBatch($_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.tree/install/db/uninstall.sql');
 
 		ModuleManager::unRegisterModule($this->MODULE_ID);
 	}
@@ -49,21 +49,21 @@ class up_familyTree extends CModule
 	public function installFiles(): void
 	{
 		CopyDirFiles(
-			$_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.familyTree/install/components',
+			$_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.tree/install/components',
 			$_SERVER['DOCUMENT_ROOT'] . '/local/components/',
 			true,
 			true
 		);
 
 		CopyDirFiles(
-			$_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.familyTree/install/templates',
+			$_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.tree/install/templates',
 			$_SERVER['DOCUMENT_ROOT'] . '/local/templates/',
 			true,
 			true
 		);
 
 		CopyDirFiles(
-			$_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.familyTree/install/routes',
+			$_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.tree/install/routes',
 			$_SERVER['DOCUMENT_ROOT'] . '/local/routes/',
 			true,
 			true

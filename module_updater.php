@@ -1,18 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
-use Bitrix\Main\ArgumentOutOfRangeException;
 use Bitrix\Main\ModuleManager;
 use Bitrix\Main\Config\Option;
 
-/**
- * @throws ArgumentOutOfRangeException
- */
-function __familyTreeMigrate(int $nextVersion, callable $callback): void
+function __treeMigrate(int $nextVersion, callable $callback): void
 {
 	global $DB;
-	$moduleId = 'up.familyTree';
+	$moduleId = 'up.tree';
 
 	if (!ModuleManager::isModuleInstalled($moduleId))
 	{

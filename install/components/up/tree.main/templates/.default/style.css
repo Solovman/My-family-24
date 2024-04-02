@@ -103,8 +103,8 @@
 }
 
 body {
-    background-image: url("/local/modules/up.familyTree/images/Family-Tree.png"),
-    url("/local/modules/up.familyTree/images/Family-Tree-reverse.png");
+    background-image: url("/local/modules/up.tree/images/Family-Tree.png"),
+    url("/local/modules/up.tree/images/Family-Tree-reverse.png");
     background-repeat: no-repeat;
     background-position: 100% 100%,
                         4% 100%;

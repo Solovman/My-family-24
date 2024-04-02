@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bitrix\Comment;
+namespace Up\Tree\Model;
 
 use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,

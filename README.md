@@ -8,11 +8,11 @@ Set `Family tree template` as your primary site template
 
 ## Setup modern Bitrix routing
 
-Add `familyTree.php` in `routing` section of `${doc_root}/bitrix/.settings.php` file:
+Add `tree.php` in `routing` section of `${doc_root}/bitrix/.settings.php` file:
 
 ```php
 'routing' => ['value' => [
-	'config' => ['familyTree.php']
+	'config' => ['tree.php']
 ]],
 ```
 
@@ -39,10 +39,9 @@ Replace following lines in your `${doc_root}/.htaccess` file:
 Creating symbolic links for Windows:
 
 ```
-mklink /d C:\OSPanel\domains\bitrix.familyTree\local\components\up C:\OSPanel\domains\bitrix.familyTree\local\modules\up.familyTree\install\components\up
+mklink /d C:\OSPanel\domains\dev.tree\local\components\up C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\components\up
 
-mklink /d C:\OSPanel\domains\bitrix.familyTree\local\routes\familyTree.php C:\OSPanel\domains\bitrix.familyTree\local\modules\up.familyTree\install\routes\familyTree.php
+mklink /d C:\OSPanel\domains\dev.tree\local\routes\tree.php C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\routes\tree.php
 
-mklink /d C:\OSPanel\domains\bitrix.familyTree\local\templates\main\ C:\OSPanel\domains\bitrix.familyTree\local\modules\up.familyTree\install\templates\main
+mklink /d C:\OSPanel\domains\dev.tree\local\templates\tree\ C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\templates\tree
 ```
-

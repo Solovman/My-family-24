@@ -7,5 +7,5 @@ use \Bitrix\Main\Routing\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes)
 {
-    $routes->get('/', new PublicPageController('/local/modules/up.familyTree/views/familyTree-main.php'));
+	$routes->get('/', new PublicPageController('/local/modules/up.tree/views/tree-main.php'));
 };
