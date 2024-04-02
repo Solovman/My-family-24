@@ -1,0 +1,9 @@
+<?php
+
+$MESS ['UP_FAMILY_TREE_INPUT_EMAIL'] = "Write your Email";
+$MESS ['UP_FAMILY_TREE_INPUT_PASSWORD'] = "Write your password";
+$MESS ['UP_FAMILY_TREE_INPUT_NAME'] = "Write your name";
+$MESS ['UP_FAMILY_TREE_BUTTON_SIGN_IN'] = "Sign in";
+$MESS ['UP_FAMILY_TREE_BUTTON_SIGN_IN_TAB'] = "Login";
+$MESS ['UP_FAMILY_TREE_BUTTON_REGISTER'] = "Register";
+$MESS ['UP_FAMILY_TREE_BUTTON_REGISTER_TAB'] = "Register";
