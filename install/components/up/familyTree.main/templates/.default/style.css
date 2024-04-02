@@ -109,6 +109,7 @@ body {
     background-position: 100% 100%,
                         4% 100%;
     background-size: 33%;
+    background-attachment: fixed;
 }
 
 

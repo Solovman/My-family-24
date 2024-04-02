@@ -10,6 +10,9 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\IntegerField,
 	Bitrix\Main\ORM\Fields\StringField,
 	Bitrix\Main\ORM\Fields\Validators\LengthValidator;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
+use Bitrix\Subscription\SubscriptionTable;
 
 Loc::loadMessages(__FILE__);
 
@@ -88,6 +91,7 @@ class UserTable extends DataManager
 					'title' => Loc::getMessage('USER_ENTITY_SUBSCRIPTION_ID_FIELD')
 				]
 			),
+
 			new DatetimeField(
 				'SUBSCRIPTION_BUY_TIME',
 				[

@@ -8,6 +8,9 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,
 	Bitrix\Main\ORM\Fields\EnumField,
 	Bitrix\Main\ORM\Fields\IntegerField;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
+use Bitrix\Main\Rest\User;
+use Bitrix\User\UserTable;
 
 Loc::loadMessages(__FILE__);
 
@@ -68,6 +71,13 @@ class SubscriptionTable extends DataManager
 					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_PRICE_FIELD')
 				]
 			),
+
+            'ID' => new OneToMany(
+                'USER_SUBSCRIPTION',
+                UserTable::class,
+                'SUBSCRIPTION_ID'
+            ),
+
 			new IntegerField(
 				'NUMBER_TREES',
 				[

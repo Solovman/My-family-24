@@ -6,7 +6,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
  */
 ?>
 
-<section class="main">
+<section class="main container">
     <div class="main__container">
         <h1 class="main__heading">Family Tree</h1>
         <div class="main__tabs-nav">

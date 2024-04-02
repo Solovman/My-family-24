@@ -13,8 +13,8 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'OpenSans', sans-serif, Helvetica;
-    min-height: 100vh;
     margin: 0;
+    min-height: 100vh;
     overflow-x: hidden;
     background-color: #F1F9F8;
 }
@@ -161,6 +161,7 @@ ul {
 }
 
 .footer__copyright {
+    margin: 0;
     font-size: 14px;
     line-height: 17px;
     color: #000000;

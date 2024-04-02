@@ -8,6 +8,7 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,
 	Bitrix\Main\ORM\Fields\IntegerField,
 	Bitrix\Main\ORM\Fields\TextField;
+use Bitrix\User\UserTable;
 
 Loc::loadMessages(__FILE__);
 
@@ -59,6 +60,12 @@ class PublicationTable extends DataManager
 					'title' => Loc::getMessage('PUBLICATION_ENTITY_USER_ID_FIELD')
 				]
 			),
+
+            new Reference(
+                'PUBLICATION_USER',
+                UserTable::class,
+                ['=this.SUBSCRIPTION_ID' => 'ref.ID']
+            ),
 			new TextField(
 				'MESSAGE',
 				[

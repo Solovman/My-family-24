@@ -7,6 +7,7 @@ namespace Bitrix\Relation;
 use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,
 	Bitrix\Main\ORM\Fields\IntegerField;
+use Bitrix\Person\PersonTable;
 
 Loc::loadMessages(__FILE__);
 
@@ -56,6 +57,18 @@ class PersonParentTable extends DataManager
 					'title' => Loc::getMessage('PERSON_PARENT_ENTITY_CHILD_ID_FIELD')
 				]
 			),
+
+            new Reference(
+                'PARENT_PERSON',
+                PersonTable::class,
+                ['=this.PARENT_ID' => 'ref.ID']
+            ),
+
+            new Reference(
+                'CHILD_PERSON',
+                PersonTable::class,
+                ['=this.CHILD_ID' => 'ref.ID']
+            ),
 		];
 	}
 }
