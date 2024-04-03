@@ -5,6 +5,9 @@ declare(strict_types=1);
 /**
  * @var CMain $APPLICATION
  */
+
+use Up\Tree\Services\Repository\UserService;
+
 ?>
 
 <!doctype html>
@@ -118,7 +121,7 @@ declare(strict_types=1);
 			</form>
 			<div class="header__icon">
 				<img class="header__image-icon" src="/local/modules/up.tree/images/user_default.png" alt="user-icon">
-				<span class="header__icon-name"><?= GetMessage('UP_HEADER_ICON_NAME') ?></span>
+				<span class="header__icon-name"><?= UserService::getUserNameById() ?></span>
 			</div>
 		</div>
 	</div>
