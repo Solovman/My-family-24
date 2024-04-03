@@ -45,7 +45,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 			</div>
 			<button name="login" class="main__button-form" type="submit"><?= GetMessage('UP_FAMILY_TREE_BUTTON_SIGN_IN') ?></button>
 		</form>
-		<form id="tab_2" class="main__form main__tabs-item">
+		<form id="tab_2" class="main__form main__tabs-item" action="/account/" method="post">
 			<div class="main__container-form">
 				<div class="main__container-input">
 					<label class="main__label-form" for="email">Email</label>
@@ -54,7 +54,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 5.25L3 6V18L3.75 18.75H20.25L21 18V6L20.25 5.25H3.75ZM4.5 7.6955V17.25H19.5V7.69525L11.9999 14.5136L4.5 7.6955ZM18.3099 6.75H5.68986L11.9999 12.4864L18.3099 6.75Z" fill="#37a969"/>
                         </svg>
                     </span>
-					<input  id="email" class="main__input-form" placeholder="<?= GetMessage('UP_FAMILY_TREE_INPUT_EMAIL') ?>" type="text">
+					<input name="email" id="email" class="main__input-form" placeholder="<?= GetMessage('UP_FAMILY_TREE_INPUT_EMAIL') ?>" type="text">
 				</div>
 				<div class="main__container-input">
 					<label class="main__label-form" for="name">Name</label>
@@ -64,7 +64,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
                             <path d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" stroke="#37a969"" stroke-width="1.5"/>
                         </svg>
                     </span>
-					<input  id="name" class="main__input-form" placeholder="<?= GetMessage('UP_FAMILY_TREE_INPUT_NAME') ?>" type="text">
+					<input  name="name" id="name" class="main__input-form" placeholder="<?= GetMessage('UP_FAMILY_TREE_INPUT_NAME') ?>" type="text">
 				</div>
 				<div class="main__container-input">
 					<label class="main__label-form" for="password">Password</label>
@@ -82,7 +82,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
                           <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
                         </svg>
                     </span>
-					<input id="password" class="main__input-form" placeholder="<?= GetMessage('UP_FAMILY_TREE_INPUT_PASSWORD') ?>" type="text">
+					<input name="password" id="password" class="main__input-form" placeholder="<?= GetMessage('UP_FAMILY_TREE_INPUT_PASSWORD') ?>" type="text">
 				</div>
 			</div>
 			<button name="register" class="main__button-form" type="submit"><?= GetMessage('UP_FAMILY_TREE_BUTTON_REGISTER') ?></button>

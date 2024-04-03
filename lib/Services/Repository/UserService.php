@@ -15,12 +15,12 @@ class UserService
 	/**
 	 * @throws Exception
 	 */
-	public function addUser($email, $username, $password): int|array
+	static function addUser($email, $name, $password): int|array
 	{
 		$passwordHash = Password::hash($password);
 
 		$userData = [
-			"NAME" => $username,
+			"NAME" => $name,
 			"EMAIL" => $email,
 			"LOGIN" => $email,
 			"PASSWORD" => $passwordHash,

@@ -68,6 +68,13 @@ class up_tree extends CModule
 			true,
 			true
 		);
+
+        CopyDirFiles(
+            $_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.tree/install/js',
+            $_SERVER['DOCUMENT_ROOT'] . '/local/js/',
+            true,
+            true
+        );
 	}
 
 	public function uninstallFiles(): void

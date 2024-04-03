@@ -44,4 +44,6 @@ mklink /d C:\OSPanel\domains\dev.tree\local\components\up C:\OSPanel\domains\dev
 mklink /d C:\OSPanel\domains\dev.tree\local\routes\tree.php C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\routes\tree.php
 
 mklink /d C:\OSPanel\domains\dev.tree\local\templates\tree\ C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\templates\tree
+
+mklink /d C:\OSPanel\domains\dev.tree\local\js\up C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\js\up
 ```
