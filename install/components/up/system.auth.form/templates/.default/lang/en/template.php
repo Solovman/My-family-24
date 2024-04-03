@@ -21,4 +21,12 @@ $MESS["auth_form_comp_otp"] = "One-time password:";
 $MESS["auth_form_comp_otp_remember_title"] = "Remember one-time password on this computer";
 $MESS["auth_form_comp_otp_remember"] = "Remember password";
 $MESS["auth_form_comp_auth"] = "Log in";
+
+$MESS ['UP_FAMILY_TREE_INPUT_EMAIL'] = "Write your Email";
+$MESS ['UP_FAMILY_TREE_INPUT_PASSWORD'] = "Write your password";
+$MESS ['UP_FAMILY_TREE_INPUT_NAME'] = "Write your name";
+$MESS ['UP_FAMILY_TREE_BUTTON_SIGN_IN'] = "Sign in";
+$MESS ['UP_FAMILY_TREE_BUTTON_SIGN_IN_TAB'] = "Login";
+$MESS ['UP_FAMILY_TREE_BUTTON_REGISTER'] = "Register";
+$MESS ['UP_FAMILY_TREE_BUTTON_REGISTER_TAB'] = "Register";
 ?>
