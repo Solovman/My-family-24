@@ -11,6 +11,9 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\StringField,
 	Bitrix\Main\ORM\Fields\Validators\LengthValidator,
 	Bitrix\Main\Type\DateTime;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
+use Bitrix\Main\ORM\Query\Join;
 
 Loc::loadMessages(__FILE__);
 
@@ -81,6 +84,13 @@ class TreeTable extends DataManager
 					'title' => Loc::getMessage('TREE_ENTITY_CREATED_AT_FIELD')
 				]
 			),
+			'TREE_PERSON' => (new OneToMany('TREE_PERSON', PersonTable::class, 'PERSON_TREE'))->configureJoinType('inner'),
+
+			'TREE_USER' => (new Reference(
+				'TREE_USER',
+				UserTable::class,
+				Join::on('this.USER_ID', 'ref.ID')
+			)) ->configureJoinType('inner'),
 		];
 	}
 

@@ -11,6 +11,9 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\IntegerField,
 	Bitrix\Main\ORM\Fields\StringField,
 	Bitrix\Main\ORM\Fields\Validators\LengthValidator;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
+use Bitrix\Main\ORM\Query\Join;
 
 Loc::loadMessages(__FILE__);
 
@@ -109,6 +112,21 @@ class PersonTable extends DataManager
 					'title' => Loc::getMessage('PERSON_ENTITY_TREE_ID_FIELD')
 				]
 			),
+			'RELATION_PARENT_PERSON' => (new OneToMany('RELATION_PARENT_PERSON', PersonParentTable::class, 'PARENT_PERSON'))->configureJoinType('inner'),
+
+			'RELATION_CHILD_PERSON' => (new OneToMany('RELATION_CHILD_PERSON', PersonParentTable::class, 'CHILD_PERSON'))->configureJoinType('inner'),
+
+			'PERSON_IMAGE' => (new Reference(
+				'PERSON_IMAGE',
+				FileTable::class,
+				Join::on('this.IMAGE_ID', 'ref.ID')
+			)) ->configureJoinType('inner'),
+
+			'PERSON_TREE' => (new Reference(
+				'PERSON_TREE',
+				TreeTable::class,
+				Join::on('this.TREE_ID', 'ref.ID')
+			)) ->configureJoinType('inner'),
 		];
 	}
 

@@ -10,6 +10,9 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\IntegerField,
 	Bitrix\Main\ORM\Fields\TextField,
 	Bitrix\Main\Type\DateTime;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
+use Bitrix\Main\ORM\Query\Join;
 
 Loc::loadMessages(__FILE__);
 
@@ -79,6 +82,13 @@ class PublicationTable extends DataManager
 					'title' => Loc::getMessage('PUBLICATION_ENTITY_CREATED_AT_FIELD')
 				]
 			),
+			'PUBLICATION_USER' => (new Reference(
+				'PUBLICATION_USER',
+				UserTable::class,
+				Join::on('this.AUTHOR_ID', 'ref.ID')
+			)) ->configureJoinType('inner'),
+
+			'PUBLICATION_COMMENT' => (new OneToMany('PUBLICATION_COMMENT', CommentTable::class, 'COMMENT_PUBLICATION'))->configureJoinType('inner')
 		];
 	}
 }

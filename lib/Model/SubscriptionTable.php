@@ -9,6 +9,7 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\IntegerField,
 	Bitrix\Main\ORM\Fields\StringField,
 	Bitrix\Main\ORM\Fields\Validators\LengthValidator;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
 
 Loc::loadMessages(__FILE__);
 
@@ -76,6 +77,8 @@ class SubscriptionTable extends DataManager
 					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_NUMBER_TREES_FIELD')
 				]
 			),
+
+			'RELATION_SUBSCRIPTION_USER' => (new OneToMany('RELATION_SUBSCRIPTION_USER', UserSubscriptionTable::class, 'RELATION_SUBSCRIPTION'))->configureJoinType('inner'),
 		];
 	}
 

@@ -7,6 +7,8 @@ namespace Up\Tree\Model;
 use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,
 	Bitrix\Main\ORM\Fields\IntegerField;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
+use Bitrix\Main\ORM\Query\Join;
 
 Loc::loadMessages(__FILE__);
 
@@ -56,6 +58,18 @@ class PersonParentTable extends DataManager
 					'title' => Loc::getMessage('PERSON_PARENT_ENTITY_CHILD_ID_FIELD')
 				]
 			),
+			'PARENT_PERSON' => (new Reference(
+				'PARENT_PERSON',
+				PersonTable::class,
+				Join::on('this.PARENT_ID', 'ref.ID')
+			)) ->configureJoinType('inner'),
+
+			'CHILD_PERSON' => (new Reference(
+				'CHILD_PERSON',
+				PersonTable::class,
+				Join::on('this.CHILD_ID', 'ref.ID')
+			)) ->configureJoinType('inner'),
+
 		];
 	}
 }
