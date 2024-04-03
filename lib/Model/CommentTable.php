@@ -6,8 +6,10 @@ namespace Up\Tree\Model;
 
 use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,
+	Bitrix\Main\ORM\Fields\DatetimeField,
 	Bitrix\Main\ORM\Fields\IntegerField,
-	Bitrix\Main\ORM\Fields\TextField;
+	Bitrix\Main\ORM\Fields\TextField,
+	Bitrix\Main\Type\DateTime;
 
 Loc::loadMessages(__FILE__);
 
@@ -17,10 +19,10 @@ Loc::loadMessages(__FILE__);
  * Fields:
  * <ul>
  * <li> ID int mandatory
- * <li> PARENT_ID int optional
  * <li> PUBLICATION_ID int mandatory
- * <li> USER_ID int mandatory
+ * <li> AUTHOR_ID int mandatory
  * <li> COMMENT text mandatory
+ * <li> CREATED_AT datetime optional default current datetime
  * </ul>
  *
  * @package Bitrix\Comment
@@ -55,12 +57,6 @@ class CommentTable extends DataManager
 				]
 			),
 			new IntegerField(
-				'PARENT_ID',
-				[
-					'title' => Loc::getMessage('COMMENT_ENTITY_PARENT_ID_FIELD')
-				]
-			),
-			new IntegerField(
 				'PUBLICATION_ID',
 				[
 					'required' => true,
@@ -68,10 +64,10 @@ class CommentTable extends DataManager
 				]
 			),
 			new IntegerField(
-				'USER_ID',
+				'AUTHOR_ID',
 				[
 					'required' => true,
-					'title' => Loc::getMessage('COMMENT_ENTITY_USER_ID_FIELD')
+					'title' => Loc::getMessage('COMMENT_ENTITY_AUTHOR_ID_FIELD')
 				]
 			),
 			new TextField(
@@ -79,6 +75,16 @@ class CommentTable extends DataManager
 				[
 					'required' => true,
 					'title' => Loc::getMessage('COMMENT_ENTITY_COMMENT_FIELD')
+				]
+			),
+			new DatetimeField(
+				'CREATED_AT',
+				[
+					'default' => function()
+					{
+						return new DateTime();
+					},
+					'title' => Loc::getMessage('COMMENT_ENTITY_CREATED_AT_FIELD')
 				]
 			),
 		];

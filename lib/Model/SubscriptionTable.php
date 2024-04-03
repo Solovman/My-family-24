@@ -6,11 +6,9 @@ namespace Up\Tree\Model;
 
 use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,
-	Bitrix\Main\ORM\Fields\EnumField,
-	Bitrix\Main\ORM\Fields\IntegerField;
-use Bitrix\Main\ORM\Fields\Relations\OneToMany;
-use Bitrix\Main\Rest\User;
-use Bitrix\User\UserTable;
+	Bitrix\Main\ORM\Fields\IntegerField,
+	Bitrix\Main\ORM\Fields\StringField,
+	Bitrix\Main\ORM\Fields\Validators\LengthValidator;
 
 Loc::loadMessages(__FILE__);
 
@@ -20,7 +18,7 @@ Loc::loadMessages(__FILE__);
  * Fields:
  * <ul>
  * <li> ID int mandatory
- * <li> LEVEL unknown optional default Free
+ * <li> LEVEL string(50) optional default 'Free'
  * <li> PRICE int optional default 0
  * <li> NUMBER_TREES int optional default 1
  * </ul>
@@ -56,13 +54,13 @@ class SubscriptionTable extends DataManager
 					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_ID_FIELD')
 				]
 			),
-			new EnumField(
-			'LEVEL',
+			new StringField(
+				'LEVEL',
 				[
-				'default' => 'Free',
-				'values' => ['Free', 'Standard', 'Premium'],
-				'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_LEVEL_FIELD')
-			]
+					'default' => 'Free',
+					'validation' => [__CLASS__, 'validateLevel'],
+					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_LEVEL_FIELD')
+				]
 			),
 			new IntegerField(
 				'PRICE',
@@ -71,13 +69,6 @@ class SubscriptionTable extends DataManager
 					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_PRICE_FIELD')
 				]
 			),
-
-            'ID' => new OneToMany(
-                'USER_SUBSCRIPTION',
-                UserTable::class,
-                'SUBSCRIPTION_ID'
-            ),
-
 			new IntegerField(
 				'NUMBER_TREES',
 				[
@@ -85,6 +76,18 @@ class SubscriptionTable extends DataManager
 					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_NUMBER_TREES_FIELD')
 				]
 			),
+		];
+	}
+
+	/**
+	 * Returns validators for LEVEL field.
+	 *
+	 * @return array
+	 */
+	public static function validateLevel()
+	{
+		return [
+			new LengthValidator(null, 50),
 		];
 	}
 }

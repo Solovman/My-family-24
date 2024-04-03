@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Up\Tree\Model;
 
-use Bitrix\Family\TreeTable;
 use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,
 	Bitrix\Main\ORM\Fields\EnumField,
@@ -97,11 +96,11 @@ class PersonTable extends DataManager
 				]
 			),
 			new EnumField(
-			'GENDER',
+				'GENDER',
 				[
-				'title' => Loc::getMessage('PERSON_ENTITY_GENDER_FIELD'),
-				'values' => ['Male', 'Female']
-			]
+					'title' => Loc::getMessage('PERSON_ENTITY_GENDER_FIELD'),
+					'values' => ['Male', 'Female']
+				]
 			),
 			new IntegerField(
 				'TREE_ID',
@@ -110,12 +109,6 @@ class PersonTable extends DataManager
 					'title' => Loc::getMessage('PERSON_ENTITY_TREE_ID_FIELD')
 				]
 			),
-
-            new Reference(
-                'TREE_PERSON',
-                TreeTable::class,
-                ['=this.TREE_ID' => 'ref.ID']
-            ),
 		];
 	}
 

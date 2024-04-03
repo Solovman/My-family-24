@@ -11,7 +11,6 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\StringField,
 	Bitrix\Main\ORM\Fields\Validators\LengthValidator,
 	Bitrix\Main\Type\DateTime;
-use Bitrix\User\UserTable;
 
 Loc::loadMessages(__FILE__);
 
@@ -72,13 +71,6 @@ class TreeTable extends DataManager
 					'title' => Loc::getMessage('TREE_ENTITY_USER_ID_FIELD')
 				]
 			),
-
-            new Reference(
-                'PERSON_USER',
-                UserTable::class,
-                ['=this.USER_ID' => 'ref.ID']
-            ),
-
 			new DatetimeField(
 				'CREATED_AT',
 				[

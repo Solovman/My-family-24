@@ -5,7 +5,7 @@ CREATE TABLE up_subscription(
 	                            NUMBER_TREES INT(3) NOT NULL DEFAULT 1
 );
 
-CREATE TABLE up_user_subscription(
+CREATE TABLE up_relation_user_subscription(
                         USER_ID INT NOT NULL,
 	                    SUBSCRIPTION_ID INT NOT NULL DEFAULT 1,
 	                    SUBSCRIPTION_BUY_TIME TIMESTAMP DEFAULT NULL
