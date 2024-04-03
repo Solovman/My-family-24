@@ -24,7 +24,6 @@ class UserService
 			"EMAIL" => $email,
 			"LOGIN" => $email,
 			"PASSWORD" => $passwordHash,
-			"CONFIRM_PASSWORD" => $passwordHash,
 			"DATE_REGISTER" => new DateTime(),
 		];
 
