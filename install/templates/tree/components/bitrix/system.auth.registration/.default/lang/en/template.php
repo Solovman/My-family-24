@@ -2,6 +2,7 @@
 $MESS["AUTH_AUTH"] = "Authorization";
 $MESS["AUTH_CONFIRM"] = "Password confirmation:";
 $MESS["AUTH_EMAIL"] = "E-Mail:";
+$MESS["AUTH_AUTHORIZE"] = "Authorize";
 $MESS["AUTH_EMAIL_SENT"] = "A registration confirmation request has been sent to the specified e-mail address.";
 $MESS["AUTH_EMAIL_WILL_BE_SENT"] = "A registration confirmation request will be sent to the specified e-mail address.";
 $MESS["AUTH_LAST_NAME"] = "Last Name:";

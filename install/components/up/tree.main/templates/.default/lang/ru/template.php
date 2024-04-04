@@ -1,4 +1,1 @@
 <?php
-
-$MESS ['UP_FAMILY_TREE_BUTTON_SIGN_IN_TAB'] = "Войти";
-$MESS ['UP_FAMILY_TREE_BUTTON_REGISTER_TAB'] = "Регистрация";
