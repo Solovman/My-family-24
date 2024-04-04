@@ -18,7 +18,6 @@ class Person implements Entity
 	private int $treeId;
 
 	/**
-	 * @param $id
 	 * @param $imageId
 	 * @param $name
 	 * @param $surname
@@ -27,9 +26,8 @@ class Person implements Entity
 	 * @param $gender
 	 * @param $treeId
 	 */
-	public function __construct($id, $imageId, $name, $surname, $birthDate, $deathDate, $gender, $treeId)
+	public function __construct($imageId, $name, $surname, $birthDate, $deathDate, $gender, $treeId)
 	{
-		$this->id = $id;
 		$this->imageId = $imageId;
 		$this->name = $name;
 		$this->surname = $surname;

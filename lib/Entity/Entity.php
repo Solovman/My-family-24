@@ -6,7 +6,7 @@ namespace Up\Tree\Entity;
 
 interface Entity
 {
-	public function getId();
-	public function setId($id);
+	public function getId() : ?int;
+	public function setId(int $id);
 }
 
