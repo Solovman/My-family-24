@@ -28,3 +28,11 @@ div.boc-light .boc-input>input:focus {
 .boc-light .boc-search [data-search-item-id]:hover, .boc-light .boc-search [data-selected=yes] {
 	background-color: #37C373FF !important;
 }
+
+.boc-edit-form-header {
+	background-color: #37C373FF !important;
+}
+
+.boc-img-button{
+	background-color: #37C373FF !important;
+}
