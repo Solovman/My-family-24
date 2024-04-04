@@ -1,0 +1,4 @@
+<?php
+
+$MESS ['UP_FAMILY_TREE_BUTTON_REGISTER_TAB'] = "Register";
+$MESS ['UP_FAMILY_TREE_BUTTON_SIGN_IN_TAB'] = "Login";

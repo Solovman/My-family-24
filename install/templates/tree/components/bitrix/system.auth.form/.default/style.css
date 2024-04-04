@@ -2,20 +2,6 @@ div.bx-system-auth-form span.bx-auth-secure {background-color:#FFFAE3; border:1p
 div.bx-system-auth-form div.bx-auth-secure-icon {background-image:url(sec.png); background-repeat:no-repeat; background-position:center; width:19px; height:18px;}
 div.bx-system-auth-form div.bx-auth-secure-unlock {background-image:url(sec-unlocked.png);}
 
-.main__container {
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding: 30px;
-	top:  50%;
-	left: 51.5%;
-	transform: translate(-50%,-50%);
-	background-color: #ffffff;
-	width: 30%;
-}
-
 .main__form {
 	width: 100%;
 }
@@ -71,39 +57,8 @@ div.bx-system-auth-form div.bx-auth-secure-unlock {background-image:url(sec-unlo
 	left: 1%;
 }
 
-.main__tabs-button {
-	padding-bottom: 13px;
-	background-color: transparent;
-	border: none;
-	font-weight: 600;
-	color: #000000;
-	cursor: pointer;
-	border-bottom: 2px solid transparent;
-	color: #000000;
-}
-
-.main__tabs-button._active {
-	color: #3de280;
-	border-bottom: 2px solid #3de280;
-}
-
-.main__tabs-button_login {
-	margin-right: 15px;
-}
-
 .main__tabs-item:not(._active) {
 	display: none;
-}
-
-.main__tabs-nav {
-	margin-bottom: 15px;
-	border-bottom: 2px solid #f4f3f2;
-	width: 100%;
-}
-
-.main__heading {
-	color: #000000;
-	font-style: italic;
 }
 
 body {
@@ -116,22 +71,3 @@ body {
 	background-attachment: fixed;
 }
 
-
-@media (max-width: 900px) {
-	.main__container {
-		width: 40%;
-	}
-}
-
-@media (max-width: 651px) {
-	.main__container {
-		width: 56%;
-		left: 56%;
-	}
-}
-
-@media (max-width: 476px) {
-	.main__container {
-		width: 70%;
-	}
-}

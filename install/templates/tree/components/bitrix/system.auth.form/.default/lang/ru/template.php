@@ -22,7 +22,7 @@ $MESS["auth_form_comp_otp_remember_title"] = "Запомнить код на э�
 $MESS["auth_form_comp_otp_remember"] = "Запомнить код";
 $MESS["auth_form_comp_auth"] = "Авторизация";
 
-$MESS ['UP_FAMILY_TREE_INPUT_EMAIL'] = "Введите email";
+$MESS ['UP_FAMILY_TREE_INPUT_EMAIL'] = "Введите логин";
 $MESS ['UP_FAMILY_TREE_INPUT_PASSWORD'] = "Введите пароль";
 $MESS ['UP_FAMILY_TREE_INPUT_NAME'] = "Введите имя";
 $MESS ['UP_FAMILY_TREE_BUTTON_SIGN_IN'] = "Войти";
