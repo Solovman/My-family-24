@@ -1,11 +1,4 @@
-<?
-/**
- * Bitrix Framework
- * @package bitrix
- * @subpackage main
- * @copyright 2001-2014 Bitrix
- */
-
+<?php
 /**
  * Bitrix vars
  * @global CMain $APPLICATION
@@ -16,77 +9,24 @@
 
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
-if($arResult["SHOW_SMS_FIELD"] == true)
-{
-	CJSCore::Init('phone_auth');
-}
-
 ?>
 <div class="bx-auth container">
-<?
+
+<?php
 if (!empty($arParams["~AUTH_RESULT"]))
 {
 	ShowMessage($arParams["~AUTH_RESULT"]);
 }
 ?>
-<?if($arResult["SHOW_EMAIL_SENT_CONFIRMATION"]):?>
-	<p><?echo GetMessage("AUTH_EMAIL_SENT")?></p>
-<?endif;?>
 
-<?if(!$arResult["SHOW_EMAIL_SENT_CONFIRMATION"] && $arResult["USE_EMAIL_CONFIRMATION"] === "Y"):?>
-	<p><?echo GetMessage("AUTH_EMAIL_WILL_BE_SENT")?></p>
-<?endif?>
+
 <noindex>
 
-<?if($arResult["SHOW_SMS_FIELD"] == true):?>
-
-<form method="post" action="<?=$arResult["AUTH_URL"]?>" name="regform">
-<input type="hidden" name="SIGNED_DATA" value="<?=htmlspecialcharsbx($arResult["SIGNED_DATA"])?>" />
-<table class="data-table bx-registration-table">
-	<tbody>
-		<tr>
-			<td><span class="starrequired">*</span><?echo GetMessage("main_register_sms_code")?></td>
-			<td><input size="30" type="text" name="SMS_CODE" value="<?=htmlspecialcharsbx($arResult["SMS_CODE"])?>" autocomplete="off" /></td>
-		</tr>
-	</tbody>
-	<tfoot>
-		<tr>
-			<td></td>
-			<td><input type="submit" name="code_submit_button" value="<?echo GetMessage("main_register_sms_send")?>" /></td>
-		</tr>
-	</tfoot>
-</table>
-</form>
-
-<script>
-new BX.PhoneAuth({
-	containerId: 'bx_register_resend',
-	errorContainerId: 'bx_register_error',
-	interval: <?=$arResult["PHONE_CODE_RESEND_INTERVAL"]?>,
-	data:
-		<?=CUtil::PhpToJSObject([
-			'signedData' => $arResult["SIGNED_DATA"],
-		])?>,
-	onError:
-		function(response)
-		{
-			var errorDiv = BX('bx_register_error');
-			var errorNode = BX.findChildByClassName(errorDiv, 'errortext');
-			errorNode.innerHTML = '';
-			for(var i = 0; i < response.errors.length; i++)
-			{
-				errorNode.innerHTML = errorNode.innerHTML + BX.util.htmlspecialchars(response.errors[i].message) + '<br>';
-			}
-			errorDiv.style.display = '';
-		}
-});
-</script>
-
-<div id="bx_register_error" style="display:none"><?ShowError("error")?></div>
+<div id="bx_register_error" style="display:none"><?php ShowError("error")?></div>
 
 <div id="bx_register_resend"></div>
 
-<?elseif(!$arResult["SHOW_EMAIL_SENT_CONFIRMATION"]):?>
+<?php if(!$arResult["SHOW_EMAIL_SENT_CONFIRMATION"]):?>
 
 <form id="tab_2" class="main__form main__tabs-item" method="post" action="<?=$arResult["AUTH_URL"]?>" name="bform" enctype="multipart/form-data">
 	<input type="hidden" name="AUTH_FORM" value="Y" />
@@ -170,10 +110,9 @@ new BX.PhoneAuth({
 				<input type="password" name="USER_CONFIRM_PASSWORD" maxlength="255" value="<?=$arResult["USER_CONFIRM_PASSWORD"]?>" class="bx-auth-input main__input-form" autocomplete="off" />
 			</td>
 		</tr>
-
-<?if($arResult["EMAIL_REGISTRATION"]):?>
+<?php if($arResult["EMAIL_REGISTRATION"]):?>
 		<tr>
-			<td class="main__title-input"><?if($arResult["EMAIL_REQUIRED"]):?><span class="starrequired">*</span><?endif?><?=GetMessage("AUTH_EMAIL")?></td>
+			<td class="main__title-input"><?php if($arResult["EMAIL_REQUIRED"]):?><span class="starrequired">*</span><?php endif?><?=GetMessage("AUTH_EMAIL")?></td>
 			<td class="main__container-input">
 				<span class="main__icon-input-reg">
 					<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -183,46 +122,7 @@ new BX.PhoneAuth({
 				<input type="text" name="USER_EMAIL" maxlength="255" value="<?=$arResult["USER_EMAIL"]?>" class="bx-auth-input main__input-form" />
 			</td>
 		</tr>
-<?endif?>
-
-
-<?// ********************* User properties ***************************************************?>
-<?if($arResult["USER_PROPERTIES"]["SHOW"] == "Y"):?>
-	<tr><td colspan="2"><?=trim($arParams["USER_PROPERTY_NAME"]) <> '' ? $arParams["USER_PROPERTY_NAME"] : GetMessage("USER_TYPE_EDIT_TAB")?></td></tr>
-	<?foreach ($arResult["USER_PROPERTIES"]["DATA"] as $FIELD_NAME => $arUserField):?>
-	<tr><td><?if ($arUserField["MANDATORY"]=="Y"):?><span class="starrequired">*</span><?endif;
-		?><?=$arUserField["EDIT_FORM_LABEL"]?>:</td><td>
-			<?$APPLICATION->IncludeComponent(
-				"bitrix:system.field.edit",
-				$arUserField["USER_TYPE"]["USER_TYPE_ID"],
-				array("bVarsFromForm" => $arResult["bVarsFromForm"], "arUserField" => $arUserField, "form_name" => "bform"), null, array("HIDE_ICONS"=>"Y"));?></td></tr>
-	<?endforeach;?>
-<?endif;?>
-		<tr>
-			<td>
-				<?$APPLICATION->IncludeComponent("bitrix:main.userconsent.request", "",
-					array(
-						"ID" => COption::getOptionString("main", "new_user_agreement", ""),
-						"IS_CHECKED" => "Y",
-						"AUTO_SAVE" => "N",
-						"IS_LOADED" => "Y",
-						"ORIGINATOR_ID" => $arResult["AGREEMENT_ORIGINATOR_ID"],
-						"ORIGIN_ID" => $arResult["AGREEMENT_ORIGIN_ID"],
-						"INPUT_NAME" => $arResult["AGREEMENT_INPUT_NAME"],
-						"REPLACE" => array(
-							"button_caption" => GetMessage("AUTH_REGISTER"),
-							"fields" => array(
-								rtrim(GetMessage("AUTH_NAME"), ":"),
-								rtrim(GetMessage("AUTH_LAST_NAME"), ":"),
-								rtrim(GetMessage("AUTH_LOGIN_MIN"), ":"),
-								rtrim(GetMessage("AUTH_PASSWORD_REQ"), ":"),
-								rtrim(GetMessage("AUTH_EMAIL"), ":"),
-							)
-						),
-					)
-				);?>
-			</td>
-		</tr>
+<?php endif?>
 	</tbody>
 	<tfoot>
 		<tr>
@@ -234,11 +134,6 @@ new BX.PhoneAuth({
 </table>
 </form>
 
-<script type="text/javascript">
-document.bform.USER_NAME.focus();
-</script>
-
-<?endif?>
-
+<?php endif?>
 </noindex>
 </div>
