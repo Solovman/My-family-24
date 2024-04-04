@@ -14,7 +14,6 @@ if ($arResult['SHOW_ERRORS'] === 'Y' && $arResult['ERROR'] && !empty($arResult['
 
 <?if($arResult["FORM_TYPE"] == "login"):?>
 
-
 <form id="tab_1" class="main__form main__tabs-item _active" name="system_auth_form<?=$arResult["RND"]?>" method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
 		<?if($arResult["BACKURL"] <> ''):?>
 			<input type="hidden" name="backurl" value="<?=$arResult["BACKURL"]?>" />
