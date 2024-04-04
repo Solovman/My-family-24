@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Up\Tree\Entity;
 
-use Bitrix\Main\Type\DateTime;
+use Bitrix\Main\Type\Date;
 
 class Person implements Entity
 {
 	private ?int $id;
-	private ?int $imageId;
+	private int $imageId;
 	private string $name;
 	private string $surname;
-	private $birthDate;
-	private $deathDate;
+	private ?Date $birthDate;
+	private ?Date $deathDate;
 	private string $gender;
 	private int $treeId;
 
@@ -40,9 +40,9 @@ class Person implements Entity
 	}
 
 	/**
-	 * @return mixed
+	 * @return int|null
 	 */
-	public function getId()
+	public function getId(): ?int
 	{
 		return $this->id;
 	}
@@ -56,17 +56,17 @@ class Person implements Entity
 	}
 
 	/**
-	 * @return mixed
+	 * @return int
 	 */
-	public function getImageId()
+	public function getImageId(): int
 	{
 		return $this->imageId;
 	}
 
 	/**
-	 * @param mixed $imageId
+	 * @param int $imageId
 	 */
-	public function setImageId($imageId): void
+	public function setImageId(int $imageId): void
 	{
 		$this->imageId = $imageId;
 	}
@@ -82,25 +82,25 @@ class Person implements Entity
 	}
 
 	/**
-	 * @return mixed
+	 * @return string
 	 */
-	public function getSurname()
+	public function getSurname(): string
 	{
 		return $this->surname;
 	}
 
 	/**
-	 * @param mixed $surname
+	 * @param string $surname
 	 */
-	public function setSurname($surname): void
+	public function setSurname(string $surname): void
 	{
 		$this->surname = $surname;
 	}
 
 	/**
-	 * @return mixed
+	 * @return Date|null
 	 */
-	public function getBirthDate()
+	public function getBirthDate(): ?Date
 	{
 		return $this->birthDate;
 	}
@@ -108,17 +108,17 @@ class Person implements Entity
 	/**
 	 * @param mixed $birthDate
 	 */
-	public function setBirthDate($birthDate): void
+	public function setBirthDate(?Date $birthDate): void
 	{
 		$this->birthDate = $birthDate;
 	}
 
-	public function getDeathDate()
+	public function getDeathDate(): ?Date
 	{
 		return $this->deathDate;
 	}
 
-	public function setDeathDate($deathDate): void
+	public function setDeathDate(?Date $deathDate): void
 	{
 		$this->deathDate = $deathDate;
 	}

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Up\Tree\Services\Repository;
+
 use Bitrix\Main\DB\SqlException;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\PersonTable;
