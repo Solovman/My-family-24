@@ -33,6 +33,12 @@ Replace following lines in your `${doc_root}/.htaccess` file:
 +RewriteRule ^(.*)$ /index.php [L]
 ```
 
+## Setting up the correct registration operation
+
+In the administrative part along the path you must specify the following value:
+```
+Settings -> Module settings -> Authentication -> System authentication component template (system.auth.*): system.auth.registration
+```
 ## Symlinks for handy development
 
 
