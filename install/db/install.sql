@@ -20,7 +20,7 @@ CREATE TABLE up_family_tree(
 
 CREATE TABLE up_person(
 	                      ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	                      IMAGE_ID INT DEFAULT NULL,
+	                      IMAGE_ID INT DEFAULT 0,
 	                      NAME VARCHAR(50) NOT NULL,
 	                      SURNAME VARCHAR(50) NOT NULL,
 	                      BIRTH_DATE DATE,
