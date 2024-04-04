@@ -1,6 +1,7 @@
 <?
 $MESS["AUTH_REGISTER"] = "Регистрация";
 $MESS["AUTH_NAME"] = "Имя:";
+$MESS["AUTH_AUTHORIZE"] = "Войти";
 $MESS["AUTH_LAST_NAME"] = "Фамилия:";
 $MESS["AUTH_LOGIN_MIN"] = "Логин (мин. 3 символа):";
 $MESS["AUTH_CONFIRM"] = "Подтверждение пароля:";
