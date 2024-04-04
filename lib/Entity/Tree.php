@@ -7,7 +7,7 @@ namespace Up\Tree\Entity;
 
 use Bitrix\Main\Type\DateTime;
 
-class Tree
+class Tree implements Entity
 {
 	private ?int $id;
 	private string $title;
