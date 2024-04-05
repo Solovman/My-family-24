@@ -8,6 +8,7 @@ use Bitrix\Main\ArgumentException;
 use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
+use Exception;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\PersonTable;
 
@@ -45,17 +46,17 @@ class PersonService
 	public static function getPersonsByTreeId(int $treeId): array
 	{
 		$persons = PersonTable::query()
-							 ->setSelect(['ID',
-										  'IMAGE_ID',
-										  'NAME',
-										  'SURNAME',
-										  'BIRTH_DATE',
-										  'DEATH_DATE',
-										  'GENDER',
-										  'TREE_ID'])
-							 ->setFilter(['TREE_ID' => $treeId])
-							 ->exec()
-							 ->fetchAll();
+							  ->setSelect(['ID',
+										   'IMAGE_ID',
+										   'NAME',
+										   'SURNAME',
+										   'BIRTH_DATE',
+										   'DEATH_DATE',
+										   'GENDER',
+										   'TREE_ID'])
+							  ->setFilter(['TREE_ID' => $treeId])
+							  ->exec()
+							  ->fetchAll();
 
 		$personList = [];
 
@@ -74,5 +75,13 @@ class PersonService
 			$personList[] = $person;
 		}
 		return $personList;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function removePersonById(int $id): void
+	{
+		PersonTable::delete($id);
 	}
 }
