@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Up\Tree\Services\Repository;
 
+use Exception;
 use Bitrix\Main\DB\SqlException;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\PersonTable;
@@ -32,6 +33,14 @@ class PersonService
 		}
 
 		throw new SqlException("Error when adding person");
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function removePersonById(int $id): void
+	{
+		PersonTable::delete($id);
 	}
 
 }
