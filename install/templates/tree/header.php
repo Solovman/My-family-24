@@ -113,7 +113,7 @@ use Up\Tree\Services\Repository\UserService;
 		<div class="header__main">
 			<div class="header__icon">
 				<img class="header__image-icon" src="/local/modules/up.tree/images/user_default.png" alt="user-icon">
-				<span class="header__icon-name"><?= UserService::getUserNameById() ?></span>
+				<span class="header__icon-name"><?= UserService::getUserNameById() ?? GetMessage('UP_HEADER_ICON_NAME') ?></span>
 			</div>
 		</div>
 	</div>

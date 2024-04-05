@@ -53,6 +53,7 @@
 	padding: 20px;
 	margin-left: auto;
 	margin-top: 2%;
+	margin-bottom: 3%;
 	background-color: #ffffff;
 	width: 30%;
 }
@@ -74,7 +75,6 @@
 	font-size: 14px;
 	background-color: transparent;
 	border: none;
-	font-weight: 600;
 	color: #000000;
 	cursor: pointer;
 	border-bottom: 2px solid transparent;
