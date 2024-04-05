@@ -74,7 +74,7 @@ ul {
 
 .header__nav-item {
 	padding: 3px;
-	width: 73%;
+	width: 100%;
 	text-align: center;
 	border-bottom: 1px solid #4ed185;
 }
@@ -103,14 +103,19 @@ ul {
 [data-title]::after {
 	content: attr(data-title);
 	position: absolute;
+	padding: 5px 8px 0 5px;
 	left: 100%;
-	top: 4%;
+	top:3%;
 	opacity: 0;
 	transition: opacity .3s ease-in-out;
+	background-color: #4ed185;
+	border-radius: 0 20px 20px 0;
+	color: #ffffff;
+	font-size: 14px;
 }
 
 [data-title]:hover::after {
-	opacity: 1; /* Показываем подсказку */
+	opacity: 1;
 }
 
 .header__search-form {
