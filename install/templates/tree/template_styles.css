@@ -18,6 +18,10 @@ body {
 	margin: 0;
 	height: 100%;
 	background-color: #F1F9F8;
+	background-image: url("/local/modules/up.tree/images/tree.png");
+	background-size: 32%;
+	background-position: 31%;
+	background-repeat: no-repeat;
 }
 
 a {

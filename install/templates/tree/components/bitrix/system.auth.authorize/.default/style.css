@@ -63,9 +63,7 @@
 	align-items: center;
 	justify-content: center;
 	padding: 20px;
-	margin-left: auto;
-	margin-top: 7%;
-	margin-bottom: 10%;
+	margin: 5% 7% 12% auto;
 	background-color: #ffffff;
 	width: 30%;
 }

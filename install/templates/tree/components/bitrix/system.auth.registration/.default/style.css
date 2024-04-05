@@ -51,9 +51,7 @@
 	align-items: center;
 	justify-content: center;
 	padding: 20px;
-	margin-left: auto;
-	margin-top: 2%;
-	margin-bottom: 3%;
+	margin: 2% 4% 3% auto;
 	background-color: #ffffff;
 	width: 30%;
 }

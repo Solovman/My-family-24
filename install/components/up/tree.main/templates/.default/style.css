@@ -1,3 +1,7 @@
+body {
+	background-image: none !important;
+}
+
 #tree {
 	background-color: #F1F9F8;
 }
@@ -9,21 +13,19 @@
 [data-n-id] rect:hover {
 	filter: drop-shadow( 4px 5px 5px #aeaeae);
 }
+
 div.boc-light .boc-input>input{
 	border-color: black;
 }
 
-/* input field on focus */
 div.boc-light .boc-input>input:focus {
 	border-color: #37C373FF;
 }
 
-/* the search label on focus */
 .boc-light .boc-input>label.focused, .boc-dark .boc-input>label.focused {
 	color: #37C373FF !important;
 }
 
-/* the hovered search resutt */
 .boc-light .boc-search [data-search-item-id]:hover, .boc-light .boc-search [data-selected=yes] {
 	background-color: #37C373FF !important;
 }
@@ -35,3 +37,4 @@ div.boc-light .boc-input>input:focus {
 .boc-img-button{
 	background-color: #37C373FF !important;
 }
+
