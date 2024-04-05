@@ -13,6 +13,9 @@ class Tree implements Entity
 	private string $title;
 	private int $userId;
 	private ?DateTime $createdAt;
+	private array $familyRelations = [];
+	private array $persons = [];
+
 
 	public function __construct($title, $userId, $createdAt)
 	{
@@ -83,5 +86,25 @@ class Tree implements Entity
 	public function setCreatedAt(?DateTime $createdAt): void
 	{
 		$this->createdAt = $createdAt;
+	}
+
+	public function addFamilyRelation(FamilyRelation $relation): void
+	{
+		$this->familyRelations[] = $relation;
+	}
+
+	public function getFamilyRelations(): array
+	{
+		return $this->familyRelations;
+	}
+
+	public function addPerson(Person $person): void
+	{
+		$this->persons[] = $person;
+	}
+
+	public function getPersons(): array
+	{
+		return $this->persons;
 	}
 }

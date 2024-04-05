@@ -31,4 +31,23 @@ class FamilyRelationService
 
 		throw new SqlException("Error adding a relationship");
 	}
+
+	public static function getFamilyRelationByPersonsIds(array $ids): array
+	{
+		$relations = PersonParentTable::query()
+								  ->setSelect(['PARENT_ID', 'CHILD_ID'])
+								  ->whereIn('PARENT_ID', $ids)
+								  ->whereIn('CHILD_ID', $ids)
+								  ->exec()
+								  ->fetchAll();
+
+		$relationList = [];
+		foreach ($relations as $relationData)
+		{
+			$relation = new FamilyRelation((int)$relationData['PARENT_ID'], (int)$relationData['CHILD_ID']);
+			$relationList[] = $relation;
+		}
+
+		return $relationList;
+	}
 }
