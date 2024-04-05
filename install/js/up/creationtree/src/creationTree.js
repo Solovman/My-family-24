@@ -16,15 +16,24 @@ export class CreationTree
 
 	render()
 	{
-		let chart = new OrgChart(document.getElementById("tree"), {
-			nodeBinding: {
-				field_0: "name"
+		var chart = new OrgChart(document.getElementById("tree"), {
+			nodeMenu: {
+				details: { text: "Details" },
+				edit: { text: "Edit" },
+				add: { text: "Add" },
+				remove: { text: "Remove" }
 			},
-			nodes: [
-				{ id: 1, name: "Amber McKenzie" },
-				{ id: 2, pid: 1, name: "Ava Field" },
-				{ id: 3, pid: 1, name: "Peter Stevens" }
-			]
+			nodeBinding: {
+				field_0: "name",
+				field_1: "title",
+				img_0: "img"
+			}
 		});
+
+		chart.load([
+			{ id: 1, name: "Denny Curtis", title: "CEO", img: "https://cdn.balkan.app/shared/2.jpg" },
+			{ id: 2, pid: 1, name: "Ashley Barnett", title: "Sales Manager", img: "https://cdn.balkan.app/shared/3.jpg" },
+			{ id: 3, pid: 1, name: "Caden Ellison", title: "Dev Manager", img: "https://cdn.balkan.app/shared/4.jpg" },
+		]);
 	}
 }
