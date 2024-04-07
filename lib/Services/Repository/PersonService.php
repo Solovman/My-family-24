@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Up\Tree\Services\Repository;
 
-use Bitrix\Main\ArgumentException;
+use Exception;
 use Bitrix\Main\DB\SqlException;
+use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
-use Exception;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\MarriedTable;
 use Up\Tree\Model\PersonParentTable;
@@ -17,14 +17,10 @@ use Up\Tree\Model\PersonTable;
 class PersonService
 {
 	/**
-	 * @throws SqlException
 	 * @throws Exception
+	 * @throws SqlException
 	 */
-	public static function addPerson(
-		Person $person,
-		int    $personConnectedId,
-		string $relationType
-	): array
+	public static function addPerson(Person $person, int $personConnectedId, string $relationType): array
 	{
 		$personData = [
 			"IMAGE_ID" => $person->getImageId(),
@@ -37,7 +33,6 @@ class PersonService
 		];
 
 		$ids = [];
-
 		$newPerson = PersonTable::add($personData);
 
 		if (!$newPerson->isSuccess())
@@ -45,49 +40,70 @@ class PersonService
 			throw new SqlException("Error when adding person");
 		}
 
-		$personId = $newPerson->getId();
-		$ids[] = $personId;
+		$ids[] = $newPerson->getId();
 
-		if ($relationType === 'partner')
+		return array_merge($ids, self::addRelation($relationType, $newPerson->getId(), $personConnectedId));
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	private static function addRelation(string $relationType, int $personId, int $relatedId): array
+	{
+		return match ($relationType)
 		{
-			$relationMarriedData = [
-				"PERSON_ID" => $newPerson->getId(),
-				"PARTNER_ID" => $personConnectedId,
-			];
+			'partner' => self::addPartnerRelations($personId, $relatedId),
+			'parent' => [self::addParentRelation($personId, $relatedId)],
+			'child' => [self::addChildRelation($personId, $relatedId)],
+			default => [],
+		};
+	}
 
-			$relationMarriedDataReverse = [
-				"PERSON_ID" => $personConnectedId,
-				"PARTNER_ID" => $newPerson->getId(),
-			];
+	/**
+	 * @throws Exception
+	 */
+	private static function addPartnerRelations(int $personId, int $partnerId): array
+	{
+		$relationMarriedData = [
+			"PERSON_ID" => $personId,
+			"PARTNER_ID" => $partnerId,
+		];
 
-			$relationMarriedId = MarriedTable::add($relationMarriedData)->getId();
-			$relationMarriedReverseId = MarriedTable::add($relationMarriedDataReverse)->getId();
+		$relationMarriedDataReverse = [
+			"PERSON_ID" => $partnerId,
+			"PARTNER_ID" => $personId,
+		];
 
-			$ids[] = $relationMarriedId;
-			$ids[] = $relationMarriedReverseId;
-		}
-		if ($relationType === 'parent')
-		{
-			$relationData = [
-				"PARENT_ID" => $newPerson->getId(),
-				"CHILD_ID" => $personConnectedId,
-			];
+		$relationMarriedId = MarriedTable::add($relationMarriedData)->getId();
+		$relationMarriedReverseId = MarriedTable::add($relationMarriedDataReverse)->getId();
 
-			$relationId = PersonParentTable::add($relationData)->getId();
-			$ids[] = $relationId;
-		}
-		if ($relationType === 'child')
-		{
-			$relationData = [
-				"PARENT_ID" => $personConnectedId,
-				"CHILD_ID" => $newPerson->getId(),
-			];
+		return [$relationMarriedId, $relationMarriedReverseId];
+	}
 
-			$relationId = PersonParentTable::add($relationData)->getId();
-			$ids[] = $relationId;
-		}
+	/**
+	 * @throws Exception
+	 */
+	private static function addParentRelation(int $parentId, int $childId): array
+	{
+		$relationData = [
+			"PARENT_ID" => $parentId,
+			"CHILD_ID" => $childId,
+		];
 
-		return $ids;
+		return [PersonParentTable::add($relationData)->getId()];
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	private static function addChildRelation(int $parentId, int $childId): array
+	{
+		$relationData = [
+			"PARENT_ID" => $childId,
+			"CHILD_ID" => $parentId,
+		];
+
+		return [PersonParentTable::add($relationData)->getId()];
 	}
 
 	/**
