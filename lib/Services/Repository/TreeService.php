@@ -63,7 +63,6 @@ class TreeService
 		);
 		$tree->setId((int)$treeData['ID']);
 
-		// Getting tree personas for tree
 		$persons = PersonService::getPersonsByTreeId($tree->getId());
 
 		foreach ($persons as $person)
@@ -77,7 +76,6 @@ class TreeService
 			$personIds[] = $person->getId();
 		}
 
-		// Getting relationships between persons for tree
 		$relations = FamilyRelationService::getFamilyRelationByPersonsIds($personIds);
 
 		foreach ($relations as $relation)

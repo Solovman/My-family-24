@@ -5,9 +5,15 @@ declare(strict_types=1);
 namespace Up\Tree\Services\Repository;
 
 
+use Bitrix\Main\ArgumentException;
+use Bitrix\Main\ObjectPropertyException;
+use Bitrix\Main\ORM\Query\Query;
+use Bitrix\Main\SystemException;
 use Exception;
 use Bitrix\Main\DB\SqlException;
 use Up\Tree\Entity\FamilyRelation;
+use Up\Tree\Entity\FamilyRelationMarried;
+use Up\Tree\Model\MarriedTable;
 use Up\Tree\Model\PersonParentTable;
 
 class FamilyRelationService
@@ -32,11 +38,35 @@ class FamilyRelationService
 		throw new SqlException("Error adding a relationship");
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public static function addFamilyMarriedRelation(FamilyRelationMarried $relation): int|array
+	{
+		$relationData = [
+			"PERSON_ID" => $relation->getPersonId(),
+			"PARTNER_ID" => $relation->getPartnerId(),
+		];
+
+		$result = MarriedTable::add($relationData);
+
+		if ($result->isSuccess())
+		{
+			return $result->getId();
+		}
+
+		throw new SqlException("Error adding a relationship");
+	}
+
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
 	public static function getFamilyRelationByPersonsIds(array $ids): array
 	{
 		$relations = PersonParentTable::query()
 								  ->setSelect(['PARENT_ID', 'CHILD_ID'])
-								  ->whereIn('PARENT_ID', $ids)
 								  ->whereIn('CHILD_ID', $ids)
 								  ->exec()
 								  ->fetchAll();
@@ -44,8 +74,37 @@ class FamilyRelationService
 		$relationList = [];
 		foreach ($relations as $relationData)
 		{
-			$relation = new FamilyRelation((int)$relationData['PARENT_ID'], (int)$relationData['CHILD_ID']);
-			$relationList[] = $relation;
+			$relationList[] = [
+				'id' => (int)$relationData['CHILD_ID'],
+				'parentID' => (int)$relationData['PARENT_ID'],
+			];
+		}
+
+		return $relationList;
+	}
+
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getFamilyMarriedRelationById(array $ids)
+	{
+		$relations = MarriedTable::query()
+			->setSelect(['PERSON_ID', 'PARTNER_ID'])
+			->whereIn('PERSON_ID', $ids)
+			->exec()
+			->fetchAll();
+
+		$relationList = [];
+
+		foreach ($relations as $relationData)
+		{
+
+			$relationList[] = [
+				'id' => (int)$relationData['PERSON_ID'],
+				'partnerID' => (int)$relationData['PARTNER_ID']
+			];
 		}
 
 		return $relationList;

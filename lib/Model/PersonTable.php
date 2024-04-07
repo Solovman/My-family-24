@@ -116,6 +116,10 @@ class PersonTable extends DataManager
 
 			'RELATION_CHILD_PERSON' => (new OneToMany('RELATION_CHILD_PERSON', PersonParentTable::class, 'CHILD_PERSON'))->configureJoinType('inner'),
 
+			'RELATION_PARTNER_PERSON' => (new OneToMany('RELATION_PARTNER_PERSON', MarriedTable::class, 'PARTNER_PERSON'))->configureJoinType('inner'),
+
+			'RELATION_MARRIED_PERSON' => (new OneToMany('RELATION_MARRIED_PERSON', MarriedTable::class, 'RELATION_PERSON_PARTNER'))->configureJoinType('inner'),
+
 			'PERSON_IMAGE' => (new Reference(
 				'PERSON_IMAGE',
 				FileTable::class,

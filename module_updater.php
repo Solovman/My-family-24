@@ -25,3 +25,16 @@ function __treeMigrate(int $nextVersion, callable $callback): void
 		Option::set($moduleId, '~database_schema_version', $nextVersion);
 	}
 }
+
+__treeMigrate(2, static function ($updater, $DB)
+{
+	if ($updater->CanUpdateDatabase() && !$updater->TableExists('up_relation_married'))
+	{
+		$DB->query('CREATE TABLE up_relation_married (
+					PERSON_ID INT NOT NULL ,
+					PARTNER_ID INT NOT NULL ,
+					PRIMARY KEY (PERSON_ID, PARTNER_ID)
+			);');
+	}
+});
+
