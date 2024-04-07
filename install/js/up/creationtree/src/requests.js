@@ -8,9 +8,7 @@ export class Requests
 			BX.ajax.runAction('up:tree.node.getPersons', {
 
 			}).then((response) => {
-				const nodesList = JSON.parse(response.data.tree);
-
-				console.log(response);
+				const nodesList = response.data.tree;
 
 				resolve(nodesList);
 			})
@@ -19,30 +17,6 @@ export class Requests
 				})
 		})
 	}
-
-	static getRelation(ids)
-	{
-		return new Promise((resolve, reject) =>
-		{
-			BX.ajax.runAction('up:tree.node.getPersonRelation', {
-				data: {
-					ids: ids
-				}
-			}).then((response) => {
-				const result= [];
-				const parent = response.data.personParent;
-				const married = response.data.personMarried;
-
-				result.push(parent, married);
-
-				resolve(result);
-			})
-				.catch((error) => {
-					reject(error);
-				})
-		})
-	}
-
 	static addNode(name, surname)
 	{
 		return new Promise((resolve, reject) =>

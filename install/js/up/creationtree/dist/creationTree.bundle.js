@@ -48,28 +48,8 @@ this.BX.Up = this.BX.Up || {};
 	    value: function loadNodes() {
 	      return new Promise(function (resolve, reject) {
 	        BX.ajax.runAction('up:tree.node.getPersons', {}).then(function (response) {
-	          var nodesList = JSON.parse(response.data.tree);
-	          console.log(response);
+	          var nodesList = response.data.tree;
 	          resolve(nodesList);
-	        })["catch"](function (error) {
-	          reject(error);
-	        });
-	      });
-	    }
-	  }, {
-	    key: "getRelation",
-	    value: function getRelation(ids) {
-	      return new Promise(function (resolve, reject) {
-	        BX.ajax.runAction('up:tree.node.getPersonRelation', {
-	          data: {
-	            ids: ids
-	          }
-	        }).then(function (response) {
-	          var result = [];
-	          var parent = response.data.personParent;
-	          var married = response.data.personMarried;
-	          result.push(parent, married);
-	          resolve(result);
 	        })["catch"](function (error) {
 	          reject(error);
 	        });
@@ -123,9 +103,7 @@ this.BX.Up = this.BX.Up || {};
 	      throw new Error("TaskList: element with id \"".concat(this.rootNodeId, "\" not found"));
 	    }
 	    this.nodeList = [];
-
-	    //this.setEvent();
-
+	    this.setEvent();
 	    this.reload();
 	  }
 	  babelHelpers.createClass(CreationTree, [{
@@ -134,6 +112,7 @@ this.BX.Up = this.BX.Up || {};
 	      var _this = this;
 	      Requests.loadNodes().then(function (nodeList) {
 	        _this.nodeList = nodeList;
+	        console.log(_this.nodeList);
 	        _this.render();
 	      });
 	    }
@@ -157,11 +136,11 @@ this.BX.Up = this.BX.Up || {};
 	          }
 	        },
 	        nodeBinding: {
-	          field_0: 'NAME',
+	          field_0: 'name',
 	          field_1: 'BIRTH_DATE'
 	        },
 	        editForm: {
-	          titleBinding: "NAME",
+	          titleBinding: "name",
 	          photoBinding: "photo",
 	          addMoreBtn: 'Add element',
 	          addMore: 'Add more elements',
@@ -170,7 +149,7 @@ this.BX.Up = this.BX.Up || {};
 	          elements: [{
 	            type: 'textbox',
 	            label: 'Full Name',
-	            binding: 'NAME'
+	            binding: 'name'
 	          }, {
 	            type: 'textbox',
 	            label: 'Email Address',
@@ -224,42 +203,38 @@ this.BX.Up = this.BX.Up || {};
 	        if (args.cnode.isPartner && args.node.partnerSeparation == 30) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + args.p.xb + '" y="' + args.p.yb + '"/>';
 	      });
 	      var ids = [];
-	      this.nodeList.forEach(function (node) {
+	      this.nodeList.persons.forEach(function (node) {
 	        ids.push(node.id);
 	      });
-	      Requests.getRelation(ids).then(function (data) {
-	        var parents = data[0];
-	        var married = data[1];
-	        parents.forEach(function (parent) {
-	          var nodeToUpdateParent = _this2.nodeList.find(function (node) {
-	            return node.id === parent.id;
-	          });
-	          if (nodeToUpdateParent) {
-	            if (!nodeToUpdateParent.parentIds) {
-	              nodeToUpdateParent.parentIds = [];
-	            }
-	            if (!nodeToUpdateParent.parentIds.includes(parent.parentID)) {
-	              nodeToUpdateParent.parentIds.push(parent.parentID);
-	            }
-	          }
-	          nodeToUpdateParent.fid = nodeToUpdateParent.parentIds[0];
-	          nodeToUpdateParent.mid = nodeToUpdateParent.parentIds[1];
+	      this.nodeList.familyRelations.forEach(function (parent) {
+	        var nodeToUpdateParent = _this2.nodeList.persons.find(function (node) {
+	          return node.id === parent.childId;
 	        });
-	        married.forEach(function (partner) {
-	          var nodeToUpdateMarried = _this2.nodeList.find(function (node) {
-	            return node.id === partner.id;
-	          });
-	          if (nodeToUpdateMarried) {
-	            if (!nodeToUpdateMarried.pids) {
-	              nodeToUpdateMarried.pids = [];
-	            }
-	            if (!nodeToUpdateMarried.pids.includes(partner.partnerID)) {
-	              nodeToUpdateMarried.pids.push(partner.partnerID);
-	            }
+	        if (nodeToUpdateParent) {
+	          if (!nodeToUpdateParent.parentIds) {
+	            nodeToUpdateParent.parentIds = [];
 	          }
-	        });
-	        family.load(_this2.nodeList);
+	          if (!nodeToUpdateParent.parentIds.includes(parent.parentId)) {
+	            nodeToUpdateParent.parentIds.push(parent.parentId);
+	          }
+	        }
+	        nodeToUpdateParent.fid = nodeToUpdateParent.parentIds[0];
+	        nodeToUpdateParent.mid = nodeToUpdateParent.parentIds[1];
 	      });
+	      this.nodeList.familyRelationsMarried.forEach(function (partner) {
+	        var nodeToUpdateMarried = _this2.nodeList.persons.find(function (node) {
+	          return node.id === partner.personID;
+	        });
+	        if (nodeToUpdateMarried) {
+	          if (!nodeToUpdateMarried.pids) {
+	            nodeToUpdateMarried.pids = [];
+	          }
+	          if (!nodeToUpdateMarried.pids.includes(partner.partnerID)) {
+	            nodeToUpdateMarried.pids.push(partner.partnerID);
+	          }
+	        }
+	      });
+	      family.load(this.nodeList.persons);
 	      console.log(this.nodeList);
 	      family.nodeMenuUI.on('show', function (sender, args) {
 	        args.menu = {

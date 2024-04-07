@@ -83,6 +83,13 @@ class TreeService
 			$tree->addFamilyRelation($relation);
 		}
 
+		$relationsMarried = FamilyRelationService::getFamilyMarriedRelationById($personIds);
+
+		foreach ($relationsMarried as $relation)
+		{
+			$tree->addFamilyRelationMarried($relation);
+		}
+
 		return $tree;
 	}
 }

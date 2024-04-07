@@ -74,10 +74,8 @@ class FamilyRelationService
 		$relationList = [];
 		foreach ($relations as $relationData)
 		{
-			$relationList[] = [
-				'id' => (int)$relationData['CHILD_ID'],
-				'parentID' => (int)$relationData['PARENT_ID'],
-			];
+			$relation = new FamilyRelation((int)$relationData['PARENT_ID'], (int)$relationData['CHILD_ID']);
+			$relationList[] = $relation;
 		}
 
 		return $relationList;
@@ -101,10 +99,12 @@ class FamilyRelationService
 		foreach ($relations as $relationData)
 		{
 
-			$relationList[] = [
-				'id' => (int)$relationData['PERSON_ID'],
-				'partnerID' => (int)$relationData['PARTNER_ID']
-			];
+			$relation = new FamilyRelationMarried(
+				(int)$relationData['PERSON_ID'],
+				(int)$relationData['PARTNER_ID']
+			);
+
+			$relationList[] = $relation;
 		}
 
 		return $relationList;

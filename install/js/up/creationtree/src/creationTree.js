@@ -24,7 +24,7 @@ export class CreationTree
 
 		this.nodeList = [];
 
-		//this.setEvent();
+		this.setEvent();
 
 		this.reload();
 	}
@@ -34,6 +34,9 @@ export class CreationTree
 		Requests.loadNodes().then(nodeList =>
 		{
 			this.nodeList = nodeList;
+
+			console.log(this.nodeList);
+
 			this.render();
 		});
 	}
@@ -50,18 +53,18 @@ export class CreationTree
 				details: { text: 'Details' },
 			},
 			nodeBinding: {
-				field_0: 'NAME',
+				field_0: 'name',
 				field_1: 'BIRTH_DATE',
 			},
 			editForm: {
-				titleBinding: "NAME",
+				titleBinding: "name",
 				photoBinding: "photo",
 				addMoreBtn: 'Add element',
 				addMore: 'Add more elements',
 				addMoreFieldName: 'Element name',
 				generateElementsFromFields: false,
 				elements: [
-					{ type: 'textbox', label: 'Full Name', binding: 'NAME' },
+					{ type: 'textbox', label: 'Full Name', binding: 'name' },
 					{ type: 'textbox', label: 'Email Address', binding: 'email' },
 					[
 						{ type: 'textbox', label: 'Phone', binding: 'phone' },
@@ -101,49 +104,41 @@ export class CreationTree
 
 		const ids = [];
 
-		this.nodeList.forEach(node => {
+		this.nodeList.persons.forEach(node => {
 			ids.push(node.id);
 		})
 
-		Requests.getRelation(ids).then((data) => {
+		this.nodeList.familyRelations.forEach(parent => {
+			const nodeToUpdateParent = this.nodeList.persons.find(node => node.id === parent.childId);
 
-			const parents = data[0];
-			const married = data[1];
-
-			parents.forEach(parent => {
-				const nodeToUpdateParent = this.nodeList.find(node => node.id === parent.id);
-				if (nodeToUpdateParent) {
-					if (!nodeToUpdateParent.parentIds) {
-						nodeToUpdateParent.parentIds = [];
-					}
-					if (!nodeToUpdateParent.parentIds.includes(parent.parentID)) {
-						nodeToUpdateParent.parentIds.push(parent.parentID);
-					}
+			if (nodeToUpdateParent) {
+				if (!nodeToUpdateParent.parentIds) {
+					nodeToUpdateParent.parentIds = [];
 				}
-
-				nodeToUpdateParent.fid = nodeToUpdateParent.parentIds[0];
-				nodeToUpdateParent.mid = nodeToUpdateParent.parentIds[1];
-			});
-
-			married.forEach(partner => {
-				const nodeToUpdateMarried = this.nodeList.find(node => node.id === partner.id);
-
-				if (nodeToUpdateMarried)
-				{
-					if (!nodeToUpdateMarried.pids) {
-						nodeToUpdateMarried.pids = [];
-					}
-					if (!nodeToUpdateMarried.pids.includes(partner.partnerID)) {
-						nodeToUpdateMarried.pids.push(partner.partnerID);
-					}
+				if (!nodeToUpdateParent.parentIds.includes(parent.parentId)) {
+					nodeToUpdateParent.parentIds.push(parent.parentId);
 				}
-			})
-			
-			family.load(this.nodeList);
+			}
+
+			nodeToUpdateParent.fid = nodeToUpdateParent.parentIds[0];
+			nodeToUpdateParent.mid = nodeToUpdateParent.parentIds[1];
 		});
 
-		console.log(this.nodeList);
+		this.nodeList.familyRelationsMarried.forEach(partner => {
+			const nodeToUpdateMarried = this.nodeList.persons.find(node => node.id === partner.personID);
 
+			if (nodeToUpdateMarried)
+			{
+				if (!nodeToUpdateMarried.pids) {
+					nodeToUpdateMarried.pids = [];
+				}
+				if (!nodeToUpdateMarried.pids.includes(partner.partnerID)) {
+					nodeToUpdateMarried.pids.push(partner.partnerID);
+				}
+			}
+		})
+
+		family.load(this.nodeList.persons);
 
 		family.nodeMenuUI.on('show', function(sender, args){
 			args.menu = {

@@ -9,12 +9,13 @@ use Bitrix\Main\Type\DateTime;
 
 class Tree implements Entity
 {
-	private ?int $id;
-	private string $title;
-	private int $userId;
-	private ?DateTime $createdAt;
-	private array $familyRelations = [];
-	private array $persons = [];
+	public ?int $id;
+	public string $title;
+	public int $userId;
+	public ?DateTime $createdAt;
+	public array $familyRelations = [];
+	public array $familyRelationsMarried = [];
+	public array $persons = [];
 
 
 	public function __construct($title, $userId, $createdAt)
@@ -91,6 +92,11 @@ class Tree implements Entity
 	public function addFamilyRelation(FamilyRelation $relation): void
 	{
 		$this->familyRelations[] = $relation;
+	}
+
+	public function addFamilyRelationMarried(FamilyRelationMarried $relation): void
+	{
+		$this->familyRelationsMarried[] = $relation;
 	}
 
 	public function getFamilyRelations(): array

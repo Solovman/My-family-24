@@ -55,22 +55,24 @@ class PersonService
 										   'GENDER',
 										   'TREE_ID'])
 							  ->setFilter(['TREE_ID' => $treeId])
-							  ->exec();
+							  ->exec()
+							  ->fetchAll();
 
 		$personList = [];
 
-		while ($person = $persons->fetchObject())
+		foreach ($persons as $personData)
 		{
-			$personList[] = [
-				'id' => (int)$person['ID'],
-				'IMAGE_ID'=> (int)$person['IMAGE_ID'],
-				'NAME' => $person['NAME'],
-				'SURNAME' => $person['SURNAME'],
-				'BIRTH_DATE' => $person['BIRTH_DATE'],
-				'DEATH_DATE' => $person['DEATH_DATE'],
-				'gender' => $person['GENDER'],
-				'TREE_ID' => (int)$person['TREE_ID']
-			];
+			$person = new Person(
+				(int)$personData['IMAGE_ID'],
+				$personData['NAME'],
+				$personData['SURNAME'],
+				$personData['BIRTH_DATE'],
+				$personData['DEATH_DATE'],
+				$personData['GENDER'],
+				(int)$personData['TREE_ID']
+			);
+			$person->setId((int)$personData['ID']);
+			$personList[] = $person;
 		}
 
 		return $personList;

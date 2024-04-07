@@ -27,7 +27,6 @@ class Node extends Engine\Controller
 	 */
 	public function getPersonsAction(): array
 	{
-		//$result = PersonService::getPersonsByTreeId($treeId);
 		global $USER;
 
 		$userID = $USER->GetID();
@@ -35,18 +34,7 @@ class Node extends Engine\Controller
 		$result = TreeService::getTreeByUserId($userID);
 
 		return [
-			'tree' => json_encode($result, JSON_THROW_ON_ERROR)
-		];
-	}
-
-	public function getPersonRelationAction(array $ids): array
-	{
-		$parent = FamilyRelationService::getFamilyRelationByPersonsIds($ids);
-		$married = FamilyRelationService::getFamilyMarriedRelationById($ids);
-
-		return [
-			'personParent' => $parent,
-			'personMarried' => $married
+			'tree' => $result
 		];
 	}
 

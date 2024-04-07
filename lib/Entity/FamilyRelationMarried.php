@@ -6,9 +6,9 @@ namespace Up\Tree\Entity;
 
 class FamilyRelationMarried
 {
-	private int $personID;
+	public int $personID;
 
-	private int $partnerID;
+	public int $partnerID;
 
 	/**
 	 * @param int $personID
