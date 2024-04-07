@@ -53,8 +53,8 @@ class PersonService
 		return match ($relationType)
 		{
 			'partner' => self::addPartnerRelations($personId, $relatedId),
-			'parent' => [self::addParentRelation($personId, $relatedId)],
-			'child' => [self::addChildRelation($personId, $relatedId)],
+			'parent' => self::addParentRelation($personId, $relatedId),
+			'child' => self::addChildRelation($personId, $relatedId),
 			default => [],
 		};
 	}
