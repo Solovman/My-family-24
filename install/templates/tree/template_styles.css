@@ -5,6 +5,8 @@
 }
 
 html {
+	position:relative;
+	min-height: 100%;
 	scroll-behavior: smooth;
 	min-width: 320px;
 }
@@ -14,9 +16,12 @@ body {
 	flex-direction: column;
 	font-family: 'OpenSans', sans-serif, Helvetica;
 	margin: 0;
-	min-height: 100vh;
-	overflow-x: hidden;
+	height: 100%;
 	background-color: #F1F9F8;
+	background-image: url("/local/modules/up.tree/images/tree.png");
+	background-size: 32%;
+	background-position: 31%;
+	background-repeat: no-repeat;
 }
 
 a {
@@ -41,9 +46,11 @@ ul {
 }
 
 .header__nav {
-	position: absolute;
-	height: 100%;
+	position:absolute;
+	left:0;
+	right:0;
 	width: 4%;
+	height: 100%;
 	background-color: #39CA76;
 }
 
@@ -74,7 +81,7 @@ ul {
 
 .header__nav-item {
 	padding: 3px;
-	width: 73%;
+	width: 100%;
 	text-align: center;
 	border-bottom: 1px solid #4ed185;
 }
@@ -103,14 +110,20 @@ ul {
 [data-title]::after {
 	content: attr(data-title);
 	position: absolute;
+	padding: 5px 8px 0 5px;
 	left: 100%;
-	top: 4%;
+	top:3%;
 	opacity: 0;
 	transition: opacity .3s ease-in-out;
+	background-color: #4ed185;
+	border-radius: 0 20px 20px 0;
+	color: #ffffff;
+	z-index: 10;
+	font-size: 14px;
 }
 
 [data-title]:hover::after {
-	opacity: 1; /* Показываем подсказку */
+	opacity: 1;
 }
 
 .header__search-form {
@@ -156,8 +169,8 @@ ul {
 }
 
 .footer {
-	margin: 0 auto;
 	margin-top: auto;
+	text-align: center;
 }
 
 .footer__copyright {

@@ -6,7 +6,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 
 return [
 	'css' => 'dist/creationTree.bundle.css',
-	'js' => ['dist/creationTree.bundle.js', 'dist/orgchart.js'],
+	'js' => ['dist/creationTree.bundle.js', 'dist/familytree.js'],
 	'rel' => [
 		'main.core',
 	],

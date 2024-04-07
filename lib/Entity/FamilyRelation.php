@@ -6,9 +6,9 @@ namespace Up\Tree\Entity;
 
 class FamilyRelation
 {
-	private int $parentId;
+	public int $parentId;
 
-	private int $childId;
+	public int $childId;
 
 	/**
 	 * @param int $parentId

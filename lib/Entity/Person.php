@@ -8,14 +8,14 @@ use Bitrix\Main\Type\Date;
 
 class Person implements Entity
 {
-	private ?int $id;
-	private int $imageId;
-	private string $name;
-	private string $surname;
-	private ?Date $birthDate;
-	private ?Date $deathDate;
-	private string $gender;
-	private int $treeId;
+	public ?int $id;
+	public int $imageId;
+	public string $name;
+	public string $surname;
+	public ?Date $birthDate;
+	public ?Date $deathDate;
+	public string $gender;
+	public int $treeId;
 
 	/**
 	 * @param $imageId

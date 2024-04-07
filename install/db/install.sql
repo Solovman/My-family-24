@@ -35,6 +35,12 @@ CREATE TABLE up_relation_person_parent(
 	                                      PRIMARY KEY (PARENT_ID, CHILD_ID)
 );
 
+CREATE TABLE up_relation_married (
+		PERSON_ID INT NOT NULL ,
+		PARTNER_ID INT NOT NULL ,
+		PRIMARY KEY (PERSON_ID, PARTNER_ID)
+);
+
 CREATE TABLE up_publication(
 	                           ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	                           AUTHOR_ID INT NOT NULL,

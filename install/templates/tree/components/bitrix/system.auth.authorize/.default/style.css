@@ -1,3 +1,7 @@
+.content {
+	padding: 0 30px;
+}
+
 .main__form {
 	width: 100%;
 	display: flex;
@@ -53,26 +57,13 @@
 	display: none;
 }
 
-body {
-	background-image: url("/local/modules/up.tree/images/Family-Tree.png"),
-	url("/local/modules/up.tree/images/Family-Tree-reverse.png");
-	background-repeat: no-repeat;
-	background-position: 100% 100%,
-	4% 100%;
-	background-size: 33%;
-	background-attachment: fixed;
-}
-
 .main__container {
-	position: absolute;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	padding: 20px;
-	top:  50%;
-	left: 51.5%;
-	transform: translate(-50%,-50%);
+	margin: 5% 7% 12% auto;
 	background-color: #ffffff;
 	width: 30%;
 }
@@ -95,7 +86,6 @@ body {
 	line-height: 14px;
 	background-color: transparent;
 	border: none;
-	font-weight: 600;
 	color: #000000;
 	cursor: pointer;
 	border-bottom: 2px solid transparent;
