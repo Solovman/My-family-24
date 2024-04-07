@@ -25,7 +25,7 @@ CREATE TABLE up_person(
 	                      SURNAME VARCHAR(50) NOT NULL,
 	                      BIRTH_DATE DATE,
 	                      DEATH_DATE DATE,
-	                      GENDER ENUM('Male', 'Female'),
+	                      GENDER ENUM('male', 'female'),
 	                      TREE_ID INT NOT NULL
 );
 
