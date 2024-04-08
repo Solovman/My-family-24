@@ -5,343 +5,347 @@ this.BX.Up = this.BX.Up || {};
 	'use strict';
 
 	var RenderForm = /*#__PURE__*/function () {
-	  function RenderForm() {
-	    babelHelpers.classCallCheck(this, RenderForm);
-	  }
-	  babelHelpers.createClass(RenderForm, null, [{
-	    key: "addForm",
-	    value: function addForm(idNode) {
-	      var form = document.querySelector('.node__form');
-	      form.id = idNode;
-	      var authPopup = BX.PopupWindowManager.create("FormPopup", null, {
-	        autoHide: true,
-	        offsetLeft: 0,
-	        offsetTop: 0,
-	        overlay: true,
-	        draggable: {
-	          restrict: true
-	        },
-	        closeByEsc: true,
-	        closeIcon: {
-	          right: "12px",
-	          top: "10px"
-	        },
-	        content: "<div style=\"width:400px;height:400px; text-align: center;\"><span style=\"position:absolute;left:50%; top:50%\"><img src=\"/bitrix/templates/eshop_adapt_yellow/img/wait.gif\"/></span></div>",
-	        events: {
-	          onPopupShow: function onPopupShow() {
-	            this.setContent(BX("bx_popup_form"));
-	          }
-	        }
-	      });
-	      authPopup.show();
-	    }
-	  }]);
-	  return RenderForm;
+		function RenderForm() {
+			babelHelpers.classCallCheck(this, RenderForm);
+		}
+		babelHelpers.createClass(RenderForm, null, [{
+			key: "addForm",
+			value: function addForm(idNode) {
+				var form = document.querySelector('.node__form');
+				form.id = idNode;
+				var authPopup = BX.PopupWindowManager.create("FormPopup", null, {
+					autoHide: true,
+					offsetLeft: 0,
+					offsetTop: 0,
+					overlay: true,
+					draggable: {
+						restrict: true
+					},
+					closeByEsc: true,
+					closeIcon: {
+						right: "12px",
+						top: "10px"
+					},
+					content: "<div style=\"width:400px;height:400px; text-align: center;\"><span style=\"position:absolute;left:50%; top:50%\"><img src=\"/bitrix/templates/eshop_adapt_yellow/img/wait.gif\"/></span></div>",
+					events: {
+						onPopupShow: function onPopupShow() {
+							this.setContent(BX("bx_popup_form"));
+						}
+					}
+				});
+				authPopup.show();
+			}
+		}]);
+		return RenderForm;
 	}();
 
 	var Requests = /*#__PURE__*/function () {
-	  function Requests() {
-	    babelHelpers.classCallCheck(this, Requests);
-	  }
-	  babelHelpers.createClass(Requests, null, [{
-	    key: "loadNodes",
-	    value: function loadNodes() {
-	      return new Promise(function (resolve, reject) {
-	        BX.ajax.runAction('up:tree.node.getPersons', {}).then(function (response) {
-	          var nodesList = response.data.tree;
-	          resolve(nodesList);
-	        })["catch"](function (error) {
-	          reject(error);
-	        });
-	      });
-	    }
-	  }, {
-	    key: "addNode",
-	    value: function addNode(name, surname, gender, personConnectedIds, relationType) {
-	      return new Promise(function (resolve, reject) {
-	        BX.ajax.runAction('up:tree.node.add', {
-	          data: {
-	            person: {
-	              imageId: 0,
-	              name: name,
-	              surname: surname,
-	              birthDate: null,
-	              deathDate: null,
-	              gender: gender,
-	              treeId: 1
-	            },
-	            personConnectedIds: personConnectedIds,
-	            relationType: relationType
-	          }
-	        }).then(function (response) {
-	          resolve(response.data);
-	        })["catch"](function (error) {
-	          reject(error);
-	        });
-	      });
-	    }
-	  }]);
-	  return Requests;
+		function Requests() {
+			babelHelpers.classCallCheck(this, Requests);
+		}
+		babelHelpers.createClass(Requests, null, [{
+			key: "loadNodes",
+			value: function loadNodes() {
+				return new Promise(function (resolve, reject) {
+					BX.ajax.runAction('up:tree.node.getPersons', {}).then(function (response) {
+						var nodesList = response.data.tree;
+						resolve(nodesList);
+					})["catch"](function (error) {
+						reject(error);
+					});
+				});
+			}
+		}, {
+			key: "addNode",
+			value: function addNode(name, surname, gender, personConnectedIds, relationType) {
+				return new Promise(function (resolve, reject) {
+					BX.ajax.runAction('up:tree.node.add', {
+						data: {
+							person: {
+								imageId: 0,
+								name: name,
+								surname: surname,
+								birthDate: null,
+								deathDate: null,
+								gender: gender,
+								treeId: 1
+							},
+							personConnectedIds: personConnectedIds,
+							relationType: relationType
+						}
+					}).then(function (response) {
+						resolve(response.data);
+					})["catch"](function (error) {
+						reject(error);
+					});
+				});
+			}
+		}]);
+		return Requests;
 	}();
 
 	var Helper = /*#__PURE__*/function () {
-	  function Helper() {
-	    babelHelpers.classCallCheck(this, Helper);
-	  }
-	  babelHelpers.createClass(Helper, null, [{
-	    key: "addRelation",
-	    value: function addRelation(list) {
-	      list.familyRelations.forEach(function (parent) {
-	        var nodeToUpdateParent = list.persons.find(function (node) {
-	          return node.id === parent.childId;
-	        });
-	        var parents = list.persons.find(function (node) {
-	          return node.id === parent.parentId;
-	        });
-	        if (parents.gender === 'male') {
-	          nodeToUpdateParent.fid = parent.parentId;
-	        } else {
-	          nodeToUpdateParent.mid = parent.parentId;
-	        }
-	      });
-	      list.familyRelationsMarried.forEach(function (partner) {
-	        var nodeToUpdateMarried = list.persons.find(function (node) {
-	          return node.id === partner.personID;
-	        });
-	        if (nodeToUpdateMarried) {
-	          if (!nodeToUpdateMarried.pids) {
-	            nodeToUpdateMarried.pids = [];
-	          }
-	          if (!nodeToUpdateMarried.pids.includes(partner.partnerID)) {
-	            nodeToUpdateMarried.pids.push(partner.partnerID);
-	          }
-	        }
-	      });
-	    }
-	  }, {
-	    key: "isNumeric",
-	    value: function isNumeric(str) {
-	      return !isNaN(parseFloat(str)) && isFinite(str);
-	    }
-	  }]);
-	  return Helper;
+		function Helper() {
+			babelHelpers.classCallCheck(this, Helper);
+		}
+		babelHelpers.createClass(Helper, null, [{
+			key: "addRelation",
+			value: function addRelation(list) {
+				list.familyRelations.forEach(function (parent) {
+					var nodeToUpdateParent = list.persons.find(function (node) {
+						return node.id === parent.childId;
+					});
+					var parents = list.persons.find(function (node) {
+						return node.id === parent.parentId;
+					});
+					if (parents.gender === 'male') {
+						nodeToUpdateParent.fid = parent.parentId;
+					} else {
+						nodeToUpdateParent.mid = parent.parentId;
+					}
+				});
+				list.familyRelationsMarried.forEach(function (partner) {
+					var nodeToUpdateMarried = list.persons.find(function (node) {
+						return node.id === partner.personID;
+					});
+					if (nodeToUpdateMarried) {
+						if (!nodeToUpdateMarried.pids) {
+							nodeToUpdateMarried.pids = [];
+						}
+						if (!nodeToUpdateMarried.pids.includes(partner.partnerID)) {
+							nodeToUpdateMarried.pids.push(partner.partnerID);
+						}
+					}
+				});
+			}
+		}, {
+			key: "isNumeric",
+			value: function isNumeric(str) {
+				return !isNaN(parseFloat(str)) && isFinite(str);
+			}
+		}]);
+		return Helper;
 	}();
 
 	var CreationTree = /*#__PURE__*/function () {
-	  function CreationTree() {
-	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	    babelHelpers.classCallCheck(this, CreationTree);
-	    if (main_core.Type.isStringFilled(options.rootNodeId)) {
-	      this.rootNodeId = options.rootNodeId;
-	    } else {
-	      throw new Error('TaskList: options.rootNodeId required');
-	    }
-	    this.rootNode = BX(this.rootNodeId);
-	    if (!this.rootNode) {
-	      throw new Error("TaskList: element with id \"".concat(this.rootNodeId, "\" not found"));
-	    }
-	    this.nodeList = [];
-	    this.reload();
-	  }
-	  babelHelpers.createClass(CreationTree, [{
-	    key: "reload",
-	    value: function reload() {
-	      var _this = this;
-	      Requests.loadNodes().then(function (nodeList) {
-	        _this.nodeList = nodeList;
-	        console.log(_this.nodeList);
-	        _this.render();
-	      });
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var family = new FamilyTree(document.getElementById('tree'), {
-	        mouseScrool: FamilyTree.action.scroll,
-	        mode: 'light',
-	        roots: null,
-	        template: 'hugo',
-	        nodeTreeMenu: true,
-	        nodeMenu: {
-	          add: {
-	            text: 'Add'
-	          },
-	          edit: {
-	            text: 'Edit'
-	          },
-	          details: {
-	            text: 'Details'
-	          }
-	        },
-	        nodeBinding: {
-	          field_0: 'name',
-	          field_1: 'BIRTH_DATE'
-	        },
-	        editForm: {
-	          titleBinding: "name",
-	          photoBinding: "photo",
-	          addMore: null,
-	          generateElementsFromFields: false,
-	          elements: [{
-	            type: 'textbox',
-	            label: 'Name',
-	            binding: 'name'
-	          }, {
-	            type: 'textbox',
-	            label: 'Surname',
-	            binding: 'surname'
-	          }, [{
-	            type: 'date',
-	            label: 'Date Of Birth',
-	            binding: 'born'
-	          }, {
-	            type: 'date',
-	            label: 'Date Of Death',
-	            binding: 'death'
-	          }], [{
-	            type: 'select',
-	            options: [{
-	              value: 'male',
-	              text: 'Male'
-	            }, {
-	              value: 'female',
-	              text: 'Female'
-	            }],
-	            label: 'Gender',
-	            binding: 'gender'
-	          }], {
-	            type: 'textbox',
-	            label: 'Photo Url',
-	            binding: 'photo',
-	            btn: 'Upload'
-	          }]
-	        }
-	      });
-	      FamilyTree.templates.tommy_male.defs = "<g transform=\"matrix(0.05,0,0,0.05,-12,-9)\" id=\"heart\">\n       \t\t\t <path fill=\"#F57C00\" d=\"M438.482,58.61c-24.7-26.549-59.311-41.655-95.573-41.711c-36.291,0.042-70.938,15.14-95.676,41.694l-8.431,8.909  l-8.431-8.909C181.284,5.762,98.663,2.728,45.832,51.815c-2.341,2.176-4.602,4.436-6.778,6.778 c-52.072,56.166-52.072,142.968,0,199.134l187.358,197.581c6.482,6.843,17.284,7.136,24.127,0.654 c0.224-0.212,0.442-0.43,0.654-0.654l187.29-197.581C490.551,201.567,490.551,114.77,438.482,58.61z\"/>\n\t\t\t<g>\n\t\t\t";
-	      family.on('expcollclick', function (sender, isCollapsing, nodeId) {
-	        var node = family.getNode(nodeId);
-	        if (isCollapsing) {
-	          family.expandCollapse(nodeId, [], node.ftChildrenIds);
-	        } else {
-	          family.expandCollapse(nodeId, node.ftChildrenIds, []);
-	        }
-	        return false;
-	      });
-	      family.on('render-link', function (sender, args) {
-	        if (args.cnode.ppid != undefined) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + args.p.xa + '" y="' + args.p.ya + '"/>';
-	        if (args.cnode.isPartner && args.node.partnerSeparation == 30) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + args.p.xb + '" y="' + args.p.yb + '"/>';
-	      });
-	      Helper.addRelation(this.nodeList);
-	      family.load(this.nodeList.persons);
-	      var self = this;
-	      family.on('click', function (sender, args) {
-	        if (args.node.id && typeof args.node.id === "string") {
-	          family.onUpdateNode(function (args) {
-	            var updateNodes = args.updateNodesData;
-	            var addNodes = args.addNodesData;
-	            var removeNodes = args.removeNodeId;
-	            if (Object.keys(addNodes).length === 0 && removeNodes === null) {
-	              var gender = updateNodes[0].gender[0];
-	              var name = updateNodes[0].name;
-	              var surname = updateNodes[0].surname;
-	              var personConnectedId = [Number(updateNodes[0].pids[0])];
-	              if (updateNodes[0].mid || updateNodes[0].fid) {
-	                if (Helper.isNumeric(updateNodes[0].mid) && Helper.isNumeric(updateNodes[0].fid)) {
-	                  personConnectedId = [Number(updateNodes[0].mid), Number(updateNodes[0].fid)];
-	                } else if (Helper.isNumeric(updateNodes[0].mid) && !Helper.isNumeric(updateNodes[0].fid)) {
-	                  personConnectedId = [Number(updateNodes[0].mid)];
-	                } else if (Helper.isNumeric(updateNodes[0].fid) && !Helper.isNumeric(updateNodes[0].mid)) {
-	                  personConnectedId = [Number(updateNodes[0].fid)];
-	                }
-	                Requests.addNode(name, surname, gender, personConnectedId, 'child').then(function (node) {
-	                  self.reload();
-	                });
-	                return;
-	              }
-	              if (updateNodes[0].child && updateNodes[0].pids.length === 0 && updateNodes[0].pids[0] !== 0) {
-	                if (updateNodes[0].child.mid) {
-	                  personConnectedId = [updateNodes[0].child.mid];
-	                } else {
-	                  personConnectedId = [updateNodes[0].child.fid];
-	                }
-	                Requests.addNode(name, surname, gender, personConnectedId, 'parent').then(function (node) {
-	                  self.reload();
-	                });
-	                return;
-	              }
-	              if (updateNodes[0].child && updateNodes[0].pids.length !== 0 && updateNodes[0].pids[0] !== 0) {
-	                console.log(updateNodes);
-	                var partner = updateNodes[0].pids[0];
-	                var childID = 0;
-	                if (updateNodes[0].child.mid) {
-	                  childID = updateNodes[0].child.mid;
-	                } else {
-	                  childID = updateNodes[0].child.fid;
-	                }
-	                personConnectedId = [partner, childID];
-	                Requests.addNode(name, surname, gender, personConnectedId, 'partnerParent').then(function (node) {
-	                  self.reload();
-	                });
-	                return;
-	              }
-	              if (updateNodes[0].pids.length !== 0) {
-	                Requests.addNode(name, surname, gender, personConnectedId, 'partner').then(function (node) {
-	                  self.reload();
-	                });
-	                return;
-	              }
-	              Requests.addNode(name, surname, gender, [0], 'init').then(function (node) {
-	                self.reload();
-	              });
-	            }
-	          });
-	        }
-	      });
-	      family.onUpdateNode(function (args) {
-	        var updateNodes = args.updateNodesData;
-	        var addNodes = args.addNodesData;
-	        var removeNodes = args.removeNodeId;
-	        if (Object.keys(addNodes).length !== 0 && Object.keys(updateNodes).length !== 0 && removeNodes === null && !addNodes[0].pids) {
-	          if (updateNodes[0].mid) {
-	            addNodes[0].child = {
-	              mid: Number(updateNodes[0].id)
-	            };
-	          } else if (updateNodes[0].fid) {
-	            addNodes[0].child = {
-	              fid: Number(updateNodes[0].id)
-	            };
-	          }
-	        }
-	        if (Object.keys(updateNodes).length === 2 && addNodes[0].pids) {
-	          updateNodes.forEach(function (node) {
-	            if (node.fid && node.fid === addNodes[0].id) {
-	              addNodes[0].child = {
-	                fid: updateNodes[0].id
-	              };
-	            } else if (node.mid && node.mid === addNodes[0].id) {
-	              addNodes[0].child = {
-	                mid: updateNodes[0].id
-	              };
-	            }
-	          });
-	        }
-	      });
-	      family.nodeMenuUI.on('show', function (sender, args) {
-	        args.menu = {
-	          edit: {
-	            text: 'Edit'
-	          },
-	          remove: {
-	            text: 'Remove'
-	          },
-	          details: {
-	            text: "Details"
-	          }
-	        };
-	      });
-	    }
-	  }]);
-	  return CreationTree;
+		function CreationTree() {
+			var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+			babelHelpers.classCallCheck(this, CreationTree);
+			if (main_core.Type.isStringFilled(options.rootNodeId)) {
+				this.rootNodeId = options.rootNodeId;
+			} else {
+				throw new Error('TaskList: options.rootNodeId required');
+			}
+			this.rootNode = BX(this.rootNodeId);
+			if (!this.rootNode) {
+				throw new Error("TaskList: element with id \"".concat(this.rootNodeId, "\" not found"));
+			}
+			this.nodeList = [];
+			this.reload();
+		}
+		babelHelpers.createClass(CreationTree, [{
+			key: "reload",
+			value: function reload() {
+				var _this = this;
+				Requests.loadNodes().then(function (nodeList) {
+					_this.nodeList = [];
+					_this.nodeList = nodeList;
+					console.log(_this.nodeList);
+					_this.render();
+				});
+			}
+		}, {
+			key: "creationTree",
+			value: function creationTree() {}
+		}, {
+			key: "render",
+			value: function render() {
+				Helper.addRelation(this.nodeList);
+				var self = this;
+				var family = new FamilyTree(document.getElementById('tree'), {
+					mouseScrool: FamilyTree.action.scroll,
+					mode: 'light',
+					roots: null,
+					template: 'hugo',
+					nodeTreeMenu: true,
+					nodeMenu: {
+						add: {
+							text: 'Add'
+						},
+						edit: {
+							text: 'Edit'
+						},
+						details: {
+							text: 'Details'
+						}
+					},
+					nodeBinding: {
+						field_0: 'name',
+						field_1: 'BIRTH_DATE'
+					},
+					editForm: {
+						titleBinding: "name",
+						photoBinding: "photo",
+						addMore: null,
+						generateElementsFromFields: false,
+						elements: [{
+							type: 'textbox',
+							label: 'Name',
+							binding: 'name'
+						}, {
+							type: 'textbox',
+							label: 'Surname',
+							binding: 'surname'
+						}, [{
+							type: 'date',
+							label: 'Date Of Birth',
+							binding: 'born'
+						}, {
+							type: 'date',
+							label: 'Date Of Death',
+							binding: 'death'
+						}], [{
+							type: 'select',
+							options: [{
+								value: 'male',
+								text: 'Male'
+							}, {
+								value: 'female',
+								text: 'Female'
+							}],
+							label: 'Gender',
+							binding: 'gender'
+						}], {
+							type: 'textbox',
+							label: 'Photo Url',
+							binding: 'photo',
+							btn: 'Upload'
+						}]
+					}
+				});
+				family.load([]);
+				family.load(this.nodeList.persons);
+				FamilyTree.templates.tommy_male.defs = "<g transform=\"matrix(0.05,0,0,0.05,-12,-9)\" id=\"heart\">\n       \t\t\t <path fill=\"#F57C00\" d=\"M438.482,58.61c-24.7-26.549-59.311-41.655-95.573-41.711c-36.291,0.042-70.938,15.14-95.676,41.694l-8.431,8.909  l-8.431-8.909C181.284,5.762,98.663,2.728,45.832,51.815c-2.341,2.176-4.602,4.436-6.778,6.778 c-52.072,56.166-52.072,142.968,0,199.134l187.358,197.581c6.482,6.843,17.284,7.136,24.127,0.654 c0.224-0.212,0.442-0.43,0.654-0.654l187.29-197.581C490.551,201.567,490.551,114.77,438.482,58.61z\"/>\n\t\t\t<g>\n\t\t\t";
+				family.on('expcollclick', function (sender, isCollapsing, nodeId) {
+					var node = family.getNode(nodeId);
+					if (isCollapsing) {
+						family.expandCollapse(nodeId, [], node.ftChildrenIds);
+					} else {
+						family.expandCollapse(nodeId, node.ftChildrenIds, []);
+					}
+					return false;
+				});
+				family.on('render-link', function (sender, args) {
+					if (args.cnode.ppid != undefined) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + args.p.xa + '" y="' + args.p.ya + '"/>';
+					if (args.cnode.isPartner && args.node.partnerSeparation == 30) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + args.p.xb + '" y="' + args.p.yb + '"/>';
+				});
+				family.on('click', function (sender, args) {
+					if (args.node.id && typeof args.node.id === "string") {
+						family.onUpdateNode(function (args) {
+							var updateNodes = args.updateNodesData;
+							var addNodes = args.addNodesData;
+							var removeNodes = args.removeNodeId;
+							if (Object.keys(addNodes).length === 0 && removeNodes === null) {
+								var gender = updateNodes[0].gender[0];
+								var name = updateNodes[0].name;
+								var surname = updateNodes[0].surname;
+								var personConnectedId = [Number(updateNodes[0].pids[0])];
+								if (updateNodes[0].mid || updateNodes[0].fid) {
+									if (Helper.isNumeric(updateNodes[0].mid) && Helper.isNumeric(updateNodes[0].fid)) {
+										personConnectedId = [Number(updateNodes[0].mid), Number(updateNodes[0].fid)];
+									} else if (Helper.isNumeric(updateNodes[0].mid) && !Helper.isNumeric(updateNodes[0].fid)) {
+										personConnectedId = [Number(updateNodes[0].mid)];
+									} else if (Helper.isNumeric(updateNodes[0].fid) && !Helper.isNumeric(updateNodes[0].mid)) {
+										personConnectedId = [Number(updateNodes[0].fid)];
+									}
+									Requests.addNode(name, surname, gender, personConnectedId, 'child').then(function (node) {
+										self.reload();
+									});
+									return;
+								}
+								if (updateNodes[0].child && updateNodes[0].pids.length === 0 && updateNodes[0].pids[0] !== 0) {
+									if (updateNodes[0].child.mid) {
+										personConnectedId = [updateNodes[0].child.mid];
+									} else {
+										personConnectedId = [updateNodes[0].child.fid];
+									}
+									Requests.addNode(name, surname, gender, personConnectedId, 'parent').then(function (node) {
+										self.reload();
+									});
+									return;
+								}
+								if (updateNodes[0].child && updateNodes[0].pids.length !== 0 && updateNodes[0].pids[0] !== 0) {
+									var partner = updateNodes[0].pids[0];
+									var childID = 0;
+									if (updateNodes[0].child.mid) {
+										childID = updateNodes[0].child.mid;
+									} else {
+										childID = updateNodes[0].child.fid;
+									}
+									personConnectedId = [partner, childID];
+									Requests.addNode(name, surname, gender, personConnectedId, 'partnerParent').then(function (node) {
+										self.reload();
+									});
+									return;
+								}
+								if (updateNodes[0].pids.length !== 0) {
+									Requests.addNode(name, surname, gender, personConnectedId, 'partner').then(function (node) {
+										self.reload();
+									});
+									return;
+								}
+								Requests.addNode(name, surname, gender, [0], 'init').then(function (node) {
+									self.reload();
+								});
+							}
+						});
+					}
+				});
+				family.onUpdateNode(function (args) {
+					var updateNodes = args.updateNodesData;
+					var addNodes = args.addNodesData;
+					var removeNodes = args.removeNodeId;
+					if (Object.keys(addNodes).length !== 0 && Object.keys(updateNodes).length !== 0 && removeNodes === null && !addNodes[0].pids) {
+						if (updateNodes[0].mid) {
+							addNodes[0].child = {
+								mid: Number(updateNodes[0].id)
+							};
+						} else if (updateNodes[0].fid) {
+							addNodes[0].child = {
+								fid: Number(updateNodes[0].id)
+							};
+						}
+					}
+					if (Object.keys(updateNodes).length === 2 && addNodes[0].pids) {
+						updateNodes.forEach(function (node) {
+							if (node.fid && node.fid === addNodes[0].id) {
+								addNodes[0].child = {
+									fid: updateNodes[0].id
+								};
+							} else if (node.mid && node.mid === addNodes[0].id) {
+								addNodes[0].child = {
+									mid: updateNodes[0].id
+								};
+							}
+						});
+					}
+				});
+				family.nodeMenuUI.on('show', function (sender, args) {
+					args.menu = {
+						edit: {
+							text: 'Edit'
+						},
+						remove: {
+							text: 'Remove'
+						},
+						details: {
+							text: "Details"
+						}
+					};
+				});
+			}
+		}]);
+		return CreationTree;
 	}();
 
 	exports.CreationTree = CreationTree;
