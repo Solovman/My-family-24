@@ -1,5 +1,4 @@
 import {Type} from 'main.core';
-import {RenderForm} from './renderForm.js';
 import {Requests} from "./requests.js";
 import {Helper} from "./helper.js";
 
@@ -32,9 +31,9 @@ export class CreationTree
 	{
 		Requests.loadNodes().then(nodeList =>
 		{
-			this.nodeList = nodeList;
+			this.nodeList = [];
 
-			console.log(this.nodeList);
+			this.nodeList = nodeList;
 
 			this.render();
 		});
@@ -42,6 +41,10 @@ export class CreationTree
 
 	render()
 	{
+		Helper.addRelation(this.nodeList);
+
+		const self = this;
+
 		let family = new FamilyTree(document.getElementById('tree'), {
 			mouseScrool: FamilyTree.action.scroll,
 			mode: 'light',
@@ -66,8 +69,8 @@ export class CreationTree
 					{ type: 'textbox', label: 'Name', binding: 'name' },
 					{ type: 'textbox', label: 'Surname', binding: 'surname' },
 					[
-					{ type: 'date', label: 'Date Of Birth', binding: 'born' },
-					{ type: 'date', label: 'Date Of Death', binding: 'death' }
+						{ type: 'date', label: 'Date Of Birth', binding: 'born' },
+						{ type: 'date', label: 'Date Of Death', binding: 'death' }
 					],
 					[
 						{ type: 'select', options: [{ value: 'male', text: 'Male' }, { value: 'female', text: 'Female' }], label: 'Gender', binding: 'gender'},
@@ -76,6 +79,10 @@ export class CreationTree
 				]
 			},
 		});
+
+		family.load([]);
+
+		family.load(this.nodeList.persons);
 
 		FamilyTree.templates.tommy_male.defs =
 			`<g transform="matrix(0.05,0,0,0.05,-12,-9)" id="heart">
@@ -99,12 +106,6 @@ export class CreationTree
 			if (args.cnode.isPartner && args.node.partnerSeparation == 30)
 				args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + (args.p.xb) + '" y="' + (args.p.yb) + '"/>';
 		});
-
-		Helper.addRelation(this.nodeList);
-
-		family.load(this.nodeList.persons);
-
-		const self = this;
 
 		family.on('click', function(sender, args){
 			if (args.node.id && typeof args.node.id === "string")
@@ -176,8 +177,8 @@ export class CreationTree
 
 							personConnectedId = [partner, childID];
 
-							 Requests.addNode(name, surname, gender, personConnectedId, 'partnerParent').then(node => {
-							 	self.reload();
+							Requests.addNode(name, surname, gender, personConnectedId, 'partnerParent').then(node => {
+								self.reload();
 							});
 
 							return;
@@ -195,12 +196,10 @@ export class CreationTree
 						Requests.addNode(name, surname, gender, [0], 'init').then(node => {
 							self.reload();
 						});
-
 					}
 				});
 			}
 		})
-
 
 		family.onUpdateNode((args) =>
 		{
@@ -233,7 +232,6 @@ export class CreationTree
 					}
 
 				})
-
 			}
 		});
 
@@ -249,7 +247,6 @@ export class CreationTree
 					text: "Details"
 				}
 			}
-
 		});
 	}
 }
