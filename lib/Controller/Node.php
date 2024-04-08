@@ -43,7 +43,7 @@ class Node extends Engine\Controller
 	 * @throws ObjectException
 	 * @throws \Exception
 	 */
-	public function addAction(array $person, array $relation): bool
+	public function addAction(array $person, array $personConnectedIds, string $relationType): array
 	{
 		$node  = new Person(
 			(int) $person['imageId'],
@@ -55,27 +55,13 @@ class Node extends Engine\Controller
 			(int) $person['treeId']
 		);
 
-		$result = PersonService::addPerson($node);
-
-		$relationNode = new FamilyRelation(
-			(int)$relation['parentID'],
-			(int)$relation['childID'],
-		);
-
-		$relationMarriedNode = new FamilyRelationMarried(
-			(int)$relation['personID'],
-			(int)$relation['partnerID']
-		);
-
-		$relationParent = FamilyRelationService::addFamilyRelation($relationNode);
-		$relationMarried = FamilyRelationService::addFamilyMarriedRelation($relationMarriedNode);
-
-
-		if (!is_numeric($result) || !is_numeric($relationParent) || !is_numeric($relationMarried))
+		try {
+			return PersonService::addPerson($node, $personConnectedIds, $relationType);
+		}
+		catch (SqlException)
 		{
-			return false;
+			throw new SqlException("Error when adding person");
 		}
 
-		return true;
 	}
 }

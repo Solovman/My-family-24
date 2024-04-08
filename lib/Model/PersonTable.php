@@ -102,7 +102,7 @@ class PersonTable extends DataManager
 				'GENDER',
 				[
 					'title' => Loc::getMessage('PERSON_ENTITY_GENDER_FIELD'),
-					'values' => ['Male', 'Female']
+					'values' => ['male', 'female']
 				]
 			),
 			new IntegerField(

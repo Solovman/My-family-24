@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Up\Tree\Services\Repository;
 
-use Exception;
-use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\ArgumentException;
+use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
+use Exception;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\MarriedTable;
 use Up\Tree\Model\PersonParentTable;
@@ -16,6 +16,11 @@ use Up\Tree\Model\PersonTable;
 
 class PersonService
 {
+	/**
+	 * @throws SqlException
+	 * @throws Exception
+	 */
+
 	/**
 	 * @throws Exception
 	 * @throws SqlException
@@ -47,6 +52,11 @@ class PersonService
 
 		$personId = $newPerson->getId();
 		$ids[] = $personId;
+
+		if ($relationType === 'init')
+		{
+			return $ids;
+		}
 
 		if ($relationType === 'partner')
 		{
@@ -82,19 +92,47 @@ class PersonService
 				"PARENT_ID" => $personConnectedIds[0],
 				"CHILD_ID" => $newPerson->getId(),
 			];
-			$relationData2 = [
-				"PARENT_ID" => $personConnectedIds[1],
-				"CHILD_ID" => $newPerson->getId(),
-			];
 
+			if ($personConnectedIds[1])
+			{
+				$relationData2 = [
+					"PARENT_ID" => $personConnectedIds[1],
+					"CHILD_ID" => $newPerson->getId(),
+				];
+
+				$relationId2 = PersonParentTable::add($relationData2)->getId();
+				$ids[] = $relationId2;
+			}
 
 			$relationId1 = PersonParentTable::add($relationData1)->getId();
-			$relationId2 = PersonParentTable::add($relationData2)->getId();
 			$ids[] = $relationId1;
-			$ids[] = $relationId2;
 		}
+
+		if ($relationType === 'partnerParent')
+		{
+			$relationData = [
+				"PARENT_ID" => $newPerson->getId(),
+				"CHILD_ID" => $personConnectedIds[1],
+			];
+
+			$relationMarriedData = [
+				"PERSON_ID" => $newPerson->getId(),
+				"PARTNER_ID" => $personConnectedIds[0],
+			];
+
+			$relationMarriedDataReverse = [
+				"PERSON_ID" => $personConnectedIds[0],
+				"PARTNER_ID" => $newPerson->getId(),
+			];
+
+			MarriedTable::add($relationMarriedData)->getId();
+			MarriedTable::add($relationMarriedDataReverse)->getId();
+			PersonParentTable::add($relationData)->getId();
+		}
+
 		return $ids;
 	}
+
 
 	/**
 	 * @throws ObjectPropertyException

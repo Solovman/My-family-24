@@ -17,31 +17,26 @@ export class Requests
 				})
 		})
 	}
-	static addNode(name, surname)
+	static addNode(name, surname, gender, personConnectedIds, relationType)
 	{
 		return new Promise((resolve, reject) =>
 		{
 			BX.ajax.runAction('up:tree.node.add', {
 				data: {
 					person: {
-						imageId: 1,
+						imageId: 0,
 						name: name,
 						surname: surname,
 						birthDate: null,
 						deathDate: null,
-						gender: 'Male',
+						gender: gender,
 						treeId: 1
 					},
-					relation: {
-						parentID: '',
-						childID: '',
-						personID: '',
-						partnerID: ''
-					}
+					personConnectedIds: personConnectedIds,
+					relationType: relationType
 				}
 			}).then((response) =>
 			{
-				console.log(response.data);
 				resolve(response.data);
 			})
 				.catch((error) =>

@@ -33,10 +33,10 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 					<div class="node__input-label_info">
 						<label class="node__label" for="male">Male</label>
-						<input name="gender" class="node__input" id="male" type="radio" value="male">
+						<input name="gender" class="node__input" id="male" type="radio" value="Male">
 
 						<label class="node__label" for="female">Female</label>
-						<input name="gender" class="node__input" id="female" type="radio" value="female">
+						<input name="gender" class="node__input" id="female" type="radio" value="Female">
 					</div>
 				</div>
 
@@ -45,13 +45,13 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 					<div class="node__input-label_info">
 						<label class="node__label" for="child">Child</label>
-						<input name="relation" class="node__input" id="child" type="radio" value="fid">
+						<input name="relation" class="node__input" id="child" type="radio" value="child">
 
 						<label class="node__label" for="parent">Parent</label>
-						<input name="relation" class="node__input" id="parent" type="radio" value="mid">
+						<input name="relation" class="node__input" id="parent" type="radio" value="parent">
 
 						<label class="node__label" for="partner">Partner</label>
-						<input name="relation" class="node__input" id="partner" type="radio" value="pids">
+						<input name="relation" class="node__input" id="partner" type="radio" value="partner">
 					</div>
 				</div>
 			</div>
@@ -70,12 +70,12 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 			<div class="node__file">
 				<label class="node__label">Add photo:</label>
-				<div class="node__input-label">
-					<label class="node__input-file">
-						<span class="node__input-file-text" type="text"></span>
-						<input type="file" name="file">
-						<span class="node__input-file-btn">Выберите файл</span>
+				<div class="input-file-row">
+					<label class="input-file">
+						<input id="file" type="file" name="file" value="send">
+						<span>Выберите файл</span>
 					</label>
+					<div class="input-file-list"></div>
 				</div>
 			</div>
 		</div>
@@ -89,7 +89,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 		const tree = new BX.Up.Tree.CreationTree({
 			rootNodeId: 'tree',
 		});
-
 	});
 </script>
 
