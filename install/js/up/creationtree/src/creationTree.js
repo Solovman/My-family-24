@@ -39,16 +39,13 @@ export class CreationTree
 		});
 	}
 
-	render()
+	creationTree()
 	{
-		Helper.addRelation(this.nodeList);
-
 		const self = this;
 
 		let family = new FamilyTree(document.getElementById('tree'), {
 			mouseScrool: FamilyTree.action.scroll,
 			mode: 'light',
-			roots: null,
 			template: 'hugo',
 			nodeTreeMenu: true,
 			nodeMenu: {
@@ -60,6 +57,7 @@ export class CreationTree
 				field_0: 'name',
 				field_1: 'BIRTH_DATE',
 			},
+			nodes: this.nodeList.persons,
 			editForm: {
 				titleBinding: "name",
 				photoBinding: "photo",
@@ -79,10 +77,6 @@ export class CreationTree
 				]
 			},
 		});
-
-		family.load([]);
-
-		family.load(this.nodeList.persons);
 
 		FamilyTree.templates.tommy_male.defs =
 			`<g transform="matrix(0.05,0,0,0.05,-12,-9)" id="heart">
@@ -248,5 +242,11 @@ export class CreationTree
 				}
 			}
 		});
+	}
+
+	render()
+	{
+		Helper.addRelation(this.nodeList);
+		this.creationTree();
 	}
 }
