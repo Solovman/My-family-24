@@ -1,6 +1,7 @@
 import {Type} from 'main.core';
 import {RenderForm} from './renderForm.js';
 import {Requests} from "./requests.js";
+import {Helper} from "./helper.js";
 
 export class CreationTree
 {
@@ -24,8 +25,6 @@ export class CreationTree
 
 		this.nodeList = [];
 
-		this.setEvent();
-
 		this.reload();
 	}
 
@@ -44,9 +43,11 @@ export class CreationTree
 	render()
 	{
 		let family = new FamilyTree(document.getElementById('tree'), {
-			mouseScrool: FamilyTree.none,
+			mouseScrool: FamilyTree.action.scroll,
 			mode: 'light',
+			roots: null,
 			template: 'hugo',
+			nodeTreeMenu: true,
 			nodeMenu: {
 				add: {text: 'Add'},
 				edit: { text: 'Edit' },
@@ -59,20 +60,17 @@ export class CreationTree
 			editForm: {
 				titleBinding: "name",
 				photoBinding: "photo",
-				addMoreBtn: 'Add element',
-				addMore: 'Add more elements',
-				addMoreFieldName: 'Element name',
+				addMore: null,
 				generateElementsFromFields: false,
 				elements: [
-					{ type: 'textbox', label: 'Full Name', binding: 'name' },
-					{ type: 'textbox', label: 'Email Address', binding: 'email' },
+					{ type: 'textbox', label: 'Name', binding: 'name' },
+					{ type: 'textbox', label: 'Surname', binding: 'surname' },
 					[
-						{ type: 'textbox', label: 'Phone', binding: 'phone' },
-						{ type: 'date', label: 'Date Of Birth', binding: 'born' }
+					{ type: 'date', label: 'Date Of Birth', binding: 'born' },
+					{ type: 'date', label: 'Date Of Death', binding: 'death' }
 					],
 					[
-						{ type: 'select', options: [{ value: 'bg', text: 'Bulgaria' }, { value: 'ru', text: 'Russia' }, { value: 'gr', text: 'Greece' }], label: 'Country', binding: 'country' },
-						{ type: 'textbox', label: 'City', binding: 'city' },
+						{ type: 'select', options: [{ value: 'male', text: 'Male' }, { value: 'female', text: 'Female' }], label: 'Gender', binding: 'gender'},
 					],
 					{ type: 'textbox', label: 'Photo Url', binding: 'photo', btn: 'Upload' },
 				]
@@ -102,52 +100,145 @@ export class CreationTree
 				args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + (args.p.xb) + '" y="' + (args.p.yb) + '"/>';
 		});
 
-		const ids = [];
-
-		this.nodeList.persons.forEach(node => {
-			ids.push(node.id);
-		})
-
-		this.nodeList.familyRelations.forEach(parent => {
-			const nodeToUpdateParent = this.nodeList.persons.find(node => node.id === parent.childId);
-
-			if (nodeToUpdateParent) {
-				if (!nodeToUpdateParent.parentIds) {
-					nodeToUpdateParent.parentIds = [];
-				}
-				if (!nodeToUpdateParent.parentIds.includes(parent.parentId)) {
-					nodeToUpdateParent.parentIds.push(parent.parentId);
-				}
-			}
-
-			nodeToUpdateParent.fid = nodeToUpdateParent.parentIds[0];
-			nodeToUpdateParent.mid = nodeToUpdateParent.parentIds[1];
-		});
-
-		this.nodeList.familyRelationsMarried.forEach(partner => {
-			const nodeToUpdateMarried = this.nodeList.persons.find(node => node.id === partner.personID);
-
-			if (nodeToUpdateMarried)
-			{
-				if (!nodeToUpdateMarried.pids) {
-					nodeToUpdateMarried.pids = [];
-				}
-				if (!nodeToUpdateMarried.pids.includes(partner.partnerID)) {
-					nodeToUpdateMarried.pids.push(partner.partnerID);
-				}
-			}
-		})
+		Helper.addRelation(this.nodeList);
 
 		family.load(this.nodeList.persons);
 
+		const self = this;
+
+		family.on('click', function(sender, args){
+			if (args.node.id && typeof args.node.id === "string")
+			{
+				family.onUpdateNode((args) =>
+				{
+					const updateNodes = args.updateNodesData;
+					const addNodes = args.addNodesData;
+					const removeNodes = args.removeNodeId;
+
+					if (Object.keys(addNodes).length === 0 && removeNodes === null)
+					{
+						const gender = updateNodes[0].gender[0];
+						const name = updateNodes[0].name;
+						const surname = updateNodes[0].surname;
+						let personConnectedId = [Number(updateNodes[0].pids[0])];
+
+						if (updateNodes[0].mid || updateNodes[0].fid)
+						{
+							if (Helper.isNumeric(updateNodes[0].mid) && Helper.isNumeric(updateNodes[0].fid))
+							{
+								personConnectedId = [Number(updateNodes[0].mid), Number(updateNodes[0].fid)];
+							}
+							else if (Helper.isNumeric(updateNodes[0].mid) && !Helper.isNumeric(updateNodes[0].fid))
+							{
+								personConnectedId = [Number(updateNodes[0].mid)];
+							}
+							else if (Helper.isNumeric(updateNodes[0].fid) && !Helper.isNumeric(updateNodes[0].mid))
+							{
+								personConnectedId = [Number(updateNodes[0].fid)]
+							}
+
+							Requests.addNode(name, surname, gender, personConnectedId, 'child').then(node => {
+								self.reload();
+							});
+
+							return;
+						}
+
+						if (updateNodes[0].child && updateNodes[0].pids.length === 0 && updateNodes[0].pids[0] !== 0) {
+
+							if (updateNodes[0].child.mid ) {
+								personConnectedId = [updateNodes[0].child.mid];
+							}
+							else
+							{
+								personConnectedId = [updateNodes[0].child.fid];
+							}
+
+							Requests.addNode(name, surname, gender, personConnectedId, 'parent').then(node => {
+								self.reload();
+							});
+
+							return;
+						}
+
+						if (updateNodes[0].child && updateNodes[0].pids.length !== 0 && updateNodes[0].pids[0] !== 0)
+						{
+							const partner = updateNodes[0].pids[0];
+							let childID = 0;
+
+							if (updateNodes[0].child.mid ) {
+								childID = updateNodes[0].child.mid;
+							}
+							else
+							{
+								childID = updateNodes[0].child.fid;
+							}
+
+							personConnectedId = [partner, childID];
+
+							 Requests.addNode(name, surname, gender, personConnectedId, 'partnerParent').then(node => {
+							 	self.reload();
+							});
+
+							return;
+						}
+
+						if (updateNodes[0].pids.length !== 0)
+						{
+							Requests.addNode(name, surname, gender, personConnectedId, 'partner').then(node => {
+								self.reload();
+							});
+
+							return;
+						}
+
+						Requests.addNode(name, surname, gender, [0], 'init').then(node => {
+							self.reload();
+						});
+
+					}
+				});
+			}
+		})
+
+
+		family.onUpdateNode((args) =>
+		{
+			const updateNodes = args.updateNodesData;
+			const addNodes = args.addNodesData;
+			const removeNodes = args.removeNodeId;
+
+			if (Object.keys(addNodes).length !== 0 &&  Object.keys(updateNodes).length !== 0 && removeNodes === null && !addNodes[0].pids) {
+
+				if (updateNodes[0].mid)
+				{
+					addNodes[0].child = {mid: Number(updateNodes[0].id)};
+				}
+				else if(updateNodes[0].fid)
+				{
+					addNodes[0].child = {fid: Number(updateNodes[0].id)};
+				}
+			}
+
+			if (Object.keys(updateNodes).length === 2 && addNodes[0].pids) {
+				updateNodes.forEach(node => {
+
+					if (node.fid && node.fid === addNodes[0].id)
+					{
+						addNodes[0].child = {fid: updateNodes[0].id};
+
+					} else if (node.mid && node.mid === addNodes[0].id)
+					{
+						addNodes[0].child = {mid: updateNodes[0].id};
+					}
+
+				})
+
+			}
+		});
+
 		family.nodeMenuUI.on('show', function(sender, args){
 			args.menu = {
-				add: {
-					text: "Add",
-					onClick: () => {
-						RenderForm.addForm(args.firstNodeId)
-					}
-				},
 				edit: {
 					text: 'Edit'
 				},
@@ -160,27 +251,5 @@ export class CreationTree
 			}
 
 		});
-	}
-
-	setEvent()
-	{
-		const submitButtonAdd = BX('addPerson');
-
-		BX.bind(submitButtonAdd, 'click', function (event)
-		{
-			event.preventDefault();
-
-			const form = document.querySelector('.node__form');
-
-			const name = BX('name').value;
-			const surname = BX('surname').value;
-
-			Requests.addNode(name, surname).then(node => {
-
-				this.nodeList.push({ id: Math.floor(Math.random() * 100), pid: Number(form.id), name: name, img: "https://cdn.balkan.app/shared/5.jpg"});
-
-				this.render();
-			});
-		}.bind(this));
 	}
 }

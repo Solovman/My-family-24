@@ -70,30 +70,28 @@ body {
 	margin-bottom: 20px;
 }
 
+.node__file {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+	width: 100%;
+	border-bottom: 1px solid #ececec;
+}
+
 .node__input-label_info {
 	margin-top: 8px;
 }
 
-.node__input-file {
+.input-file-row {
+	display: inline-block;
+}
+
+.input-file {
 	position: relative;
 	display: inline-block;
-	margin-top: 8px;
 }
 
-.node__input-file-text {
-	padding: 0 10px;
-	line-height: 40px;
-	text-align: left;
-	height: 40px;
-	display: block;
-	float: left;
-	box-sizing: border-box;
-	width: 66%;
-	border-radius: 6px 0px 0 6px;
-	border: 1px solid #ddd;
-}
-
-.node__input-file-btn {
+.input-file span {
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
@@ -103,7 +101,7 @@ body {
 	vertical-align: middle;
 	color: rgb(255 255 255);
 	text-align: center;
-	border-radius: 0 4px 4px 0;
+	border-radius: 4px;
 	background-color: #00cfaa;
 	line-height: 22px;
 	height: 40px;
@@ -114,39 +112,32 @@ body {
 	transition: background-color 0.2s;
 }
 
-.node__input-file input[type=file] {
+.input-file input[type=file] {
 	position: absolute;
 	z-index: -1;
-	opacity: 0;
 	display: block;
-	width: 0;
-	height: 0;
+	left: 29%;
+	top: 19%;
 }
 
-/*.node__input-file input[type=file]:focus + .node__input-file-btn {*/
-/*	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);*/
-/*}*/
-
-/*.node__input-file:hover .node__input-file-btn {*/
-/*	background-color: #59be6e;*/
-/*}*/
-
-.node__input-file:active .node__input-file-btn {
-	background-color: #00cfaa;
+.input-file input[type=file]:focus + span {
+	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 
-.node__input-file input[type=file]:disabled + .node__input-file-btn {
-	background-color: #eee;
+
+.input-file-list {
+	padding: 10px 0;
 }
 
-.node__file {
-	width: 100%;
+.input-file-list-item {
+	margin-bottom: 10px;
 }
 
-.node__file {
-	margin-bottom: 15px;
-	border-bottom: 1px solid #ececec;
-	padding-bottom: 30px;
+.input-file-list-remove {
+	color: red;
+	text-decoration: none;
+	display: inline-block;
+	margin-left: 5px;
 }
 
 .node__form-button {
