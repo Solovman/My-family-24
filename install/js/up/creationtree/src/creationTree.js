@@ -31,52 +31,56 @@ export class CreationTree
 	{
 		Requests.loadNodes().then(nodeList =>
 		{
-			this.nodeList = [];
-
 			this.nodeList = nodeList;
 
 			this.render();
 		});
 	}
 
-	creationTree()
+	tree()
 	{
-		const self = this;
-
-		let family = new FamilyTree(document.getElementById('tree'), {
+		let family =  new FamilyTree(document.getElementById('tree'), {
 			mouseScrool: FamilyTree.action.scroll,
 			mode: 'light',
 			template: 'hugo',
 			nodeTreeMenu: true,
 			nodeMenu: {
 				add: {text: 'Add'},
-				edit: { text: 'Edit' },
-				details: { text: 'Details' },
+				edit: {text: 'Edit'},
+				details: {text: 'Details'},
 			},
+			nodes: this.nodeList.persons,
 			nodeBinding: {
 				field_0: 'name',
 				field_1: 'BIRTH_DATE',
 			},
-			nodes: this.nodeList.persons,
+
 			editForm: {
 				titleBinding: "name",
 				photoBinding: "photo",
 				addMore: null,
 				generateElementsFromFields: false,
 				elements: [
-					{ type: 'textbox', label: 'Name', binding: 'name' },
-					{ type: 'textbox', label: 'Surname', binding: 'surname' },
+					{type: 'textbox', label: 'Name', binding: 'name'},
+					{type: 'textbox', label: 'Surname', binding: 'surname'},
 					[
-						{ type: 'date', label: 'Date Of Birth', binding: 'born' },
-						{ type: 'date', label: 'Date Of Death', binding: 'death' }
+						{type: 'date', label: 'Date Of Birth', binding: 'born'},
+						{type: 'date', label: 'Date Of Death', binding: 'death'}
 					],
 					[
-						{ type: 'select', options: [{ value: 'male', text: 'Male' }, { value: 'female', text: 'Female' }], label: 'Gender', binding: 'gender'},
+						{
+							type: 'select',
+							options: [{value: 'male', text: 'Male'}, {value: 'female', text: 'Female'}],
+							label: 'Gender',
+							binding: 'gender'
+						},
 					],
-					{ type: 'textbox', label: 'Photo Url', binding: 'photo', btn: 'Upload' },
+					{type: 'textbox', label: 'Photo Url', binding: 'photo', btn: 'Upload'},
 				]
 			},
 		});
+
+		const self = this;
 
 		FamilyTree.templates.tommy_male.defs =
 			`<g transform="matrix(0.05,0,0,0.05,-12,-9)" id="heart">
@@ -140,7 +144,6 @@ export class CreationTree
 						}
 
 						if (updateNodes[0].child && updateNodes[0].pids.length === 0 && updateNodes[0].pids[0] !== 0) {
-
 							if (updateNodes[0].child.mid ) {
 								personConnectedId = [updateNodes[0].child.mid];
 							}
@@ -242,11 +245,14 @@ export class CreationTree
 				}
 			}
 		});
+
+		return family;
 	}
 
 	render()
 	{
 		Helper.addRelation(this.nodeList);
-		this.creationTree();
+
+		this.tree();
 	}
 }
