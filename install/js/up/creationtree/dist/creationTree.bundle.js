@@ -21,8 +21,32 @@ this.BX.Up = this.BX.Up || {};
 	      });
 	    }
 	  }, {
+	    key: "updateNode",
+	    value: function updateNode(id, name, surname, birthDate, deathDate, gender) {
+	      return new Promise(function (resolve, reject) {
+	        BX.ajax.runAction('up:tree.node.update', {
+	          data: {
+	            id: id,
+	            updatablePerson: {
+	              imageId: 0,
+	              name: name,
+	              surname: surname,
+	              birthDate: birthDate,
+	              deathDate: deathDate,
+	              gender: gender,
+	              treeId: 1
+	            }
+	          }
+	        }).then(function (response) {
+	          resolve(response.data);
+	        })["catch"](function (error) {
+	          reject(error);
+	        });
+	      });
+	    }
+	  }, {
 	    key: "addNode",
-	    value: function addNode(name, surname, gender, personConnectedIds, relationType) {
+	    value: function addNode(name, surname, gender, birthDate, deathDate, personConnectedIds, relationType) {
 	      return new Promise(function (resolve, reject) {
 	        BX.ajax.runAction('up:tree.node.add', {
 	          data: {
@@ -30,8 +54,8 @@ this.BX.Up = this.BX.Up || {};
 	              imageId: 0,
 	              name: name,
 	              surname: surname,
-	              birthDate: null,
-	              deathDate: null,
+	              birthDate: birthDate,
+	              deathDate: deathDate,
 	              gender: gender,
 	              treeId: 1
 	            },
@@ -88,6 +112,17 @@ this.BX.Up = this.BX.Up || {};
 	    value: function isNumeric(str) {
 	      return !isNaN(parseFloat(str)) && isFinite(str);
 	    }
+	  }, {
+	    key: "formatDate",
+	    value: function formatDate(date) {
+	      var dateObject = new Date(date);
+	      var day = dateObject.getDate();
+	      var month = dateObject.getMonth() + 1;
+	      var year = dateObject.getFullYear();
+	      var formattedDay = day < 10 ? '0' + day : day;
+	      var formattedMonth = month < 10 ? '0' + month : month;
+	      return "".concat(formattedDay, ".").concat(formattedMonth, ".").concat(year);
+	    }
 	  }]);
 	  return Helper;
 	}();
@@ -114,6 +149,7 @@ this.BX.Up = this.BX.Up || {};
 	      var _this = this;
 	      Requests.loadNodes().then(function (nodeList) {
 	        _this.nodeList = nodeList;
+	        console.log(_this.nodeList);
 	        _this.render();
 	      });
 	    }
@@ -139,7 +175,7 @@ this.BX.Up = this.BX.Up || {};
 	        nodes: this.nodeList.persons,
 	        nodeBinding: {
 	          field_0: 'name',
-	          field_1: 'BIRTH_DATE'
+	          field_1: 'photo'
 	        },
 	        editForm: {
 	          titleBinding: "name",
@@ -197,10 +233,12 @@ this.BX.Up = this.BX.Up || {};
 	        if (args.cnode.isPartner && args.node.partnerSeparation == 30) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + args.p.xb + '" y="' + args.p.yb + '"/>';
 	      });
 	      var onUpdateNodeAdded = false;
+	      var onUpdatePerson = false;
 	      family.on('click', function (sender, args) {
 	        if (args.node.id && typeof args.node.id === "string" && !onUpdateNodeAdded) {
 	          onUpdateNodeAdded = true;
 	          family.onUpdateNode(function (args) {
+	            console.log(args, 'add');
 	            var updateNodes = args.updateNodesData;
 	            var addNodes = args.addNodesData;
 	            var removeNodes = args.removeNodeId;
@@ -208,6 +246,13 @@ this.BX.Up = this.BX.Up || {};
 	              var gender = updateNodes[0].gender[0];
 	              var name = updateNodes[0].name;
 	              var surname = updateNodes[0].surname;
+	              var birthDate = Helper.formatDate(updateNodes[0].born);
+	              var deathDate;
+	              if (updateNodes[0].death.length === 0) {
+	                deathDate = null;
+	              } else {
+	                deathDate = Helper.formatDate(updateNodes[0].death);
+	              }
 	              var personConnectedId = [Number(updateNodes[0].pids[0])];
 	              if (updateNodes[0].mid || updateNodes[0].fid) {
 	                if (Helper.isNumeric(updateNodes[0].mid) && Helper.isNumeric(updateNodes[0].fid)) {
@@ -217,7 +262,7 @@ this.BX.Up = this.BX.Up || {};
 	                } else if (Helper.isNumeric(updateNodes[0].fid) && !Helper.isNumeric(updateNodes[0].mid)) {
 	                  personConnectedId = [Number(updateNodes[0].fid)];
 	                }
-	                Requests.addNode(name, surname, gender, personConnectedId, 'child').then(function (node) {
+	                Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'child').then(function (node) {
 	                  self.reload();
 	                });
 	                return;
@@ -228,7 +273,7 @@ this.BX.Up = this.BX.Up || {};
 	                } else {
 	                  personConnectedId = [updateNodes[0].child.fid];
 	                }
-	                Requests.addNode(name, surname, gender, personConnectedId, 'parent').then(function (node) {
+	                Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'parent').then(function (node) {
 	                  self.reload();
 	                });
 	                return;
@@ -242,21 +287,45 @@ this.BX.Up = this.BX.Up || {};
 	                  childID = updateNodes[0].child.fid;
 	                }
 	                personConnectedId = [partner, childID];
-	                Requests.addNode(name, surname, gender, personConnectedId, 'partnerParent').then(function (node) {
+	                Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'partnerParent').then(function (node) {
 	                  self.reload();
 	                });
 	                return;
 	              }
 	              if (updateNodes[0].pids.length !== 0) {
-	                Requests.addNode(name, surname, gender, personConnectedId, 'partner').then(function (node) {
+	                Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'partner').then(function (node) {
 	                  self.reload();
 	                });
 	                return;
 	              }
-	              Requests.addNode(name, surname, gender, [0], 'init').then(function (node) {
+	              Requests.addNode(name, surname, gender, birthDate, deathDate, [0], 'init').then(function (node) {
 	                self.reload();
 	              });
 	            }
+	          });
+	        } else if (!onUpdatePerson) {
+	          onUpdatePerson = true;
+	          family.onUpdateNode(function (args) {
+	            if (Object.keys(args.addNodesData).length !== 0) {
+	              return;
+	            }
+	            console.log(args, 'update');
+	            var updateNodes = args.updateNodesData;
+	            var id = updateNodes[0].id;
+	            var gender = updateNodes[0].gender[0];
+	            var name = updateNodes[0].name;
+	            var surname = updateNodes[0].surname;
+	            var birthDate = Helper.formatDate(updateNodes[0].born);
+	            var deathDate;
+	            if (updateNodes[0].death.length === 0) {
+	              deathDate = null;
+	            } else {
+	              deathDate = Helper.formatDate(updateNodes[0].death);
+	            }
+	            Requests.updateNode(id, name, surname, birthDate, deathDate, gender).then(function (node) {
+	              self.reload();
+	              return node;
+	            });
 	          });
 	        }
 	      });

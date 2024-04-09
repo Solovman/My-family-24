@@ -33,6 +33,8 @@ export class CreationTree
 		{
 			this.nodeList = nodeList;
 
+			console.log(this.nodeList);
+
 			this.render();
 		});
 	}
@@ -52,7 +54,7 @@ export class CreationTree
 			nodes: this.nodeList.persons,
 			nodeBinding: {
 				field_0: 'name',
-				field_1: 'BIRTH_DATE',
+				field_1: 'photo',
 			},
 
 			editForm: {
@@ -106,6 +108,7 @@ export class CreationTree
 		});
 
 		let onUpdateNodeAdded = false;
+		let onUpdatePerson = false;
 
 		family.on('click', function(sender, args){
 			if (args.node.id && typeof args.node.id === "string" && !onUpdateNodeAdded)
@@ -122,6 +125,15 @@ export class CreationTree
 						const gender = updateNodes[0].gender[0];
 						const name = updateNodes[0].name;
 						const surname = updateNodes[0].surname;
+						const birthDate = Helper.formatDate(updateNodes[0].born);
+						let deathDate;
+
+						if (updateNodes[0].death.length === 0) {
+							deathDate = null;
+						} else {
+							deathDate = Helper.formatDate(updateNodes[0].death);
+						}
+
 						let personConnectedId = [Number(updateNodes[0].pids[0])];
 
 						if (updateNodes[0].mid || updateNodes[0].fid)
@@ -139,7 +151,7 @@ export class CreationTree
 								personConnectedId = [Number(updateNodes[0].fid)]
 							}
 
-							Requests.addNode(name, surname, gender, personConnectedId, 'child').then(node => {
+							Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'child').then(node => {
 								self.reload();
 							});
 
@@ -155,7 +167,7 @@ export class CreationTree
 								personConnectedId = [updateNodes[0].child.fid];
 							}
 
-							Requests.addNode(name, surname, gender, personConnectedId, 'parent').then(node => {
+							Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'parent').then(node => {
 								self.reload();
 							});
 
@@ -177,7 +189,7 @@ export class CreationTree
 
 							personConnectedId = [partner, childID];
 
-							Requests.addNode(name, surname, gender, personConnectedId, 'partnerParent').then(node => {
+							Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'partnerParent').then(node => {
 								self.reload();
 							});
 
@@ -186,18 +198,50 @@ export class CreationTree
 
 						if (updateNodes[0].pids.length !== 0)
 						{
-							Requests.addNode(name, surname, gender, personConnectedId, 'partner').then(node => {
+							Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'partner').then(node => {
 								self.reload();
 							});
 
 							return;
 						}
 
-						Requests.addNode(name, surname, gender, [0], 'init').then(node => {
+						Requests.addNode(name, surname, gender, birthDate, deathDate, [0], 'init').then(node => {
 							self.reload();
 						});
 					}
 				});
+			}
+			else if(!onUpdatePerson)
+			{
+				onUpdatePerson = true;
+
+				family.onUpdateNode((args) =>
+				{
+					if (Object.keys(args.addNodesData).length !== 0) {
+						return;
+					}
+
+					const updateNodes = args.updateNodesData;
+
+					const id = updateNodes[0].id;
+					const gender = updateNodes[0].gender[0];
+					const name = updateNodes[0].name;
+					const surname = updateNodes[0].surname;
+					const birthDate = Helper.formatDate(updateNodes[0].born);
+					let deathDate;
+
+					if (updateNodes[0].death.length === 0) {
+						deathDate = null;
+					}
+					else {
+						deathDate = Helper.formatDate(updateNodes[0].death);
+					}
+
+					Requests.updateNode(id, name, surname, birthDate, deathDate, gender).then(node => {
+						self.reload();
+						return node;
+					})
+				})
 			}
 		})
 

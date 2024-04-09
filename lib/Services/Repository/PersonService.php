@@ -170,7 +170,7 @@ class PersonService
 	/**
 	 * @throws Exception
 	 */
-	public static function updatePersonById(int $id, Person $updatablePerson,): bool
+	public static function updatePersonById(int $id, Person $updatablePerson): bool
 	{
 		$personData = [
 			'NAME' => $updatablePerson->getName(),

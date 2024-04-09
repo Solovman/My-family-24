@@ -62,6 +62,24 @@ class Node extends Engine\Controller
 		{
 			throw new SqlException("Error when adding person");
 		}
+	}
 
+	/**
+	 * @throws ObjectException
+	 * @throws \Exception
+	 */
+	public function updateAction(int $id, array $updatablePerson): bool
+	{
+		$node  = new Person(
+			(int) $updatablePerson['imageId'],
+			$updatablePerson['name'],
+			$updatablePerson['surname'],
+			new Date($updatablePerson['birthDate']),
+			new Date($updatablePerson['deathDate']),
+			$updatablePerson['gender'],
+			(int) $updatablePerson['treeId']
+		);
+
+		return PersonService::updatePersonById($id, $node);
 	}
 }

@@ -17,7 +17,36 @@ export class Requests
 				})
 		})
 	}
-	static addNode(name, surname, gender, personConnectedIds, relationType)
+
+	static updateNode(id, name, surname, birthDate, deathDate, gender)
+	{
+		return new Promise((resolve, reject) =>
+		{
+			BX.ajax.runAction('up:tree.node.update', {
+				data: {
+					id: id,
+					updatablePerson: {
+						imageId: 0,
+						name: name,
+						surname: surname,
+						birthDate: birthDate,
+						deathDate: deathDate,
+						gender: gender,
+						treeId: 1
+					},
+				}
+			}).then((response) =>
+			{
+				resolve(response.data);
+			})
+				.catch((error) =>
+				{
+					reject(error);
+				});
+		});
+	}
+
+	static addNode(name, surname, gender, birthDate, deathDate, personConnectedIds, relationType)
 	{
 		return new Promise((resolve, reject) =>
 		{
@@ -27,8 +56,8 @@ export class Requests
 						imageId: 0,
 						name: name,
 						surname: surname,
-						birthDate: null,
-						deathDate: null,
+						birthDate: birthDate,
+						deathDate: deathDate,
 						gender: gender,
 						treeId: 1
 					},
