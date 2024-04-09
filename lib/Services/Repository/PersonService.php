@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Up\Tree\Services\Repository;
 
+use Bitrix\Main\Application;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\ObjectPropertyException;
@@ -193,6 +194,17 @@ class PersonService
 	 */
 	public static function removePersonById(int $id): void
 	{
+		$connection = Application::getConnection();
+
+		$deletePersonParentRelationQuery = "DELETE FROM up_relation_person_parent WHERE PARENT_ID = $id OR CHILD_ID = $id";
+		$connection->queryExecute($deletePersonParentRelationQuery);
+
+		$deleteMarriedRelationQuery = "DELETE FROM up_relation_married WHERE PERSON_ID = $id OR PARTNER_ID = $id";
+		$connection->queryExecute($deleteMarriedRelationQuery);
+		$connection->queryExecute($deleteMarriedRelationQuery);
+
+
 		PersonTable::delete($id);
 	}
 }
+
