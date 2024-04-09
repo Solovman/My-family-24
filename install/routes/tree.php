@@ -7,7 +7,7 @@ use \Bitrix\Main\Routing\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes)
 {
-	$routes->any('/trees/', new PublicPageController('/local/modules/up.tree/views/tree-main.php'));
+	$routes->get('/trees/', new PublicPageController('/local/modules/up.tree/views/tree-list.php'));
 
 	$routes->get('/', new PublicPageController('/local/modules/up.tree/views/tree-main.php'));
 
