@@ -105,9 +105,12 @@ export class CreationTree
 				args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + (args.p.xb) + '" y="' + (args.p.yb) + '"/>';
 		});
 
+		let onUpdateNodeAdded = false;
+
 		family.on('click', function(sender, args){
-			if (args.node.id && typeof args.node.id === "string")
+			if (args.node.id && typeof args.node.id === "string" && !onUpdateNodeAdded)
 			{
+				onUpdateNodeAdded = true;
 				family.onUpdateNode((args) =>
 				{
 					const updateNodes = args.updateNodesData;

@@ -196,8 +196,10 @@ this.BX.Up = this.BX.Up || {};
 	        if (args.cnode.ppid != undefined) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + args.p.xa + '" y="' + args.p.ya + '"/>';
 	        if (args.cnode.isPartner && args.node.partnerSeparation == 30) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + args.p.xb + '" y="' + args.p.yb + '"/>';
 	      });
+	      var onUpdateNodeAdded = false;
 	      family.on('click', function (sender, args) {
-	        if (args.node.id && typeof args.node.id === "string") {
+	        if (args.node.id && typeof args.node.id === "string" && !onUpdateNodeAdded) {
+	          onUpdateNodeAdded = true;
 	          family.onUpdateNode(function (args) {
 	            var updateNodes = args.updateNodesData;
 	            var addNodes = args.addNodesData;
