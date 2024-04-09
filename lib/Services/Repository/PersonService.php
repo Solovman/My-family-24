@@ -17,11 +17,6 @@ use Up\Tree\Model\PersonTable;
 class PersonService
 {
 	/**
-	 * @throws SqlException
-	 * @throws Exception
-	 */
-
-	/**
 	 * @throws Exception
 	 * @throws SqlException
 	 */
@@ -170,6 +165,27 @@ class PersonService
 		}
 
 		return $personList;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function updatePersonById(int $id, Person $updatablePerson,): bool
+	{
+		$personData = [
+			'NAME' => $updatablePerson->getName(),
+			'SURNAME' => $updatablePerson->getSurname(),
+			'BIRTH_DATE' => $updatablePerson->getBirthDate(),
+			'DEATH_DATE' => $updatablePerson->getDeathDate(),
+			'GENDER' => $updatablePerson->getGender(),
+		];
+		$result = PersonTable::update($id , $personData);
+
+		if (!$result->isSuccess())
+		{
+			return false;
+		}
+		return true;
 	}
 
 	/**
