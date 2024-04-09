@@ -45,11 +45,9 @@ class TreeService
 	 */
 	public static function getTreeByUserId(int $userId): ?Tree
 	{
-		$treeData = TreeTable::query()
-							 ->setSelect(['ID', 'TITLE', 'USER_ID', 'CREATED_AT'])
-							 ->setFilter(['USER_ID' => $userId])
-							 ->exec()
-							 ->fetch();
+		$treeData = TreeTable::query()->setSelect(['ID', 'TITLE', 'USER_ID', 'CREATED_AT'])->setFilter(
+			['USER_ID' => $userId]
+		)->exec()->fetch();
 
 		if (!$treeData)
 		{
@@ -57,9 +55,7 @@ class TreeService
 		}
 
 		$tree = new Tree(
-			$treeData['TITLE'],
-			(int)$treeData['USER_ID'],
-			new DateTime($treeData['CREATED_AT'])
+			$treeData['TITLE'], (int)$treeData['USER_ID'], new DateTime($treeData['CREATED_AT'])
 		);
 		$tree->setId((int)$treeData['ID']);
 
@@ -91,5 +87,41 @@ class TreeService
 		}
 
 		return $tree;
+	}
+
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getTreesByUserId(int $userId): array
+	{
+		$trees = [];
+
+		$treeData = TreeTable::query()->setSelect(
+				[
+					'ID',
+					'TITLE',
+					'USER_ID',
+					'CREATED_AT',
+				]
+			)->setFilter(
+				[
+					'USER_ID' => $userId,
+				]
+			)->exec()->fetchAll();
+
+		foreach ($treeData as $treeItem)
+		{
+			$tree = new Tree(
+				$treeItem['TITLE'],
+				(int)$treeItem['USER_ID'],
+				new DateTime($treeItem['CREATED_AT'])
+			);
+			$trees[] = $tree;
+		}
+
+		return $trees;
 	}
 }
