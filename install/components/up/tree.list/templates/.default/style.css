@@ -1,10 +1,10 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
 
-body{
+body {
 	background-image: none !important;
 }
 
-.card{
+.card {
 	transition: transform 0.3s ease;
 }
 
@@ -13,16 +13,16 @@ body{
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.button-add{
+.button-add {
 	background-color: #00ceaa !important;
 	font-family: 'MorningBreeze', sans-serif, Helvetica;
 }
 
-.input-title-tree{
+.input-title-tree {
 	font-family: 'MorningBreeze', sans-serif, Helvetica;
 }
 
-.create-tree-form{
+.create-tree-form {
 	display: flex;
 	justify-content: center;
 	padding-top: 5%;
