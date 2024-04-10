@@ -6,6 +6,10 @@ Install module using admin panel
 
 Set `Family tree template` as your primary site template
 
+## Installing the template
+Specify two templates:
+![img.png](screenshots/img.png)
+
 ## Setup modern Bitrix routing
 
 Add `tree.php` in `routing` section of `${doc_root}/bitrix/.settings.php` file:
@@ -43,7 +47,7 @@ mklink /d C:\OSPanel\domains\dev.tree\local\components\up C:\OSPanel\domains\dev
 
 mklink /d C:\OSPanel\domains\dev.tree\local\routes\tree.php C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\routes\tree.php
 
-mklink /d C:\OSPanel\domains\dev.tree\local\templates\tree\ C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\templates\tree
+mklink /d C:\OSPanel\domains\dev.tree\local\templates\ C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\templates\
 
 mklink /d C:\OSPanel\domains\dev.tree\local\js\up C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\js\up
 ```
