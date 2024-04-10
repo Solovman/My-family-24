@@ -11,7 +11,7 @@ export class Requests
 				}
 			}).then((response) => {
 				const nodesList = response.data.tree;
-				console.log(nodesList);
+
 				resolve(nodesList);
 			})
 				.catch((error) => {
@@ -20,7 +20,7 @@ export class Requests
 		})
 	}
 
-	static updateNode(id, name, surname, birthDate, deathDate, gender)
+	static updateNode(id, name, surname, birthDate, deathDate, gender, treeId)
 	{
 		return new Promise((resolve, reject) =>
 		{
@@ -34,6 +34,7 @@ export class Requests
 						birthDate: birthDate,
 						deathDate: deathDate,
 						gender: gender,
+						treeId: treeId,
 					},
 				}
 			}).then((response) =>
@@ -47,7 +48,7 @@ export class Requests
 		});
 	}
 
-	static addNode(name, surname, gender, birthDate, deathDate, personConnectedIds, relationType)
+	static addNode(name, surname, gender, birthDate, deathDate, treeId, personConnectedIds, relationType)
 	{
 		return new Promise((resolve, reject) =>
 		{
@@ -60,7 +61,9 @@ export class Requests
 						birthDate: birthDate,
 						deathDate: deathDate,
 						gender: gender,
+						treeId: treeId,
 					},
+
 					personConnectedIds: personConnectedIds,
 					relationType: relationType
 				}

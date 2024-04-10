@@ -30,17 +30,15 @@ export class CreationTree
 	reload()
 	{
 		const id = parseInt(window.location.href.match(/\d+/));
-
-		Requests.loadNodes(id).then(nodeList =>
-		{
+		Requests.loadNodes(id).then(nodeList => {
 			this.nodeList = nodeList;
-
 			this.render();
 		});
 	}
 
 	tree()
 	{
+		let treeID =  parseInt(window.location.href.match(/\d+/));
 		let family =  new FamilyTree(document.getElementById('tree'), {
 			mouseScrool: FamilyTree.action.scroll,
 			mode: 'light',
@@ -162,7 +160,7 @@ export class CreationTree
 								personConnectedId = [Number(updateNodes[0].fid)]
 							}
 
-							Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'child').then(node => {
+							Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(node => {
 								self.reload();
 							});
 
@@ -178,7 +176,7 @@ export class CreationTree
 								personConnectedId = [updateNodes[0].child.fid];
 							}
 
-							Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'parent').then(node => {
+							Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(node => {
 								self.reload();
 							});
 
@@ -200,7 +198,7 @@ export class CreationTree
 
 							personConnectedId = [partner, childID];
 
-							Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'partnerParent').then(node => {
+							Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(node => {
 								self.reload();
 							});
 
@@ -209,14 +207,14 @@ export class CreationTree
 
 						if (updateNodes[0].pids.length !== 0)
 						{
-							Requests.addNode(name, surname, gender, birthDate, deathDate, personConnectedId, 'partner').then(node => {
+							Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(node => {
 								self.reload();
 							});
 
 							return;
 						}
 
-						Requests.addNode(name, surname, gender, birthDate, deathDate, [0], 'init').then(node => {
+						Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(node => {
 							self.reload();
 						});
 					}
@@ -248,7 +246,7 @@ export class CreationTree
 						deathDate = Helper.formatDate(updateNodes[0].death);
 					}
 
-					Requests.updateNode(id, name, surname, birthDate, deathDate, gender).then(node => {
+					Requests.updateNode(id, name, surname, birthDate, deathDate, gender, treeID).then(node => {
 						self.reload();
 						return node;
 					})
