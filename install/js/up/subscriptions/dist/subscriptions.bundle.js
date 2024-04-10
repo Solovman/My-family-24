@@ -4,25 +4,54 @@ this.BX.Up = this.BX.Up || {};
 (function (exports,main_core) {
 	'use strict';
 
+	var Form = /*#__PURE__*/function () {
+	  function Form() {
+	    babelHelpers.classCallCheck(this, Form);
+	  }
+	  babelHelpers.createClass(Form, null, [{
+	    key: "render",
+	    value: function render() {
+	      var buyPopup = BX.PopupWindowManager.create("FormPopup", null, {
+	        autoHide: true,
+	        offsetLeft: 0,
+	        offsetTop: 0,
+	        overlay: true,
+	        draggable: {
+	          restrict: true
+	        },
+	        closeByEsc: true,
+	        closeIcon: {
+	          right: "12px",
+	          top: "10px"
+	        },
+	        content: "<div style=\"width:400px;height:400px; text-align: center;\"><span style=\"position:absolute;left:50%; top:50%\"><img src=\"/bitrix/templates/eshop_adapt_yellow/img/wait.gif\"/></span></div>",
+	        events: {
+	          onPopupShow: function onPopupShow() {
+	            this.setContent(BX("bx_popup_form"));
+	          }
+	        }
+	      });
+	      buyPopup.show();
+	    }
+	  }]);
+	  return Form;
+	}();
+
 	var Subscriptions = /*#__PURE__*/function () {
 	  function Subscriptions() {
-	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-	      name: 'Subscriptions'
-	    };
 	    babelHelpers.classCallCheck(this, Subscriptions);
-	    this.name = options.name;
+	    this.setEvents();
+	    console.log('test');
 	  }
 	  babelHelpers.createClass(Subscriptions, [{
-	    key: "setName",
-	    value: function setName(name) {
-	      if (main_core.Type.isString(name)) {
-	        this.name = name;
-	      }
-	    }
-	  }, {
-	    key: "getName",
-	    value: function getName() {
-	      return this.name;
+	    key: "setEvents",
+	    value: function setEvents() {
+	      var subscriptionsButton = document.querySelectorAll('.subscriptions__button');
+	      subscriptionsButton.forEach(function (btn) {
+	        BX.bind(btn, 'click', function () {
+	          Form.render();
+	        });
+	      });
 	    }
 	  }]);
 	  return Subscriptions;

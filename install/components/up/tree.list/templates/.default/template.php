@@ -6,7 +6,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
  * @var array $arResult
  */
 
-\Bitrix\Main\UI\Extension::load('up.treelist');
+\Bitrix\Main\UI\Extension::load('up.tree-list');
 ?>
 
 
@@ -49,6 +49,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 <script>
 	BX.ready(function ()
 	{
-		window.TreeList = new BX.Up.Tree.TreeList();
+		window.TreeList = new BX.Up.Tree.TreeList({});
 	});
 </script>

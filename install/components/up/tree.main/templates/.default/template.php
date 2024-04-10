@@ -7,11 +7,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 \Bitrix\Main\UI\Extension::load('up.creationtree');
 
-
-use Bitrix\Main\Application;
-
-use Up\Tree\Services\Repository\TreeService;
-
 ?>
 
 <div class="my-container tree__container" style="height: 700px" id="tree">

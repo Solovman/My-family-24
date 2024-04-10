@@ -4,6 +4,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 /**
  * @var CMain $APPLICATION
  */
+
+\Bitrix\Main\UI\Extension::load('up.subscriptions');
+
 ?>
 
 <div class="subscriptions__container">
@@ -24,7 +27,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 						</div>
 					</div>
 				</div>
-				<a class="subscriptions__button" href="#">Купить</a>
+				<button class="subscriptions__button">Купить</button>
 			</div>
 		</li>
 		<li class="subscriptions__item">
@@ -43,7 +46,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 						</div>
 					</div>
 				</div>
-				<a class="subscriptions__button" href="#">Купить</a>
+				<button class="subscriptions__button">Купить</button>
 			</div>
 		</li>
 		<li class="subscriptions__item">
@@ -62,11 +65,55 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 						</div>
 					</div>
 				</div>
-				<a class="subscriptions__button" href="#">Купить</a>
+				<button class="subscriptions__button">Купить</button>
 			</div>
 		</li>
 	</ul>
 </div>
+
+<div id="bx_popup_form" style="display:none; padding:10px;min-height: 300px" class="bx_login_popup_form">
+	<div class="sign-up-modal">
+		<div id="close-modal-button"></div>
+		<div class="logo-container">
+			<svg class="logo" width="94.4px" height="56px">
+				<g>
+					<polygon points="49.3,56 49.3,0 0,28 	" />
+					<path d="M53.7,3.6v46.3l40.7-23.2L53.7,3.6z M57.7,10.6l28.4,16.2L57.7,42.9V10.6z" />
+				</g>
+			</svg>
+		</div>
+
+		<form class="details">
+			<div class="input-container">
+				<input class="col-sm-12 email-input with-placeholder" id="email" type="email" placeholder="Email" />
+			</div>
+			<div class="input-container">
+				<input class="col-sm-5 username-input with-placeholder" id="username" type="text" placeholder="Username" maxlength="8" />
+			</div>
+			<div class="input-container">
+				<input class="col-sm-5 col-sm-push-2 password-input with-placeholder" id="password" type="password" placeholder="Password" />
+			</div>
+
+			<div class="col-sm-12 form-checkbox">
+				<label>
+					<input type="checkbox" value="true"> Keep me signed in</label>
+			</div>
+
+			<input id="sign-up-button" type="submit" value="Sign Up">
+
+			<p>Already have an account? <a href="#signIn">Sign in</a></p>
+		</form>
+	</div>
+</div>
+
+<script>
+	BX.ready(function ()
+	{
+		let subscriptions = new BX.Up.Tree.Subscriptions({
+
+		});
+	});
+</script>
 
 
 
