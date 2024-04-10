@@ -89,7 +89,7 @@ use Up\Tree\Services\Repository\UserService;
 				</a>
 			</li>
 			<li data-title="<?= GetMessage('UP_HEADER_NAV_BUY_SUBSCRIPTION') ?>" class="header__nav-item">
-				<a href="#" class="header__nav-link">
+				<a href="/subscriptions/" class="header__nav-link">
 					<svg class="header__svg" width="30px" height="30px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 						<path class="header__svg-path" fill="#ffff" d="M14,6a7.17,7.17,0,0,0-1,.08A4.49,4.49,0,0,0,4,6.5V7A2,2,0,0,0,2,9v9a1.94,1.94,0,0,0,2,2H8.73A8,8,0,1,0,14,6ZM6,6.5a2.51,2.51,0,0,1,5-.24V7H6ZM14,20a6,6,0,1,1,6-6A6,6,0,0,1,14,20Zm-1.5-8v1h4a1,1,0,0,1,1,1v3a1,1,0,0,1-1,1H15v1H13V18H10.5V16h5V15h-4a1,1,0,0,1-1-1V11a1,1,0,0,1,1-1H13V9h2v1h2.5v2Z"/>
 						<rect width="24" height="24" fill="none"/>

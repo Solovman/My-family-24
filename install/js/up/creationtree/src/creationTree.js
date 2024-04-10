@@ -29,7 +29,9 @@ export class CreationTree
 
 	reload()
 	{
-		Requests.loadNodes().then(nodeList =>
+		const id = parseInt(window.location.href.match(/\d+/));
+
+		Requests.loadNodes(id).then(nodeList =>
 		{
 			this.nodeList = nodeList;
 

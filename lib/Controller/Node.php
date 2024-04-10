@@ -26,17 +26,13 @@ class Node extends Engine\Controller
 	 * @throws ArgumentException
 	 * @throws \JsonException
 	 */
-	public function getPersonsAction(): array
+	public function getPersonsAction(int $treeId): array
 	{
 		global $USER;
 
 		$userId = $USER->GetID();
 
-		$request = Application::getInstance()->getContext()->getRequest();
-		$treeId = $request->get('id');
-
-
-		$result = TreeService::getTree($userId, (int)$treeId);
+		$result = TreeService::getTree($userId, $treeId);
 
 		return [
 			'tree' => $result

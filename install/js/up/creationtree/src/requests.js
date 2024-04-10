@@ -1,15 +1,17 @@
 export class Requests
 {
 
-	static loadNodes()
+	static loadNodes(id)
 	{
 		return new Promise((resolve, reject) =>
 		{
 			BX.ajax.runAction('up:tree.node.getPersons', {
-
+				data: {
+					treeId: id
+				}
 			}).then((response) => {
 				const nodesList = response.data.tree;
-
+				console.log(nodesList);
 				resolve(nodesList);
 			})
 				.catch((error) => {

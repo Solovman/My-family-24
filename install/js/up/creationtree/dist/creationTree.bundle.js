@@ -10,10 +10,16 @@ this.BX.Up = this.BX.Up || {};
 	  }
 	  babelHelpers.createClass(Requests, null, [{
 	    key: "loadNodes",
-	    value: function loadNodes() {
+	    value: function loadNodes(id) {
+	      console.log(babelHelpers["typeof"](id));
 	      return new Promise(function (resolve, reject) {
-	        BX.ajax.runAction('up:tree.node.getPersons', {}).then(function (response) {
+	        BX.ajax.runAction('up:tree.node.getPersons', {
+	          data: {
+	            treeId: id
+	          }
+	        }).then(function (response) {
 	          var nodesList = response.data.tree;
+	          console.log(nodesList);
 	          resolve(nodesList);
 	        })["catch"](function (error) {
 	          reject(error);
@@ -33,8 +39,7 @@ this.BX.Up = this.BX.Up || {};
 	              surname: surname,
 	              birthDate: birthDate,
 	              deathDate: deathDate,
-	              gender: gender,
-	              treeId: 1
+	              gender: gender
 	            }
 	          }
 	        }).then(function (response) {
@@ -56,8 +61,7 @@ this.BX.Up = this.BX.Up || {};
 	              surname: surname,
 	              birthDate: birthDate,
 	              deathDate: deathDate,
-	              gender: gender,
-	              treeId: 1
+	              gender: gender
 	            },
 	            personConnectedIds: personConnectedIds,
 	            relationType: relationType
@@ -162,9 +166,9 @@ this.BX.Up = this.BX.Up || {};
 	    key: "reload",
 	    value: function reload() {
 	      var _this = this;
-	      Requests.loadNodes().then(function (nodeList) {
+	      var id = parseInt(window.location.href.match(/\d+/));
+	      Requests.loadNodes(id).then(function (nodeList) {
 	        _this.nodeList = nodeList;
-	        console.log(_this.nodeList);
 	        _this.render();
 	      });
 	    }

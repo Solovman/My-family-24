@@ -18,8 +18,9 @@ class Tree implements Entity
 	public array $persons = [];
 
 
-	public function __construct($title, $userId, $createdAt)
+	public function __construct($id, $title, $userId, $createdAt)
 	{
+		$this->id = $id;
 		$this->title = $title;
 		$this->userId = $userId;
 		$this->createdAt = $createdAt;

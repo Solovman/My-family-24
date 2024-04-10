@@ -5,7 +5,10 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
  * @var CMain $APPLICATION
  * @var array $arResult
  */
+
 ?>
+
+
 
 <div class="columns is-multiline my-container">
 	<?php

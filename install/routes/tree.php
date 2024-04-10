@@ -9,6 +9,8 @@ return function (RoutingConfigurator $routes)
 {
 	$routes->get('/tree/{id}/', new PublicPageController('/local/modules/up.tree/views/tree-main.php'));
 
+	$routes->get('/subscriptions/', new PublicPageController('/local/modules/up.tree/views/tree-subscriptions.php'));
+
 	$routes->get('/', new PublicPageController('/local/modules/up.tree/views/tree-list.php'));
 
 	$routes->get('/account/', new PublicPageController('/local/modules/up.tree/views/tree-account.php'));

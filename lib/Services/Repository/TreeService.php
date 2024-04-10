@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Up\Tree\Services\Repository;
 
+use Bitrix\Main\Application;
 use Exception;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\DB\SqlException;
@@ -55,9 +56,8 @@ class TreeService
 		}
 
 		$tree = new Tree(
-			$treeData['TITLE'], (int)$treeData['USER_ID'], new DateTime($treeData['CREATED_AT'])
+			(int)$treeData['ID'], $treeData['TITLE'], (int)$treeData['USER_ID'], new DateTime($treeData['CREATED_AT'])
 		);
-		$tree->setId((int)$treeData['ID']);
 
 		$persons = PersonService::getPersonsByTreeId($tree->getId());
 
