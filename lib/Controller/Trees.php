@@ -25,7 +25,7 @@ class Trees extends Engine\Controller
 
 		$userId = $USER->GetID();
 
-		$trees = TreeService::getTreesByUserId($userId);
+		$trees = TreeService::getTreesByUserId((int)$userId);
 
 		return [
 			'trees' => $trees
