@@ -13,7 +13,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 		<div class="column">
 			<div class="card">
 				<header class="card-header">
-					<a class="card-header-title">
+					<a href="/tree/<?= $tree->getId()?>/" class="card-header-title">
 						<?= htmlspecialcharsEx($tree->getTitle()) ?>
 					</a>
 				</header>

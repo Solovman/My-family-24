@@ -119,6 +119,7 @@ class TreeService
 				(int)$treeItem['USER_ID'],
 				new DateTime($treeItem['CREATED_AT'])
 			);
+			$tree->setId((int)$treeItem['ID']);
 			$trees[] = $tree;
 		}
 
