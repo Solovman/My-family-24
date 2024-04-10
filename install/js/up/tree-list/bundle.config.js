@@ -1,6 +1,6 @@
 module.exports = {
-	input: 'src/treelist.js',
-	output: 'dist/treelist.bundle.js',
+	input: 'src/tree-list.js',
+	output: 'dist/tree-list.bundle.js',
 	namespace: 'BX.Up.Tree',
 	sourceMaps: false,
 };

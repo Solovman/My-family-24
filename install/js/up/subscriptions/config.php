@@ -5,8 +5,8 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 }
 
 return [
-	'css' => 'dist/treelist.bundle.css',
-	'js' => 'dist/treelist.bundle.js',
+	'css' => 'dist/subscriptions.bundle.css',
+	'js' => 'dist/subscriptions.bundle.js',
 	'rel' => [
 		'main.core',
 	],
