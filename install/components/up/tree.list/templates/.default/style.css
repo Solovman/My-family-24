@@ -3,3 +3,31 @@
 body{
 	background-image: none !important;
 }
+
+.card{
+	transition: transform 0.3s ease;
+}
+
+.card:hover {
+	transform: scale(1.05);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-add{
+	background-color: #00ceaa !important;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+}
+
+.input-title-tree{
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+}
+
+.create-tree-form{
+	display: flex;
+	justify-content: center;
+	padding-top: 5%;
+}
+
+.emerald-color {
+	background-color: #00ceaa !important;
+}
