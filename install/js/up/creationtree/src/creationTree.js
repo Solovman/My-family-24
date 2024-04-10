@@ -12,14 +12,14 @@ export class CreationTree
 		}
 		else
 		{
-			throw new Error('TaskList: options.rootNodeId required');
+			throw new Error('Tree: options.rootNodeId required');
 		}
 
 		this.rootNode = BX(this.rootNodeId);
 
 		if (!this.rootNode)
 		{
-			throw new Error(`TaskList: element with id "${this.rootNodeId}" not found`);
+			throw new Error(`Tree: element with id "${this.rootNodeId}" not found`);
 		}
 
 		this.nodeList = [];
