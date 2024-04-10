@@ -51,7 +51,7 @@ ul {
 	right:0;
 	width: 4%;
 	height: 100%;
-	background-color: #39CA76;
+	background-color: #00ceaa;
 }
 
 .header__main {
@@ -80,10 +80,10 @@ ul {
 }
 
 .header__nav-item {
-	padding: 3px;
-	width: 100%;
+	padding: 6px;
+	width: 68%;
 	text-align: center;
-	border-bottom: 1px solid #4ed185;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .header__svg-path {
@@ -115,7 +115,7 @@ ul {
 	top:3%;
 	opacity: 0;
 	transition: opacity .3s ease-in-out;
-	background-color: #4ed185;
+	background-color: #00ceaa;
 	border-radius: 0 20px 20px 0;
 	color: #ffffff;
 	z-index: 10;
@@ -135,7 +135,7 @@ ul {
 
 .header__nav-item-tree {
 	padding: 14px;
-	background: #31ac64;
+	background: #00c1b8;
 	width: 100%;
 	border-bottom: none;
 }

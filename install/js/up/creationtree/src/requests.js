@@ -74,4 +74,23 @@ export class Requests
 				});
 		});
 	}
+
+	static removeNode(id)
+	{
+		return new Promise((resolve, reject) =>
+		{
+			BX.ajax.runAction('up:tree.node.remove', {
+				data: {
+					id: id
+				}
+			}).then((response) =>
+			{
+				resolve(response.data);
+			})
+				.catch((error) =>
+				{
+					reject(error);
+				});
+		});
+	}
 }

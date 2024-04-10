@@ -292,10 +292,10 @@ declare class FamilyTree extends FamilyTreeBase {
     /**
      * Exports the details form to PDF.
      * @param options export options
-     * @param callback called when the export completes
+     * @param callback? called when the export completes
      * {@link https://balkan.app/FamilyTreeJS/Docs/Exporting | See doc...}        
      */
-    exportPDFProfile(options: FamilyTree.exportOptions, callback?: () => void): void;
+	exportPDFProfile(options: { id: number }, callback?: () => void): void;
     exportPDFPreview(options: FamilyTree.exportOptions): void;
     /**
      * Exports the details form to PDF.

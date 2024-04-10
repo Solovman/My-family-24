@@ -1,6 +1,7 @@
 <?php
 
 $MESS['UP_HEADER_NAV_EXPORT'] = "Сохранить в PDF";
+$MESS['UP_HEADER_NAV_JSON'] = "Сохранить в JSON";
 $MESS['UP_HEADER_NAV_STATISTIC'] = "Показать статистику";
 $MESS['UP_HEADER_NAV_BUY_SUBSCRIPTION'] = "Купить подписку";
 $MESS['UP_HEADER_NAV_MY_TREES'] = "Мои деревья";

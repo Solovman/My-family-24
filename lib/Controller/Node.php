@@ -82,4 +82,19 @@ class Node extends Engine\Controller
 
 		return PersonService::updatePersonById($id, $node);
 	}
+
+	/**
+	 * @throws \Exception
+	 */
+	public function removeAction(int $id):void
+	{
+		try {
+			PersonService::removePersonById($id);
+		}
+		catch (SqlException)
+		{
+			throw new SqlException("Error when deleting person");
+		}
+
+	}
 }
