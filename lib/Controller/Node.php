@@ -2,6 +2,7 @@
 
 namespace Up\Tree\Controller;
 
+use Bitrix\Main\Application;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectException;
@@ -29,9 +30,13 @@ class Node extends Engine\Controller
 	{
 		global $USER;
 
-		$userID = $USER->GetID();
+		$userId = $USER->GetID();
 
-		$result = TreeService::getTreeByUserId($userID, 1);
+		$request = Application::getInstance()->getContext()->getRequest();
+		$treeId = $request->get('id');
+
+
+		$result = TreeService::getTree($userId, (int)$treeId);
 
 		return [
 			'tree' => $result

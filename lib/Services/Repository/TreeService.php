@@ -43,10 +43,10 @@ class TreeService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getTreeByUserId(int $userId): ?Tree
+	public static function getTree(int $userId, int $treeId): ?Tree
 	{
 		$treeData = TreeTable::query()->setSelect(['ID', 'TITLE', 'USER_ID', 'CREATED_AT'])->setFilter(
-			['USER_ID' => $userId]
+			['USER_ID' => $userId, 'ID'=> $treeId]
 		)->exec()->fetch();
 
 		if (!$treeData)
