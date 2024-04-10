@@ -33,8 +33,6 @@ export class CreationTree
 		{
 			this.nodeList = nodeList;
 
-			console.log(this.nodeList);
-
 			this.render();
 		});
 	}

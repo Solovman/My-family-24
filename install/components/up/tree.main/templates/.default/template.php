@@ -9,78 +9,10 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 ?>
 
-<div class="my-container tree__container" id="tree"></div>
-
-<div id="bx_popup_form" style="display:none; padding:10px;min-height: 300px" class="bx_login_popup_form">
-	<form class="node__form" enctype="multipart/form-data">
-		<h2 class="node__heading"><?= GetMessage('UP_HEADING_ADD_PERSON') ?></h2>
-		<div class="node__input-container">
-			<div class="node__name">
-				<div class="node__input-label">
-					<label class="node__label" for="name">First Name:</label>
-					<input name="name" class="node__input" id="name" placeholder="Write name" type="text">
-				</div>
-
-				<div class="node__input-label">
-					<label class="node__label" for="surname">Last Name:</label>
-					<input name="surname" class="node__input" id="surname" placeholder="Write surname" type="text">
-				</div>
-			</div>
-
-			<div class="node__info">
-				<div class="node__info_gender">
-					<label class="node__label">Gender:</label>
-
-					<div class="node__input-label_info">
-						<label class="node__label" for="male">Male</label>
-						<input name="gender" class="node__input" id="male" type="radio" value="Male">
-
-						<label class="node__label" for="female">Female</label>
-						<input name="gender" class="node__input" id="female" type="radio" value="Female">
-					</div>
-				</div>
-
-				<div class="node__info_relation">
-					<label class="node__label">Relation Type:</label>
-
-					<div class="node__input-label_info">
-						<label class="node__label" for="child">Child</label>
-						<input name="relation" class="node__input" id="child" type="radio" value="child">
-
-						<label class="node__label" for="parent">Parent</label>
-						<input name="relation" class="node__input" id="parent" type="radio" value="parent">
-
-						<label class="node__label" for="partner">Partner</label>
-						<input name="relation" class="node__input" id="partner" type="radio" value="partner">
-					</div>
-				</div>
-			</div>
-
-			<div class="node__date">
-				<div class="node__input-label">
-					<label class="node__label" for="birth">Birth Date:</label>
-					<input name="birthdate" class="node__input" id="birth" placeholder="Write birth date" type="date">
-				</div>
-
-				<div class="node__input-label">
-					<label class="node__label" for="death">Death Date</label>
-					<input name="deathdate" class="node__input" id="death" placeholder="Write death date" type="date">
-				</div>
-			</div>
-
-			<div class="node__file">
-				<label class="node__label">Add photo:</label>
-				<div class="input-file-row">
-					<label class="input-file">
-						<input id="file" type="file" name="file" value="send">
-						<span>Выберите файл</span>
-					</label>
-					<div class="input-file-list"></div>
-				</div>
-			</div>
-		</div>
-		<button id="addPerson" class="node__form-button" type="submit">Добавить</button>
-	</form>
+<div class="my-container tree__container" style="height: 700px" id="tree">
+	<div class="tree__spinner spinner-grow text-primary" role="status">
+		<span class="visually-hidden">Loading...</span>
+	</div>
 </div>
 
 <script>

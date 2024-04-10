@@ -18,6 +18,12 @@ use Up\Tree\Services\Repository\UserService;
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title><?php $APPLICATION->ShowTitle(); ?></title>
 	<link rel="stylesheet" href="style/reset.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+		  crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+			crossorigin="anonymous"></script>
 	<?php
 	$APPLICATION->ShowHead();
 	?>
@@ -89,8 +95,6 @@ use Up\Tree\Services\Repository\UserService;
 						<rect width="24" height="24" fill="none"/>
 					</svg>
 				</a>
-			</li>
-			<li data-title="<?= GetMessage('UP_HEADER_NAV_MY_TREES') ?>" class="header__nav-item">
 			</li>
 			<li data-title="<?= GetMessage('UP_HEADER_NAV_LOGOUT') ?>" class="header__nav-item">
 				<a href="/?logout=yes&<?=bitrix_sessid_get()?>" class="header__nav-link">

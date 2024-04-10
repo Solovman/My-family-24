@@ -59,7 +59,7 @@ ul {
 .header__main {
 	display: flex;
 	align-items: center;
-	padding: 11px;
+	padding: 5px;
 	background-color: #ffffff;
 	box-shadow: 0 6px 4px -4px rgba(0, 0, 0, .2);
 }
@@ -180,28 +180,6 @@ ul {
 	font-size: 17px;
 	line-height: 17px;
 	color: #000000;
-}
-
-text {
-	font-family: 'MorningBreeze', sans-serif, Helvetica;
-	font-size: 23px !important;
-	font-weight: 400 !important;
-}
-
-.bft-light .bft-input>input, .bft-light .bft-input>select {
-	font-family: 'MorningBreeze', sans-serif, Helvetica;
-	font-size: 22px;
-	font-weight: 400;
-}
-
-.bft-edit-form-title {
-	font-family: 'MorningBreeze', sans-serif, Helvetica;
-	font-size: 25px;
-}
-
-.bft-form-fieldset {
-	font-size: 18px;
-	font-family: 'MorningBreeze', sans-serif, Helvetica;
 }
 
 @media (max-width: 1200px) {

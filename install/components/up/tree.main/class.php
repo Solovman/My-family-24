@@ -8,5 +8,4 @@ class TreeMainComponent extends CBitrixComponent
 	{
 		$this->includeComponentTemplate();
 	}
-
 }

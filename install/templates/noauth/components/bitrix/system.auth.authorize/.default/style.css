@@ -12,7 +12,9 @@
 	margin-bottom: 20px;
 	padding: 13px 29px;
 	font-weight: 300;
+	font-size: 20px;
 	width: 100%;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
 	background-color: #f5f9f7;
 	border: none;
 	border-bottom: 3px solid rgba(255, 96, 104, 0.5);
