@@ -1,5 +1,6 @@
 <?
 $MESS["AUTH_REGISTER"] = "Регистрация";
+$MESS["AUTH_REGISTER_ON"] = "Зарегистрироваться";
 $MESS["AUTH_NAME"] = "Имя:";
 $MESS["AUTH_AUTHORIZE"] = "Войти";
 $MESS["AUTH_LAST_NAME"] = "Фамилия:";
@@ -18,4 +19,10 @@ $MESS["AUTH_NONSECURE_NOTE"] = "Пароль будет отправлен в о
 $MESS["main_register_sms_code"] = "Код подтверждения из СМС:";
 $MESS["main_register_sms_send"] = "Отправить";
 $MESS["main_register_phone_number"] = "Номер телефона:";
+
+
+$MESS['REGISTER_PLACEHOLDER_NANE'] = 'Введите имя';
+$MESS['REGISTER_PLACEHOLDER_SURNAME'] = 'Введите фамилию';
+$MESS['REGISTER_PLACEHOLDER_LOGIN'] = 'Введите логин';
+$MESS['REGISTER_PLACEHOLDER_PASSWORD'] = 'Введите пароль';
 ?>

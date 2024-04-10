@@ -1,3 +1,5 @@
+@import "fonts.css";
+
 *,
 *::before,
 *::after {
@@ -14,7 +16,7 @@ html {
 body {
 	display: flex;
 	flex-direction: column;
-	font-family: 'OpenSans', sans-serif, Helvetica;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
 	margin: 0;
 	height: 100%;
 	background-color: #F1F9F8;
@@ -35,7 +37,7 @@ ul {
 	list-style-type: none;
 }
 
-.container {
+.my-container {
 	width: 96%;
 	margin-left: auto;
 }
@@ -74,8 +76,8 @@ ul {
 }
 
 .header__icon-name {
-	font-size: 14px;
-	line-height: 14px;
+	font-size: 17px;
+	line-height: 17px;
 	color: #000000;
 }
 
@@ -119,7 +121,7 @@ ul {
 	border-radius: 0 20px 20px 0;
 	color: #ffffff;
 	z-index: 10;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 [data-title]:hover::after {
@@ -175,9 +177,31 @@ ul {
 
 .footer__copyright {
 	margin: 0;
-	font-size: 14px;
+	font-size: 17px;
 	line-height: 17px;
 	color: #000000;
+}
+
+text {
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	font-size: 23px !important;
+	font-weight: 400 !important;
+}
+
+.bft-light .bft-input>input, .bft-light .bft-input>select {
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	font-size: 22px;
+	font-weight: 400;
+}
+
+.bft-edit-form-title {
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	font-size: 25px;
+}
+
+.bft-form-fieldset {
+	font-size: 18px;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
 }
 
 @media (max-width: 1200px) {
@@ -190,7 +214,7 @@ ul {
 		width: 5%;
 	}
 
-	.container {
+	.my-container {
 		width: 95%;
 	}
 
@@ -217,7 +241,7 @@ ul {
 		width: 6%;
 	}
 
-	.container {
+	.my-container {
 		width: 94%;
 	}
 
@@ -231,7 +255,7 @@ ul {
 		width: 9%;
 	}
 
-	.container {
+	.my-container {
 		width: 91%;
 	}
 
@@ -249,7 +273,7 @@ ul {
 		width: 12%;
 	}
 
-	.container {
+	.my-container {
 		width: 88%;
 	}
 }

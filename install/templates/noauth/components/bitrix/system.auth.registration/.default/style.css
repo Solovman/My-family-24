@@ -2,13 +2,23 @@
 	padding: 0 30px;
 }
 
+.data-table {
+	width: 100%;
+}
+
 .main__input-form-reg {
 	margin-bottom: 20px;
-	padding: 10px 29px;
+	padding: 10px 32px;
 	width: 100%;
 	background-color: #f5f9f7;
 	border: none;
 	border-bottom: 3px solid  rgba(255, 96, 104, 0.5);
+}
+
+.main__input-form-reg::placeholder {
+	font-size: 16px;
+	font-weight: 300;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
 }
 
 .main__input-form:focus {
@@ -17,8 +27,10 @@
 }
 
 .main__button-form {
-	padding: 15px 30px;
+	padding: 12px 30px;
 	width: 100%;
+	font-size: 21px;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
 	background-color: #ff6068;
 	cursor: pointer;
 	border-radius: 10px;
@@ -32,6 +44,9 @@
 }
 
 .main__title-input {
+	margin-bottom: 10px;
+	font-size: 18px;
+	line-height: 18px;
 	width: 20%;
 }
 
@@ -42,7 +57,12 @@
 .main__icon-input-reg {
 	position: absolute;
 	top: 18%;
-	left: 3%;
+	left: 2%;
+}
+
+tr {
+	display: flex;
+	flex-direction: column;
 }
 
 .main__container {
@@ -59,8 +79,9 @@
 .main__heading {
 	margin: 0;
 	margin-bottom: 15px;
+	font-size: 31px;
+	font-weight: 500;
 	color: #000000;
-	font-style: italic;
 }
 
 .main__tabs-nav {
@@ -70,10 +91,11 @@
 }
 
 .main__tabs-button {
-	font-size: 14px;
+	font-size: 20px;
+	line-height: 20px;
+	font-weight: 300;
 	background-color: transparent;
 	border: none;
-	color: #000000;
 	cursor: pointer;
 	border-bottom: 2px solid transparent;
 	color: #000000;

@@ -9,7 +9,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 ?>
 
-<div class="container tree__container" id="tree"></div>
+<div class="my-container tree__container" id="tree"></div>
 
 <div id="bx_popup_form" style="display:none; padding:10px;min-height: 300px" class="bx_login_popup_form">
 	<form class="node__form" enctype="multipart/form-data">

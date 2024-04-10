@@ -119,7 +119,7 @@ use Up\Tree\Services\Repository\UserService;
 			</li>
 		</ul>
 	</nav>
-	<div class="container">
+	<div class="my-container">
 		<div class="header__main">
 			<div class="header__icon">
 				<img class="header__image-icon" src="/local/modules/up.tree/images/user_default.png" alt="user-icon">

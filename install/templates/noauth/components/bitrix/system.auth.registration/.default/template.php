@@ -49,7 +49,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 										<path d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" stroke="#ff6068" stroke-width="1.5"/>
 									</svg>
 								</span>
-								<input type="text" name="USER_NAME" maxlength="50" value="<?=$arResult["USER_NAME"]?>" class="bx-auth-input main__input-form-reg" />
+								<input placeholder="<?= GetMessage('REGISTER_PLACEHOLDER_NANE') ?>" type="text" name="USER_NAME" maxlength="50" value="<?=$arResult["USER_NAME"]?>" class="bx-auth-input main__input-form-reg" />
 							</td>
 						</tr>
 						<tr>
@@ -61,7 +61,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 										<path d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" stroke="#ff6068" stroke-width="1.5"/>
 									</svg>
 								</span>
-								<input type="text" name="USER_LAST_NAME" maxlength="50" value="<?=$arResult["USER_LAST_NAME"]?>" class="bx-auth-input main__input-form-reg" />
+								<input type="text" placeholder="<?= GetMessage('REGISTER_PLACEHOLDER_SURNAME') ?>" name="USER_LAST_NAME" maxlength="50" value="<?=$arResult["USER_LAST_NAME"]?>" class="bx-auth-input main__input-form-reg" />
 							</td>
 						</tr>
 						<tr>
@@ -73,7 +73,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 										<path d="m458.15 617.7 18.8-107.3a56.94 56.94 0 0 1 35.2-101.9V289.4h-145.2a56.33 56.33 0 0 0-56.3 56.3v275.8a33.94 33.94 0 0 0 3.4 15c12.2 24.6 60.2 103.7 197.9 164.5V622.1a313.29 313.29 0 0 1-53.8-4.4zM656.85 289h-144.9v119.1a56.86 56.86 0 0 1 35.7 101.4l18.8 107.8A320.58 320.58 0 0 1 512 622v178.6c137.5-60.5 185.7-139.9 197.9-164.5a33.94 33.94 0 0 0 3.4-15V345.5a56 56 0 0 0-16.4-40 56.76 56.76 0 0 0-40.05-16.5z" style="fill:#fff"/>
 									</svg>
 								</span>
-								<input type="text" name="USER_LOGIN" maxlength="50" value="<?=$arResult["USER_LOGIN"]?>" class="bx-auth-input main__input-form-reg" />
+								<input type="text" name="USER_LOGIN" placeholder="<?= GetMessage('REGISTER_PLACEHOLDER_LOGIN') ?>" maxlength="50" value="<?=$arResult["USER_LOGIN"]?>" class="bx-auth-input main__input-form-reg" />
 							</td>
 						</tr>
 						<tr>
@@ -93,7 +93,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 										<rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
 									</svg>
 								</span>
-								<input type="password" name="USER_PASSWORD" maxlength="255" value="<?=$arResult["USER_PASSWORD"]?>" class="bx-auth-input main__input-form-reg" autocomplete="off" />
+								<input type="password" name="USER_PASSWORD" placeholder="<?= GetMessage('REGISTER_PLACEHOLDER_PASSWORD') ?>" maxlength="255" value="<?=$arResult["USER_PASSWORD"]?>" class="bx-auth-input main__input-form-reg" autocomplete="off" />
 							</td>
 						</tr>
 						<tr>
@@ -103,7 +103,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 						<tfoot>
 						<tr>
 							<td colspan="2">
-								<input class="main__button-form" type="submit" name="Register" value="<?=GetMessage("AUTH_REGISTER")?>" />
+								<input class="main__button-form" type="submit" name="Register" value="<?=GetMessage("AUTH_REGISTER_ON")?>" />
 							</td>
 						</tr>
 						</tfoot>

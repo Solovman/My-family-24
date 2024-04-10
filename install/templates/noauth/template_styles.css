@@ -1,3 +1,5 @@
+@import "fonts.css";
+
 *,
 *::before,
 *::after {
@@ -14,7 +16,7 @@ html {
 body {
 	display: flex;
 	flex-direction: column;
-	font-family: 'OpenSans', sans-serif, Helvetica;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
 	margin: 0;
 	height: 100%;
 	background-color: #F1F9F8;
@@ -47,7 +49,7 @@ ul {
 
 .footer__copyright {
 	margin: 0;
-	font-size: 14px;
+	font-size: 17px;
 	line-height: 17px;
 	color: #000000;
 }

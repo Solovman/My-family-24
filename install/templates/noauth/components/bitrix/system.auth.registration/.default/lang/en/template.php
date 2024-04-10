@@ -1,5 +1,6 @@
 <?
 $MESS["AUTH_AUTH"] = "Authorization";
+$MESS["AUTH_REGISTER_ON"] = "Register";
 $MESS["AUTH_CONFIRM"] = "Password confirmation:";
 $MESS["AUTH_EMAIL"] = "E-Mail:";
 $MESS["AUTH_AUTHORIZE"] = "Authorize";
@@ -18,4 +19,9 @@ $MESS["CAPTCHA_REGF_TITLE"] = "Please type the word you see in the image";
 $MESS["main_register_phone_number"] = "Phone number:";
 $MESS["main_register_sms_code"] = "SMS confirmation code:";
 $MESS["main_register_sms_send"] = "Send";
+
+$MESS['REGISTER_PLACEHOLDER_NANE'] = 'Write your name';
+$MESS['REGISTER_PLACEHOLDER_SURNAME'] = 'Write your surname';
+$MESS['REGISTER_PLACEHOLDER_LOGIN'] = 'Write your login';
+$MESS['REGISTER_PLACEHOLDER_PASSWORD'] = 'Write your password';
 ?>

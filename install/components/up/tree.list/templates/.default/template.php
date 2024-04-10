@@ -7,7 +7,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
  */
 ?>
 
-<div class="columns is-multiline container">
+<div class="columns is-multiline my-container">
 	<?php
 	foreach ($arResult['TREES'] as $tree): ?>
 		<div class="column">
