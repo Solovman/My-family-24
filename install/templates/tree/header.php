@@ -76,7 +76,7 @@ use Up\Tree\Services\Repository\UserService;
 				</a>
 			</li>
 			<li data-title="<?= GetMessage('UP_HEADER_NAV_MY_TREES') ?>" class="header__nav-item">
-				<a href="#" class="header__nav-link">
+				<a href="/trees/" class="header__nav-link">
 					<svg class="header__svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 						 width="30px" height="30px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
                     <g>
