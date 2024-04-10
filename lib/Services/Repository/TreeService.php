@@ -56,8 +56,10 @@ class TreeService
 		}
 
 		$tree = new Tree(
-			(int)$treeData['ID'], $treeData['TITLE'], (int)$treeData['USER_ID'], new DateTime($treeData['CREATED_AT'])
+			$treeData['TITLE'], (int)$treeData['USER_ID'], new DateTime($treeData['CREATED_AT'])
 		);
+
+		$tree->setId($treeId);
 
 		$persons = PersonService::getPersonsByTreeId($tree->getId());
 
