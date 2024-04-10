@@ -32,7 +32,6 @@ export class Requests
 						birthDate: birthDate,
 						deathDate: deathDate,
 						gender: gender,
-						treeId: 1
 					},
 				}
 			}).then((response) =>
@@ -59,7 +58,6 @@ export class Requests
 						birthDate: birthDate,
 						deathDate: deathDate,
 						gender: gender,
-						treeId: 1
 					},
 					personConnectedIds: personConnectedIds,
 					relationType: relationType

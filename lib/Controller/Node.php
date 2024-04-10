@@ -31,7 +31,7 @@ class Node extends Engine\Controller
 
 		$userID = $USER->GetID();
 
-		$result = TreeService::getTreeByUserId($userID);
+		$result = TreeService::getTreeByUserId($userID, 1);
 
 		return [
 			'tree' => $result
