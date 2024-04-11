@@ -31,7 +31,6 @@ export class TreeList
 			.then(treeList => {
 				this.treeList = treeList;
 				console.log(this.treeList);
-
 				this.render();
 			});
 	}
@@ -47,8 +46,7 @@ export class TreeList
 						}
 					})
 				.then((responce) => {
-					const treeList = responce.data.treeList;
-					console.log(treeList);
+					const treeList = responce.data.trees;
 					resolve(treeList);
 				})
 				.catch((error) => {
@@ -64,22 +62,29 @@ export class TreeList
 
 		const treeContainerNode = Tag.render`<div class="columns"></div>`;
 
-		this.treeList.forEach(treeData => {
+		this.treeList.forEach(trees => {
 			const treeNode = Tag.render`
-				<div class="column">
-					<div class="card project-card">
-						<header class="card-header">
-							<a class="card-header-title card-header-title-from-database" href="/tree/${treeData.ID}/">
-								${treeData.TITLE}
-							</a>
-						</header>
-					</div>
+				<div class="columns is-multiline my-container">
+					<div class="column is-one-fifth">
+						<div class="card">
+							<header class="card-header is-size-4 emerald-color">
+									<a href="/tree/${trees.id}/" class="card-header-title">
+										${BX.util.htmlspecialchars(trees.title)}
+									</a>
+								</header>
+								<footer class="card-footer">
+									<span class="card-footer-item is-size-6">
+										<strong>Created at</strong>: ${BX.date.format('d-m-Y', trees.createdAt)}
+									</span>
+								</footer>
+							</div>
+						</div>
+					<?php
+					endforeach; ?>
 				</div>
 			`;
-
 			treeContainerNode.appendChild(treeNode);
 		});
-
 		this.rootNode.appendChild(treeContainerNode);
 	}
 }
