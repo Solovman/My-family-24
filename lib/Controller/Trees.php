@@ -13,6 +13,8 @@ use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\Date;
 use Up\Tree\Entity\Person;
 use Up\Tree\Services\Repository\PersonService;
+use Bitrix\Main\Type\DateTime;
+use Up\Tree\Entity\Tree;
 use Up\Tree\Services\Repository\TreeService;
 
 class Trees extends Engine\Controller
@@ -32,7 +34,7 @@ class Trees extends Engine\Controller
 		$trees = TreeService::getTreesByUserId((int)$userId);
 
 		return [
-			'trees' => $trees
+			'trees' => $trees,
 		];
 	}
 
@@ -41,16 +43,30 @@ class Trees extends Engine\Controller
 	 */
 	public function initAction(array $tree): void
 	{
-		$node  = new Person(
+		$node = new Person(
 			0,
 			'Your name',
 			'Your surname',
 			new Date(),
 			null,
 			null,
-			(int) $tree['treeId']
+			(int)$tree['treeId']
 		);
 
 		PersonService::addPerson($node, [0], 'init');
+	}
+
+	/**
+	 * @throws SqlException
+	 */
+	public function addTreeAction(string $treeTitle): void
+	{
+		global $USER;
+
+		$userId = $USER->GetID();
+
+		$newTree = new Tree($treeTitle, (int)$userId, new DateTime(),);
+		TreeService::addTree($newTree);
+
 	}
 }
