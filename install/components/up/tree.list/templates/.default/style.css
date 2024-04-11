@@ -1,7 +1,18 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
 
 body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 	background-image: none !important;
+}
+
+footer {
+	margin-top: auto;
+}
+.columns {
+	display: flex;
+	gap: 2%;
 }
 
 .card {
@@ -13,7 +24,7 @@ body {
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.button-add {
+.button-add-tree {
 	background-color: #00ceaa !important;
 	font-family: 'MorningBreeze', sans-serif, Helvetica;
 }
@@ -25,7 +36,7 @@ body {
 .create-tree-form {
 	display: flex;
 	justify-content: center;
-	padding-top: 5%;
+	padding-top: 10%;
 }
 
 .emerald-color {
