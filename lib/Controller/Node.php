@@ -9,6 +9,7 @@ use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\Date;
+use Exception;
 use Up\Tree\Entity\FamilyRelation;
 use Up\Tree\Entity\FamilyRelationMarried;
 use Up\Tree\Entity\Person;
@@ -24,7 +25,6 @@ class Node extends Engine\Controller
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 * @throws ArgumentException
-	 * @throws \JsonException
 	 */
 	public function getPersonsAction(int $treeId): array
 	{
@@ -42,7 +42,7 @@ class Node extends Engine\Controller
 	/**
 	 * @throws SqlException
 	 * @throws ObjectException
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function addAction(array $person, array $personConnectedIds, string $relationType): array
 	{
@@ -67,7 +67,7 @@ class Node extends Engine\Controller
 
 	/**
 	 * @throws ObjectException
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function updateAction(int $id, array $updatablePerson): bool
 	{
@@ -85,7 +85,7 @@ class Node extends Engine\Controller
 	}
 
 	/**
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function removeAction(int $id):void
 	{
@@ -96,6 +96,5 @@ class Node extends Engine\Controller
 		{
 			throw new SqlException("Error when deleting person");
 		}
-
 	}
 }
