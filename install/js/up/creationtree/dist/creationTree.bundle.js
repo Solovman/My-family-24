@@ -178,6 +178,10 @@ this.BX.Up = this.BX.Up || {};
 	      var treeID = parseInt(window.location.href.match(/\d+/));
 	      var family = new FamilyTree(document.getElementById('tree'), {
 	        mouseScrool: FamilyTree.action.scroll,
+	        searchDisplayField: 'name',
+	        searchFieldsWeight: {
+	          "name": 100
+	        },
 	        mode: 'light',
 	        template: 'hugo',
 	        nodeTreeMenu: true,
@@ -195,7 +199,8 @@ this.BX.Up = this.BX.Up || {};
 	        nodes: this.nodeList.persons,
 	        nodeBinding: {
 	          field_0: 'name',
-	          field_1: 'photo'
+	          field_1: "surname",
+	          field_2: 'photo'
 	        },
 	        editForm: {
 	          titleBinding: "name",

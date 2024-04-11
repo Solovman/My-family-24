@@ -41,6 +41,10 @@ export class CreationTree
 		let treeID =  parseInt(window.location.href.match(/\d+/));
 		let family =  new FamilyTree(document.getElementById('tree'), {
 			mouseScrool: FamilyTree.action.scroll,
+			searchDisplayField: 'name',
+			searchFieldsWeight: {
+				"name": 100,
+			},
 			mode: 'light',
 			template: 'hugo',
 			nodeTreeMenu: true,
@@ -49,10 +53,12 @@ export class CreationTree
 				edit: {text: 'Edit'},
 				details: {text: 'Details'},
 			},
+
 			nodes: this.nodeList.persons,
 			nodeBinding: {
 				field_0: 'name',
-				field_1: 'photo',
+				field_1: "surname",
+				field_2: 'photo',
 			},
 
 			editForm: {
@@ -81,9 +87,16 @@ export class CreationTree
 		});
 
 		const self = this;
-
 		const buttonPDF = BX('pdf');
 		const buttonJSON = BX('json');
+
+		function pdfPreview(nodeId) {
+			FamilyTree.pdfPrevUI.show(family, {
+				format: "A4",
+				header: 'My Header',
+				footer: 'My Footer. Page {current-page} of {total-pages}'
+			});
+		}
 
 		BX.bind(buttonPDF, 'click', () => {
 			family.exportPDF();
@@ -92,6 +105,7 @@ export class CreationTree
 		BX.bind(buttonJSON, 'click', filename => {
 			family.exportJSON(filename);
 		});
+
 
         FamilyTree.templates.tommy_male.defs =
 			`<g transform="matrix(0.05,0,0,0.05,-12,-9)" id="heart">

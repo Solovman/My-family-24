@@ -13,7 +13,7 @@ text {
 }
 
 .bft-light .bft-input>input, .bft-light .bft-input>select {
-	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	font-family: 'MorningBreeze', sans-serif, Helvetica !important;
 	font-size: 22px;
 	font-weight: 400;
 }
@@ -25,6 +25,14 @@ text {
 
 .bft-form-fieldset {
 	font-size: 18px;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+}
+
+.node {
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+}
+
+.bft-input label {
 	font-family: 'MorningBreeze', sans-serif, Helvetica;
 }
 
@@ -41,4 +49,8 @@ input {
 	height: 50px;
 	z-index: 20;
 	background-color: #ff6068;
+}
+
+.bft-link-bft-button {
+	display: none;
 }
