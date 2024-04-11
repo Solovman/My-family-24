@@ -31,8 +31,8 @@ export class TreeList
 			.then(treeList => {
 				this.treeList = treeList;
 				console.log(this.treeList);
-				console.log('Hi')
-				//this.render();
+
+				this.render();
 			});
 	}
 

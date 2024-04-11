@@ -27,7 +27,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 						</div>
 					</div>
 				</div>
-				<button class="subscriptions__button">Купить</button>
+				<button id="free" class="subscriptions__button">Купить</button>
 			</div>
 		</li>
 		<li class="subscriptions__item">
@@ -46,7 +46,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 						</div>
 					</div>
 				</div>
-				<button class="subscriptions__button">Купить</button>
+				<button id="standard" class="subscriptions__button">Купить</button>
 			</div>
 		</li>
 		<li class="subscriptions__item">
@@ -65,7 +65,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 						</div>
 					</div>
 				</div>
-				<button class="subscriptions__button">Купить</button>
+				<button id="premium" class="subscriptions__button">Купить</button>
 			</div>
 		</li>
 	</ul>
@@ -73,35 +73,36 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 <div id="bx_popup_form" style="display:none; padding:10px;min-height: 300px" class="bx_login_popup_form">
 	<div class="sign-up-modal">
-		<div id="close-modal-button"></div>
+<!--		<div id="close-modal-button"></div>-->
 		<div class="logo-container">
-			<svg class="logo" width="94.4px" height="56px">
-				<g>
-					<polygon points="49.3,56 49.3,0 0,28 	" />
-					<path d="M53.7,3.6v46.3l40.7-23.2L53.7,3.6z M57.7,10.6l28.4,16.2L57.7,42.9V10.6z" />
-				</g>
-			</svg>
+			<svg height="60px" width="60px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+				 viewBox="0 0 512 512"  xml:space="preserve">
+				<style type="text/css">
+					.st0{fill:#ffffff;}
+				</style>
+					<g>
+						<path class="st0" d="M362.52,283.124c13.229,0.369,55.903-5.18,86.724-23.296c-61.625-29.739-119.02-104.774-119.02-104.774
+						s30.673,4.197,69.838-16.82c-73.28-28.017-144.054-126.775-144.054-126.775s-70.772,98.758-144.07,126.775
+						c39.181,21.017,69.854,16.82,69.854,16.82s-57.411,75.034-119.02,104.774c30.805,18.115,73.494,23.664,86.724,23.296
+						C124.283,308.781,65.166,357.995,0,385.225c37.854,23.321,117.79,44.731,199.727,51.92l6.984,63.395h98.594l6.984-63.395
+						c81.937-7.189,161.857-28.599,199.711-51.92C446.85,357.995,387.717,308.781,362.52,283.124z"/>
+					</g>
+				</svg>
 		</div>
 
 		<form class="details">
 			<div class="input-container">
-				<input class="col-sm-12 email-input with-placeholder" id="email" type="email" placeholder="Email" />
+				<input id="phone" type="tel" placeholder="Phone" />
 			</div>
 			<div class="input-container">
-				<input class="col-sm-5 username-input with-placeholder" id="username" type="text" placeholder="Username" maxlength="8" />
+				<input id="card" type="text" placeholder="Card number" maxlength="8" />
 			</div>
-			<div class="input-container">
-				<input class="col-sm-5 col-sm-push-2 password-input with-placeholder" id="password" type="password" placeholder="Password" />
+			<div class="input-container input-info-card">
+				<input class="input-info" id="month" type="text" placeholder="Month" maxlength="8" />
+				<input class="input-info" id="year" type="text" placeholder="Year" maxlength="8" />
+				<input class="input-info" id="cvc" type="text" placeholder="CVC" maxlength="8" />
 			</div>
-
-			<div class="col-sm-12 form-checkbox">
-				<label>
-					<input type="checkbox" value="true"> Keep me signed in</label>
-			</div>
-
-			<input id="sign-up-button" type="submit" value="Sign Up">
-
-			<p>Already have an account? <a href="#signIn">Sign in</a></p>
+			<input id="sign-up-button" type="submit" value="Купить">
 		</form>
 	</div>
 </div>

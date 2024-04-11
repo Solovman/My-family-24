@@ -16,7 +16,15 @@ export class Form
 				{
 					this.setContent(BX("bx_popup_form"));
 				},
-			}
+				onPopupClose: function ()
+				{
+					const modal = document.querySelector('.sign-up-modal');
+
+					BX.removeClass(modal, 'sing-modal-free');
+					BX.removeClass(modal, 'sing-modal-standard');
+					BX.removeClass(modal, 'sing-modal-premium');
+				}
+			},
 		});
 
 		buyPopup.show();

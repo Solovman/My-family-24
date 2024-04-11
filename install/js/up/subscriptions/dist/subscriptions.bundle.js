@@ -28,6 +28,12 @@ this.BX.Up = this.BX.Up || {};
 	        events: {
 	          onPopupShow: function onPopupShow() {
 	            this.setContent(BX("bx_popup_form"));
+	          },
+	          onPopupClose: function onPopupClose() {
+	            var modal = document.querySelector('.sign-up-modal');
+	            BX.removeClass(modal, 'sing-modal-free');
+	            BX.removeClass(modal, 'sing-modal-standard');
+	            BX.removeClass(modal, 'sing-modal-premium');
 	          }
 	        }
 	      });
@@ -46,12 +52,30 @@ this.BX.Up = this.BX.Up || {};
 	  babelHelpers.createClass(Subscriptions, [{
 	    key: "setEvents",
 	    value: function setEvents() {
+	      var _this = this;
 	      var subscriptionsButton = document.querySelectorAll('.subscriptions__button');
 	      subscriptionsButton.forEach(function (btn) {
 	        BX.bind(btn, 'click', function () {
+	          _this.addClass(btn.id);
 	          Form.render();
 	        });
 	      });
+	    }
+	  }, {
+	    key: "addClass",
+	    value: function addClass(id) {
+	      var modal = document.querySelector('.sign-up-modal');
+	      switch (id) {
+	        case 'free':
+	          BX.addClass(modal, 'sing-modal-free');
+	          break;
+	        case 'standard':
+	          BX.addClass(modal, 'sing-modal-standard');
+	          break;
+	        case 'premium':
+	          BX.addClass(modal, 'sing-modal-premium');
+	          break;
+	      }
 	    }
 	  }]);
 	  return Subscriptions;
