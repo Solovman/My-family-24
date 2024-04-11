@@ -41,32 +41,27 @@ class Trees extends Engine\Controller
 	/**
 	 * @throws SqlException
 	 */
-	public function initAction(array $tree): void
-	{
-		$node = new Person(
-			0,
-			'Your name',
-			'Your surname',
-			new Date(),
-			null,
-			null,
-			(int)$tree['treeId']
-		);
-
-		PersonService::addPerson($node, [0], 'init');
-	}
-
-	/**
-	 * @throws SqlException
-	 */
 	public function addTreeAction(string $treeTitle): void
 	{
-		global $USER;
+		global $USER, $DB;
 
 		$userId = $USER->GetID();
 
-		$newTree = new Tree($treeTitle, (int)$userId, new DateTime(),);
+		$newTree = new Tree($treeTitle, (int)$userId, new DateTime());
 		TreeService::addTree($newTree);
+		$newTreeId = $DB->LastID();
+
+		$initialNode = new Person(
+			0,
+			'Enter your name',
+			'Enter your surname',
+			new Date(),
+			null,
+			'',
+			(int)$newTreeId,
+		);
+
+		PersonService::addPerson($initialNode, [0], 'init');
 
 	}
 }
