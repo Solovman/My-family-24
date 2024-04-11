@@ -7,7 +7,9 @@ Install module using admin panel
 Set `Family tree template` as your primary site template
 
 ## Installing the template
-![img.png](screenshots/img.png)
+![template.png](screenshots/template.png)
+## Uncheck the boxes in the Bitrix authentication settings
+![register.png](screenshots/register.png)
 
 ## Setup modern Bitrix routing
 
