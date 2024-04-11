@@ -21,7 +21,31 @@ export class TreeList
 
 		this.treeList = [];
 
+		const addButton = BX('addTreeButton');
+		addButton.addEventListener('click', () => {
+			this.handleAddTreeButtonClick()});
+
 		this.reload();
+	}
+	handleAddTreeButtonClick() {
+
+		const inputTitle = BX('treeTitleInput');
+		const treeTitle = inputTitle.value.trim();
+		const warningMessage = BX('warningMessage');
+
+
+		if (treeTitle !== '') {
+
+			this.addTree(treeTitle).then(() => {
+				inputTitle.value = '';
+				this.reload();
+			}).catch((error) => {
+				console.error('Error adding tree:', error);
+			});
+		} else {
+			warningMessage.textContent = 'Please enter a tree title!';
+			console.error('Tree title is empty');
+		}
 	}
 
 	reload()
@@ -52,6 +76,22 @@ export class TreeList
 					console.error(error);
 				})
 			;
+		});
+	}
+	addTree(treeTitle)
+	{
+		return new Promise((resolve, reject) =>
+		{
+			BX.ajax.runAction('up:tree.trees.addTree', {
+				data: { treeTitle: treeTitle }
+			}).then((response) =>
+				{
+					resolve(response.data);
+				})
+				.catch((error) =>
+				{
+					reject(error);
+				});
 		});
 	}
 
