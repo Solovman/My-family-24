@@ -44,7 +44,7 @@ class TreeService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getTree(int $userId, int $treeId): ?Tree
+	public static function getTree(int $userId, int $treeId)
 	{
 		$treeData = TreeTable::query()->setSelect(['ID', 'TITLE', 'USER_ID', 'CREATED_AT'])->setFilter(
 			['USER_ID' => $userId, 'ID'=> $treeId]
@@ -72,6 +72,11 @@ class TreeService
 		foreach ($tree->getPersons() as $person)
 		{
 			$personIds[] = $person->getId();
+		}
+
+		if(empty($personIds))
+		{
+			$personIds[] = 0;
 		}
 
 		$relations = FamilyRelationService::getFamilyRelationByPersonsIds($personIds);

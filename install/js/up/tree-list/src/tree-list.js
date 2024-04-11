@@ -21,8 +21,31 @@ export class TreeList
 
 		this.treeList = [];
 
+		const addButton = BX('addTreeButton');
+		addButton.addEventListener('click', () => {
+			this.handleAddTreeButtonClick()});
+
 		this.reload();
-		console.log('qq');
+	}
+	handleAddTreeButtonClick() {
+
+		const inputTitle = BX('treeTitleInput');
+		const treeTitle = inputTitle.value.trim();
+		const warningMessage = BX('warningMessage');
+
+
+		if (treeTitle !== '') {
+
+			this.addTree(treeTitle).then(() => {
+				inputTitle.value = '';
+				this.reload();
+			}).catch((error) => {
+				console.error('Error adding tree:', error);
+			});
+		} else {
+			warningMessage.textContent = 'Please enter a tree title!';
+			console.error('Tree title is empty');
+		}
 	}
 
 	reload()
@@ -55,17 +78,33 @@ export class TreeList
 			;
 		});
 	}
+	addTree(treeTitle)
+	{
+		return new Promise((resolve, reject) =>
+		{
+			BX.ajax.runAction('up:tree.trees.addTree', {
+				data: { treeTitle: treeTitle }
+			}).then((response) =>
+				{
+					resolve(response.data);
+				})
+				.catch((error) =>
+				{
+					reject(error);
+				});
+		});
+	}
 
 	render()
 	{
 		this.rootNode.innerHTML = '';
 
-		const treeContainerNode = Tag.render`<div class="columns"></div>`;
+		const treeContainerNode = Tag.render`<div class="columns my-container"></div>`;
 
 		this.treeList.forEach(trees => {
 			const treeNode = Tag.render`
-				<div class="columns is-multiline my-container">
-					<div class="column is-one-fifth">
+				<div class="columns is-multiline">
+					<div class="column is-two-fifth">
 						<div class="card">
 							<header class="card-header is-size-4 emerald-color">
 									<a href="/tree/${trees.id}/" class="card-header-title">

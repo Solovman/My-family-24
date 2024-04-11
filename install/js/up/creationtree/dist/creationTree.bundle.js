@@ -33,6 +33,7 @@ this.BX.Up = this.BX.Up || {};
 	            id: id,
 	            fileName: fileName,
 	            updatablePerson: {
+	              imageId: 0,
 	              name: name,
 	              surname: surname,
 	              birthDate: birthDate,
