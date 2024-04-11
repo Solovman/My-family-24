@@ -22,7 +22,6 @@ export class TreeList
 		this.treeList = [];
 
 		this.reload();
-		console.log('qq');
 	}
 
 	reload()
@@ -60,12 +59,12 @@ export class TreeList
 	{
 		this.rootNode.innerHTML = '';
 
-		const treeContainerNode = Tag.render`<div class="columns"></div>`;
+		const treeContainerNode = Tag.render`<div class="columns my-container"></div>`;
 
 		this.treeList.forEach(trees => {
 			const treeNode = Tag.render`
-				<div class="columns is-multiline my-container">
-					<div class="column is-one-fifth">
+				<div class="columns is-multiline">
+					<div class="column is-two-fifth">
 						<div class="card">
 							<header class="card-header is-size-4 emerald-color">
 									<a href="/tree/${trees.id}/" class="card-header-title">
