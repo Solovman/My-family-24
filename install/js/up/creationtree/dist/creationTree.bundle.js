@@ -26,13 +26,13 @@ this.BX.Up = this.BX.Up || {};
 	    }
 	  }, {
 	    key: "updateNode",
-	    value: function updateNode(id, name, surname, birthDate, deathDate, gender, treeId) {
+	    value: function updateNode(id, fileName, name, surname, birthDate, deathDate, gender, treeId) {
 	      return new Promise(function (resolve, reject) {
 	        BX.ajax.runAction('up:tree.node.update', {
 	          data: {
 	            id: id,
+	            fileName: fileName,
 	            updatablePerson: {
-	              imageId: 0,
 	              name: name,
 	              surname: surname,
 	              birthDate: birthDate,
@@ -50,12 +50,12 @@ this.BX.Up = this.BX.Up || {};
 	    }
 	  }, {
 	    key: "addNode",
-	    value: function addNode(name, surname, gender, birthDate, deathDate, treeId, personConnectedIds, relationType) {
+	    value: function addNode(fileName, name, surname, gender, birthDate, deathDate, treeId, personConnectedIds, relationType) {
 	      return new Promise(function (resolve, reject) {
 	        BX.ajax.runAction('up:tree.node.add', {
 	          data: {
+	            fileName: fileName,
 	            person: {
-	              imageId: 0,
 	              name: name,
 	              surname: surname,
 	              birthDate: birthDate,
@@ -99,32 +99,36 @@ this.BX.Up = this.BX.Up || {};
 	  babelHelpers.createClass(Helper, null, [{
 	    key: "addRelation",
 	    value: function addRelation(list) {
-	      list.familyRelations.forEach(function (parent) {
-	        var nodeToUpdateParent = list.persons.find(function (node) {
-	          return node.id === parent.childId;
-	        });
-	        var parents = list.persons.find(function (node) {
-	          return node.id === parent.parentId;
-	        });
-	        if (parents.gender === 'male') {
-	          nodeToUpdateParent.fid = parent.parentId;
-	        } else {
-	          nodeToUpdateParent.mid = parent.parentId;
-	        }
-	      });
-	      list.familyRelationsMarried.forEach(function (partner) {
-	        var nodeToUpdateMarried = list.persons.find(function (node) {
-	          return node.id === partner.personID;
-	        });
-	        if (nodeToUpdateMarried) {
-	          if (!nodeToUpdateMarried.pids) {
-	            nodeToUpdateMarried.pids = [];
+	      if (list.familyRelations.length !== 0) {
+	        list.familyRelations.forEach(function (parent) {
+	          var nodeToUpdateParent = list.persons.find(function (node) {
+	            return node.id === parent.childId;
+	          });
+	          var parents = list.persons.find(function (node) {
+	            return node.id === parent.parentId;
+	          });
+	          if (parents.gender === 'male') {
+	            nodeToUpdateParent.fid = parent.parentId;
+	          } else {
+	            nodeToUpdateParent.mid = parent.parentId;
 	          }
-	          if (!nodeToUpdateMarried.pids.includes(partner.partnerID)) {
-	            nodeToUpdateMarried.pids.push(partner.partnerID);
+	        });
+	      }
+	      if (list.familyRelationsMarried.length !== 0) {
+	        list.familyRelationsMarried.forEach(function (partner) {
+	          var nodeToUpdateMarried = list.persons.find(function (node) {
+	            return node.id === partner.personID;
+	          });
+	          if (nodeToUpdateMarried) {
+	            if (!nodeToUpdateMarried.pids) {
+	              nodeToUpdateMarried.pids = [];
+	            }
+	            if (!nodeToUpdateMarried.pids.includes(partner.partnerID)) {
+	              nodeToUpdateMarried.pids.push(partner.partnerID);
+	            }
 	          }
-	        }
-	      });
+	        });
+	      }
 	    }
 	  }, {
 	    key: "isNumeric",
@@ -146,6 +150,7 @@ this.BX.Up = this.BX.Up || {};
 	  return Helper;
 	}();
 
+	var _templateObject;
 	var CreationTree = /*#__PURE__*/function () {
 	  function CreationTree() {
 	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -169,6 +174,9 @@ this.BX.Up = this.BX.Up || {};
 	      var id = parseInt(window.location.href.match(/\d+/));
 	      Requests.loadNodes(id).then(function (nodeList) {
 	        _this.nodeList = nodeList;
+	        _this.nodeList.persons.forEach(function (date) {
+	          date.birthDate = new Date(date.birthDate);
+	        });
 	        _this.render();
 	      });
 	    }
@@ -179,6 +187,7 @@ this.BX.Up = this.BX.Up || {};
 	      var family = new FamilyTree(document.getElementById('tree'), {
 	        mouseScrool: FamilyTree.action.scroll,
 	        searchDisplayField: 'name',
+	        searchFields: ["name", "surname"],
 	        searchFieldsWeight: {
 	          "name": 100
 	        },
@@ -200,13 +209,22 @@ this.BX.Up = this.BX.Up || {};
 	        nodeBinding: {
 	          field_0: 'name',
 	          field_1: "surname",
-	          field_2: 'photo'
+	          img_0: 'photo'
 	        },
 	        editForm: {
 	          titleBinding: "name",
 	          photoBinding: "photo",
 	          addMore: null,
 	          generateElementsFromFields: false,
+	          buttons: {
+	            edit: {
+	              onClick: function onClick() {
+	                alert('test');
+	              }
+	            },
+	            share: null,
+	            remove: null
+	          },
 	          elements: [{
 	            type: 'textbox',
 	            label: 'Name',
@@ -218,11 +236,11 @@ this.BX.Up = this.BX.Up || {};
 	          }, [{
 	            type: 'date',
 	            label: 'Date Of Birth',
-	            binding: 'born'
+	            binding: 'birthDate'
 	          }, {
 	            type: 'date',
 	            label: 'Date Of Death',
-	            binding: 'death'
+	            binding: 'deathDate'
 	          }], [{
 	            type: 'select',
 	            options: [{
@@ -265,101 +283,6 @@ this.BX.Up = this.BX.Up || {};
 	        if (args.cnode.ppid != undefined) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + args.p.xa + '" y="' + args.p.ya + '"/>';
 	        if (args.cnode.isPartner && args.node.partnerSeparation == 30) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + args.p.xb + '" y="' + args.p.yb + '"/>';
 	      });
-	      var onUpdateNodeAdded = false;
-	      var onUpdatePerson = false;
-	      family.on('click', function (sender, args) {
-	        if (args.node.id && typeof args.node.id === "string" && !onUpdateNodeAdded) {
-	          onUpdateNodeAdded = true;
-	          family.onUpdateNode(function (args) {
-	            var updateNodes = args.updateNodesData;
-	            var addNodes = args.addNodesData;
-	            var removeNodes = args.removeNodeId;
-	            if (Object.keys(addNodes).length === 0 && removeNodes === null) {
-	              var gender = updateNodes[0].gender[0];
-	              var name = updateNodes[0].name;
-	              var surname = updateNodes[0].surname;
-	              var birthDate = Helper.formatDate(updateNodes[0].born);
-	              var deathDate;
-	              if (updateNodes[0].death.length === 0) {
-	                deathDate = null;
-	              } else {
-	                deathDate = Helper.formatDate(updateNodes[0].death);
-	              }
-	              var personConnectedId = [Number(updateNodes[0].pids[0])];
-	              if (updateNodes[0].mid || updateNodes[0].fid) {
-	                if (Helper.isNumeric(updateNodes[0].mid) && Helper.isNumeric(updateNodes[0].fid)) {
-	                  personConnectedId = [Number(updateNodes[0].mid), Number(updateNodes[0].fid)];
-	                } else if (Helper.isNumeric(updateNodes[0].mid) && !Helper.isNumeric(updateNodes[0].fid)) {
-	                  personConnectedId = [Number(updateNodes[0].mid)];
-	                } else if (Helper.isNumeric(updateNodes[0].fid) && !Helper.isNumeric(updateNodes[0].mid)) {
-	                  personConnectedId = [Number(updateNodes[0].fid)];
-	                }
-	                Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(function (node) {
-	                  self.reload();
-	                });
-	                return;
-	              }
-	              if (updateNodes[0].child && updateNodes[0].pids.length === 0 && updateNodes[0].pids[0] !== 0) {
-	                if (updateNodes[0].child.mid) {
-	                  personConnectedId = [updateNodes[0].child.mid];
-	                } else {
-	                  personConnectedId = [updateNodes[0].child.fid];
-	                }
-	                Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(function (node) {
-	                  self.reload();
-	                });
-	                return;
-	              }
-	              if (updateNodes[0].child && updateNodes[0].pids.length !== 0 && updateNodes[0].pids[0] !== 0) {
-	                var partner = updateNodes[0].pids[0];
-	                var childID = 0;
-	                if (updateNodes[0].child.mid) {
-	                  childID = updateNodes[0].child.mid;
-	                } else {
-	                  childID = updateNodes[0].child.fid;
-	                }
-	                personConnectedId = [partner, childID];
-	                Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(function (node) {
-	                  self.reload();
-	                });
-	                return;
-	              }
-	              if (updateNodes[0].pids.length !== 0) {
-	                Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(function (node) {
-	                  self.reload();
-	                });
-	                return;
-	              }
-	              Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(function (node) {
-	                self.reload();
-	              });
-	            }
-	          });
-	        } else if (!onUpdatePerson) {
-	          onUpdatePerson = true;
-	          family.onUpdateNode(function (args) {
-	            if (Object.keys(args.addNodesData).length !== 0) {
-	              return;
-	            }
-	            var updateNodes = args.updateNodesData;
-	            var id = updateNodes[0].id;
-	            var gender = updateNodes[0].gender[0];
-	            var name = updateNodes[0].name;
-	            var surname = updateNodes[0].surname;
-	            var birthDate = Helper.formatDate(updateNodes[0].born);
-	            var deathDate;
-	            if (updateNodes[0].death.length === 0) {
-	              deathDate = null;
-	            } else {
-	              deathDate = Helper.formatDate(updateNodes[0].death);
-	            }
-	            Requests.updateNode(id, name, surname, birthDate, deathDate, gender, treeID).then(function (node) {
-	              self.reload();
-	              return node;
-	            });
-	          });
-	        }
-	      });
 	      family.onUpdateNode(function (args) {
 	        var updateNodes = args.updateNodesData;
 	        var addNodes = args.addNodesData;
@@ -395,19 +318,124 @@ this.BX.Up = this.BX.Up || {};
 	            text: 'Edit'
 	          },
 	          remove: {
-	            text: 'Remove',
-	            onClick: function onClick() {
-	              Requests.removeNode(args.firstNodeId).then(function (node) {
-	                self.reload();
-	              });
-	            }
+	            text: 'Remove'
 	          },
 	          details: {
 	            text: "Details"
 	          }
 	        };
 	      });
-	      return family;
+	      var onUpdateNodeAdded = false;
+	      var onUpdatePerson = false;
+	      family.on('click', function (sender, args) {
+	        if (args.node.id && typeof args.node.id === "string" && !onUpdateNodeAdded) {
+	          onUpdateNodeAdded = true;
+	          family.onUpdateNode(function (args) {
+	            var updateNodes = args.updateNodesData;
+	            var addNodes = args.addNodesData;
+	            var removeNodes = args.removeNodeId;
+	            if (Object.keys(addNodes).length === 0 && removeNodes === null) {
+	              var gender = updateNodes[0].gender[0];
+	              var name = updateNodes[0].name;
+	              var surname = updateNodes[0].surname;
+	              var fileName = updateNodes[0].photo;
+	              var birthDate = Helper.formatDate(updateNodes[0].birthDate);
+	              var deathDate = Helper.formatDate(updateNodes[0].deathDate);
+	              if (updateNodes[0].deathDate.length === 0) {
+	                deathDate = null;
+	              }
+	              if (updateNodes[0].birthDate.length === 0) {
+	                birthDate = null;
+	              }
+	              if (fileName.length === 0) {
+	                fileName = '/local/modules/up.tree/images/user_default.png';
+	              }
+	              var personConnectedId = [Number(updateNodes[0].pids[0])];
+	              if (updateNodes[0].mid || updateNodes[0].fid) {
+	                if (Helper.isNumeric(updateNodes[0].mid) && Helper.isNumeric(updateNodes[0].fid)) {
+	                  personConnectedId = [Number(updateNodes[0].mid), Number(updateNodes[0].fid)];
+	                } else if (Helper.isNumeric(updateNodes[0].mid) && !Helper.isNumeric(updateNodes[0].fid)) {
+	                  personConnectedId = [Number(updateNodes[0].mid)];
+	                } else if (Helper.isNumeric(updateNodes[0].fid) && !Helper.isNumeric(updateNodes[0].mid)) {
+	                  personConnectedId = [Number(updateNodes[0].fid)];
+	                }
+	                Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(function (node) {
+	                  self.reload();
+	                });
+	                return;
+	              }
+	              if (updateNodes[0].child && updateNodes[0].pids.length === 0 && updateNodes[0].pids[0] !== 0) {
+	                if (updateNodes[0].child.mid) {
+	                  personConnectedId = [updateNodes[0].child.mid];
+	                } else {
+	                  personConnectedId = [updateNodes[0].child.fid];
+	                }
+	                Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(function (node) {
+	                  self.reload();
+	                });
+	                return;
+	              }
+	              if (updateNodes[0].child && updateNodes[0].pids.length !== 0 && updateNodes[0].pids[0] !== 0) {
+	                var partner = updateNodes[0].pids[0];
+	                var childID = 0;
+	                if (updateNodes[0].child.mid) {
+	                  childID = updateNodes[0].child.mid;
+	                } else {
+	                  childID = updateNodes[0].child.fid;
+	                }
+	                personConnectedId = [partner, childID];
+	                Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(function (node) {
+	                  self.reload();
+	                });
+	                return;
+	              }
+	              if (updateNodes[0].pids.length !== 0) {
+	                Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(function (node) {
+	                  self.reload();
+	                });
+	                return;
+	              }
+	              Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(function (node) {
+	                self.reload();
+	              });
+	            }
+	          });
+	        } else if (!onUpdatePerson) {
+	          onUpdatePerson = true;
+	          family.onUpdateNode(function (args) {
+	            if (Object.keys(args.addNodesData).length !== 0) {
+	              return;
+	            }
+	            var updateNodes = args.updateNodesData;
+	            var id = updateNodes[0].id;
+	            var gender = updateNodes[0].gender[0];
+	            var name = updateNodes[0].name;
+	            var surname = updateNodes[0].surname;
+	            var fileName = updateNodes[0].photo;
+	            var fileNameLoad = BX('photoName').value;
+	            var birthDate = Helper.formatDate(updateNodes[0].birthDate);
+	            var deathDate = Helper.formatDate(updateNodes[0].deathDate);
+	            if (updateNodes[0].deathDate.length === 0) {
+	              deathDate = null;
+	            }
+	            if (updateNodes[0].birthDate.length === 0) {
+	              birthDate = null;
+	            }
+	            Requests.updateNode(id, fileName, name, surname, birthDate, deathDate, gender, treeID).then(function (node) {
+	              self.reload();
+	              return node;
+	            });
+	          });
+	        }
+	        sender.editUI.show(args.node.id, false);
+	        var form = document.querySelector('.bft-edit-form');
+	        var editForm = document.querySelector('.bft-edit-form-fields');
+	        form.enctype = "multipart/form-data";
+	        form.action = '/subscriptions/';
+	        var formFile = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"my-file\">\n\t\t\t"])));
+	        editForm.append(formFile);
+	        return false;
+	      });
 	    }
 	  }, {
 	    key: "render",

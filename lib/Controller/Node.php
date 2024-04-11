@@ -2,17 +2,14 @@
 
 namespace Up\Tree\Controller;
 
-use Bitrix\Main\Application;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\Date;
-use Up\Tree\Entity\FamilyRelation;
-use Up\Tree\Entity\FamilyRelationMarried;
+use Up\Tree\Entity\Image;
 use Up\Tree\Entity\Person;
-use Up\Tree\Services\Repository\FamilyRelationService;
 use \Up\Tree\Services\Repository\PersonService;
 use \Bitrix\Main\DB\SqlException;
 use Up\Tree\Services\Repository\TreeService;
@@ -44,10 +41,11 @@ class Node extends Engine\Controller
 	 * @throws ObjectException
 	 * @throws \Exception
 	 */
-	public function addAction(array $person, array $personConnectedIds, string $relationType): array
+	public function addAction(array $person, string $fileName, array $personConnectedIds, string $relationType): array
 	{
 		$node  = new Person(
 			(int) $person['imageId'],
+			$fileName,
 			$person['name'],
 			$person['surname'],
 			new Date($person['birthDate']),
@@ -56,8 +54,10 @@ class Node extends Engine\Controller
 			(int) $person['treeId']
 		);
 
+		$image = new Image($fileName);
+
 		try {
-			return PersonService::addPerson($node, $personConnectedIds, $relationType);
+			return PersonService::addPerson($node, $image, $personConnectedIds, $relationType);
 		}
 		catch (SqlException)
 		{
@@ -69,10 +69,11 @@ class Node extends Engine\Controller
 	 * @throws ObjectException
 	 * @throws \Exception
 	 */
-	public function updateAction(int $id, array $updatablePerson): bool
+	public function updateAction(int $id, string $fileName, array $updatablePerson): bool
 	{
 		$node  = new Person(
 			(int) $updatablePerson['imageId'],
+			$fileName,
 			$updatablePerson['name'],
 			$updatablePerson['surname'],
 			new Date($updatablePerson['birthDate']),
@@ -81,7 +82,7 @@ class Node extends Engine\Controller
 			(int) $updatablePerson['treeId']
 		);
 
-		return PersonService::updatePersonById($id, $node);
+		return PersonService::updatePersonById($id, new Image($fileName), $node);
 	}
 
 	/**

@@ -10,7 +10,9 @@ use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Exception;
+use Up\Tree\Entity\Image;
 use Up\Tree\Entity\Person;
+use Up\Tree\Model\FileTable;
 use Up\Tree\Model\MarriedTable;
 use Up\Tree\Model\PersonParentTable;
 use Up\Tree\Model\PersonTable;
@@ -23,12 +25,15 @@ class PersonService
 	 */
 	public static function addPerson(
 		Person $person,
+		Image $image,
 		array  $personConnectedIds,
 		string $relationType
 	): array
 	{
+		$imageID = ImageService::addImage($image);
+
 		$personData = [
-			"IMAGE_ID" => $person->getImageId(),
+			"IMAGE_ID" => $imageID,
 			"NAME" => $person->getName(),
 			"SURNAME" => $person->getSurname(),
 			"BIRTH_DATE" => $person->getBirthDate(),
@@ -154,6 +159,7 @@ class PersonService
 		{
 			$person = new Person(
 				(int)$personData['IMAGE_ID'],
+				self::getImageName((int) $personData['ID']),
 				$personData['NAME'],
 				$personData['SURNAME'],
 				$personData['BIRTH_DATE'],
@@ -171,7 +177,7 @@ class PersonService
 	/**
 	 * @throws Exception
 	 */
-	public static function updatePersonById(int $id, Person $updatablePerson): bool
+	public static function updatePersonById(int $id, Image $image, Person $updatablePerson): bool
 	{
 		$personData = [
 			'NAME' => $updatablePerson->getName(),
@@ -180,9 +186,18 @@ class PersonService
 			'DEATH_DATE' => $updatablePerson->getDeathDate(),
 			'GENDER' => $updatablePerson->getGender(),
 		];
+
+		$photo = [
+			'FILE_NAME' => $image->fileName
+		];
+
 		$result = PersonTable::update($id , $personData);
 
-		if (!$result->isSuccess())
+		$imageId = self::getImageId($id);
+
+		$updateImage = FileTable::update($imageId, $photo);
+
+		if (!$result->isSuccess() || !$updateImage->isSuccess())
 		{
 			return false;
 		}
@@ -205,6 +220,31 @@ class PersonService
 
 
 		PersonTable::delete($id);
+	}
+
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getImageName(int $personID): string
+	{
+		$imageID = PersonTable::query()->setSelect(['IMAGE_ID'])
+			->setFilter(['ID' => $personID])
+			->exec()
+			->fetchObject();
+
+		return ImageService::getImageNameByPerson($imageID->getImageID());
+	}
+
+	public static function getImageId(int $personId): int
+	{
+		$imageId = PersonTable::query()->setSelect(['IMAGE_ID'])
+			->setFilter(['ID' => $personId])
+			->exec()
+			->fetchObject();
+
+		return $imageId->getImageID();
 	}
 }
 

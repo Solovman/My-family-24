@@ -10,6 +10,7 @@ class Person implements Entity
 {
 	public ?int $id;
 	public int $imageId;
+	public string $photo;
 	public string $name;
 	public string $surname;
 	public ?Date $birthDate;
@@ -19,6 +20,7 @@ class Person implements Entity
 
 	/**
 	 * @param $imageId
+	 * @param $photo
 	 * @param $name
 	 * @param $surname
 	 * @param $birthDate
@@ -26,9 +28,10 @@ class Person implements Entity
 	 * @param $gender
 	 * @param $treeId
 	 */
-	public function __construct($imageId, $name, $surname, $birthDate, $deathDate, $gender, $treeId)
+	public function __construct($imageId, $photo, $name, $surname, $birthDate, $deathDate, $gender, $treeId)
 	{
 		$this->imageId = $imageId;
+		$this->photo = $photo;
 		$this->name = $name;
 		$this->surname = $surname;
 		$this->birthDate = $birthDate;

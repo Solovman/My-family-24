@@ -1,4 +1,4 @@
-import {Type} from 'main.core';
+import {Type, Tag} from 'main.core';
 import {Requests} from "./requests.js";
 import {Helper} from "./helper.js";
 
@@ -32,9 +32,15 @@ export class CreationTree
 		const id = parseInt(window.location.href.match(/\d+/));
 		Requests.loadNodes(id).then(nodeList => {
 			this.nodeList = nodeList;
+
+			this.nodeList.persons.forEach(date => {
+				date.birthDate = new Date(date.birthDate);
+			})
+
 			this.render();
 		});
 	}
+
 
 	tree()
 	{
@@ -42,6 +48,7 @@ export class CreationTree
 		let family =  new FamilyTree(document.getElementById('tree'), {
 			mouseScrool: FamilyTree.action.scroll,
 			searchDisplayField: 'name',
+			searchFields: ["name", "surname"],
 			searchFieldsWeight: {
 				"name": 100,
 			},
@@ -50,28 +57,37 @@ export class CreationTree
 			nodeTreeMenu: true,
 			nodeMenu: {
 				remove: {text: 'Remove'},
-				edit: {text: 'Edit'},
+				edit: {
+					text: 'Edit',
+				},
 				details: {text: 'Details'},
 			},
-
 			nodes: this.nodeList.persons,
 			nodeBinding: {
 				field_0: 'name',
 				field_1: "surname",
-				field_2: 'photo',
+				img_0: 'photo'
 			},
-
 			editForm: {
 				titleBinding: "name",
 				photoBinding: "photo",
 				addMore: null,
 				generateElementsFromFields: false,
+				buttons: {
+					edit: {
+						onClick: function () {
+							alert('test');
+						}
+					},
+					share: null,
+					remove: null
+				},
 				elements: [
 					{type: 'textbox', label: 'Name', binding: 'name'},
 					{type: 'textbox', label: 'Surname', binding: 'surname'},
 					[
-						{type: 'date', label: 'Date Of Birth', binding: 'born'},
-						{type: 'date', label: 'Date Of Death', binding: 'death'}
+						{type: 'date', label: 'Date Of Birth', binding: 'birthDate'},
+						{type: 'date', label: 'Date Of Death', binding: 'deathDate'}
 					],
 					[
 						{
@@ -81,7 +97,7 @@ export class CreationTree
 							binding: 'gender'
 						},
 					],
-					{type: 'textbox', label: 'Photo Url', binding: 'photo', btn: 'Upload'},
+					{ type: 'textbox', label: 'Photo Url', binding: 'photo', btn: 'Upload' },
 				]
 			},
 		});
@@ -89,14 +105,6 @@ export class CreationTree
 		const self = this;
 		const buttonPDF = BX('pdf');
 		const buttonJSON = BX('json');
-
-		function pdfPreview(nodeId) {
-			FamilyTree.pdfPrevUI.show(family, {
-				format: "A4",
-				header: 'My Header',
-				footer: 'My Footer. Page {current-page} of {total-pages}'
-			});
-		}
 
 		BX.bind(buttonPDF, 'click', () => {
 			family.exportPDF();
@@ -129,144 +137,6 @@ export class CreationTree
 			if (args.cnode.isPartner && args.node.partnerSeparation == 30)
 				args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + (args.p.xb) + '" y="' + (args.p.yb) + '"/>';
 		});
-
-		let onUpdateNodeAdded = false;
-		let onUpdatePerson = false;
-
-		family.on('click', function(sender, args){
-			if (args.node.id && typeof args.node.id === "string" && !onUpdateNodeAdded)
-			{
-				onUpdateNodeAdded = true;
-				family.onUpdateNode((args) =>
-				{
-					const updateNodes = args.updateNodesData;
-					const addNodes = args.addNodesData;
-					const removeNodes = args.removeNodeId;
-
-					if (Object.keys(addNodes).length === 0 && removeNodes === null)
-					{
-						const gender = updateNodes[0].gender[0];
-						const name = updateNodes[0].name;
-						const surname = updateNodes[0].surname;
-						const birthDate = Helper.formatDate(updateNodes[0].born);
-						let deathDate;
-
-						if (updateNodes[0].death.length === 0) {
-							deathDate = null;
-						} else {
-							deathDate = Helper.formatDate(updateNodes[0].death);
-						}
-
-						let personConnectedId = [Number(updateNodes[0].pids[0])];
-
-						if (updateNodes[0].mid || updateNodes[0].fid)
-						{
-							if (Helper.isNumeric(updateNodes[0].mid) && Helper.isNumeric(updateNodes[0].fid))
-							{
-								personConnectedId = [Number(updateNodes[0].mid), Number(updateNodes[0].fid)];
-							}
-							else if (Helper.isNumeric(updateNodes[0].mid) && !Helper.isNumeric(updateNodes[0].fid))
-							{
-								personConnectedId = [Number(updateNodes[0].mid)];
-							}
-							else if (Helper.isNumeric(updateNodes[0].fid) && !Helper.isNumeric(updateNodes[0].mid))
-							{
-								personConnectedId = [Number(updateNodes[0].fid)]
-							}
-
-							Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(node => {
-								self.reload();
-							});
-
-							return;
-						}
-
-						if (updateNodes[0].child && updateNodes[0].pids.length === 0 && updateNodes[0].pids[0] !== 0) {
-							if (updateNodes[0].child.mid ) {
-								personConnectedId = [updateNodes[0].child.mid];
-							}
-							else
-							{
-								personConnectedId = [updateNodes[0].child.fid];
-							}
-
-							Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(node => {
-								self.reload();
-							});
-
-							return;
-						}
-
-						if (updateNodes[0].child && updateNodes[0].pids.length !== 0 && updateNodes[0].pids[0] !== 0)
-						{
-							const partner = updateNodes[0].pids[0];
-							let childID = 0;
-
-							if (updateNodes[0].child.mid ) {
-								childID = updateNodes[0].child.mid;
-							}
-							else
-							{
-								childID = updateNodes[0].child.fid;
-							}
-
-							personConnectedId = [partner, childID];
-
-							Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(node => {
-								self.reload();
-							});
-
-							return;
-						}
-
-						if (updateNodes[0].pids.length !== 0)
-						{
-							Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(node => {
-								self.reload();
-							});
-
-							return;
-						}
-
-						Requests.addNode(name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(node => {
-							self.reload();
-						});
-					}
-				});
-			}
-			else if(!onUpdatePerson)
-			{
-				onUpdatePerson = true;
-
-				family.onUpdateNode((args) =>
-				{
-					if (Object.keys(args.addNodesData).length !== 0) {
-						return;
-					}
-
-					const updateNodes = args.updateNodesData;
-
-					const id = updateNodes[0].id;
-					const gender = updateNodes[0].gender[0];
-					const name = updateNodes[0].name;
-					const surname = updateNodes[0].surname;
-					const birthDate = Helper.formatDate(updateNodes[0].born);
-					let deathDate;
-
-					if (updateNodes[0].death.length === 0) {
-						deathDate = null;
-					}
-					else {
-						deathDate = Helper.formatDate(updateNodes[0].death);
-					}
-
-					Requests.updateNode(id, name, surname, birthDate, deathDate, gender, treeID).then(node => {
-						self.reload();
-						return node;
-					})
-				})
-			}
-		})
 
 		family.onUpdateNode((args) =>
 		{
@@ -305,15 +175,10 @@ export class CreationTree
 		family.nodeMenuUI.on('show', function(sender, args){
 			args.menu = {
 				edit: {
-					text: 'Edit'
+					text: 'Edit',
 				},
 				remove: {
 					text: 'Remove',
-					onClick: function onClick() {
-						Requests.removeNode(args.firstNodeId).then(node => {
-							self.reload();
-						})
-					}
 				},
 				details: {
 					text: "Details"
@@ -321,7 +186,171 @@ export class CreationTree
 			}
 		});
 
-		return family;
+		let onUpdateNodeAdded = false;
+		let onUpdatePerson = false;
+
+		family.on('click', function(sender, args){
+
+			if (args.node.id && typeof args.node.id === "string" && !onUpdateNodeAdded)
+			{
+				onUpdateNodeAdded = true;
+				family.onUpdateNode((args) =>
+				{
+					const updateNodes = args.updateNodesData;
+					const addNodes = args.addNodesData;
+					const removeNodes = args.removeNodeId;
+
+					if (Object.keys(addNodes).length === 0 && removeNodes === null)
+					{
+						const gender = updateNodes[0].gender[0];
+						const name = updateNodes[0].name;
+						const surname = updateNodes[0].surname;
+						let fileName = updateNodes[0].photo;
+						let birthDate = Helper.formatDate(updateNodes[0].birthDate);
+						let deathDate = Helper.formatDate(updateNodes[0].deathDate);
+
+						if (updateNodes[0].deathDate.length === 0) {
+							deathDate = null;
+						}
+
+						if (updateNodes[0].birthDate.length === 0) {
+							birthDate = null;
+						}
+
+						if (fileName.length === 0) {
+							fileName = '/local/modules/up.tree/images/user_default.png';
+						}
+
+						let personConnectedId = [Number(updateNodes[0].pids[0])];
+
+						if (updateNodes[0].mid || updateNodes[0].fid)
+						{
+							if (Helper.isNumeric(updateNodes[0].mid) && Helper.isNumeric(updateNodes[0].fid))
+							{
+								personConnectedId = [Number(updateNodes[0].mid), Number(updateNodes[0].fid)];
+							}
+							else if (Helper.isNumeric(updateNodes[0].mid) && !Helper.isNumeric(updateNodes[0].fid))
+							{
+								personConnectedId = [Number(updateNodes[0].mid)];
+							}
+							else if (Helper.isNumeric(updateNodes[0].fid) && !Helper.isNumeric(updateNodes[0].mid))
+							{
+								personConnectedId = [Number(updateNodes[0].fid)]
+							}
+
+							Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(node => {
+								self.reload();
+							});
+
+							return;
+						}
+
+						if (updateNodes[0].child && updateNodes[0].pids.length === 0 && updateNodes[0].pids[0] !== 0) {
+
+							if (updateNodes[0].child.mid ) {
+								personConnectedId = [updateNodes[0].child.mid];
+							}
+							else
+							{
+								personConnectedId = [updateNodes[0].child.fid];
+							}
+
+							Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(node => {
+								self.reload();
+							});
+
+							return;
+						}
+
+						if (updateNodes[0].child && updateNodes[0].pids.length !== 0 && updateNodes[0].pids[0] !== 0)
+						{
+							const partner = updateNodes[0].pids[0];
+							let childID = 0;
+
+							if (updateNodes[0].child.mid ) {
+								childID = updateNodes[0].child.mid;
+							}
+							else
+							{
+								childID = updateNodes[0].child.fid;
+							}
+
+							personConnectedId = [partner, childID];
+
+							Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(node => {
+								self.reload();
+							});
+
+							return;
+						}
+
+						if (updateNodes[0].pids.length !== 0)
+						{
+							Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(node => {
+								self.reload();
+							});
+
+							return;
+						}
+
+						Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(node => {
+							self.reload();
+						});
+					}
+				});
+			}
+			else if(!onUpdatePerson)
+			{
+				onUpdatePerson = true;
+
+				family.onUpdateNode((args) =>
+				{
+					if (Object.keys(args.addNodesData).length !== 0) {
+						return;
+					}
+
+					const updateNodes = args.updateNodesData;
+
+					const id = updateNodes[0].id;
+					const gender = updateNodes[0].gender[0];
+					const name = updateNodes[0].name;
+					const surname = updateNodes[0].surname;
+					let fileName = updateNodes[0].photo;
+					let fileNameLoad = BX('photoName').value;
+					let birthDate = Helper.formatDate(updateNodes[0].birthDate);
+					let deathDate = Helper.formatDate(updateNodes[0].deathDate);
+
+					if (updateNodes[0].deathDate.length === 0) {
+						deathDate = null;
+					}
+
+					if (updateNodes[0].birthDate.length === 0) {
+						birthDate = null;
+					}
+
+					Requests.updateNode(id, fileName, name, surname, birthDate, deathDate, gender, treeID).then(node => {
+						self.reload();
+						return node;
+					})
+				})
+			}
+
+			sender.editUI.show(args.node.id, false);
+
+			const form = document.querySelector('.bft-edit-form');
+			const editForm = document.querySelector('.bft-edit-form-fields');
+
+			form.enctype = "multipart/form-data";
+			form.action = '/subscriptions/';
+			const formFile = Tag.render`
+				<input id="photoName" type="file" name="my-file">
+			`;
+
+			editForm.append(formFile);
+
+			return false;
+		})
+
 	}
 
 	render()

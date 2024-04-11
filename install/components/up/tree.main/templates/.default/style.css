@@ -34,6 +34,7 @@ text {
 
 .bft-input label {
 	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	font-size: 15px;
 }
 
 input {
@@ -53,4 +54,11 @@ input {
 
 .bft-link-bft-button {
 	display: none;
+}
+
+image {
+	x: 85;
+	y: -10;
+	width: 80px;
+	height: 80px;
 }
