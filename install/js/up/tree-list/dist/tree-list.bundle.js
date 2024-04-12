@@ -128,14 +128,17 @@ this.BX.Up = this.BX.Up || {};
 	      this.rootNode.innerHTML = '';
 	      var treeContainerNode = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["<div class=\"columns cards-container\"></div>"])));
 	      this.treeList.forEach(function (trees) {
-	        var treeNode = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"columns is-multiline\">\n\t\t\t\t\t<div class=\"column is-two-fifth\">\n\t\t\t\t\t\t<div class=\"card\">\n\t\t\t\t\t\t\t<header class=\"card-header is-size-4 emerald-color\">\n\t\t\t\t\t\t\t\t\t<a href=\"/tree/", "/\" class=\"card-header-title\">\n\t\t\t\t\t\t\t\t\t\t", "\n\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t<form method=\"post\" action=\"/delete/\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"hidden\" name=\"treeId\" value=\"", "\" id=\"treeId\">\n\t\t\t\t\t\t\t\t\t\t\t<button type=\"button\" class=\"card-header-icon\" aria-label=\"delete task\" id=\"delTreeButton\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"icon disabled\">\u274C</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</form>\n\t\t\t\t\t\t\t\t</header>\n\t\t\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t\t\t<span class=\"card-footer-item is-size-6\">\n\t\t\t\t\t\t\t\t\t\t<strong>Created at</strong>: ", "\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</footer>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t<?php\n\t\t\t\t\tendforeach; ?>\n\t\t\t\t</div>\n\t\t\t"])), trees.id, BX.util.htmlspecialchars(trees.title), trees.id, BX.date.format('d-m-Y', trees.createdAt));
+	        var treeNode = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"columns is-multiline\">\n\t\t\t\t\t<div class=\"column is-two-fifth\">\n\t\t\t\t\t\t<div class=\"card\">\n\t\t\t\t\t\t\t<header class=\"card-header is-size-4 emerald-color\">\n\t\t\t\t\t\t\t\t\t<a href=\"/tree/", "/\" class=\"card-header-title\">\n\t\t\t\t\t\t\t\t\t\t", "\n\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t<input type=\"hidden\" name=\"treeId\" value=\"", "\" id=\"treeId\">\n\t\t\t\t\t\t\t\t\t\t\t<button type=\"button\" class=\"card-header-icon delTreeButton\" aria-label=\"delete task\" data-tree-id=\"", "\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"icon disabled\">\u274C</span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</header>\n\t\t\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t\t\t<span class=\"card-footer-item is-size-6\">\n\t\t\t\t\t\t\t\t\t\t<strong>Created at</strong>: ", "\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</footer>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t<?php\n\t\t\t\t\tendforeach; ?>\n\t\t\t\t</div>\n\t\t\t"])), trees.id, BX.util.htmlspecialchars(trees.title), trees.id, trees.id, BX.date.format('d-m-Y', trees.createdAt));
 	        // console.log(trees.id)
 	        treeContainerNode.appendChild(treeNode);
 	      });
 	      this.rootNode.appendChild(treeContainerNode);
-	      var removeButton = BX('delTreeButton');
-	      removeButton.addEventListener('click', function () {
-	        _this5.handleRemoveTreeButtonClick();
+	      var removeButtons = document.querySelectorAll('.delTreeButton');
+	      removeButtons.forEach(function (button) {
+	        button.addEventListener('click', function () {
+	          var treeId = button.getAttribute('data-tree-id');
+	          _this5.handleRemoveTreeButtonClick(treeId);
+	        });
 	      });
 	    }
 	  }]);
