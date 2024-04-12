@@ -21,7 +21,6 @@ class Node extends Engine\Controller
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 * @throws ArgumentException
-	 * @throws \JsonException
 	 */
 	public function getPersonsAction(int $treeId): array
 	{

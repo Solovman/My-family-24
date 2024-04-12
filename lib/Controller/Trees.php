@@ -11,6 +11,7 @@ use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\Date;
+use Up\Tree\Entity\Image;
 use Up\Tree\Entity\Person;
 use Up\Tree\Services\Repository\PersonService;
 use Bitrix\Main\Type\DateTime;
@@ -53,6 +54,7 @@ class Trees extends Engine\Controller
 
 		$initialNode = new Person(
 			0,
+			'',
 			'Enter your name',
 			'Enter your surname',
 			new Date(),
@@ -61,7 +63,7 @@ class Trees extends Engine\Controller
 			(int)$newTreeId,
 		);
 
-		PersonService::addPerson($initialNode, [0], 'init');
+		PersonService::addPerson($initialNode, new Image(''), [0], 'init');
 
 	}
 }
