@@ -348,3 +348,7 @@ body {
 	width: 32%;
 }
 
+#modal-form-heading {
+	text-align: center;
+	font-size: 46px;
+}

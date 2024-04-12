@@ -45,6 +45,8 @@ footer {
 
 .cards-container {
 	padding: 25px 200px;
-	/*display: flex;*/
-	/*flex-direction: column;*/
+}
+
+.columns:not(.is-desktop) {
+	flex-wrap: wrap;
 }

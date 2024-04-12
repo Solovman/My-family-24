@@ -10,70 +10,12 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 ?>
 
 <div class="subscriptions__container">
-	<ul class="subscriptions__list">
-		<li class="subscriptions__item">
-			<div class="nft ntf_1">
-				<div class='main'>
-					<h2 class="subscriptions__heading">Free</h2>
-					<p class='description'>Our Kibertopiks will give you nothing, waste your money on us.</p>
-					<div class='tokenInfo'>
-						<div class="price">
-							<ins>◘</ins>
-							<p>0.031 ETH</p>
-						</div>
-						<div class="duration">
-							<ins>◷</ins>
-							<p>11 days left</p>
-						</div>
-					</div>
-				</div>
-				<button id="free" class="subscriptions__button">Купить</button>
-			</div>
-		</li>
-		<li class="subscriptions__item">
-			<div class="nft ntf_2">
-				<div class='main'>
-					<h2 class="subscriptions__heading">Standard</h2>
-					<p class='description'>Our Kibertopiks will give you nothing, waste your money on us.</p>
-					<div class='tokenInfo'>
-						<div class="price">
-							<ins>◘</ins>
-							<p>0.031 ETH</p>
-						</div>
-						<div class="duration">
-							<ins>◷</ins>
-							<p>11 days left</p>
-						</div>
-					</div>
-				</div>
-				<button id="standard" class="subscriptions__button">Купить</button>
-			</div>
-		</li>
-		<li class="subscriptions__item">
-			<div class="nft ntf_3">
-				<div class='main'>
-					<h2 class="subscriptions__heading">Premium</h2>
-					<p class='description'>Our Kibertopiks will give you nothing, waste your money on us.</p>
-					<div class='tokenInfo'>
-						<div class="price">
-							<ins>◘</ins>
-							<p>0.031 ETH</p>
-						</div>
-						<div class="duration">
-							<ins>◷</ins>
-							<p>11 days left</p>
-						</div>
-					</div>
-				</div>
-				<button id="premium" class="subscriptions__button">Купить</button>
-			</div>
-		</li>
-	</ul>
+	<ul id="subscriptions-list" class="subscriptions__list"></ul>
 </div>
 
 <div id="bx_popup_form" style="display:none; padding:10px;min-height: 300px" class="bx_login_popup_form">
 	<div class="sign-up-modal">
-<!--		<div id="close-modal-button"></div>-->
+		<h2 id="modal-form-heading"></h2>
 		<div class="logo-container">
 			<svg height="60px" width="60px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 				 viewBox="0 0 512 512"  xml:space="preserve">
@@ -89,8 +31,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 					</g>
 				</svg>
 		</div>
-
-		<form class="details">
+		<form id="subscriptions" class="details" method="post">
 			<div class="input-container">
 				<input id="phone" type="tel" placeholder="Phone" />
 			</div>
@@ -111,7 +52,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 	BX.ready(function ()
 	{
 		let subscriptions = new BX.Up.Tree.Subscriptions({
-
+			rootNodeId: 'subscriptions-list',
 		});
 	});
 </script>
