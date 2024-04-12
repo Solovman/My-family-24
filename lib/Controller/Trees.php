@@ -53,8 +53,8 @@ class Trees extends Engine\Controller
 		$newTreeId = $DB->LastID();
 
 		$initialNode = new Person(
-			0,
-			'',
+			1,
+			'/local/modules/up.tree/images/user_default.png',
 			'Enter your name',
 			'Enter your surname',
 			new Date(),
@@ -63,7 +63,7 @@ class Trees extends Engine\Controller
 			(int)$newTreeId,
 		);
 
-		PersonService::addPerson($initialNode, new Image(''), [0], 'init');
+		PersonService::addPerson($initialNode,new Image('/local/modules/up.tree/images/user_default.png'), [0], 'init');
 
 	}
 }
