@@ -16,6 +16,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 <div id="bx_popup_form" style="display:none; padding:10px;min-height: 300px" class="bx_login_popup_form">
 	<div class="sign-up-modal">
 		<h2 id="modal-form-heading"></h2>
+<!--		<div id="close-modal-button"></div>-->
 		<div class="logo-container">
 			<svg height="60px" width="60px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 				 viewBox="0 0 512 512"  xml:space="preserve">
@@ -43,7 +44,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 				<input class="input-info" id="year" type="text" placeholder="Year" maxlength="8" />
 				<input class="input-info" id="cvc" type="text" placeholder="CVC" maxlength="8" />
 			</div>
-			<input id="sign-up-button" type="submit" value="Купить">
+			<input class="sign-up-button" type="submit" value="Купить">
 		</form>
 	</div>
 </div>

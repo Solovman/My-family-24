@@ -256,3 +256,17 @@ debug: readdir filename: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.t
 debug: file C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-48-35~b5b96e8c-8d82-4267-98d6-7914530de67b.png is less then one hour old and will not be deleted! {"timestamp":"2024-04-12T13:30:43.415Z"}
 debug: readdir filename: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-48-35~b5b96e8c-8d82-4267-98d6-7914530de67b.svg {"timestamp":"2024-04-12T13:30:43.415Z"}
 debug: file C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-48-35~b5b96e8c-8d82-4267-98d6-7914530de67b.svg is less then one hour old and will not be deleted! {"timestamp":"2024-04-12T13:30:43.415Z"}
+debug: clear {"timestamp":"2024-04-12T16:43:07.715Z"}
+debug: readdir: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata {"timestamp":"2024-04-12T16:43:07.718Z"}
+debug: dir existsSync: ./logs {"timestamp":"2024-04-12T16:43:07.718Z"}
+debug: readdir filename: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-43-45~16b213e0-8d62-4d99-af3d-47e8442fcb93.pdf {"timestamp":"2024-04-12T16:43:07.720Z"}
+debug: readdir filename: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-43-45~16b213e0-8d62-4d99-af3d-47e8442fcb93.svg {"timestamp":"2024-04-12T16:43:07.720Z"}
+debug: readdir filename: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-48-35~b5b96e8c-8d82-4267-98d6-7914530de67b.png {"timestamp":"2024-04-12T16:43:07.720Z"}
+debug: readdir filename: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-48-35~b5b96e8c-8d82-4267-98d6-7914530de67b.svg {"timestamp":"2024-04-12T16:43:07.721Z"}
+info: file C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-43-45~16b213e0-8d62-4d99-af3d-47e8442fcb93.pdf has been deleted! {"timestamp":"2024-04-12T16:43:07.723Z"}
+info: file C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-43-45~16b213e0-8d62-4d99-af3d-47e8442fcb93.svg has been deleted! {"timestamp":"2024-04-12T16:43:07.729Z"}
+info: file C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-48-35~b5b96e8c-8d82-4267-98d6-7914530de67b.png has been deleted! {"timestamp":"2024-04-12T16:43:07.730Z"}
+info: file C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata/2024-3-12-14-48-35~b5b96e8c-8d82-4267-98d6-7914530de67b.svg has been deleted! {"timestamp":"2024-04-12T16:43:07.730Z"}
+debug: clear {"timestamp":"2024-04-12T16:43:07.758Z"}
+debug: readdir: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata {"timestamp":"2024-04-12T16:43:07.758Z"}
+debug: dir existsSync: ./logs {"timestamp":"2024-04-12T16:43:07.759Z"}

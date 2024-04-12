@@ -36,17 +36,39 @@ export class Subscriptions
 		})
 	}
 
+	buy(id)
+	{
+		console.log(id);
+		Requests.buy(id).then(res => {
+			console.log(res);
+		})
+	}
+
 	setEvents()
 	{
 		const subscriptionsButton = document.querySelectorAll('.subscriptions__button');
+		const formButton = document.querySelector('.sign-up-button');
+
+		BX.bind(BX('subscriptions'), 'click', function (event)
+		{
+			event.preventDefault('');
+
+			this.buy(formButton.id);
+		}.bind(this));
+
 		const formHeading = BX('modal-form-heading');
 
 		subscriptionsButton.forEach(btn => {
-			if (btn.id === 'Free') {
+			if (btn.id === 'Free1') {
 				btn.style.display = 'none';
 			}
+
+			const heading = btn.id.replace(/[^a-zA-Z]+/g, '');
+			const buttonId = btn.id.match( /\d+/g);
+
 			BX.bind(btn, 'click', () => {
-				formHeading.innerText = btn.id;
+				formButton.id = buttonId;
+				formHeading.innerText = heading;
 				this.addClass(btn.id);
 				Form.render();
 			});
@@ -58,10 +80,10 @@ export class Subscriptions
 		const modal = document.querySelector('.sign-up-modal');
 
 		switch (id) {
-			case 'Standard':
+			case 'Standard2':
 				BX.addClass(modal, 'sing-modal-standard');
 				break;
-			case 'Premium':
+			case 'Premium3':
 				BX.addClass(modal, 'sing-modal-premium');
 				break;
 		}
@@ -75,17 +97,9 @@ export class Subscriptions
 				<div class="nft ntf_${list.id}">
 				<div class='main'>
 					<h2 class="subscriptions__heading">${list.level}</h2>
-					<p class='description'>Our Kibertopiks will give you nothing, waste your money on us.</p>
-					<div class='tokenInfo'>
-						<div class="price">
-							<p>${list.price}</p>
-						</div>
-						<div class="duration">
-							<p>${list.numberTrees}</p>
-						</div>
-					</div>
+					<p class='description'></p>
 				</div>
-				<button id="${list.level}" class="subscriptions__button">Купить</button>
+				<button id="${list.level}${list.id}" class="subscriptions__button">Купить</button>
 			</div>
 			</li>
 		`;

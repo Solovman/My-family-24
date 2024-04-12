@@ -15,4 +15,12 @@ class Subscriptions extends Engine\Controller
 		];
 
 	}
+
+	/**
+	 * @throws \Exception
+	 */
+	public function buyAction(int $idSubscriptions): bool
+	{
+		return SubscriptionsService::buySubscriptions($idSubscriptions);
+	}
 }

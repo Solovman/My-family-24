@@ -17,4 +17,23 @@ export class Requests
 				});
 		});
 	}
+
+	static buy(id)
+	{
+		return new Promise((resolve, reject) =>
+		{
+			BX.ajax.runAction('up:tree.subscriptions.buy', {
+				data: {
+					idSubscriptions: id
+				}
+			}).then((response) =>
+			{
+				resolve(response.data);
+			})
+				.catch((error) =>
+				{
+					reject(error);
+				});
+		});
+	}
 }

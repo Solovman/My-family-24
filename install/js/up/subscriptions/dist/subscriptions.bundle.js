@@ -59,6 +59,21 @@ this.BX.Up = this.BX.Up || {};
 	        });
 	      });
 	    }
+	  }, {
+	    key: "buy",
+	    value: function buy(id) {
+	      return new Promise(function (resolve, reject) {
+	        BX.ajax.runAction('up:tree.subscriptions.buy', {
+	          data: {
+	            idSubscriptions: id
+	          }
+	        }).then(function (response) {
+	          resolve(response.data);
+	        })["catch"](function (error) {
+	          reject(error);
+	        });
+	      });
+	    }
 	  }]);
 	  return Requests;
 	}();
@@ -90,17 +105,33 @@ this.BX.Up = this.BX.Up || {};
 	      });
 	    }
 	  }, {
+	    key: "buy",
+	    value: function buy(id) {
+	      console.log(id);
+	      Requests.buy(id).then(function (res) {
+	        console.log(res);
+	      });
+	    }
+	  }, {
 	    key: "setEvents",
 	    value: function setEvents() {
 	      var _this2 = this;
 	      var subscriptionsButton = document.querySelectorAll('.subscriptions__button');
+	      var formButton = document.querySelector('.sign-up-button');
+	      BX.bind(BX('subscriptions'), 'click', function (event) {
+	        event.preventDefault('');
+	        this.buy(formButton.id);
+	      }.bind(this));
 	      var formHeading = BX('modal-form-heading');
 	      subscriptionsButton.forEach(function (btn) {
-	        if (btn.id === 'Free') {
+	        if (btn.id === 'Free1') {
 	          btn.style.display = 'none';
 	        }
+	        var heading = btn.id.replace(/[^a-zA-Z]+/g, '');
+	        var buttonId = btn.id.match(/\d+/g);
 	        BX.bind(btn, 'click', function () {
-	          formHeading.innerText = btn.id;
+	          formButton.id = buttonId;
+	          formHeading.innerText = heading;
 	          _this2.addClass(btn.id);
 	          Form.render();
 	        });
@@ -111,10 +142,10 @@ this.BX.Up = this.BX.Up || {};
 	    value: function addClass(id) {
 	      var modal = document.querySelector('.sign-up-modal');
 	      switch (id) {
-	        case 'Standard':
+	        case 'Standard2':
 	          BX.addClass(modal, 'sing-modal-standard');
 	          break;
-	        case 'Premium':
+	        case 'Premium3':
 	          BX.addClass(modal, 'sing-modal-premium');
 	          break;
 	      }
@@ -124,7 +155,7 @@ this.BX.Up = this.BX.Up || {};
 	    value: function renderCard() {
 	      var _this3 = this;
 	      this.subscriptions.forEach(function (list) {
-	        var card = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<li class=\"subscriptions__item\">\n\t\t\t\t<div class=\"nft ntf_", "\">\n\t\t\t\t<div class='main'>\n\t\t\t\t\t<h2 class=\"subscriptions__heading\">", "</h2>\n\t\t\t\t\t<p class='description'>Our Kibertopiks will give you nothing, waste your money on us.</p>\n\t\t\t\t\t<div class='tokenInfo'>\n\t\t\t\t\t\t<div class=\"price\">\n\t\t\t\t\t\t\t<p>", "</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"duration\">\n\t\t\t\t\t\t\t<p>", "</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<button id=\"", "\" class=\"subscriptions__button\">\u041A\u0443\u043F\u0438\u0442\u044C</button>\n\t\t\t</div>\n\t\t\t</li>\n\t\t"])), list.id, list.level, list.price, list.numberTrees, list.level);
+	        var card = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<li class=\"subscriptions__item\">\n\t\t\t\t<div class=\"nft ntf_", "\">\n\t\t\t\t<div class='main'>\n\t\t\t\t\t<h2 class=\"subscriptions__heading\">", "</h2>\n\t\t\t\t\t<p class='description'></p>\n\t\t\t\t</div>\n\t\t\t\t<button id=\"", "", "\" class=\"subscriptions__button\">\u041A\u0443\u043F\u0438\u0442\u044C</button>\n\t\t\t</div>\n\t\t\t</li>\n\t\t"])), list.id, list.level, list.level, list.id);
 	        BX.append(card, _this3.rootNode);
 	      });
 	      this.setEvents();

@@ -49,7 +49,7 @@ class UserSubscriptionTable extends DataManager
 			new IntegerField(
 				'USER_ID',
 				[
-					'required' => true,
+					'primary' => true,
 					'title' => Loc::getMessage('USER_SUBSCRIPTION_ENTITY_USER_ID_FIELD')
 				]
 			),
