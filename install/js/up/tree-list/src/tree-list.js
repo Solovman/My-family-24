@@ -56,7 +56,6 @@ export class TreeList
 	handleRemoveTreeButtonClick()
 	{
 		const treeId = BX('treeId').value;
-		console.log(treeId)
 		if (treeId !== '')
 		{
 			this.removeTree(treeId).then(() => {
@@ -72,7 +71,6 @@ export class TreeList
 		this.loadList()
 			.then(treeList => {
 				this.treeList = treeList;
-				console.log(this.treeList);
 				this.render();
 			});
 	}
@@ -147,12 +145,10 @@ export class TreeList
 									<a href="/tree/${trees.id}/" class="card-header-title">
 										${BX.util.htmlspecialchars(trees.title)}
 									</a>
-									<form method="post" action="/delete/">
 										<input type="hidden" name="treeId" value="${trees.id}" id="treeId">
-											<button type="button" class="card-header-icon" aria-label="delete task" id="delTreeButton">
-											<span class="icon disabled">❌</span>
-										</button>
-									</form>
+											<button type="button" class="card-header-icon delTreeButton" aria-label="delete task" data-tree-id="${trees.id}">
+												<span class="icon disabled">❌</span>
+											</button>
 								</header>
 								<footer class="card-footer">
 									<span class="card-footer-item is-size-6">
@@ -165,13 +161,16 @@ export class TreeList
 					endforeach; ?>
 				</div>
 			`;
-			// console.log(trees.id)
 			treeContainerNode.appendChild(treeNode);
 		});
 		this.rootNode.appendChild(treeContainerNode);
 
-		const removeButton = BX('delTreeButton');
-		removeButton.addEventListener('click', () => {
-			this.handleRemoveTreeButtonClick()});
+		const removeButtons = document.querySelectorAll('.delTreeButton');
+		removeButtons.forEach(button => {
+			button.addEventListener('click', () => {
+				const treeId = button.getAttribute('data-tree-id');
+				this.handleRemoveTreeButtonClick(treeId);
+			});
+		});
 	}
 }
