@@ -37,4 +37,10 @@ __treeMigrate(2, static function ($updater, $DB)
 			);');
 	}
 });
-
+__treeMigrate(6, static function ($updater, $DB)
+{
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query("INSERT INTO `b_file` (`ID`, `TIMESTAMP_X`, `MODULE_ID`, `HEIGHT`, `WIDTH`, `FILE_SIZE`, `CONTENT_TYPE`, `SUBDIR`, `FILE_NAME`, `ORIGINAL_NAME`, `DESCRIPTION`, `HANDLER_ID`, `EXTERNAL_ID`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/user_default.png', NULL, NULL, NULL, NULL);");
+	}
+});
