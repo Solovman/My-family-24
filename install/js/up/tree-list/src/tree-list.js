@@ -24,6 +24,12 @@ export class TreeList
 		const addButton = BX('addTreeButton');
 		addButton.addEventListener('click', () => {
 			this.handleAddTreeButtonClick()});
+
+		const inputTitle = BX('treeTitleInput');
+		inputTitle.addEventListener('keypress', (event) => {
+			if (event.key === 'Enter') {
+				this.handleAddTreeButtonClick();
+			}});
 		this.reload();
 	}
 	handleAddTreeButtonClick() {

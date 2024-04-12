@@ -24,6 +24,12 @@ this.BX.Up = this.BX.Up || {};
 	    addButton.addEventListener('click', function () {
 	      _this.handleAddTreeButtonClick();
 	    });
+	    var inputTitle = BX('treeTitleInput');
+	    inputTitle.addEventListener('keypress', function (event) {
+	      if (event.key === 'Enter') {
+	        _this.handleAddTreeButtonClick();
+	      }
+	    });
 	    this.reload();
 	  }
 	  babelHelpers.createClass(TreeList, [{
