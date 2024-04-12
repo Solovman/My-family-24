@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@balkangraph/export-service": "^1.4.7"
+  }
+}

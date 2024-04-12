@@ -33,7 +33,6 @@ this.BX.Up = this.BX.Up || {};
 	            id: id,
 	            fileName: fileName,
 	            updatablePerson: {
-	              imageId: 0,
 	              name: name,
 	              surname: surname,
 	              birthDate: birthDate,
@@ -212,6 +211,7 @@ this.BX.Up = this.BX.Up || {};
 	          field_1: "surname",
 	          img_0: 'photo'
 	        },
+	        exportUrl: 'http://127.0.0.1:1337',
 	        editForm: {
 	          titleBinding: "name",
 	          photoBinding: "photo",
@@ -258,8 +258,15 @@ this.BX.Up = this.BX.Up || {};
 	            label: 'Photo Url',
 	            binding: 'photo',
 	            btn: 'Upload'
+	          }, {
+	            type: 'checkbox',
+	            label: 'Click if it\'s you',
+	            binding: 'active'
 	          }]
 	        }
+	      });
+	      family.on('exportstart', function (sender, args) {
+	        args.styles += document.getElementById('myStyles').outerHTML;
 	      });
 	      var self = this;
 	      var buttonPDF = BX('pdf');
@@ -319,7 +326,12 @@ this.BX.Up = this.BX.Up || {};
 	            text: 'Edit'
 	          },
 	          remove: {
-	            text: 'Remove'
+	            text: 'Remove',
+	            onClick: function onClick() {
+	              Requests.removeNode(args.firstNodeId).then(function (node) {
+	                self.reload();
+	              });
+	            }
 	          },
 	          details: {
 	            text: "Details"
@@ -408,6 +420,7 @@ this.BX.Up = this.BX.Up || {};
 	              return;
 	            }
 	            var updateNodes = args.updateNodesData;
+	            console.log(updateNodes[0]);
 	            var id = updateNodes[0].id;
 	            var gender = updateNodes[0].gender[0];
 	            var name = updateNodes[0].name;

@@ -15,6 +15,16 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 	</div>
 </div>
 
+<style id="myStyles">
+	@import url("https://fonts.googleapis.com/css?family=Gochi+Hand");
+	.node {
+		font-family: 'Gochi Hand';
+	}
+	.node.baby rect {
+		fill: rgb(255, 202, 40);
+	}
+</style>
+
 <script>
 	BX.ready(function ()
 	{

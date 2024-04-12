@@ -62,3 +62,7 @@ image {
 	width: 80px;
 	height: 80px;
 }
+
+g rect {
+	fill: linear-gradient(0deg, #FF8E00 0%, #FFE400 100%);
+}

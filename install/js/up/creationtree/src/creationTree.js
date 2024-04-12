@@ -53,6 +53,7 @@ export class CreationTree
 			},
 			mode: 'light',
 			template: 'hugo',
+
 			nodeTreeMenu: true,
 			nodeMenu: {
 				remove: {text: 'Remove'},
@@ -67,6 +68,7 @@ export class CreationTree
 				field_1: "surname",
 				img_0: 'photo'
 			},
+			exportUrl: 'http://127.0.0.1:1337',
 			editForm: {
 				titleBinding: "name",
 				photoBinding: "photo",
@@ -97,8 +99,14 @@ export class CreationTree
 						},
 					],
 					{ type: 'textbox', label: 'Photo Url', binding: 'photo', btn: 'Upload' },
+					{ type: 'checkbox', label: 'Click if it\'s you', binding: 'active' }
 				]
 			},
+		});
+
+
+		family.on('exportstart', function(sender, args){
+			args.styles += document.getElementById('myStyles').outerHTML;
 		});
 
 		const self = this;
@@ -177,6 +185,11 @@ export class CreationTree
 				},
 				remove: {
 					text: 'Remove',
+					onClick: function onClick() {
+						Requests.removeNode(args.firstNodeId).then(node => {
+							self.reload();
+						});
+					},
 				},
 				details: {
 					text: "Details"
@@ -308,6 +321,8 @@ export class CreationTree
 					}
 
 					const updateNodes = args.updateNodesData;
+
+					console.log(updateNodes[0]);
 
 					const id = updateNodes[0].id;
 					const gender = updateNodes[0].gender[0];
