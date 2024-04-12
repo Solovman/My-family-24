@@ -136,7 +136,7 @@ export class TreeList
 	{
 		this.rootNode.innerHTML = '';
 
-		const treeContainerNode = Tag.render`<div class="columns my-container"></div>`;
+		const treeContainerNode = Tag.render`<div class="columns cards-container"></div>`;
 
 		this.treeList.forEach(trees => {
 			const treeNode = Tag.render`

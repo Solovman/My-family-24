@@ -42,3 +42,9 @@ footer {
 .emerald-color {
 	background-color: #00ceaa !important;
 }
+
+.cards-container {
+	padding: 25px 200px;
+	/*display: flex;*/
+	/*flex-direction: column;*/
+}
