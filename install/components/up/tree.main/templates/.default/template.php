@@ -18,7 +18,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 <style id="myStyles">
 	@import url("https://fonts.googleapis.com/css?family=Gochi+Hand");
 	.node {
-		font-family: 'Gochi Hand';
+		font-family: 'MorningBreeze', sans-serif, Helvetica
 	}
 	.node.baby rect {
 		fill: rgb(255, 202, 40);
