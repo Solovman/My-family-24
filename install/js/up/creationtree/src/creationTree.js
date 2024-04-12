@@ -41,7 +41,6 @@ export class CreationTree
 		});
 	}
 
-
 	tree()
 	{
 		let treeID =  parseInt(window.location.href.match(/\d+/));
@@ -113,7 +112,6 @@ export class CreationTree
 		BX.bind(buttonJSON, 'click', filename => {
 			family.exportJSON(filename);
 		});
-
 
         FamilyTree.templates.tommy_male.defs =
 			`<g transform="matrix(0.05,0,0,0.05,-12,-9)" id="heart">
