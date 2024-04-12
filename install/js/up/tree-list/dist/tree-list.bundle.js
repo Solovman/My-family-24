@@ -46,13 +46,27 @@ this.BX.Up = this.BX.Up || {};
 	      }
 	    }
 	  }, {
+	    key: "handleRemoveTreeButtonClick",
+	    value: function handleRemoveTreeButtonClick() {
+	      var _this3 = this;
+	      var treeId = BX('treeId').value;
+	      console.log(treeId);
+	      if (treeId !== '') {
+	        this.removeTree(treeId).then(function () {
+	          _this3.reload();
+	        })["catch"](function (error) {
+	          console.error('Error remove tree:', error);
+	        });
+	      }
+	    }
+	  }, {
 	    key: "reload",
 	    value: function reload() {
-	      var _this3 = this;
+	      var _this4 = this;
 	      this.loadList().then(function (treeList) {
-	        _this3.treeList = treeList;
-	        console.log(_this3.treeList);
-	        _this3.render();
+	        _this4.treeList = treeList;
+	        console.log(_this4.treeList);
+	        _this4.render();
 	      });
 	    }
 	  }, {
@@ -87,15 +101,36 @@ this.BX.Up = this.BX.Up || {};
 	      });
 	    }
 	  }, {
+	    key: "removeTree",
+	    value: function removeTree(id) {
+	      return new Promise(function (resolve, reject) {
+	        BX.ajax.runAction('up:tree.trees.removeTree', {
+	          data: {
+	            id: id
+	          }
+	        }).then(function (response) {
+	          resolve(response.data);
+	        })["catch"](function (error) {
+	          reject(error);
+	        });
+	      });
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
+	      var _this5 = this;
 	      this.rootNode.innerHTML = '';
 	      var treeContainerNode = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["<div class=\"columns my-container\"></div>"])));
 	      this.treeList.forEach(function (trees) {
-	        var treeNode = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"columns is-multiline\">\n\t\t\t\t\t<div class=\"column is-two-fifth\">\n\t\t\t\t\t\t<div class=\"card\">\n\t\t\t\t\t\t\t<header class=\"card-header is-size-4 emerald-color\">\n\t\t\t\t\t\t\t\t\t<a href=\"/tree/", "/\" class=\"card-header-title\">\n\t\t\t\t\t\t\t\t\t\t", "\n\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t</header>\n\t\t\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t\t\t<span class=\"card-footer-item is-size-6\">\n\t\t\t\t\t\t\t\t\t\t<strong>Created at</strong>: ", "\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</footer>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t<?php\n\t\t\t\t\tendforeach; ?>\n\t\t\t\t</div>\n\t\t\t"])), trees.id, BX.util.htmlspecialchars(trees.title), BX.date.format('d-m-Y', trees.createdAt));
+	        var treeNode = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"columns is-multiline\">\n\t\t\t\t\t<div class=\"column is-two-fifth\">\n\t\t\t\t\t\t<div class=\"card\">\n\t\t\t\t\t\t\t<header class=\"card-header is-size-4 emerald-color\">\n\t\t\t\t\t\t\t\t\t<a href=\"/tree/", "/\" class=\"card-header-title\">\n\t\t\t\t\t\t\t\t\t\t", "\n\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t<form method=\"post\" action=\"/delete/\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"hidden\" name=\"treeId\" value=\"", "\" id=\"treeId\">\n\t\t\t\t\t\t\t\t\t\t\t<button type=\"button\" class=\"card-header-icon\" aria-label=\"delete task\" id=\"delTreeButton\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"icon disabled\">\u274C</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</form>\n\t\t\t\t\t\t\t\t</header>\n\t\t\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t\t\t<span class=\"card-footer-item is-size-6\">\n\t\t\t\t\t\t\t\t\t\t<strong>Created at</strong>: ", "\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</footer>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t<?php\n\t\t\t\t\tendforeach; ?>\n\t\t\t\t</div>\n\t\t\t"])), trees.id, BX.util.htmlspecialchars(trees.title), trees.id, BX.date.format('d-m-Y', trees.createdAt));
+	        // console.log(trees.id)
 	        treeContainerNode.appendChild(treeNode);
 	      });
 	      this.rootNode.appendChild(treeContainerNode);
+	      var removeButton = BX('delTreeButton');
+	      removeButton.addEventListener('click', function () {
+	        _this5.handleRemoveTreeButtonClick();
+	      });
 	    }
 	  }]);
 	  return TreeList;

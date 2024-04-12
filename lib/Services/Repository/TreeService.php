@@ -132,4 +132,12 @@ class TreeService
 
 		return $trees;
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function removeTreeById(int $id): void
+	{
+		TreeTable::delete($id);
+	}
 }

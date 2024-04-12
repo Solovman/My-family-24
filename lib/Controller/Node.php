@@ -96,6 +96,5 @@ class Node extends Engine\Controller
 		{
 			throw new SqlException("Error when deleting person");
 		}
-
 	}
 }

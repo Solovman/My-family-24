@@ -24,7 +24,6 @@ export class TreeList
 		const addButton = BX('addTreeButton');
 		addButton.addEventListener('click', () => {
 			this.handleAddTreeButtonClick()});
-
 		this.reload();
 	}
 	handleAddTreeButtonClick() {
@@ -45,6 +44,20 @@ export class TreeList
 		} else {
 			warningMessage.textContent = 'Please enter a tree title!';
 			console.error('Tree title is empty');
+		}
+	}
+
+	handleRemoveTreeButtonClick()
+	{
+		const treeId = BX('treeId').value;
+		console.log(treeId)
+		if (treeId !== '')
+		{
+			this.removeTree(treeId).then(() => {
+				this.reload();
+			}).catch((error) => {
+				console.error('Error remove tree:', error);
+			});
 		}
 	}
 
@@ -94,6 +107,24 @@ export class TreeList
 				});
 		});
 	}
+	removeTree(id)
+	{
+		return new Promise((resolve, reject) =>
+		{
+			BX.ajax.runAction('up:tree.trees.removeTree', {
+				data: {
+					id: id
+				}
+			}).then((response) =>
+				{
+					resolve(response.data);
+				})
+				.catch((error) =>
+				{
+					reject(error);
+				});
+		});
+	}
 
 	render()
 	{
@@ -110,6 +141,12 @@ export class TreeList
 									<a href="/tree/${trees.id}/" class="card-header-title">
 										${BX.util.htmlspecialchars(trees.title)}
 									</a>
+									<form method="post" action="/delete/">
+										<input type="hidden" name="treeId" value="${trees.id}" id="treeId">
+											<button type="button" class="card-header-icon" aria-label="delete task" id="delTreeButton">
+											<span class="icon disabled">❌</span>
+										</button>
+									</form>
 								</header>
 								<footer class="card-footer">
 									<span class="card-footer-item is-size-6">
@@ -122,8 +159,13 @@ export class TreeList
 					endforeach; ?>
 				</div>
 			`;
+			// console.log(trees.id)
 			treeContainerNode.appendChild(treeNode);
 		});
 		this.rootNode.appendChild(treeContainerNode);
+
+		const removeButton = BX('delTreeButton');
+		removeButton.addEventListener('click', () => {
+			this.handleRemoveTreeButtonClick()});
 	}
 }
