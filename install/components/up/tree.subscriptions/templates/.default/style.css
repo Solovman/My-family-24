@@ -345,10 +345,45 @@ body {
 }
 
 .popup-window {
+	position: relative;
 	width: 32%;
+}
+
+.popup-window:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	background-image: url("/local/modules/up.tree/images/lock.svg");
+	background-repeat: no-repeat;
+	background-size: 37%;
+	background-position: 50% 50%;
+	z-index: 10;
+}
+
+.popup-window-overlay {
+	display: none !important;
+}
+
+.popup-window-close-icon {
+	z-index: 20;
 }
 
 #modal-form-heading {
 	text-align: center;
 	font-size: 46px;
+}
+
+.not-work {
+	position: absolute;
+	color: #000000;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	bottom: 23%;
+	font-size: 19px;
+	text-align: center;
+	left: 0;
+	z-index: 20;
 }

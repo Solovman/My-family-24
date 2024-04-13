@@ -59,21 +59,6 @@ this.BX.Up = this.BX.Up || {};
 	        });
 	      });
 	    }
-	  }, {
-	    key: "buy",
-	    value: function buy(id) {
-	      return new Promise(function (resolve, reject) {
-	        BX.ajax.runAction('up:tree.subscriptions.buy', {
-	          data: {
-	            idSubscriptions: id
-	          }
-	        }).then(function (response) {
-	          resolve(response.data);
-	        })["catch"](function (error) {
-	          reject(error);
-	        });
-	      });
-	    }
 	  }]);
 	  return Requests;
 	}();
@@ -105,23 +90,11 @@ this.BX.Up = this.BX.Up || {};
 	      });
 	    }
 	  }, {
-	    key: "buy",
-	    value: function buy(id) {
-	      console.log(id);
-	      Requests.buy(id).then(function (res) {
-	        console.log(res);
-	      });
-	    }
-	  }, {
 	    key: "setEvents",
 	    value: function setEvents() {
 	      var _this2 = this;
 	      var subscriptionsButton = document.querySelectorAll('.subscriptions__button');
 	      var formButton = document.querySelector('.sign-up-button');
-	      BX.bind(BX('subscriptions'), 'click', function (event) {
-	        event.preventDefault('');
-	        this.buy(formButton.id);
-	      }.bind(this));
 	      var formHeading = BX('modal-form-heading');
 	      subscriptionsButton.forEach(function (btn) {
 	        if (btn.id === 'Free1') {

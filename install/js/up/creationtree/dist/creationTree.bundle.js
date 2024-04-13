@@ -203,7 +203,6 @@ this.BX.Up = this.BX.Up || {};
 	      });
 	      DownloadJson.download(_this.nodeList.persons, "familyTree");
 	    });
-	    console.log(this.nodeList);
 	  }
 	  babelHelpers.createClass(CreationTree, [{
 	    key: "reload",

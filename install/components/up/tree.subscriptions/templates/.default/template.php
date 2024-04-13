@@ -14,6 +14,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 </div>
 
 <div id="bx_popup_form" style="display:none; padding:10px;min-height: 300px" class="bx_login_popup_form">
+	<span class="not-work">Данная функция находится в разработке, обратитесь к менеджеру</span>
 	<div class="sign-up-modal">
 		<h2 id="modal-form-heading"></h2>
 <!--		<div id="close-modal-button"></div>-->

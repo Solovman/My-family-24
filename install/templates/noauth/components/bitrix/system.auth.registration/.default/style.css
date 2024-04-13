@@ -74,6 +74,7 @@ tr {
 	align-items: center;
 	justify-content: center;
 	padding: 20px;
+	border-radius: 10px;
 	margin: 8% 4% 3% auto;
 	background-color: #ffffff;
 	width: 32%;

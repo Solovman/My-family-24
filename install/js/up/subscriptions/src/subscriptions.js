@@ -36,25 +36,10 @@ export class Subscriptions
 		})
 	}
 
-	buy(id)
-	{
-		console.log(id);
-		Requests.buy(id).then(res => {
-			console.log(res);
-		})
-	}
-
 	setEvents()
 	{
 		const subscriptionsButton = document.querySelectorAll('.subscriptions__button');
 		const formButton = document.querySelector('.sign-up-button');
-
-		BX.bind(BX('subscriptions'), 'click', function (event)
-		{
-			event.preventDefault('');
-
-			this.buy(formButton.id);
-		}.bind(this));
 
 		const formHeading = BX('modal-form-heading');
 
