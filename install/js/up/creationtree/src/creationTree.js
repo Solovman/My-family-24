@@ -1,6 +1,7 @@
 import {Type, Tag} from 'main.core';
 import {Requests} from "./requests.js";
 import {Helper} from "./helper.js";
+import {DownloadJson} from "./downloadJson.js";
 
 export class CreationTree
 {
@@ -25,6 +26,16 @@ export class CreationTree
 		this.nodeList = [];
 
 		this.reload();
+
+		const buttonJSON = BX('json');
+		BX.bind(buttonJSON, 'click', () => {
+			this.nodeList.persons.forEach(person => {
+				DownloadJson.changeKey(person, 'mid', 'mother');
+				DownloadJson.changeKey(person, 'fid', 'farther');
+				DownloadJson.changeKey(person, 'pids', 'partners');
+			})
+			DownloadJson.download(this.nodeList.persons, "familyTree")
+		});
 	}
 
 	reload()
@@ -111,14 +122,9 @@ export class CreationTree
 
 		const self = this;
 		const buttonPDF = BX('pdf');
-		const buttonJSON = BX('json');
 
 		BX.bind(buttonPDF, 'click', () => {
 			family.exportPDF();
-		});
-
-		BX.bind(buttonJSON, 'click', filename => {
-			family.exportJSON(filename);
 		});
 
         FamilyTree.templates.tommy_male.defs =
@@ -321,8 +327,6 @@ export class CreationTree
 					}
 
 					const updateNodes = args.updateNodesData;
-
-					console.log(updateNodes[0]);
 
 					const id = updateNodes[0].id;
 					const gender = updateNodes[0].gender[0];

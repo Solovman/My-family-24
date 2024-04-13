@@ -19,7 +19,7 @@ export class TreeList
 			throw new Error(`TreeList: element with id "${this.rootNodeId}" not found`);
 		}
 
-		this.treeList = [];
+		this.treeList = [];up_familyTree
 
 		const addButton = BX('addTreeButton');
 		addButton.addEventListener('click', () => {
@@ -29,7 +29,8 @@ export class TreeList
 		inputTitle.addEventListener('keypress', (event) => {
 			if (event.key === 'Enter') {
 				this.handleAddTreeButtonClick();
-			}});
+			}
+		});
 		this.reload();
 	}
 	handleAddTreeButtonClick() {
