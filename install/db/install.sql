@@ -2,7 +2,12 @@ CREATE TABLE up_subscription(
 	                            ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	                            LEVEL   VARCHAR(50) DEFAULT 'Free',
 	                            PRICE INT NOT NULL DEFAULT 0,
-	                            NUMBER_TREES INT(3) NOT NULL DEFAULT 1
+	                            NUMBER_TREES INT(3) DEFAULT 1,
+	                            NUMBER_NODES INT(3) DEFAULT 20,
+	                            CUSTOMIZATION BOOL DEFAULT FALSE,
+	                            SUBSCRIPTION_TYPE VARCHAR(50),
+	                            START_DATE DATE,
+	                            END_DATE DATE
 );
 
 CREATE TABLE up_relation_user_subscription(

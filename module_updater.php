@@ -13,7 +13,7 @@ function __treeMigrate(int $nextVersion, callable $callback): void
 		return;
 	}
 
-	$currentVersion = (int)Option::get($moduleId, '~database_schema_version', 0);
+	$currentVersion = (int)Option::get('up.tree', '~database_schema_version', 0);
 
 	if ($currentVersion < $nextVersion)
 	{
@@ -25,22 +25,35 @@ function __treeMigrate(int $nextVersion, callable $callback): void
 		Option::set($moduleId, '~database_schema_version', $nextVersion);
 	}
 }
-
 __treeMigrate(2, static function ($updater, $DB)
 {
 	if ($updater->CanUpdateDatabase() && !$updater->TableExists('up_relation_married'))
 	{
-		$DB->query('CREATE TABLE up_relation_married (
+		$DB->query('CREATE TABLE IF NOT EXISTS `up_relation_married` (
 					PERSON_ID INT NOT NULL ,
 					PARTNER_ID INT NOT NULL ,
 					PRIMARY KEY (PERSON_ID, PARTNER_ID)
 			);');
 	}
 });
-__treeMigrate(6, static function ($updater, $DB)
+
+__treeMigrate(3, static function ($updater, $DB)
 {
 	if ($updater->CanUpdateDatabase())
 	{
 		$DB->query("INSERT INTO `b_file` (`ID`, `TIMESTAMP_X`, `MODULE_ID`, `HEIGHT`, `WIDTH`, `FILE_SIZE`, `CONTENT_TYPE`, `SUBDIR`, `FILE_NAME`, `ORIGINAL_NAME`, `DESCRIPTION`, `HANDLER_ID`, `EXTERNAL_ID`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/user_default.png', NULL, NULL, NULL, NULL);");
 	}
 });
+
+__treeMigrate(4, static function ($updater, $DB)
+{
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query("INSERT INTO `up_subscription` (ID, LEVEL, PRICE, NUMBER_TREES, NUMBER_NODES, CUSTOMIZATION, SUBSCRIPTION_TYPE, START_DATE, END_DATE) VALUES
+					(NULL, 'Free', 0, 1, 20, FALSE, 'default', NULL, NULL),
+					(NULL, 'Standard', 30, 3, NULL ,FALSE, 'purchase', NULL, NULL),
+					(NULL, 'Premium', 100, NULL, NULL, TRUE, 'subscription', NULL, NULL)");
+	}
+});
+
+
