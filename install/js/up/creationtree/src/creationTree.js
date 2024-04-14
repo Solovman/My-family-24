@@ -27,6 +27,10 @@ export class CreationTree
 
 		this.reload();
 
+		this.path = options.path;
+
+		console.log(this.path);
+
 		const buttonJSON = BX('json');
 		BX.bind(buttonJSON, 'click', () => {
 			this.nodeList.persons.forEach(person => {
@@ -86,11 +90,6 @@ export class CreationTree
 				addMore: null,
 				generateElementsFromFields: false,
 				buttons: {
-					edit: {
-						onClick: function () {
-							alert('test');
-						}
-					},
 					share: null,
 					remove: null
 				},
@@ -320,8 +319,39 @@ export class CreationTree
 			{
 				onUpdatePerson = true;
 
-				family.onUpdateNode((args) =>
-				{
+				family.onUpdateNode(async (args) => {
+
+					const formData = new FormData();
+					const fileInput = form.querySelector('input[type="file"]');
+					formData.append(fileInput.name, fileInput.files[0]);
+
+					const ids = parseInt(window.location.href.match(/\d+/));
+
+
+					fetch(
+						`/tree/${ids}/`,
+						{
+							method: 'POST',
+							headers: {
+								"X-Bitrix-Csrf-Token": BX.bitrix_sessid()
+							},
+							body: formData
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error('Network response was not ok');
+							}
+							return response.json();
+						})
+						.then((response) => {
+							console.log(response);
+						})
+						.catch((error) => {
+							console.error('Error while changing item:', error);
+						});
+
+
 					if (Object.keys(args.addNodesData).length !== 0) {
 						return;
 					}
@@ -333,9 +363,10 @@ export class CreationTree
 					const name = updateNodes[0].name;
 					const surname = updateNodes[0].surname;
 					let fileName = updateNodes[0].photo;
-					let fileNameLoad = BX('photoName').value;
 					let birthDate = Helper.formatDate(updateNodes[0].birthDate);
 					let deathDate = Helper.formatDate(updateNodes[0].deathDate);
+
+					fileName = this.path;
 
 					if (updateNodes[0].deathDate.length === 0) {
 						deathDate = null;
@@ -345,7 +376,7 @@ export class CreationTree
 						birthDate = null;
 					}
 
-					Requests.updateNode(id, fileName, name, surname, birthDate, deathDate, gender, treeID).then(node => {
+					Requests.updateNode(id, formData, fileName, name, surname, birthDate, deathDate, gender, treeID).then(node => {
 						self.reload();
 						return node;
 					})
@@ -358,9 +389,9 @@ export class CreationTree
 			const editForm = document.querySelector('.bft-edit-form-fields');
 
 			form.enctype = "multipart/form-data";
-			form.action = '/subscriptions/';
+			form.action = '/tree/{id}/';
 			const formFile = Tag.render`
-				<input id="photoName" type="file" name="my-file">
+				<input id="photoName" type="file" name="photo">
 			`;
 
 			editForm.append(formFile);

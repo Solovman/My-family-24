@@ -3,11 +3,13 @@
 namespace Up\Tree\Controller;
 
 use Bitrix\Main\ArgumentException;
+use Bitrix\Main\Context;
 use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\Date;
+use CFile;
 use Up\Tree\Entity\Image;
 use Up\Tree\Entity\Person;
 use \Up\Tree\Services\Repository\PersonService;
@@ -81,7 +83,30 @@ class Node extends Engine\Controller
 			(int) $updatablePerson['treeId']
 		);
 
+
 		return PersonService::updatePersonById($id, new Image($fileName), $node);
+	}
+
+	public function testAction(): string|bool
+	{
+		$file = $_FILES['photo'];
+
+		$maxSize = 2 * 1024 * 1024;
+		$error = CFile::CheckImageFile($file, $maxSize);
+
+		if ($error != '')
+		{
+			die('uploading error: ' . $error);
+		}
+
+		$fileId = CFile::SaveFile($file, 'upload_tree');
+
+		if (!$fileId)
+		{
+			die('Cannot save file');
+		}
+
+		return json_encode(['data' => $fileId]);
 	}
 
 	/**
@@ -97,4 +122,6 @@ class Node extends Engine\Controller
 			throw new SqlException("Error when deleting person");
 		}
 	}
+
 }
+

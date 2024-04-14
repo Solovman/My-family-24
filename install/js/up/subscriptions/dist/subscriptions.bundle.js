@@ -114,6 +114,7 @@ this.BX.Up = this.BX.Up || {};
 	    key: "addClass",
 	    value: function addClass(id) {
 	      var modal = document.querySelector('.sign-up-modal');
+	      console.log(id);
 	      switch (id) {
 	        case 'Standard2':
 	          BX.addClass(modal, 'sing-modal-standard');

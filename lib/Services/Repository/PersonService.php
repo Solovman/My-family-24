@@ -9,6 +9,7 @@ use Bitrix\Main\ArgumentException;
 use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
+use CFile;
 use Exception;
 use Up\Tree\Entity\Image;
 use Up\Tree\Entity\Person;

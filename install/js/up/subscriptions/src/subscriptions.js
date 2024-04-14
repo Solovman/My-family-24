@@ -64,6 +64,7 @@ export class Subscriptions
 	{
 		const modal = document.querySelector('.sign-up-modal');
 
+		console.log(id);
 		switch (id) {
 			case 'Standard2':
 				BX.addClass(modal, 'sing-modal-standard');

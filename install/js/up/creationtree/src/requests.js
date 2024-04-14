@@ -1,6 +1,5 @@
 export class Requests
 {
-
 	static loadNodes(id)
 	{
 		return new Promise((resolve, reject) =>
@@ -20,16 +19,18 @@ export class Requests
 		})
 	}
 
-	static updateNode(id, fileName, name, surname, birthDate, deathDate, gender, treeId)
+	static updateNode(id, formData, fileName, name, surname, birthDate, deathDate, gender, treeId)
 	{
 		return new Promise((resolve, reject) =>
 		{
-			BX.ajax.runAction('up:tree.node.update', {
+			BX.ajax.runAction('up:tree.node.update',
+				{
 				data: {
 					id: id,
 					fileName: fileName,
 					updatablePerson: {
 						name: name,
+						formData: formData,
 						surname: surname,
 						birthDate: birthDate,
 						deathDate: deathDate,
