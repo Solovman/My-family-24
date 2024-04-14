@@ -31,7 +31,7 @@ export class Subscriptions
 	{
 		Requests.loadList().then(list => {
 			this.subscriptions = list;
-
+			console.log(this.subscriptions)
 			this.renderCard();
 		})
 	}
@@ -75,6 +75,46 @@ export class Subscriptions
 		}
 	}
 
+	getCustomStatusMessage(customStatus)
+	{
+		switch (customStatus){
+			case 1:
+				return "Доступна возможность кастомизации деревьев";
+			case 0:
+				return  "Возможность кастомизации отсутсвует";
+		}
+	}
+	getSubscriptionStatusMessage(customStatus)
+	{
+		switch (customStatus){
+			case 'purchase':
+				return "Купи один раз и пользуйся!";
+			case 'subscription':
+				return  "Месячная подписка";
+			case 'default':
+				return  "Доступно сейчас";
+	}}
+
+	getCorrectValue(value){
+		if (value === 0){
+			return "не ограничено";
+		}
+		else {
+			return value;
+		}
+	}
+
+	getEmojiByTitle(title)
+	{
+		if (title ==='Premium'){
+			return title + "👑";
+			}
+		else{
+			return title;
+		}
+
+	}
+
 	renderCard()
 	{
 		this.subscriptions.forEach(list => {
@@ -82,9 +122,16 @@ export class Subscriptions
 			<li class="subscriptions__item">
 				<div class="nft ntf_${list.id}">
 				<div class='main'>
-					<h2 class="subscriptions__heading">${list.level}</h2>
+					<h2 class="subscriptions__heading">${this.getEmojiByTitle(list.level)}</h2>
 					<p class='description'></p>
 				</div>
+				<ul style="color: white; font-size: 1.4em">
+					<li>✧ Цена: ${list.price}$</li>
+					<li>✧ Максимальное количество деревьев: ${this.getCorrectValue(list.numberTrees)}</li>
+					<li>✧ Максимальное количество вершин: ${this.getCorrectValue(list.numberNodes)}</li>
+					<li>✧ ${this.getCustomStatusMessage(list.customization)}</li>
+					<li>✧ ${this.getSubscriptionStatusMessage(list.subscriptionType)}</li>
+				</ul>
 				<button id="${list.level}${list.id}" class="subscriptions__button">Купить</button>
 			</div>
 			</li>

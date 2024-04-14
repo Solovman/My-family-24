@@ -13,6 +13,7 @@ use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\DateTime;
 use Up\Tree\Entity\Tree;
+use Up\Tree\Model\PersonParentTable;
 use Up\Tree\Model\TreeTable;
 
 class TreeService
@@ -138,6 +139,13 @@ class TreeService
 	 */
 	public static function removeTreeById(int $id): void
 	{
+		$connection = Application::getConnection();
+
 		TreeTable::delete($id);
+
+		$deletePersonsQuery = "DELETE FROM up_person WHERE TREE_ID = $id";
+
+		$connection->queryExecute($deletePersonsQuery);
+
 	}
 }
