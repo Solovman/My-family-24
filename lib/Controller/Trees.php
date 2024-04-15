@@ -95,7 +95,16 @@ class Trees extends Engine\Controller
 	{
 		try
 		{
+			global $USER;
+
+			$userId = (int)$USER->GetID();
+
+			$countTrees = (int)UserSubscriptionsService::getCountTreesByUserId($userId);
+
 			TreeService::removeTreeById((int)$id);
+			$countTrees -= 1;
+
+			UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees]);
 		}
 		catch (SqlException)
 		{
