@@ -62,4 +62,27 @@ class UserService
 		}
 		return null;
 	}
+
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function getUserDataById(): array
+	{
+		global $USER;
+
+		$userId = $USER->GetID();
+
+		$data = UserTable::query()
+			->setSelect(['NAME', 'LAST_NAME'])
+			->setFilter(['ID', $userId])
+			->exec()
+			->fetchObject();
+
+		return [
+			'name' => $data->getName(),
+			'surname' => $data->getLastName()
+		];
+	}
 }

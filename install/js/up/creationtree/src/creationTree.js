@@ -49,8 +49,6 @@ export class CreationTree
 				date.birthDate = new Date(date.birthDate);
 			})
 
-			console.log(this.nodeList);
-
 			this.render();
 		});
 	}

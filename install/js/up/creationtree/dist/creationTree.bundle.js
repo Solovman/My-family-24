@@ -291,7 +291,6 @@ this.BX.Up = this.BX.Up || {};
 	        _this2.nodeList.persons.forEach(function (date) {
 	          date.birthDate = new Date(date.birthDate);
 	        });
-	        console.log(_this2.nodeList);
 	        _this2.render();
 	      });
 	    }

@@ -1,4 +1,5 @@
-import {Type} from 'main.core';
+import {Type, Tag} from 'main.core';
+import {Requests} from "./requests.js";
 
 export class Account
 {
@@ -19,5 +20,32 @@ export class Account
 		{
 			throw new Error(`Account: element with id "${this.rootNodeId}" not found`);
 		}
+
+		this.nodeList = [];
+
+		this.reload();
+	}
+
+
+	reload()
+	{
+		Requests.getInformation().then(data => {
+			this.nodeList = data;
+			console.log(this.nodeList);
+			this.render()
+		})
+	}
+
+	render()
+	{
+		const data = Tag.render`
+			<div class="profile-container">
+				<img src="/local/modules/up.tree/images/user_default.png" alt="Фото профиля">
+				<h2 class="profile-heading font-account">${this.nodeList[1].name + ' ' + this.nodeList[1].surname}</h2>
+				<div class="font-account">Уровень подписки: ${this.nodeList[0]}</div>
+			</div>
+		`;
+
+		this.rootNode.append(data);
 	}
 }

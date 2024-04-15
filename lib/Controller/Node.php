@@ -3,16 +3,13 @@
 namespace Up\Tree\Controller;
 
 use Bitrix\Main\ArgumentException;
-use Bitrix\Main\Context;
 use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\Date;
 use CFile;
-use Up\Tree\Entity\Image;
 use Up\Tree\Entity\Person;
-use Up\Tree\Model\FileTable;
 use \Up\Tree\Services\Repository\PersonService;
 use \Bitrix\Main\DB\SqlException;
 use Up\Tree\Services\Repository\TreeService;
@@ -121,6 +118,5 @@ class Node extends Engine\Controller
 			throw new SqlException("Error when deleting person");
 		}
 	}
-
 }
 
