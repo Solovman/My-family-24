@@ -77,6 +77,10 @@ class SubscriptionsService
 			->exec()
 			->fetchObject();
 
+		if ($subscription === null) {
+			return 1;
+		}
+
 		return $subscription->getSubscriptionId();
 	}
 }

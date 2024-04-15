@@ -47,7 +47,6 @@ this.BX.Up = this.BX.Up || {};
 	      var _this = this;
 	      Requests.getInformation().then(function (data) {
 	        _this.nodeList = data;
-	        console.log(_this.nodeList);
 	        _this.render();
 	      });
 	    }

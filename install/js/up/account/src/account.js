@@ -31,7 +31,7 @@ export class Account
 	{
 		Requests.getInformation().then(data => {
 			this.nodeList = data;
-			console.log(this.nodeList);
+
 			this.render()
 		})
 	}
