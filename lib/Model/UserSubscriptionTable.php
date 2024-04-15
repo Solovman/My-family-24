@@ -19,6 +19,7 @@ Loc::loadMessages(__FILE__);
  * Fields:
  * <ul>
  * <li> USER_ID int mandatory
+ * <li> COUNT_TREES int optional default 0
  * <li> SUBSCRIPTION_ID int optional default 1
  * <li> SUBSCRIPTION_BUY_TIME datetime optional
  * </ul>
@@ -54,6 +55,13 @@ class UserSubscriptionTable extends DataManager
 				]
 			),
 			new IntegerField(
+				'COUNT_TREES',
+				[
+					'default' => 0,
+					'title' => Loc::getMessage('USER_SUBSCRIPTION_ENTITY_COUNT_TREES_FIELD')
+				]
+			),
+			new IntegerField(
 				'SUBSCRIPTION_ID',
 				[
 					'default' => 1,
@@ -66,7 +74,6 @@ class UserSubscriptionTable extends DataManager
 					'title' => Loc::getMessage('USER_SUBSCRIPTION_ENTITY_SUBSCRIPTION_BUY_TIME_FIELD')
 				]
 			),
-
 			'RELATION_USER_SUBSCRIPTION' => (new Reference(
 				'RELATION_USER_SUBSCRIPTION',
 				UserTable::class,
