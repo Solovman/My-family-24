@@ -8,6 +8,4 @@ class TreeSubscriptionsComponent extends CBitrixComponent
 	{
 		$this->includeComponentTemplate();
 	}
-
-
 }

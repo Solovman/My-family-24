@@ -7,6 +7,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 \Bitrix\Main\UI\Extension::load('up.subscriptions');
 
+CJSCore::Init(['popup']);
+
 ?>
 
 <div class="subscriptions__container">

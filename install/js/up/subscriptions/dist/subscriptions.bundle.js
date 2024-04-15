@@ -86,7 +86,6 @@ this.BX.Up = this.BX.Up || {};
 	      var _this = this;
 	      Requests.loadList().then(function (list) {
 	        _this.subscriptions = list;
-	        console.log(_this.subscriptions);
 	        _this.renderCard();
 	      });
 	    }
@@ -115,7 +114,6 @@ this.BX.Up = this.BX.Up || {};
 	    key: "addClass",
 	    value: function addClass(id) {
 	      var modal = document.querySelector('.sign-up-modal');
-	      console.log(id);
 	      switch (id) {
 	        case 'Standard2':
 	          BX.addClass(modal, 'sing-modal-standard');
@@ -132,7 +130,7 @@ this.BX.Up = this.BX.Up || {};
 	        case 1:
 	          return "Доступна возможность кастомизации деревьев";
 	        case 0:
-	          return "Возможность кастомизации отсутсвует";
+	          return "Возможность кастомизации отсутствует";
 	      }
 	    }
 	  }, {

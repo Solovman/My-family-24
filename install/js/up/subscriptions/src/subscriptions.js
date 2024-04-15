@@ -31,7 +31,6 @@ export class Subscriptions
 	{
 		Requests.loadList().then(list => {
 			this.subscriptions = list;
-			console.log(this.subscriptions)
 			this.renderCard();
 		})
 	}
@@ -64,7 +63,6 @@ export class Subscriptions
 	{
 		const modal = document.querySelector('.sign-up-modal');
 
-		console.log(id);
 		switch (id) {
 			case 'Standard2':
 				BX.addClass(modal, 'sing-modal-standard');
@@ -81,7 +79,7 @@ export class Subscriptions
 			case 1:
 				return "Доступна возможность кастомизации деревьев";
 			case 0:
-				return  "Возможность кастомизации отсутсвует";
+				return  "Возможность кастомизации отсутствует";
 		}
 	}
 	getSubscriptionStatusMessage(customStatus)
