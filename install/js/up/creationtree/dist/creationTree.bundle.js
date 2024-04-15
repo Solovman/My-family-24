@@ -528,7 +528,8 @@ this.BX.Up = this.BX.Up || {};
 	                        console.error('Error while changing item:', error);
 	                      });
 	                    } else {
-	                      Requests.updateNode(id, imageId, name, surname, birthDate, deathDate, gender, treeID).then(function (node) {
+	                      console.log(gender);
+	                      Requests.updateNode(id, imageId, 0, name, surname, birthDate, deathDate, gender, treeID).then(function (node) {
 	                        self.reload();
 	                        return node;
 	                      });

@@ -316,7 +316,8 @@ export class CreationTree
 					}
 					else
 					{
-						Requests.updateNode(id, imageId, name, surname, birthDate, deathDate, gender, treeID).then(node => {
+						console.log(gender);
+						Requests.updateNode(id, imageId, 0, name, surname, birthDate, deathDate, gender, treeID).then(node => {
 							self.reload();
 							return node;
 						})
