@@ -56,4 +56,12 @@ __treeMigrate(4, static function ($updater, $DB)
 	}
 });
 
+__treeMigrate(5, static function ($updater, $DB)
+{
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query("INSERT INTO `up_relation_user_subscription` (`USER_ID`, `COUNT_TREES`, `SUBSCRIPTION_ID`, `SUBSCRIPTION_BUY_TIME`) VALUES (1, 0, 3, NULL)");
+	}
+});
+
 
