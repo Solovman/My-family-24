@@ -26,15 +26,13 @@ class PersonService
 	 */
 	public static function addPerson(
 		Person $person,
-		Image $image,
 		array  $personConnectedIds,
 		string $relationType
 	): array
 	{
-		$imageID = ImageService::addImage($image);
 
 		$personData = [
-			"IMAGE_ID" => $imageID,
+			"IMAGE_ID" => $person->getImageId(),
 			"NAME" => $person->getName(),
 			"SURNAME" => $person->getSurname(),
 			"BIRTH_DATE" => $person->getBirthDate(),
@@ -160,7 +158,7 @@ class PersonService
 		{
 			$person = new Person(
 				(int)$personData['IMAGE_ID'],
-				self::getImageName((int) $personData['ID']),
+				self::getImageName((int)$personData['ID']),
 				$personData['NAME'],
 				$personData['SURNAME'],
 				$personData['BIRTH_DATE'],
@@ -169,6 +167,7 @@ class PersonService
 				(int)$personData['TREE_ID']
 			);
 			$person->setId((int)$personData['ID']);
+
 			$personList[] = $person;
 		}
 
@@ -178,9 +177,10 @@ class PersonService
 	/**
 	 * @throws Exception
 	 */
-	public static function updatePersonById(int $id, Image $image, Person $updatablePerson): bool
+	public static function updatePersonById(int $id, $lastImageId, Person $updatablePerson): bool
 	{
 		$personData = [
+			'IMAGE_ID' => $updatablePerson->getImageId(),
 			'NAME' => $updatablePerson->getName(),
 			'SURNAME' => $updatablePerson->getSurname(),
 			'BIRTH_DATE' => $updatablePerson->getBirthDate(),
@@ -188,17 +188,14 @@ class PersonService
 			'GENDER' => $updatablePerson->getGender(),
 		];
 
-		$photo = [
-			'FILE_NAME' => $image->fileName
-		];
-
 		$result = PersonTable::update($id , $personData);
 
-		$imageId = self::getImageId($id);
+		if ($lastImageId !== 1)
+		{
+			FileTable::delete($lastImageId);
+		}
 
-		$updateImage = FileTable::update($imageId, $photo);
-
-		if (!$result->isSuccess() || !$updateImage->isSuccess())
+		if (!$result->isSuccess())
 		{
 			return false;
 		}

@@ -36,11 +36,16 @@ class ImageService
 	 */
 	public static function getImageNameByPerson(int $personImageID): string
 	{
-		$imageName = FileTable::query()->setSelect(['FILE_NAME'])
+		$imageName = FileTable::query()->setSelect(['FILE_NAME', 'SUBDIR'])
 			->setFilter(['ID' => $personImageID])
 			->exec()
 			->fetchObject();
 
-		return $imageName->getFileName();
+		if ($personImageID === 1)
+		{
+			return $imageName->getFileName();
+		}
+
+		return '/upload/' . $imageName->getSubdir(). '/' . $imageName->getFileName();
 	}
 }

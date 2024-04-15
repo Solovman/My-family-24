@@ -12,6 +12,7 @@ use Bitrix\Main\Type\Date;
 use CFile;
 use Up\Tree\Entity\Image;
 use Up\Tree\Entity\Person;
+use Up\Tree\Model\FileTable;
 use \Up\Tree\Services\Repository\PersonService;
 use \Bitrix\Main\DB\SqlException;
 use Up\Tree\Services\Repository\TreeService;
@@ -42,11 +43,11 @@ class Node extends Engine\Controller
 	 * @throws ObjectException
 	 * @throws \Exception
 	 */
-	public function addAction(array $person, string $fileName, array $personConnectedIds, string $relationType): array
+	public function addAction(array $person, array $personConnectedIds, string $relationType): array
 	{
 		$node  = new Person(
 			(int) $person['imageId'],
-			$fileName,
+			"",
 			$person['name'],
 			$person['surname'],
 			new Date($person['birthDate']),
@@ -55,10 +56,8 @@ class Node extends Engine\Controller
 			(int) $person['treeId']
 		);
 
-		$image = new Image($fileName);
-
 		try {
-			return PersonService::addPerson($node, $image, $personConnectedIds, $relationType);
+			return PersonService::addPerson($node, $personConnectedIds, $relationType);
 		}
 		catch (SqlException)
 		{
@@ -70,11 +69,11 @@ class Node extends Engine\Controller
 	 * @throws ObjectException
 	 * @throws \Exception
 	 */
-	public function updateAction(int $id, string $fileName, array $updatablePerson): bool
+	public function updateAction(int $id, array $updatablePerson): bool
 	{
 		$node  = new Person(
 			(int) $updatablePerson['imageId'],
-			$fileName,
+			'',
 			$updatablePerson['name'],
 			$updatablePerson['surname'],
 			new Date($updatablePerson['birthDate']),
@@ -84,10 +83,10 @@ class Node extends Engine\Controller
 		);
 
 
-		return PersonService::updatePersonById($id, new Image($fileName), $node);
+		return PersonService::updatePersonById($id,  (int) $updatablePerson['lastImageId'], $node);
 	}
 
-	public function testAction(): string|bool
+	public function uploadFileAction(): array
 	{
 		$file = $_FILES['photo'];
 
@@ -106,7 +105,7 @@ class Node extends Engine\Controller
 			die('Cannot save file');
 		}
 
-		return json_encode(['data' => $fileId]);
+		return ['fileId' => $fileId];
 	}
 
 	/**

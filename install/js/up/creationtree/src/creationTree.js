@@ -2,6 +2,7 @@ import {Type, Tag} from 'main.core';
 import {Requests} from "./requests.js";
 import {Helper} from "./helper.js";
 import {DownloadJson} from "./downloadJson.js";
+import {CreatedNode} from "./createdNode";
 
 export class CreationTree
 {
@@ -27,10 +28,6 @@ export class CreationTree
 
 		this.reload();
 
-		this.path = options.path;
-
-		console.log(this.path);
-
 		const buttonJSON = BX('json');
 		BX.bind(buttonJSON, 'click', () => {
 			this.nodeList.persons.forEach(person => {
@@ -51,6 +48,8 @@ export class CreationTree
 			this.nodeList.persons.forEach(date => {
 				date.birthDate = new Date(date.birthDate);
 			})
+
+			console.log(this.nodeList);
 
 			this.render();
 		});
@@ -108,12 +107,10 @@ export class CreationTree
 							binding: 'gender'
 						},
 					],
-					{ type: 'textbox', label: 'Photo Url', binding: 'photo', btn: 'Upload' },
 					{ type: 'checkbox', label: 'Click if it\'s you', binding: 'active' }
 				]
 			},
 		});
-
 
 		family.on('exportstart', function(sender, args){
 			args.styles += document.getElementById('myStyles').outerHTML;
@@ -216,103 +213,43 @@ export class CreationTree
 					const addNodes = args.addNodesData;
 					const removeNodes = args.removeNodeId;
 
-					if (Object.keys(addNodes).length === 0 && removeNodes === null)
+					const formData = new FormData();
+					const fileInput = form.querySelector('input[type="file"]');
+					formData.append(fileInput.name, fileInput.files[0]);
+
+					if (BX('photoName').value !== '')
 					{
-						const gender = updateNodes[0].gender[0];
-						const name = updateNodes[0].name;
-						const surname = updateNodes[0].surname;
-						let fileName = updateNodes[0].photo;
-						let birthDate = Helper.formatDate(updateNodes[0].birthDate);
-						let deathDate = Helper.formatDate(updateNodes[0].deathDate);
-
-						if (updateNodes[0].deathDate.length === 0) {
-							deathDate = null;
-						}
-
-						if (updateNodes[0].birthDate.length === 0) {
-							birthDate = null;
-						}
-
-						if (fileName.length === 0) {
-							fileName = '/local/modules/up.tree/images/user_default.png';
-						}
-
-						let personConnectedId = [Number(updateNodes[0].pids[0])];
-
-						if (updateNodes[0].mid || updateNodes[0].fid)
-						{
-							if (Helper.isNumeric(updateNodes[0].mid) && Helper.isNumeric(updateNodes[0].fid))
+						fetch(
+							`/tree/${treeID}/`,
 							{
-								personConnectedId = [Number(updateNodes[0].mid), Number(updateNodes[0].fid)];
+								method: 'POST',
+								headers: {
+									"X-Bitrix-Csrf-Token": BX.bitrix_sessid()
+								},
+								body: formData
 							}
-							else if (Helper.isNumeric(updateNodes[0].mid) && !Helper.isNumeric(updateNodes[0].fid))
-							{
-								personConnectedId = [Number(updateNodes[0].mid)];
-							}
-							else if (Helper.isNumeric(updateNodes[0].fid) && !Helper.isNumeric(updateNodes[0].mid))
-							{
-								personConnectedId = [Number(updateNodes[0].fid)]
-							}
+						)
+							.then((response) => {
+								if (!response.ok) {
+									throw new Error('Network response was not ok');
+								}
+								return response.json();
+							})
+							.then((response) => {
+								updateNodes[0].imageId = response.data.fileId;
 
-							Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(node => {
-								self.reload();
+								CreatedNode.addNode(updateNodes, addNodes, removeNodes, self);
+							})
+							.catch((error) => {
+								console.error('Error while changing item:', error);
 							});
-
-							return;
-						}
-
-						if (updateNodes[0].child && updateNodes[0].pids.length === 0 && updateNodes[0].pids[0] !== 0) {
-
-							if (updateNodes[0].child.mid ) {
-								personConnectedId = [updateNodes[0].child.mid];
-							}
-							else
-							{
-								personConnectedId = [updateNodes[0].child.fid];
-							}
-
-							Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(node => {
-								self.reload();
-							});
-
-							return;
-						}
-
-						if (updateNodes[0].child && updateNodes[0].pids.length !== 0 && updateNodes[0].pids[0] !== 0)
-						{
-							const partner = updateNodes[0].pids[0];
-							let childID = 0;
-
-							if (updateNodes[0].child.mid ) {
-								childID = updateNodes[0].child.mid;
-							}
-							else
-							{
-								childID = updateNodes[0].child.fid;
-							}
-
-							personConnectedId = [partner, childID];
-
-							Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(node => {
-								self.reload();
-							});
-
-							return;
-						}
-
-						if (updateNodes[0].pids.length !== 0)
-						{
-							Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(node => {
-								self.reload();
-							});
-
-							return;
-						}
-
-						Requests.addNode(fileName, name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(node => {
-							self.reload();
-						});
 					}
+					else
+					{
+						updateNodes[0].imageId = 1;
+						CreatedNode.addNode(updateNodes, addNodes, removeNodes, self);
+					}
+
 				});
 			}
 			else if(!onUpdatePerson)
@@ -321,52 +258,23 @@ export class CreationTree
 
 				family.onUpdateNode(async (args) => {
 
-					const formData = new FormData();
-					const fileInput = form.querySelector('input[type="file"]');
-					formData.append(fileInput.name, fileInput.files[0]);
-
-					const ids = parseInt(window.location.href.match(/\d+/));
-
-
-					fetch(
-						`/tree/${ids}/`,
-						{
-							method: 'POST',
-							headers: {
-								"X-Bitrix-Csrf-Token": BX.bitrix_sessid()
-							},
-							body: formData
-						}
-					)
-						.then((response) => {
-							if (!response.ok) {
-								throw new Error('Network response was not ok');
-							}
-							return response.json();
-						})
-						.then((response) => {
-							console.log(response);
-						})
-						.catch((error) => {
-							console.error('Error while changing item:', error);
-						});
-
-
 					if (Object.keys(args.addNodesData).length !== 0) {
 						return;
 					}
+
+					const formData = new FormData();
+					const fileInput = form.querySelector('input[type="file"]');
+					formData.append(fileInput.name, fileInput.files[0]);
 
 					const updateNodes = args.updateNodesData;
 
 					const id = updateNodes[0].id;
 					const gender = updateNodes[0].gender[0];
 					const name = updateNodes[0].name;
+					const imageId = updateNodes[0].imageId;
 					const surname = updateNodes[0].surname;
-					let fileName = updateNodes[0].photo;
 					let birthDate = Helper.formatDate(updateNodes[0].birthDate);
 					let deathDate = Helper.formatDate(updateNodes[0].deathDate);
-
-					fileName = this.path;
 
 					if (updateNodes[0].deathDate.length === 0) {
 						deathDate = null;
@@ -376,17 +284,52 @@ export class CreationTree
 						birthDate = null;
 					}
 
-					Requests.updateNode(id, formData, fileName, name, surname, birthDate, deathDate, gender, treeID).then(node => {
-						self.reload();
-						return node;
-					})
+					if (BX('photoName').value !== '')
+					{
+						fetch(
+							`/tree/${treeID}/`,
+							{
+								method: 'POST',
+								headers: {
+									"X-Bitrix-Csrf-Token": BX.bitrix_sessid()
+								},
+								body: formData
+							}
+						)
+							.then((response) => {
+								if (!response.ok) {
+									throw new Error('Network response was not ok');
+								}
+								return response.json();
+							})
+							.then((response) => {
+								const lastImageId = updateNodes[0].imageId;
+								updateNodes[0].imageId = response.data.fileId;
+								const imageId = updateNodes[0].imageId;
+
+								Requests.updateNode(id, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeID).then(node => {
+									self.reload();
+									return node;
+								})
+							})
+							.catch((error) => {
+								console.error('Error while changing item:', error);
+							});
+					}
+					else
+					{
+						Requests.updateNode(id, imageId, name, surname, birthDate, deathDate, gender, treeID).then(node => {
+							self.reload();
+							return node;
+						})
+					}
 				})
 			}
 
 			sender.editUI.show(args.node.id, false);
 
 			const form = document.querySelector('.bft-edit-form');
-			const editForm = document.querySelector('.bft-edit-form-fields');
+			const editForm = document.querySelector('.bft-form-fieldset');
 
 			form.enctype = "multipart/form-data";
 			form.action = '/tree/{id}/';

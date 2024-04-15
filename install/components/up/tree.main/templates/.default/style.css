@@ -63,6 +63,10 @@ image {
 	height: 80px;
 }
 
+.bft-edit-form-fields-inner {
+	margin: 0 7px 0 7px !important;
+}
+
 /*g rect {*/
 /*	fill: #ffe866;*/
 /*}*/

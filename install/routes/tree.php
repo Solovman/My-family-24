@@ -9,7 +9,7 @@ return function (RoutingConfigurator $routes)
 {
 	$routes->get('/tree/{id}/', new PublicPageController('/local/modules/up.tree/views/tree-main.php'));
 
-	$routes->post('/tree/{id}/', [\Up\Tree\Controller\Node::class, 'test']);
+	$routes->post('/tree/{id}/', [\Up\Tree\Controller\Node::class, 'uploadFile']);
 
 	$routes->get('/subscriptions/', new PublicPageController('/local/modules/up.tree/views/tree-subscriptions.php'));
 

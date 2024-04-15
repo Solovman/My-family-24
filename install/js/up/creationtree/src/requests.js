@@ -19,7 +19,7 @@ export class Requests
 		})
 	}
 
-	static updateNode(id, formData, fileName, name, surname, birthDate, deathDate, gender, treeId)
+	static updateNode(id, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeId)
 	{
 		return new Promise((resolve, reject) =>
 		{
@@ -27,10 +27,10 @@ export class Requests
 				{
 				data: {
 					id: id,
-					fileName: fileName,
 					updatablePerson: {
+						imageId: imageId,
+						lastImageId: lastImageId,
 						name: name,
-						formData: formData,
 						surname: surname,
 						birthDate: birthDate,
 						deathDate: deathDate,
@@ -49,14 +49,14 @@ export class Requests
 		});
 	}
 
-	static addNode(fileName, name, surname, gender, birthDate, deathDate, treeId, personConnectedIds, relationType)
+	static addNode(imageId, name, surname, gender, birthDate, deathDate, treeId, personConnectedIds, relationType)
 	{
 		return new Promise((resolve, reject) =>
 		{
 			BX.ajax.runAction('up:tree.node.add', {
 				data: {
-					fileName: fileName,
 					person: {
+						imageId: imageId,
 						name: name,
 						surname: surname,
 						birthDate: birthDate,
