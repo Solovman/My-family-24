@@ -73,7 +73,7 @@ class SubscriptionsService
 
 		$subscription = UserSubscriptionTable::query()
 			->setSelect(['SUBSCRIPTION_ID'])
-			->setFilter(['USER_ID', $userId])
+			->setFilter(['USER_ID' => $userId])
 			->exec()
 			->fetchObject();
 
