@@ -100,5 +100,16 @@ class SubscriptionsService
 
 		return $numberTrees->getNumberTrees();
 	}
+
+	public static function getNumberNodesById(int $id)
+	{
+		$numberTrees = SubscriptionTable::query()
+			->setSelect(['NUMBER_NODES'])
+			->setFilter(['ID' => $id])
+			->exec()
+			->fetchObject();
+
+		return $numberTrees->getNumberNodes();
+	}
 }
 

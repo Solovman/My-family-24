@@ -10,9 +10,12 @@ use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\Date;
 use CFile;
 use Up\Tree\Entity\Person;
+use Up\Tree\Model\UserSubscriptionTable;
 use \Up\Tree\Services\Repository\PersonService;
 use \Bitrix\Main\DB\SqlException;
+use Up\Tree\Services\Repository\SubscriptionsService;
 use Up\Tree\Services\Repository\TreeService;
+use Up\Tree\Services\Repository\UserSubscriptionsService;
 
 class Node extends Engine\Controller
 {
@@ -42,6 +45,8 @@ class Node extends Engine\Controller
 	 */
 	public function addAction(array $person, array $personConnectedIds, string $relationType): array
 	{
+		global $USER;
+
 		$node  = new Person(
 			(int) $person['imageId'],
 			"",
@@ -53,13 +58,27 @@ class Node extends Engine\Controller
 			(int) $person['treeId']
 		);
 
-		try {
-			return PersonService::addPerson($node, $personConnectedIds, $relationType);
-		}
-		catch (SqlException)
+		$userId = (int) $USER->GetID();
+
+		$numberNodesLimit = (int) SubscriptionsService::getNumberNodesById(1);
+		$countNodesByUser = (int) UserSubscriptionsService::getCountNodesByUserId($userId);
+
+		if ($countNodesByUser < $numberNodesLimit)
 		{
-			throw new SqlException("Error when adding person");
+			try {
+				PersonService::addPerson($node, $personConnectedIds, $relationType);
+
+				$countNodesByUser += 1;
+
+				UserSubscriptionTable::update($userId, ['COUNT_NODES' => $countNodesByUser]);
+			}
+			catch (SqlException)
+			{
+				throw new SqlException("Error when adding person");
+			}
 		}
+
+		return [];
 	}
 
 	/**
@@ -111,7 +130,15 @@ class Node extends Engine\Controller
 	public function removeAction(int $id):void
 	{
 		try {
+			global $USER;
 			PersonService::removePersonById($id);
+
+			$userId = (int) $USER->GetID();
+			$countNodesByUser = (int) UserSubscriptionsService::getCountNodesByUserId($userId);
+
+			$countNodesByUser -= 1;
+
+			UserSubscriptionTable::update($userId, ['COUNT_NODES' => $countNodesByUser]);
 		}
 		catch (SqlException)
 		{

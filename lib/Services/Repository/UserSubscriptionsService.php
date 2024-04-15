@@ -21,6 +21,16 @@ class UserSubscriptionsService
 			return 1;
 		}
 		return $countTrees->getCountTrees();
+	}
 
+	public static function getCountNodesByUserId(int $userId):int
+	{
+		$countNodes = UserSubscriptionTable::query()
+													->setSelect(['COUNT_NODES'])
+													->setFilter(['USER_ID' => $userId])
+													->exec()
+													->fetchObject();
+
+		return $countNodes->getCountNodes();
 	}
 }

@@ -62,6 +62,13 @@ class UserSubscriptionTable extends DataManager
 				]
 			),
 			new IntegerField(
+				'COUNT_NODES',
+				[
+					'default' => 0,
+					'title' => Loc::getMessage('USER_SUBSCRIPTION_ENTITY_COUNT_NODES_FIELD')
+				]
+			),
+			new IntegerField(
 				'SUBSCRIPTION_ID',
 				[
 					'default' => 1,
