@@ -11,7 +11,8 @@ CREATE TABLE up_subscription(
 );
 
 CREATE TABLE up_relation_user_subscription(
-                        USER_ID INT NOT NULL,
+                        USER_ID INT NOT NULL PRIMARY KEY,
+                        COUNT_TREES INT DEFAULT 0,
 	                    SUBSCRIPTION_ID INT NOT NULL DEFAULT 1,
 	                    SUBSCRIPTION_BUY_TIME TIMESTAMP DEFAULT NULL
 );

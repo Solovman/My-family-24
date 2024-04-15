@@ -14,10 +14,13 @@ use Bitrix\Main\Type\Date;
 use Exception;
 use Up\Tree\Entity\Image;
 use Up\Tree\Entity\Person;
+use Up\Tree\Model\UserSubscriptionTable;
 use Up\Tree\Services\Repository\PersonService;
 use Bitrix\Main\Type\DateTime;
 use Up\Tree\Entity\Tree;
+use Up\Tree\Services\Repository\SubscriptionsService;
 use Up\Tree\Services\Repository\TreeService;
+use Up\Tree\Services\Repository\UserSubscriptionsService;
 
 class Trees extends Engine\Controller
 {
@@ -42,34 +45,46 @@ class Trees extends Engine\Controller
 
 	/**
 	 * @throws SqlException
+	 * @throws Exception
 	 */
 	public function addTreeAction(string $treeTitle): void
 	{
 		global $USER, $DB;
 
-		$userId = $USER->GetID();
+		$userId = (int)$USER->GetID();
 
-		$newTree = new Tree($treeTitle, (int)$userId, new DateTime());
-		TreeService::addTree($newTree);
-		$newTreeId = $DB->LastID();
+		$subscriptionId = (int)SubscriptionsService::getSubscriptionIdByUserId($userId);
 
-		$initialNode = new Person(
-			1,
-			'/local/modules/up.tree/images/user_default.png',
-			'Enter your name',
-			'Enter your surname',
-			new Date(),
-			null,
-			'',
-			(int)$newTreeId,
-		);
+		$countTrees = (int)UserSubscriptionsService::getCountTreesByUserId($userId);
+		$numberTreesOnSubscription = (int)SubscriptionsService::getNumberTreesById($subscriptionId);
 
-		PersonService::addPerson(
-			$initialNode,
-			[0],
-			'init'
-		);
+		if ($numberTreesOnSubscription > $countTrees || $numberTreesOnSubscription === 0)
+		{
+			$newTree = new Tree($treeTitle, $userId, new DateTime());
+			TreeService::addTree($newTree);
+			$newTreeId = $DB->LastID();
 
+			$initialNode = new Person(
+				1,
+				'/local/modules/up.tree/images/user_default.png',
+				'Enter your name',
+				'Enter your surname',
+				new Date(),
+				null,
+				'',
+				(int)$newTreeId,
+			);
+
+			PersonService::addPerson(
+				$initialNode,
+				[0],
+				'init'
+			);
+
+			$countTrees += 1;
+
+			UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees]);
+		}
 	}
 
 	/**

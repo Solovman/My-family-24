@@ -51,9 +51,13 @@ class SubscriptionsService
 
 	public static function getSubscriptionNameByUser()
 	{
+		global $USER;
+
+		$userId = $USER->GetID();
+
 		$subscriptions = SubscriptionTable::query()
 			->setSelect(['LEVEL'])
-			->setFilter(['ID' => self::getSubscriptionByUser()])
+			->setFilter(['ID' => self::getSubscriptionIdByUserId($userId)])
 			->exec()
 			->fetchObject();
 
@@ -65,23 +69,36 @@ class SubscriptionsService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getSubscriptionByUser()
+	public static function getSubscriptionIdByUserId(int $userId)
 	{
-		global $USER;
-
-		$userId = $USER->GetID();
-
 		$subscription = UserSubscriptionTable::query()
 			->setSelect(['SUBSCRIPTION_ID'])
-			->setFilter(['USER_ID', $userId])
+			->setFilter(['USER_ID'=> $userId])
 			->exec()
 			->fetchObject();
 
-		if ($subscription === null) {
+		if ($subscription === null)
+		{
 			return 1;
 		}
 
 		return $subscription->getSubscriptionId();
+	}
+
+	public static function getNumberTreesById(int $id)
+	{
+		$numberTrees = SubscriptionTable::query()
+											 ->setSelect(['NUMBER_TREES'])
+											 ->setFilter(['ID' => $id])
+											 ->exec()
+											 ->fetchObject();
+
+		if ($numberTrees === null)
+		{
+			return 1;
+		}
+
+		return $numberTrees->getNumberTrees();
 	}
 }
 
