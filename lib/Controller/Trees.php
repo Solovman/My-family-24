@@ -66,7 +66,6 @@ class Trees extends Engine\Controller
 
 		PersonService::addPerson(
 			$initialNode,
-			new Image('/local/modules/up.tree/images/user_default.png'),
 			[0],
 			'init'
 		);
