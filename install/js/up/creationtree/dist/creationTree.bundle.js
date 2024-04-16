@@ -439,9 +439,11 @@ this.BX.Up = this.BX.Up || {};
 	          remove: {
 	            text: 'Remove',
 	            onClick: function onClick() {
-	              Requests.removeNode(args.firstNodeId).then(function (node) {
-	                self.reload();
-	              });
+	              if (confirm("Are you sure you are going to remove this family member?")) {
+	                Requests.removeNode(args.firstNodeId).then(function (node) {
+	                  self.reload();
+	                });
+	              }
 	            }
 	          },
 	          details: {

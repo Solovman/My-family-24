@@ -199,9 +199,11 @@ export class CreationTree
 				remove: {
 					text: 'Remove',
 					onClick: function onClick() {
-						Requests.removeNode(args.firstNodeId).then(node => {
-							self.reload();
-						});
+						if (confirm("Are you sure you are going to remove this family member?")) {
+							Requests.removeNode(args.firstNodeId).then(node => {
+								self.reload();
+							});
+						}
 					},
 				},
 				details: {
