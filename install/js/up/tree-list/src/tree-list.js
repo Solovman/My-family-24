@@ -1,4 +1,5 @@
 import {Type, Tag} from 'main.core';
+import {ModalWindow} from "./modalWindow";
 
 export class TreeList
 {
@@ -43,7 +44,11 @@ export class TreeList
 		if (treeTitle !== '') {
 
 			this.addTree(treeTitle).then((result) => {
-				console.log(result);
+				if (result === false)
+				{
+					ModalWindow.render();
+				}
+
 				inputTitle.value = '';
 				this.reload();
 			}).catch((error) => {

@@ -178,6 +178,39 @@ this.BX.Up = this.BX.Up || {};
 	  return DownloadJson;
 	}();
 
+	var RenderForm = /*#__PURE__*/function () {
+	  function RenderForm() {
+	    babelHelpers.classCallCheck(this, RenderForm);
+	  }
+	  babelHelpers.createClass(RenderForm, null, [{
+	    key: "render",
+	    value: function render() {
+	      var modalPopup = BX.PopupWindowManager.create("ModalPopup", null, {
+	        autoHide: true,
+	        offsetLeft: 0,
+	        offsetTop: 0,
+	        overlay: true,
+	        draggable: {
+	          restrict: true
+	        },
+	        closeByEsc: true,
+	        closeIcon: {
+	          right: "12px",
+	          top: "10px"
+	        },
+	        content: "<div style=\"width:400px;height:400px; text-align: center;\"><span style=\"position:absolute;left:50%; top:50%\"><img src=\"/bitrix/templates/eshop_adapt_yellow/img/wait.gif\"/></span></div>",
+	        events: {
+	          onPopupShow: function onPopupShow() {
+	            this.setContent(BX("bx_popup_modal_tree"));
+	          }
+	        }
+	      });
+	      modalPopup.show();
+	    }
+	  }]);
+	  return RenderForm;
+	}();
+
 	var CreatedNode = /*#__PURE__*/function () {
 	  function CreatedNode() {
 	    babelHelpers.classCallCheck(this, CreatedNode);
@@ -209,7 +242,12 @@ this.BX.Up = this.BX.Up || {};
 	            personConnectedId = [Number(updateNodes[0].fid)];
 	          }
 	          Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(function (node) {
-	            self.reload();
+	            if (node) {
+	              self.reload();
+	            } else {
+	              RenderForm.render();
+	              self.reload();
+	            }
 	          });
 	          return;
 	        }
@@ -220,7 +258,12 @@ this.BX.Up = this.BX.Up || {};
 	            personConnectedId = [updateNodes[0].child.fid];
 	          }
 	          Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(function (node) {
-	            self.reload();
+	            if (node) {
+	              self.reload();
+	            } else {
+	              RenderForm.render();
+	              self.reload();
+	            }
 	          });
 	          return;
 	        }
@@ -234,18 +277,33 @@ this.BX.Up = this.BX.Up || {};
 	          }
 	          personConnectedId = [partner, childID];
 	          Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(function (node) {
-	            self.reload();
+	            if (node) {
+	              self.reload();
+	            } else {
+	              RenderForm.render();
+	              self.reload();
+	            }
 	          });
 	          return;
 	        }
 	        if (updateNodes[0].pids.length !== 0) {
 	          Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(function (node) {
-	            self.reload();
+	            if (node) {
+	              self.reload();
+	            } else {
+	              RenderForm.render();
+	              self.reload();
+	            }
 	          });
 	          return;
 	        }
 	        Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(function (node) {
-	          self.reload();
+	          if (node) {
+	            self.reload();
+	          } else {
+	            RenderForm.render();
+	            self.reload();
+	          }
 	        });
 	      }
 	    }
@@ -373,13 +431,12 @@ this.BX.Up = this.BX.Up || {};
 	            }],
 	            label: 'Gender',
 	            binding: 'gender'
-	          }], {
-	            type: 'checkbox',
-	            label: 'Click if it\'s you',
-	            binding: 'active'
 	          }]
+	          // { type: 'checkbox', label: 'Click if it\'s you', binding: 'active' }
+	          ]
 	        }
 	      });
+
 	      family.on('exportstart', function (sender, args) {
 	        args.styles += document.getElementById('myStyles').outerHTML;
 	      });
@@ -560,8 +617,12 @@ this.BX.Up = this.BX.Up || {};
 	        var editForm = document.querySelector('.bft-form-fieldset');
 	        form.enctype = "multipart/form-data";
 	        form.action = '/tree/{id}/';
-	        var formFile = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"photo\">\n\t\t\t"])));
+	        var formFile = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<label class=\"input-file\">\n\t\t\t\t\t<span class=\"input-file-text\" type=\"text\"></span>\n\t\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"photo\">\n\t\t\t\t\t<span class=\"input-file-btn\">\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B</span>\n\t\t\t\t</label>\n\t\t\t"])));
 	        editForm.append(formFile);
+	        BX('photoName').addEventListener('change', function () {
+	          var file = this.files[0];
+	          document.querySelector('.input-file-text').innerHTML = file.name;
+	        });
 	        return false;
 	      });
 	    }

@@ -6,15 +6,18 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
  * @var array $arResult
  */
 \Bitrix\Main\UI\Extension::load('up.creationtree');
-
+CJSCore::Init(['popup']);
 ?>
 
 <div  class="my-container tree__container" style="height: 700px" id="tree">
 	<div class="tree__spinner spinner-grow text-primary" role="status">
 		<span class="visually-hidden">Loading...</span>
 	</div>
-
 </div>
+
+<?php
+$APPLICATION->IncludeComponent("up:tree.modalLimit", "", []);
+?>
 
 
 <style id="myStyles">

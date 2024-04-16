@@ -43,7 +43,7 @@ class Node extends Engine\Controller
 	 * @throws ObjectException
 	 * @throws \Exception
 	 */
-	public function addAction(array $person, array $personConnectedIds, string $relationType): array
+	public function addAction(array $person, array $personConnectedIds, string $relationType): bool
 	{
 		global $USER;
 
@@ -76,9 +76,11 @@ class Node extends Engine\Controller
 			{
 				throw new SqlException("Error when adding person");
 			}
+
+			return true;
 		}
 
-		return [];
+		return false;
 	}
 
 	/**

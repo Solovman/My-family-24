@@ -1,5 +1,6 @@
 import {Helper} from "./helper.js";
 import {Requests} from "./requests.js";
+import {RenderForm} from "./renderForm.js";
 
 export class CreatedNode
 {
@@ -42,7 +43,14 @@ export class CreatedNode
 				}
 
 				Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(node => {
-					self.reload();
+					if (node)
+					{
+						self.reload();
+					}else
+					{
+						RenderForm.render();
+						self.reload();
+					}
 				});
 
 				return;
@@ -59,7 +67,14 @@ export class CreatedNode
 				}
 
 				Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(node => {
-					self.reload();
+					if (node)
+					{
+						self.reload();
+					}else
+					{
+						RenderForm.render();
+						self.reload();
+					}
 				});
 
 				return;
@@ -81,7 +96,14 @@ export class CreatedNode
 				personConnectedId = [partner, childID];
 
 				Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(node => {
-					self.reload();
+					if (node)
+					{
+						self.reload();
+					}else
+					{
+						RenderForm.render();
+						self.reload();
+					}
 				});
 
 				return;
@@ -90,14 +112,28 @@ export class CreatedNode
 			if (updateNodes[0].pids.length !== 0)
 			{
 				Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(node => {
-					self.reload();
+					if (node)
+					{
+						self.reload();
+					}else
+					{
+						RenderForm.render();
+						self.reload();
+					}
 				});
 
 				return;
 			}
 
 			Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(node => {
-				self.reload();
+				if (node)
+				{
+					self.reload();
+				}else
+				{
+					RenderForm.render();
+					self.reload();
+				}
 			});
 		}
 	}

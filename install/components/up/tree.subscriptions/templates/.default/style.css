@@ -165,6 +165,7 @@ body {
 	margin-top: auto;
 	border: 1px solid #FFFFFF;
 	background-color: transparent;
+	border-radius: 5px;
 	color: #ffffff;
 	transition: all .3s ease-in-out;
 }
@@ -347,6 +348,7 @@ body {
 .popup-window {
 	position: relative;
 	width: 32%;
+	border-radius: 5px;
 }
 
 .popup-window:after {
@@ -359,6 +361,7 @@ body {
 	background-color: rgba(0, 0, 0, 0.3);
 	background-image: url("/local/modules/up.tree/images/lock.svg");
 	background-repeat: no-repeat;
+	border-radius: 5px;
 	background-size: 37%;
 	background-position: 50% 50%;
 	z-index: 10;
@@ -386,4 +389,8 @@ body {
 	text-align: center;
 	left: 0;
 	z-index: 20;
+}
+
+.sign-up-button {
+	border-radius: 5px;
 }

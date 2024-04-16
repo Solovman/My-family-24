@@ -7,6 +7,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
  */
 
 \Bitrix\Main\UI\Extension::load('up.tree-list');
+
+CJSCore::Init(['popup']);
 ?>
 
 <form action="/" method="post" class="form my-container create-tree-form">
@@ -26,6 +28,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 </form>
 <div class="tree-list-app" id="tree-list"></div>
 
+<?php
+$APPLICATION->IncludeComponent("up:tree.modalLimit", "", []);
+?>
 
 <script>
 	BX.ready(function ()

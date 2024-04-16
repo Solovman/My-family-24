@@ -4,6 +4,39 @@ this.BX.Up = this.BX.Up || {};
 (function (exports,main_core) {
 	'use strict';
 
+	var ModalWindow = /*#__PURE__*/function () {
+	  function ModalWindow() {
+	    babelHelpers.classCallCheck(this, ModalWindow);
+	  }
+	  babelHelpers.createClass(ModalWindow, null, [{
+	    key: "render",
+	    value: function render() {
+	      var modalPopup = BX.PopupWindowManager.create("ModalPopup", null, {
+	        autoHide: true,
+	        offsetLeft: 0,
+	        offsetTop: 0,
+	        overlay: true,
+	        draggable: {
+	          restrict: true
+	        },
+	        closeByEsc: true,
+	        closeIcon: {
+	          right: "12px",
+	          top: "10px"
+	        },
+	        content: "<div style=\"width:400px;height:400px; text-align: center;\"><span style=\"position:absolute;left:50%; top:50%\"><img src=\"/bitrix/templates/eshop_adapt_yellow/img/wait.gif\"/></span></div>",
+	        events: {
+	          onPopupShow: function onPopupShow() {
+	            this.setContent(BX("bx_popup_modal_tree"));
+	          }
+	        }
+	      });
+	      modalPopup.show();
+	    }
+	  }]);
+	  return ModalWindow;
+	}();
+
 	var _templateObject, _templateObject2;
 	var TreeList = /*#__PURE__*/function () {
 	  function TreeList() {
@@ -41,7 +74,9 @@ this.BX.Up = this.BX.Up || {};
 	      var warningMessage = BX('warningMessage');
 	      if (treeTitle !== '') {
 	        this.addTree(treeTitle).then(function (result) {
-	          console.log(result);
+	          if (result === false) {
+	            ModalWindow.render();
+	          }
 	          inputTitle.value = '';
 	          _this2.reload();
 	        })["catch"](function (error) {

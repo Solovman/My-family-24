@@ -118,7 +118,7 @@ export class CreationTree
 							binding: 'gender'
 						},
 					],
-					{ type: 'checkbox', label: 'Click if it\'s you', binding: 'active' }
+					// { type: 'checkbox', label: 'Click if it\'s you', binding: 'active' }
 				]
 			},
 		});
@@ -345,10 +345,22 @@ export class CreationTree
 			form.enctype = "multipart/form-data";
 			form.action = '/tree/{id}/';
 			const formFile = Tag.render`
-				<input id="photoName" type="file" name="photo">
+				<label class="input-file">
+					<span class="input-file-text" type="text"></span>
+					<input id="photoName" type="file" name="photo">
+					<span class="input-file-btn">Выберите файл</span>
+				</label>
 			`;
 
+
 			editForm.append(formFile);
+
+			BX('photoName').addEventListener('change', function(){
+					let file = this.files[0];
+					document.querySelector('.input-file-text').innerHTML = file.name;
+				}
+			);
+
 
 			return false;
 		})

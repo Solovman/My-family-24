@@ -1,12 +1,8 @@
 export class RenderForm
 {
-	static addForm(idNode)
+	static render()
 	{
-		const form = document.querySelector('.node__form');
-
-		form.id = idNode;
-
-		let authPopup = BX.PopupWindowManager.create("FormPopup", null, {
+		let modalPopup = BX.PopupWindowManager.create("ModalPopup", null, {
 			autoHide: true,
 			offsetLeft: 0,
 			offsetTop: 0,
@@ -18,11 +14,11 @@ export class RenderForm
 			events: {
 				onPopupShow: function()
 				{
-					this.setContent(BX("bx_popup_form"));
+					this.setContent(BX("bx_popup_modal_tree"));
 				},
 			}
 		});
 
-		authPopup.show();
+		modalPopup.show();
 	}
 }

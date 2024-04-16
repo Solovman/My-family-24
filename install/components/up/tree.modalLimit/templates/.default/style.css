@@ -1,0 +1,31 @@
+.modal_icon {
+	display: flow;
+	text-align: center;
+}
+
+.modal__heading {
+	width: 73%;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	font-size: 20px;
+	line-height: 20px;
+	color: #000000;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+}
+
+#ModalPopup {
+	width: 35%;
+	border-radius: 5px;
+}
+
+.modal__link {
+	display: flow;
+	background-color: #FFE13E;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	color: #FFFFFF;
+	text-align: center;
+	border-radius: 5px;
+	padding: 11px 16px;
+	font-size: 18px;
+	transition: color .3s ease-in-out;
+}
