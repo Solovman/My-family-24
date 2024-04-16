@@ -53,7 +53,7 @@ class SubscriptionsService
 	{
 		global $USER;
 
-		$userId = $USER->GetID();
+		$userId = (int) $USER->GetID();
 
 		$subscriptions = SubscriptionTable::query()
 			->setSelect(['LEVEL'])
