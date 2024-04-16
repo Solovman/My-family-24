@@ -16,6 +16,7 @@ text {
 	font-family: 'MorningBreeze', sans-serif, Helvetica !important;
 	font-size: 22px;
 	font-weight: 400;
+	margin-bottom: 5px !important;
 }
 
 .bft-edit-form-title {
@@ -76,12 +77,17 @@ image {
 /*	fill: #ffe866;*/
 /*}*/
 
+.active {
+	fill: #FFE13E !important;
+}
+
 .input-file {
 	position: relative;
 	display: inline-block;
 	margin: 3px;
 	width: 100%;
 }
+
 .input-file-text {
 	padding: 0 10px;
 	line-height: 40px;
@@ -95,6 +101,15 @@ image {
 	border-radius: 6px 0px 0 6px;
 	border: 1px solid #ddd;
 }
+
+.bft-checkbox {
+	margin-bottom: 0 !important;
+}
+
+.bft-input>input, .bft-input>select {
+	height: 45px !important;
+}
+
 .input-file-btn {
 	position: relative;
 	display: inline-block;
@@ -115,6 +130,7 @@ image {
 	margin: 0;
 	transition: background-color 0.2s;
 }
+
 .input-file input[type=file] {
 	position: absolute;
 	z-index: -1;

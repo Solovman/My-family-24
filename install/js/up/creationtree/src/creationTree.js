@@ -45,9 +45,13 @@ export class CreationTree
 		Requests.loadNodes(id).then(nodeList => {
 			this.nodeList = nodeList;
 
-			this.nodeList.persons.forEach(date => {
-				date.birthDate = new Date(date.birthDate);
+			this.nodeList.persons.forEach(person => {
+				person.birthDate = new Date(person.birthDate);
+
+				person.active = person.active !== '0';
 			})
+
+			console.log(this.nodeList);
 
 			this.render();
 		});
@@ -65,8 +69,6 @@ export class CreationTree
 				}
 			})
 		}
-
-		console.log(root);
 
 		let treeID =  parseInt(window.location.href.match(/\d+/));
 		let family =  new FamilyTree(document.getElementById('tree'), {
@@ -118,7 +120,7 @@ export class CreationTree
 							binding: 'gender'
 						},
 					],
-					// { type: 'checkbox', label: 'Click if it\'s you', binding: 'active' }
+					{ type: 'checkbox', label: 'Important', binding: 'active' }
 				]
 			},
 		});
@@ -286,8 +288,27 @@ export class CreationTree
 					const name = updateNodes[0].name;
 					const imageId = updateNodes[0].imageId;
 					const surname = updateNodes[0].surname;
+					let active = updateNodes[0].active;
 					let birthDate = Helper.formatDate(updateNodes[0].birthDate);
 					let deathDate = Helper.formatDate(updateNodes[0].deathDate);
+
+					if (active) {
+						active = '1'
+					} else {
+						active = '0'
+					}
+
+					console.log(active);
+
+					// const node = document.querySelector(`g[data-n-id="${updateNodes[0].id}"] rect`);
+					//
+					// if (updateNodes[0].active === true)
+					// {
+					// 	node.setAttribute('fill', '#FFE13E');
+					//
+					// 	self.reload();
+					// 	return;
+					// }
 
 					if (updateNodes[0].deathDate.length === 0) {
 						deathDate = null;
@@ -331,7 +352,7 @@ export class CreationTree
 					}
 					else
 					{
-						Requests.updateNode(id, imageId, 0, name, surname, birthDate, deathDate, gender, treeID).then(node => {
+						Requests.updateNode(id, active, imageId, 0, name, surname, birthDate, deathDate, gender, treeID).then(node => {
 							self.reload();
 							return node;
 						})
@@ -354,7 +375,6 @@ export class CreationTree
 				</label>
 			`;
 
-
 			editForm.append(formFile);
 
 			BX('photoName').addEventListener('change', function(){
@@ -362,7 +382,6 @@ export class CreationTree
 					document.querySelector('.input-file-text').innerHTML = file.name;
 				}
 			);
-
 
 			return false;
 		})

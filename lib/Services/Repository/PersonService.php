@@ -32,6 +32,7 @@ class PersonService
 	{
 
 		$personData = [
+			"ACTIVE" => $person->getActive(),
 			"IMAGE_ID" => $person->getImageId(),
 			"NAME" => $person->getName(),
 			"SURNAME" => $person->getSurname(),
@@ -150,6 +151,7 @@ class PersonService
 													   'DEATH_DATE',
 													   'GENDER',
 													   'TREE_ID',
+													   'ACTIVE'
 												   ])->setFilter(['TREE_ID' => $treeId])->exec()->fetchAll();
 
 		$personList = [];
@@ -157,6 +159,7 @@ class PersonService
 		foreach ($persons as $personData)
 		{
 			$person = new Person(
+				$personData['ACTIVE'],
 				(int)$personData['IMAGE_ID'],
 				self::getImageName((int)$personData['ID']),
 				$personData['NAME'],
@@ -180,6 +183,7 @@ class PersonService
 	public static function updatePersonById(int $id, $lastImageId, Person $updatablePerson): bool
 	{
 		$personData = [
+			'ACTIVE' => $updatablePerson->getActive(),
 			'IMAGE_ID' => $updatablePerson->getImageId(),
 			'NAME' => $updatablePerson->getName(),
 			'SURNAME' => $updatablePerson->getSurname(),

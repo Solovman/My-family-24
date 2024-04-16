@@ -9,6 +9,7 @@ use Bitrix\Main\Type\Date;
 class Person implements Entity
 {
 	public ?int $id;
+	public string $active;
 	public int $imageId;
 	public string $photo;
 	public string $name;
@@ -19,6 +20,7 @@ class Person implements Entity
 	public int $treeId;
 
 	/**
+	 * @param $active
 	 * @param $imageId
 	 * @param $photo
 	 * @param $name
@@ -28,8 +30,9 @@ class Person implements Entity
 	 * @param $gender
 	 * @param $treeId
 	 */
-	public function __construct($imageId, $photo, $name, $surname, $birthDate, $deathDate, $gender, $treeId)
+	public function __construct($active, $imageId, $photo, $name, $surname, $birthDate, $deathDate, $gender, $treeId)
 	{
+		$this->active = $active;
 		$this->imageId = $imageId;
 		$this->photo = $photo;
 		$this->name = $name;
@@ -54,6 +57,11 @@ class Person implements Entity
 	public function setId($id): void
 	{
 		$this->id = $id;
+	}
+
+	public function getActive(): string
+	{
+		return $this->active;
 	}
 
 	/**

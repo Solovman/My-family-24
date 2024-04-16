@@ -112,6 +112,13 @@ class PersonTable extends DataManager
 					'title' => Loc::getMessage('PERSON_ENTITY_TREE_ID_FIELD')
 				]
 			),
+			new IntegerField(
+				'ACTIVE',
+				[
+					'default' => 0,
+					'title' => Loc::getMessage('PERSON_ENTITY_ACTIVE_FIELD')
+				]
+			),
 			'RELATION_PARENT_PERSON' => (new OneToMany('RELATION_PARENT_PERSON', PersonParentTable::class, 'PARENT_PERSON'))->configureJoinType('inner'),
 
 			'RELATION_CHILD_PERSON' => (new OneToMany('RELATION_CHILD_PERSON', PersonParentTable::class, 'CHILD_PERSON'))->configureJoinType('inner'),

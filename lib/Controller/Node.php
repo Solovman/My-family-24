@@ -48,6 +48,7 @@ class Node extends Engine\Controller
 		global $USER;
 
 		$node  = new Person(
+			$person['active'],
 			(int) $person['imageId'],
 			"",
 			$person['name'],
@@ -90,6 +91,7 @@ class Node extends Engine\Controller
 	public function updateAction(int $id, array $updatablePerson): bool
 	{
 		$node  = new Person(
+			$updatablePerson['active'],
 			(int) $updatablePerson['imageId'],
 			'',
 			$updatablePerson['name'],

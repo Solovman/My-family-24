@@ -67,6 +67,7 @@ class Trees extends Engine\Controller
 			$newTreeId = $DB->LastID();
 
 			$initialNode = new Person(
+				"0",
 				1,
 				'/local/modules/up.tree/images/user_default.png',
 				'Enter your name',

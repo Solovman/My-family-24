@@ -12,10 +12,17 @@ export class CreatedNode
 		{
 			const gender = updateNodes[0].gender[0];
 			const name = updateNodes[0].name;
+			let active = updateNodes[0].active;
 			const imageId = updateNodes[0].imageId;
 			const surname = updateNodes[0].surname;
 			let birthDate = Helper.formatDate(updateNodes[0].birthDate);
 			let deathDate = Helper.formatDate(updateNodes[0].deathDate);
+
+			if (active) {
+				active = '1'
+			} else {
+				active = '0'
+			}
 
 			if (updateNodes[0].deathDate.length === 0) {
 				deathDate = null;
@@ -42,7 +49,7 @@ export class CreatedNode
 					personConnectedId = [Number(updateNodes[0].fid)]
 				}
 
-				Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(node => {
+				Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(node => {
 					if (node)
 					{
 						self.reload();
@@ -66,7 +73,7 @@ export class CreatedNode
 					personConnectedId = [updateNodes[0].child.fid];
 				}
 
-				Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(node => {
+				Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(node => {
 					if (node)
 					{
 						self.reload();
@@ -95,7 +102,7 @@ export class CreatedNode
 
 				personConnectedId = [partner, childID];
 
-				Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(node => {
+				Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(node => {
 					if (node)
 					{
 						self.reload();
@@ -111,7 +118,7 @@ export class CreatedNode
 
 			if (updateNodes[0].pids.length !== 0)
 			{
-				Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(node => {
+				Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(node => {
 					if (node)
 					{
 						self.reload();
@@ -125,7 +132,7 @@ export class CreatedNode
 				return;
 			}
 
-			Requests.addNode(imageId, name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(node => {
+			Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(node => {
 				if (node)
 				{
 					self.reload();

@@ -34,7 +34,8 @@ CREATE TABLE up_person(
 	                      BIRTH_DATE DATE,
 	                      DEATH_DATE DATE,
 	                      GENDER ENUM('male', 'female'),
-	                      TREE_ID INT NOT NULL
+	                      TREE_ID INT NOT NULL,
+                          ACTIVE BOOL DEFAULT FALSE
 );
 
 CREATE TABLE up_relation_person_parent(
