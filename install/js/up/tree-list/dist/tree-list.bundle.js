@@ -57,11 +57,14 @@ this.BX.Up = this.BX.Up || {};
 	      var _this3 = this;
 	      var treeId = parseInt(element.id.match(/\d+/));
 	      if (treeId !== '') {
-	        this.removeTree(treeId).then(function () {
-	          _this3.reload();
-	        })["catch"](function (error) {
-	          console.error('Error remove tree:', error);
-	        });
+	        var confirmDelete = confirm("Are you sure you want to remove the tree?");
+	        if (confirmDelete) {
+	          this.removeTree(treeId).then(function () {
+	            _this3.reload();
+	          })["catch"](function (error) {
+	            console.error('Error when deleting a tree:', error);
+	          });
+	        }
 	      }
 	    }
 	  }, {
