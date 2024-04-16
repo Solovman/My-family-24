@@ -148,11 +148,12 @@ export class TreeList
 		const treeContainerNode = Tag.render`<div class="columns cards-container"></div>`;
 
 		this.treeList.forEach(trees => {
+			console.log(trees);
 			const treeNode = Tag.render`
 				<div class="columns is-multiline">
 					<div class="column is-two-fifth">
-						<div class="card">
-							<header class="card-header is-size-4 emerald-color">
+						<div class="card" style="background-color: ${trees.color}">
+							<header class="card-header is-size-4">
 									<a href="/tree/${trees.id}/" class="card-header-title">
 										${BX.util.htmlspecialchars(trees.title)}
 									</a>

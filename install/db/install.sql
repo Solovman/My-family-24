@@ -22,7 +22,8 @@ CREATE TABLE up_family_tree(
 	                           ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	                           TITLE VARCHAR(100) NOT NULL,
 	                           USER_ID INT NOT NULL,
-	                           CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	                           CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	                           COLOR VARCHAR(20) DEFAULT NULL
 );
 
 CREATE TABLE up_person(
