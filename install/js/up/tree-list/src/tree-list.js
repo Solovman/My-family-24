@@ -55,17 +55,20 @@ export class TreeList
 		}
 	}
 
-	handleRemoveTreeButtonClick(element)
-	{
+	handleRemoveTreeButtonClick(element) {
 		const treeId = parseInt(element.id.match(/\d+/));
 
-		if (treeId !== '')
-		{
-			this.removeTree(treeId).then(() => {
-				this.reload();
-			}).catch((error) => {
-				console.error('Error remove tree:', error);
-			});
+		if (treeId !== '') {
+			const confirmDelete = confirm("Are you sure you want to remove the tree?");
+			if (confirmDelete) {
+				this.removeTree(treeId)
+					.then(() => {
+						this.reload();
+					})
+					.catch((error) => {
+						console.error('Error when deleting a tree:', error);
+					});
+			}
 		}
 	}
 
