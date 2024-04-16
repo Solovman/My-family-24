@@ -60,7 +60,9 @@ class Trees extends Engine\Controller
 
 		if ($numberTreesOnSubscription > $countTrees || $numberTreesOnSubscription === 0)
 		{
-			$newTree = new Tree($treeTitle, $userId, new DateTime());
+			$randomColor = 'rgba(' . random_int(0, 255) . ',' . random_int(0, 255) . ',' . random_int(0, 255) . ',' . (0.3) . ')';
+
+			$newTree = new Tree($treeTitle, $userId, new DateTime(), $randomColor);
 			TreeService::addTree($newTree);
 			$newTreeId = $DB->LastID();
 

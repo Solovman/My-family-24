@@ -13,16 +13,27 @@ class Tree implements Entity
 	public string $title;
 	public int $userId;
 	public ?DateTime $createdAt;
+	public ?string $color;
 	public array $familyRelations = [];
 	public array $familyRelationsMarried = [];
 	public array $persons = [];
 
 
-	public function __construct($title, $userId, $createdAt)
+	public function __construct($title, $userId, $createdAt, $color)
 	{
 		$this->title = $title;
 		$this->userId = $userId;
 		$this->createdAt = $createdAt;
+		$this->color = $color;
+	}
+	public function getColor(): ?string
+	{
+		return $this->color;
+	}
+
+	public function setColor(?string $color): void
+	{
+		$this->color = $color;
 	}
 
 	/**

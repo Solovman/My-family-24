@@ -28,6 +28,7 @@ class TreeService
 			"TITLE" => $tree->getTitle(),
 			"USER_ID" => $tree->getUserId(),
 			"CREATED_AT" => $tree->getCreatedAt(),
+			"COLOR" => $tree->getColor()
 		];
 
 		$result = TreeTable::add($treeData);
@@ -47,7 +48,7 @@ class TreeService
 	 */
 	public static function getTree(int $userId, int $treeId)
 	{
-		$treeData = TreeTable::query()->setSelect(['ID', 'TITLE', 'USER_ID', 'CREATED_AT'])->setFilter(
+		$treeData = TreeTable::query()->setSelect(['ID', 'TITLE', 'USER_ID', 'CREATED_AT', 'COLOR'])->setFilter(
 			['USER_ID' => $userId, 'ID'=> $treeId]
 		)->exec()->fetch();
 
@@ -57,7 +58,7 @@ class TreeService
 		}
 
 		$tree = new Tree(
-			$treeData['TITLE'], (int)$treeData['USER_ID'], new DateTime($treeData['CREATED_AT'])
+			$treeData['TITLE'], (int)$treeData['USER_ID'], new DateTime($treeData['CREATED_AT']), $treeData['COLOR']
 		);
 
 		$tree->setId($treeId);
@@ -113,6 +114,7 @@ class TreeService
 					'TITLE',
 					'USER_ID',
 					'CREATED_AT',
+					'COLOR'
 				]
 			)->setFilter(
 				[
@@ -125,7 +127,8 @@ class TreeService
 			$tree = new Tree(
 				$treeItem['TITLE'],
 				(int)$treeItem['USER_ID'],
-				new DateTime($treeItem['CREATED_AT'])
+				new DateTime($treeItem['CREATED_AT']),
+				$treeItem['COLOR']
 			);
 			$tree->setId((int)$treeItem['ID']);
 			$trees[] = $tree;
