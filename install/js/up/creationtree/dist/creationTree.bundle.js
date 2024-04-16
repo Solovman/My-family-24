@@ -297,6 +297,14 @@ this.BX.Up = this.BX.Up || {};
 	  }, {
 	    key: "tree",
 	    value: function tree() {
+	      var lastNode = this.nodeList.persons.length > 0 ? this.nodeList.persons[this.nodeList.persons.length - 1].id : null;
+	      var root = null;
+	      this.nodeList.persons.forEach(function (person) {
+	        if (person.mid === lastNode || person.fid === lastNode) {
+	          root = [lastNode];
+	        }
+	      });
+	      console.log(root);
 	      var treeID = parseInt(window.location.href.match(/\d+/));
 	      var family = new FamilyTree(document.getElementById('tree'), {
 	        mouseScrool: FamilyTree.action.scroll,
@@ -305,6 +313,7 @@ this.BX.Up = this.BX.Up || {};
 	        searchFieldsWeight: {
 	          "name": 100
 	        },
+	        roots: root,
 	        mode: 'light',
 	        template: 'hugo',
 	        nodeTreeMenu: true,
@@ -528,7 +537,6 @@ this.BX.Up = this.BX.Up || {};
 	                        console.error('Error while changing item:', error);
 	                      });
 	                    } else {
-	                      console.log(gender);
 	                      Requests.updateNode(id, imageId, 0, name, surname, birthDate, deathDate, gender, treeID).then(function (node) {
 	                        self.reload();
 	                        return node;

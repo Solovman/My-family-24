@@ -55,6 +55,15 @@ export class CreationTree
 
 	tree()
 	{
+		const lastNode = this.nodeList.persons.length > 0 ? this.nodeList.persons[this.nodeList.persons.length - 1].id : null;
+		let root = null;
+
+		this.nodeList.persons.forEach(person => {
+			if (person.mid === lastNode || person.fid === lastNode) {
+				root = [lastNode];
+			}
+		})
+
 		let treeID =  parseInt(window.location.href.match(/\d+/));
 		let family =  new FamilyTree(document.getElementById('tree'), {
 			mouseScrool: FamilyTree.action.scroll,
@@ -63,9 +72,9 @@ export class CreationTree
 			searchFieldsWeight: {
 				"name": 100,
 			},
+			roots: root,
 			mode: 'light',
 			template: 'hugo',
-
 			nodeTreeMenu: true,
 			nodeMenu: {
 				remove: {text: 'Remove'},
@@ -316,7 +325,6 @@ export class CreationTree
 					}
 					else
 					{
-						console.log(gender);
 						Requests.updateNode(id, imageId, 0, name, surname, birthDate, deathDate, gender, treeID).then(node => {
 							self.reload();
 							return node;
