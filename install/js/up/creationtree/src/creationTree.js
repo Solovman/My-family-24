@@ -56,14 +56,12 @@ export class CreationTree
 	tree()
 	{
 		const lastNode = this.nodeList.persons.length > 0 ? this.nodeList.persons[this.nodeList.persons.length - 1] : null;
-		let root = localStorage.getItem('root') ? [Number(localStorage.getItem('root'))] : null;
+		let root = null;
 
 		if (lastNode !== null) {
 			this.nodeList.persons.forEach(person => {
 				if (person.mid === lastNode.id || person.fid === lastNode.id) {
 					root = [lastNode.id];
-
-					localStorage.setItem('root', root);
 				}
 			})
 		}

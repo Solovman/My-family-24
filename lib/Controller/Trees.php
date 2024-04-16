@@ -47,7 +47,7 @@ class Trees extends Engine\Controller
 	 * @throws SqlException
 	 * @throws Exception
 	 */
-	public function addTreeAction(string $treeTitle): void
+	public function addTreeAction(string $treeTitle): bool
 	{
 		global $USER, $DB;
 
@@ -84,7 +84,11 @@ class Trees extends Engine\Controller
 			$countTrees += 1;
 
 			UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees]);
+
+			return true;
 		}
+
+		return false;
 	}
 
 	/**

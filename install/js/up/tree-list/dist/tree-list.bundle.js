@@ -40,7 +40,8 @@ this.BX.Up = this.BX.Up || {};
 	      var treeTitle = inputTitle.value.trim();
 	      var warningMessage = BX('warningMessage');
 	      if (treeTitle !== '') {
-	        this.addTree(treeTitle).then(function () {
+	        this.addTree(treeTitle).then(function (result) {
+	          console.log(result);
 	          inputTitle.value = '';
 	          _this2.reload();
 	        })["catch"](function (error) {

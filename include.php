@@ -24,19 +24,21 @@ function OnBeforeUserRegisterHandler(&$arFields): void
 	}
 }
 
-function OnAfterUserRegisterHandler(): void
+function OnAfterUserRegisterHandler(&$arFields): void
 {
-	global $USER, $APPLICATION;
-	$userId = (int) $USER->GetID();
-	UserSubscriptionTable::add(['USER_ID' => $userId]);
-	$request = \request();
-	$uriString = $request->getRequestUri();
+	if ($arFields['USER_ID'] > 0) {
+		global $USER;
+		$userId = (int) $USER->GetID();
+		UserSubscriptionTable::add(['USER_ID' => $userId]);
+		$request = \request();
+		$uriString = $request->getRequestUri();
 
-	$uri = new Uri($uriString);
-	$uri->deleteParams(['register']);
+		$uri = new Uri($uriString);
+		$uri->deleteParams(['register']);
 
-	$newUriString = $uri->getUri();
-	LocalRedirect($newUriString);
+		$newUriString = $uri->getUri();
+		LocalRedirect($newUriString);
+	}
 }
 
 AddEventHandler("main", "OnBeforeUserRegister", "OnBeforeUserRegisterHandler");

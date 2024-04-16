@@ -42,7 +42,8 @@ export class TreeList
 
 		if (treeTitle !== '') {
 
-			this.addTree(treeTitle).then(() => {
+			this.addTree(treeTitle).then((result) => {
+				console.log(result);
 				inputTitle.value = '';
 				this.reload();
 			}).catch((error) => {

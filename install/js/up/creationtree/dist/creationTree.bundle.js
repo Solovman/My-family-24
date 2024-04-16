@@ -298,12 +298,11 @@ this.BX.Up = this.BX.Up || {};
 	    key: "tree",
 	    value: function tree() {
 	      var lastNode = this.nodeList.persons.length > 0 ? this.nodeList.persons[this.nodeList.persons.length - 1] : null;
-	      var root = localStorage.getItem('root') ? [Number(localStorage.getItem('root'))] : null;
+	      var root = null;
 	      if (lastNode !== null) {
 	        this.nodeList.persons.forEach(function (person) {
 	          if (person.mid === lastNode.id || person.fid === lastNode.id) {
 	            root = [lastNode.id];
-	            localStorage.setItem('root', root);
 	          }
 	        });
 	      }
