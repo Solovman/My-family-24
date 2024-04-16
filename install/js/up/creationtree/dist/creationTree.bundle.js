@@ -297,13 +297,17 @@ this.BX.Up = this.BX.Up || {};
 	  }, {
 	    key: "tree",
 	    value: function tree() {
-	      var lastNode = this.nodeList.persons.length > 0 ? this.nodeList.persons[this.nodeList.persons.length - 1].id : null;
-	      var root = null;
-	      this.nodeList.persons.forEach(function (person) {
-	        if (person.mid === lastNode || person.fid === lastNode) {
-	          root = [lastNode];
-	        }
-	      });
+	      var lastNode = this.nodeList.persons.length > 0 ? this.nodeList.persons[this.nodeList.persons.length - 1] : null;
+	      var root = localStorage.getItem('root') ? [Number(localStorage.getItem('root'))] : null;
+	      if (lastNode !== null) {
+	        this.nodeList.persons.forEach(function (person) {
+	          if (person.mid === lastNode.id || person.fid === lastNode.id) {
+	            root = [lastNode.id];
+	            localStorage.setItem('root', root);
+	          }
+	        });
+	      }
+	      console.log(root);
 	      var treeID = parseInt(window.location.href.match(/\d+/));
 	      var family = new FamilyTree(document.getElementById('tree'), {
 	        mouseScrool: FamilyTree.action.scroll,

@@ -55,14 +55,20 @@ export class CreationTree
 
 	tree()
 	{
-		const lastNode = this.nodeList.persons.length > 0 ? this.nodeList.persons[this.nodeList.persons.length - 1].id : null;
-		let root = null;
+		const lastNode = this.nodeList.persons.length > 0 ? this.nodeList.persons[this.nodeList.persons.length - 1] : null;
+		let root = localStorage.getItem('root') ? [Number(localStorage.getItem('root'))] : null;
 
-		this.nodeList.persons.forEach(person => {
-			if (person.mid === lastNode || person.fid === lastNode) {
-				root = [lastNode];
-			}
-		})
+		if (lastNode !== null) {
+			this.nodeList.persons.forEach(person => {
+				if (person.mid === lastNode.id || person.fid === lastNode.id) {
+					root = [lastNode.id];
+
+					localStorage.setItem('root', root);
+				}
+			})
+		}
+
+		console.log(root);
 
 		let treeID =  parseInt(window.location.href.match(/\d+/));
 		let family =  new FamilyTree(document.getElementById('tree'), {
