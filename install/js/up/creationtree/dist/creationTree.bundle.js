@@ -304,7 +304,6 @@ this.BX.Up = this.BX.Up || {};
 	          root = [lastNode];
 	        }
 	      });
-	      console.log(root);
 	      var treeID = parseInt(window.location.href.match(/\d+/));
 	      var family = new FamilyTree(document.getElementById('tree'), {
 	        mouseScrool: FamilyTree.action.scroll,

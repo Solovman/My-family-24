@@ -50,3 +50,11 @@ footer {
 .columns:not(.is-desktop) {
 	flex-wrap: wrap;
 }
+
+.card-header-icon {
+	z-index: 10;
+}
+
+svg {
+	z-index: -1;
+}
