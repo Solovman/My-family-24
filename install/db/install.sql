@@ -23,7 +23,7 @@ CREATE TABLE up_family_tree(
 	                           TITLE VARCHAR(100) NOT NULL,
 	                           USER_ID INT NOT NULL,
 	                           CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	                           COLOR VARCHAR(20) DEFAULT NULL
+	                           COLOR VARCHAR(100) DEFAULT NULL
 );
 
 CREATE TABLE up_person(

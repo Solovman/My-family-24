@@ -21,6 +21,7 @@ use Up\Tree\Entity\Tree;
 use Up\Tree\Services\Repository\SubscriptionsService;
 use Up\Tree\Services\Repository\TreeService;
 use Up\Tree\Services\Repository\UserSubscriptionsService;
+use Up\Tree\Services\RandomService;
 
 class Trees extends Engine\Controller
 {
@@ -60,8 +61,7 @@ class Trees extends Engine\Controller
 
 		if ($numberTreesOnSubscription > $countTrees || $numberTreesOnSubscription === 0)
 		{
-			$randomColor = 'rgba(' . random_int(0, 255) . ',' . random_int(0, 255) . ',' . random_int(0, 255) . ',' . (0.3) . ')';
-
+			$randomColor = RandomService::getRandomGradientColorString();
 			$newTree = new Tree($treeTitle, $userId, new DateTime(), $randomColor);
 			TreeService::addTree($newTree);
 			$newTreeId = $DB->LastID();
