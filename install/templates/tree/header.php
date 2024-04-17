@@ -108,16 +108,66 @@ use Up\Tree\Services\Repository\UserService;
 		</ul>
 	</nav>
 	<div class="my-container">
-		<div class="header__main">
-			<div class="header__icon">
-				<img class="header__image-icon" src="/local/modules/up.tree/images/user_default.png" alt="user-icon">
-				<span class="header__icon-name">
-					<a href="/account/">
-						<?= htmlspecialcharsEx(UserService::getUserNameById()) ?: GetMessage('UP_HEADER_ICON_NAME') ?>
-					</a>
-				</span>
+		<nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
+			<div class="navbar-brand">
+				<a class="navbar-item has-text-weight-semibold is-size-4 logo" href="/">
+					<span>
+						<img src="/local/modules/up.tree/images/tree-logo.svg" class="tree__icon">
+					</span>
+					My Family 24
+				</a>
+
+				<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+				</a>
 			</div>
-		</div>
+
+			<div id="navbarBasicExample" class="navbar-menu">
+				<div class="navbar-start">
+
+					<a class="navbar-item header_item">
+						Documentation
+					</a>
+
+					<div class="navbar-item has-dropdown is-hoverable">
+						<a class="navbar-link header_item">
+							More
+						</a>
+
+						<div class="navbar-dropdown">
+							<a class="navbar-item header_item">
+								About
+							</a>
+							<a class="navbar-item header_item">
+								Contact
+							</a>
+							<a class="navbar-item header_item" href="mailto:familyTreeTechnicalSupport@gmail.com">
+								Report an issue
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="navbar-end">
+					<div class="navbar-item">
+						<div class="buttons">
+							<div class="header__icon">
+								<span class="header__icon-name">
+									<a href="/account/" class="name__link">
+										My account: <?= htmlspecialcharsEx(UserService::getUserNameById()) ?: GetMessage('UP_HEADER_ICON_NAME') ?>
+									</a>
+									<img class="header__image-icon" src="/local/modules/up.tree/images/profile-user.svg" alt="user-icon">
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+	</div>
 	</div>
 </header>
 

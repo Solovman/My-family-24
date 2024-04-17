@@ -172,7 +172,7 @@ export class TreeList
 								</header>
 								<footer class="card-footer">
 									<span class="card-footer-item is-size-6">
-										<div style="font-size: 1.2em; color:white"><strong style="color:white">Created at :</strong> ${BX.date.format('d F Y', trees.createdAt)}</div>
+										<div style="font-size: 1.2em; color:white"><strong style="color:white">Created at :</strong> ${BX.date.format('d-m-Y', trees.createdAt)}</div>
 									</span>
 								</footer>
 							</div>
