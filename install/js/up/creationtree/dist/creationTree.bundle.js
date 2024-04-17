@@ -618,7 +618,7 @@ this.BX.Up = this.BX.Up || {};
 	                        var lastImageId = updateNodes[0].imageId;
 	                        updateNodes[0].imageId = response.data.fileId;
 	                        var imageId = updateNodes[0].imageId;
-	                        Requests.updateNode(id, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeID).then(function (node) {
+	                        Requests.updateNode(id, active, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeID).then(function (node) {
 	                          self.reload();
 	                          return node;
 	                        });

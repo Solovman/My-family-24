@@ -341,7 +341,7 @@ export class CreationTree
 								updateNodes[0].imageId = response.data.fileId;
 								const imageId = updateNodes[0].imageId;
 
-								Requests.updateNode(id, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeID).then(node => {
+								Requests.updateNode(id, active, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeID).then(node => {
 									self.reload();
 									return node;
 								})
