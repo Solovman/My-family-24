@@ -45,6 +45,7 @@ footer {
 
 .cards-container {
 	padding: 25px 200px;
+	justify-content: center;
 }
 
 .columns:not(.is-desktop) {
