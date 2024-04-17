@@ -357,8 +357,14 @@ this.BX.Up = this.BX.Up || {};
 	        _this2.nodeList.persons.forEach(function (person) {
 	          person.birthDate = new Date(person.birthDate);
 	          person.active = person.active !== '0';
+	          var newStyles = document.createElement('style');
+	          document.head.append(newStyles);
+	          if (person.active) {
+	            newStyles.innerHTML = "svg.hugo [data-n-id=\"".concat(person.id, "\"].node>rect {\n\t\t\t\t\t\t\tfill: #FFE13E\n\t\t\t\t\t\t}");
+	          } else {
+	            newStyles.innerHTML = "svg.hugo [data-n-id=\"".concat(person.id, "\"].node>rect {\n\t\t\t\t\t\t\tfill: url(#hugo_grad_").concat(person.gender, ")\n\t\t\t\t\t\t}");
+	          }
 	        });
-	        console.log(_this2.nodeList);
 	        _this2.render();
 	      });
 	    }
@@ -382,7 +388,6 @@ this.BX.Up = this.BX.Up || {};
 	        searchFieldsWeight: {
 	          "name": 100
 	        },
-	        roots: root,
 	        mode: 'light',
 	        template: 'hugo',
 	        nodeTreeMenu: true,
@@ -447,10 +452,10 @@ this.BX.Up = this.BX.Up || {};
 	          }]
 	        }
 	      });
+	      var self = this;
 	      family.on('exportstart', function (sender, args) {
 	        args.styles += document.getElementById('myStyles').outerHTML;
 	      });
-	      var self = this;
 	      var buttonPDF = BX('pdf');
 	      BX.bind(buttonPDF, 'click', function () {
 	        family.exportPDF();
@@ -584,18 +589,6 @@ this.BX.Up = this.BX.Up || {};
 	                    } else {
 	                      active = '0';
 	                    }
-	                    console.log(active);
-
-	                    // const node = document.querySelector(`g[data-n-id="${updateNodes[0].id}"] rect`);
-	                    //
-	                    // if (updateNodes[0].active === true)
-	                    // {
-	                    // 	node.setAttribute('fill', '#FFE13E');
-	                    //
-	                    // 	self.reload();
-	                    // 	return;
-	                    // }
-
 	                    if (updateNodes[0].deathDate.length === 0) {
 	                      deathDate = null;
 	                    }
@@ -631,7 +624,7 @@ this.BX.Up = this.BX.Up || {};
 	                        return node;
 	                      });
 	                    }
-	                  case 19:
+	                  case 18:
 	                  case "end":
 	                    return _context.stop();
 	                }

@@ -49,9 +49,21 @@ export class CreationTree
 				person.birthDate = new Date(person.birthDate);
 
 				person.active = person.active !== '0';
-			})
 
-			console.log(this.nodeList);
+				let newStyles = document.createElement('style')
+				document.head.append(newStyles);
+
+				if (person.active) {
+					newStyles.innerHTML = `svg.hugo [data-n-id="${person.id}"].node>rect {
+							fill: #FFE13E
+						}`
+				}
+				else {
+					newStyles.innerHTML = `svg.hugo [data-n-id="${person.id}"].node>rect {
+							fill: url(#hugo_grad_${person.gender})
+						}`
+				}
+			})
 
 			this.render();
 		});
@@ -78,7 +90,6 @@ export class CreationTree
 			searchFieldsWeight: {
 				"name": 100,
 			},
-			roots: root,
 			mode: 'light',
 			template: 'hugo',
 			nodeTreeMenu: true,
@@ -125,11 +136,12 @@ export class CreationTree
 			},
 		});
 
+		const self = this;
+
 		family.on('exportstart', function(sender, args){
 			args.styles += document.getElementById('myStyles').outerHTML;
 		});
 
-		const self = this;
 		const buttonPDF = BX('pdf');
 
 		BX.bind(buttonPDF, 'click', () => {
@@ -298,18 +310,6 @@ export class CreationTree
 						active = '0'
 					}
 
-					console.log(active);
-
-					// const node = document.querySelector(`g[data-n-id="${updateNodes[0].id}"] rect`);
-					//
-					// if (updateNodes[0].active === true)
-					// {
-					// 	node.setAttribute('fill', '#FFE13E');
-					//
-					// 	self.reload();
-					// 	return;
-					// }
-
 					if (updateNodes[0].deathDate.length === 0) {
 						deathDate = null;
 					}
@@ -385,7 +385,6 @@ export class CreationTree
 
 			return false;
 		})
-
 	}
 
 	render()

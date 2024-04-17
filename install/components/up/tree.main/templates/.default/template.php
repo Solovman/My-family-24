@@ -35,11 +35,9 @@ $APPLICATION->IncludeComponent("up:tree.modalLimit", "", []);
 	{
 		const tree = new BX.Up.Tree.CreationTree({
 			rootNodeId: 'tree',
-			path: <?= json_encode($arResult["path"], JSON_THROW_ON_ERROR) ?>,
 		});
 	});
 </script>
-
 
 
 
