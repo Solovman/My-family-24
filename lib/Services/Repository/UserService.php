@@ -49,7 +49,7 @@ class UserService
 
 		if ($USER->IsAuthorized())
 		{
-			$userId = $USER->GetID();
+			$userId = (int) $USER->GetID();
 			$user = UserTable::getList([
 										   'filter' => ['=ID' => $userId],
 										   'select' => ['NAME']
@@ -72,11 +72,11 @@ class UserService
 	{
 		global $USER;
 
-		$userId = $USER->GetID();
+		$userId = (int) $USER->GetID();
 
 		$data = UserTable::query()
 			->setSelect(['NAME', 'LAST_NAME'])
-			->setFilter(['ID', $userId])
+			->setFilter(['ID' => $userId])
 			->exec()
 			->fetchObject();
 
