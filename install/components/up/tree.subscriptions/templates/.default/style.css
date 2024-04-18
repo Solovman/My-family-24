@@ -18,6 +18,10 @@ body {
 	width: 31%;
 }
 
+.subscriptions__item:not(:last-child) {
+	margin-right: 30px;
+}
+
 .nft {
 	display: flex;
 	flex-direction: column;
@@ -26,7 +30,7 @@ body {
 	padding: 30px;
 	width: 100%;
 	min-height: 500px;
-	margin: 5rem auto;
+	margin: 20px auto;
 	border: 1px solid #ffffff22;
 	background: linear-gradient(0deg, #282c34 0%, rgba(51, 172, 99, 0.7) 100%);
 	box-shadow: 0 7px 20px 5px #00000088;
@@ -393,4 +397,39 @@ body {
 
 .sign-up-button {
 	border-radius: 5px;
+}
+
+.subscriptions__tabs-item {
+	display: none;
+}
+
+.subscriptions__container-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 50px;
+}
+
+.subscriptions__btn {
+	padding: 3px 30px;
+	border: 1px solid #00ceaa;
+	background-color: transparent;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	border-radius: 5px;
+	font-size: 22px;
+	color: #000000;
+	cursor: pointer;
+}
+
+.subscriptions__btn._active {
+	background-color: #00ceaa;
+	color: #FFFFFF;
+}
+
+.subscriptions__btn:not(:last-child) {
+	margin-right: 20px;
+}
+
+._active {
+	display: flex;
 }
