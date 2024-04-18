@@ -553,6 +553,8 @@ class UserTable extends DataManager
 				Join::on('this.ID', 'ref.USER_ID')
 			)) ->configureJoinType('inner'),
 
+			'USER_PURCHASE' => (new OneToMany('USER_PURCHASE', UserSinglePurchaseTable::class, 'RELATION_USER_PURCHASE'))->configureJoinType('inner'),
+
 			'USER_PUBLICATION' => (new OneToMany('USER_PUBLICATION', PublicationTable::class, 'PUBLICATION_USER'))->configureJoinType('inner')
 		];
 	}

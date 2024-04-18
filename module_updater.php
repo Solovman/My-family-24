@@ -64,4 +64,28 @@ __treeMigrate(5, static function ($updater, $DB)
 	}
 });
 
+__treeMigrate(6, static function ($updater, $DB)
+{
+	if ($updater->CanUpdateDatabase() && !$updater->TableExists('up_single_purchase'))
+	{
+		$DB->query("CREATE TABLE up_single_purchase(
+                    ID INT PRIMARY KEY NOT NULL,
+                    TITLE VARCHAR(100) NOT NULL
+					);");
+	}
+});
+
+
+__treeMigrate(7, static function ($updater, $DB)
+{
+	if ($updater->CanUpdateDatabase() && !$updater->TableExists('up_relation_user_single_purchase'))
+	{
+		$DB->query("CREATE TABLE up_relation_user_single_purchase(
+                    USER_ID INT NOT NULL PRIMARY KEY,
+                    SINGLE_PURCHASE_ID INT NOT NULL PRIMARY KEY,
+					PRIMARY KEY (USER_ID, SINGLE_PURCHASE_ID)
+                    );");
+	}
+});
+
 
