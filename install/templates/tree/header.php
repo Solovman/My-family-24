@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 use Up\Tree\Services\Repository\UserService;
 
+$currentUrl = request()->getRequestUri();
 ?>
 
 <!doctype html>
@@ -131,31 +132,35 @@ use Up\Tree\Services\Repository\UserService;
 						Documentation
 					</a>
 
-					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link header_item">
-							More
-						</a>
+					<?php if (str_contains($currentUrl, '/tree/') === false):?>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a class="navbar-link header_item">
+								More
+							</a>
 
-						<div class="navbar-dropdown">
-							<a class="navbar-item header_item">
-								About
-							</a>
-							<a class="navbar-item header_item">
-								Contact
-							</a>
-							<a class="navbar-item header_item" href="mailto:familyTreeTechnicalSupport@gmail.com">
-								Report an issue
-							</a>
+							<div class="navbar-dropdown">
+								<a class="navbar-item header_item">
+									About
+								</a>
+								<a class="navbar-item header_item">
+									Contact
+								</a>
+								<a class="navbar-item header_item" href="mailto:familyTreeTechnicalSupport@gmail.com">
+									Report an issue
+								</a>
+							</div>
 						</div>
-					</div>
-					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link header_item">
-							Skins
-						</a>
-						<div class="navbar-dropdown">
-								<?= $APPLICATION->IncludeComponent("up:tree.purchases", "", []);?>
+					<?php endif; ?>
+					<?php if (str_contains($currentUrl, '/tree/')):?>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a class="navbar-link header_item">
+								Skins
+							</a>
+							<div class="navbar-dropdown">
+									<?= $APPLICATION->IncludeComponent("up:tree.purchases", "", []);?>
+							</div>
 						</div>
-					</div>
+					<?php endif; ?>
 				</div>
 
 				<div class="navbar-end">
