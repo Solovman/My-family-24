@@ -128,9 +128,9 @@ this.BX.Up = this.BX.Up || {};
 	    value: function getCustomStatusMessage(customStatus) {
 	      switch (customStatus) {
 	        case 1:
-	          return "Доступна возможность кастомизации деревьев";
+	          return "Доступна кастомизация деревьев";
 	        case 0:
-	          return "Возможность кастомизации отсутствует";
+	          return "Кастомизация отсутствует";
 	      }
 	    }
 	  }, {
@@ -146,12 +146,21 @@ this.BX.Up = this.BX.Up || {};
 	      }
 	    }
 	  }, {
-	    key: "getCorrectValue",
-	    value: function getCorrectValue(value) {
+	    key: "getCountNodesMessage",
+	    value: function getCountNodesMessage(value) {
 	      if (value === 0) {
-	        return "не ограничено";
+	        return "Неограниченное количество вершин";
 	      } else {
-	        return value;
+	        return "Максимальное количество вершин: " + value;
+	      }
+	    }
+	  }, {
+	    key: "getCountTreesMessage",
+	    value: function getCountTreesMessage(value) {
+	      if (value === 0) {
+	        return "Неограниченное количество деревьев";
+	      } else {
+	        return "Максимальное количество деревьев: " + value;
 	      }
 	    }
 	  }, {
@@ -168,7 +177,7 @@ this.BX.Up = this.BX.Up || {};
 	    value: function renderCard() {
 	      var _this3 = this;
 	      this.subscriptions.forEach(function (list) {
-	        var card = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<li class=\"subscriptions__item\">\n\t\t\t\t<div class=\"nft ntf_", "\">\n\t\t\t\t<div class='main'>\n\t\t\t\t\t<h2 class=\"subscriptions__heading\">", "</h2>\n\t\t\t\t\t<p class='description'></p>\n\t\t\t\t</div>\n\t\t\t\t<ul style=\"color: white; font-size: 1.4em\">\n\t\t\t\t\t<li>\u2727 \u0426\u0435\u043D\u0430: ", "$</li>\n\t\t\t\t\t<li>\u2727 \u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435 \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0434\u0435\u0440\u0435\u0432\u044C\u0435\u0432: ", "</li>\n\t\t\t\t\t<li>\u2727 \u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435 \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0432\u0435\u0440\u0448\u0438\u043D: ", "</li>\n\t\t\t\t\t<li>\u2727 ", "</li>\n\t\t\t\t\t<li>\u2727 ", "</li>\n\t\t\t\t</ul>\n\t\t\t\t<button id=\"", "", "\" class=\"subscriptions__button\">\u041A\u0443\u043F\u0438\u0442\u044C</button>\n\t\t\t</div>\n\t\t\t</li>\n\t\t"])), list.id, _this3.getEmojiByTitle(list.level), list.price, _this3.getCorrectValue(list.numberTrees), _this3.getCorrectValue(list.numberNodes), _this3.getCustomStatusMessage(list.customization), _this3.getSubscriptionStatusMessage(list.subscriptionType), list.level, list.id);
+	        var card = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<li class=\"subscriptions__item\">\n\t\t\t\t<div class=\"nft ntf_", "\">\n\t\t\t\t<div class='main'>\n\t\t\t\t\t<h2 class=\"subscriptions__heading\">", "</h2>\n\t\t\t\t\t<p class='description'></p>\n\t\t\t\t</div>\n\t\t\t\t<ul style=\"color: white; font-size: 1.4em\">\n\t\t\t\t\t<li>\u2727 \u0426\u0435\u043D\u0430: ", "$</li>\n\t\t\t\t\t<li>\u2727 ", "</li>\n\t\t\t\t\t<li>\u2727 ", "</li>\n\t\t\t\t\t<li>\u2727 ", "</li>\n\t\t\t\t\t<li>\u2727 ", "</li>\n\t\t\t\t</ul>\n\t\t\t\t<button id=\"", "", "\" class=\"subscriptions__button\">\u041A\u0443\u043F\u0438\u0442\u044C</button>\n\t\t\t</div>\n\t\t\t</li>\n\t\t"])), list.id, _this3.getEmojiByTitle(list.level), list.price, _this3.getCountTreesMessage(list.numberTrees), _this3.getCountNodesMessage(list.numberNodes), _this3.getCustomStatusMessage(list.customization), _this3.getSubscriptionStatusMessage(list.subscriptionType), list.level, list.id);
 	        BX.append(card, _this3.rootNode);
 	      });
 	      this.setEvents();

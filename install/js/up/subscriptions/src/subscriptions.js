@@ -77,9 +77,9 @@ export class Subscriptions
 	{
 		switch (customStatus){
 			case 1:
-				return "Доступна возможность кастомизации деревьев";
+				return "Доступна кастомизация деревьев";
 			case 0:
-				return  "Возможность кастомизации отсутствует";
+				return  "Кастомизация отсутствует";
 		}
 	}
 	getSubscriptionStatusMessage(customStatus)
@@ -93,12 +93,21 @@ export class Subscriptions
 				return  "Доступно сейчас";
 	}}
 
-	getCorrectValue(value){
+	getCountNodesMessage(value){
 		if (value === 0){
-			return "не ограничено";
+			return "Неограниченное количество вершин";
 		}
 		else {
-			return value;
+			return "Максимальное количество вершин: " + value;
+		}
+	}
+
+	getCountTreesMessage(value){
+		if (value === 0){
+			return "Неограниченное количество деревьев";
+		}
+		else {
+			return "Максимальное количество деревьев: " + value;
 		}
 	}
 
@@ -125,8 +134,8 @@ export class Subscriptions
 				</div>
 				<ul style="color: white; font-size: 1.4em">
 					<li>✧ Цена: ${list.price}$</li>
-					<li>✧ Максимальное количество деревьев: ${this.getCorrectValue(list.numberTrees)}</li>
-					<li>✧ Максимальное количество вершин: ${this.getCorrectValue(list.numberNodes)}</li>
+					<li>✧ ${this.getCountTreesMessage(list.numberTrees)}</li>
+					<li>✧ ${this.getCountNodesMessage(list.numberNodes)}</li>
 					<li>✧ ${this.getCustomStatusMessage(list.customization)}</li>
 					<li>✧ ${this.getSubscriptionStatusMessage(list.subscriptionType)}</li>
 				</ul>

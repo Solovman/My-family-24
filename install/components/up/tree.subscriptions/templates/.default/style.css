@@ -5,6 +5,7 @@ body {
 .subscriptions__list {
 	display: flex;
 	justify-content: space-between;
+	gap: 2.5%;
 }
 
 .subscriptions__container {
@@ -15,7 +16,7 @@ body {
 
 
 .subscriptions__item {
-	width: 31%;
+	width: 40%;
 }
 
 .nft {
