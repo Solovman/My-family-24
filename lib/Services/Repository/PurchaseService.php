@@ -40,7 +40,7 @@ class PurchaseService
 
 		$purchasesIds = self::getPurchaseIdsByUserId((int)$userId);
 
-		return PurchaseTable::query()->setSelect(['TITLE'])
+		return PurchaseTable::query()->setSelect(['ID', 'TITLE'])
 							->setFilter(['ID' => $purchasesIds])
 							->exec()
 							->fetchAll();
