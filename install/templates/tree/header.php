@@ -148,6 +148,14 @@ use Up\Tree\Services\Repository\UserService;
 							</a>
 						</div>
 					</div>
+					<div class="navbar-item has-dropdown is-hoverable">
+						<a class="navbar-link header_item">
+							Skins
+						</a>
+						<div class="navbar-dropdown">
+								<?= $APPLICATION->IncludeComponent("up:tree.purchases", "", []);?>
+						</div>
+					</div>
 				</div>
 
 				<div class="navbar-end">
