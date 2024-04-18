@@ -5,17 +5,18 @@ body {
 .subscriptions__list {
 	display: flex;
 	justify-content: space-between;
+	gap: 2.2%;
 }
 
 .subscriptions__container {
-	width: 81%;
+	width: 80%;
 	margin: 0 auto;
 	margin-right: 8%;
 }
 
 
 .subscriptions__item {
-	width: 31%;
+	width: 40%;
 }
 
 .subscriptions__item:not(:last-child) {
