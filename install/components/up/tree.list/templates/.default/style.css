@@ -45,12 +45,11 @@ footer {
 
 .cards-container {
 	padding: 25px 275px;
-	justify-content: center;
-
 }
 
 .columns:not(.is-desktop) {
 	flex-wrap: wrap;
+	justify-content: center;
 }
 
 .card-header-icon {

@@ -107,7 +107,7 @@ use Up\Tree\Services\Repository\UserService;
 			</li>
 		</ul>
 	</nav>
-	<div class="my-container">
+	<div class="my-container header__main">
 		<nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
 			<div class="navbar-brand">
 				<a class="navbar-item has-text-weight-semibold is-size-4 logo" href="/">
