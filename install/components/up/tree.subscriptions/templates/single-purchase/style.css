@@ -107,3 +107,11 @@
 	left: 7%;
 	top: 27%;
 }
+
+.filed-purchase {
+	width: 38% !important;
+}
+
+.tooltip-purchase {
+	width: 115% !important;
+}

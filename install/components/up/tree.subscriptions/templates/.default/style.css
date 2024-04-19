@@ -165,8 +165,9 @@ body {
 }
 
 .subscriptions__button {
+	position: relative;
 	padding: 12px 15px;
-	width: 55%;
+	width: 100%;
 	margin-top: auto;
 	border: 1px solid #FFFFFF;
 	background-color: transparent;
@@ -433,4 +434,89 @@ body {
 
 ._active {
 	display: flex;
+}
+
+.subscriptions__main-svg {
+	position: absolute;
+	left: 10%;
+	top: 28%;
+}
+
+.subscriptions__span {
+	font-size: 20px;
+}
+
+/*tooltip*/
+
+.has-tooltip:hover + .tooltip,
+.has-tooltip:focus + .tooltip,
+.has-tooltip.hover + .tooltip {
+	opacity: 1;
+	transform: translate(-50%, -100%) scale(1) rotate(0deg);
+	pointer-events: inherit;
+	z-index: 10;
+}
+
+.tooltip-p {
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	font-size: 18px;
+	line-height: 20px;
+	font-weight: 400;
+}
+
+.tooltip {
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0.75) rotate(5deg);
+	transform-origin: bottom center;
+	padding: 10px 30px;
+	border-radius: 5px;
+	background: rgba(0, 0, 0, 0.75);
+	text-align: center;
+	color: white;
+	transition: 0.15s ease-in-out;
+	opacity: 0;
+	width: 100%;
+	max-width: 100vw;
+	pointer-events: none;
+	z-index: 10;
+}
+
+.tooltip.blue {
+	background: rgba(0, 206, 170, 0.75);
+}
+
+.tooltip.blue:after {
+	border-top: 5px solid rgba(0, 206, 170, 0.75); }
+
+.tooltip:hover {
+	opacity: 1;
+	transform: translate(-50%, -100%) scale(1) rotate(0deg);
+	pointer-events: inherit;
+}
+
+.tooltip img {
+	max-width: 100%;
+}
+
+.tooltip:after {
+	content: '';
+	display: block;
+	margin: 0 auto;
+	widtH: 0;
+	height: 0;
+	border: 5px solid transparent;
+	border-top: 5px solid rgba(0, 0, 0, 0.75);
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%, 100%);
+}
+
+.field {
+	position: relative;
+	width: 77%;
+	margin-top: auto;
 }
