@@ -16,6 +16,8 @@ if ($arResult["SHOW_SMS_FIELD"] == true)
 }
 
 \Bitrix\Main\UI\Extension::load('up.account');
+
+$APPLICATION->setAdditionalCSS('style.css');
 ?>
 
 <div class="bx-auth-profile container">
