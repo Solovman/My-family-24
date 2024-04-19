@@ -128,7 +128,7 @@ this.BX.Up = this.BX.Up || {};
 	    value: function getCustomStatusMessage(customStatus) {
 	      switch (customStatus) {
 	        case 1:
-	          return "Доступна кастомизация деревьев";
+	          return "Возможность кастомизации";
 	        case 0:
 	          return "Кастомизация отсутствует";
 	      }
@@ -151,7 +151,7 @@ this.BX.Up = this.BX.Up || {};
 	      if (value === 0) {
 	        return "Неограниченное количество вершин";
 	      } else {
-	        return "Максимальное количество вершин: " + value;
+	        return "Количество вершин: " + value;
 	      }
 	    }
 	  }, {
@@ -160,7 +160,7 @@ this.BX.Up = this.BX.Up || {};
 	      if (value === 0) {
 	        return "Неограниченное количество деревьев";
 	      } else {
-	        return "Максимальное количество деревьев: " + value;
+	        return "Количество деревьев: " + value;
 	      }
 	    }
 	  }, {

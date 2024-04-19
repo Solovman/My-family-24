@@ -77,7 +77,7 @@ export class Subscriptions
 	{
 		switch (customStatus){
 			case 1:
-				return "Доступна кастомизация деревьев";
+				return "Возможность кастомизации";
 			case 0:
 				return  "Кастомизация отсутствует";
 		}
@@ -98,7 +98,7 @@ export class Subscriptions
 			return "Неограниченное количество вершин";
 		}
 		else {
-			return "Максимальное количество вершин: " + value;
+			return "Количество вершин: " + value;
 		}
 	}
 
@@ -107,7 +107,7 @@ export class Subscriptions
 			return "Неограниченное количество деревьев";
 		}
 		else {
-			return "Максимальное количество деревьев: " + value;
+			return "Количество деревьев: " + value;
 		}
 	}
 
