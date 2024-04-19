@@ -26,10 +26,13 @@ export class Sriniz {
 		FamilyTree.templates.sriniz_male.node =
 			'<rect x="0" y="0" height="{h}" width="{w}" stroke-width="1" fill="#039BE5" stroke="#aeaeae" rx="15" ry="15"></rect>';
 
+		FamilyTree.templates.sriniz.node =
+			'<rect x="0" y="0" height="{h}" width="{w}" stroke-width="1" fill="grey" stroke="#aeaeae" rx="15" ry="15"></rect>';
+
 		FamilyTree.templates.sriniz_male.field_0 =
-			'<text style="font-size: 16px; font-weight: bold;" fill="#ffffff" x="100" y="30">{val}</text>';
+			'<text data-width="120px" style="font-size: 16px; font-weight: bold;" fill="#ffffff" x="90" y="45">{val}</text>';
 		FamilyTree.templates.sriniz_male.field_1 =
-			'<text style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="100" y="50">{val}</text>';
+			'<text data-width="120px" style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="90" y="65">{val}</text>';
 
 		FamilyTree.templates.sriniz_female = Object.assign({},
 			FamilyTree.templates.sriniz
@@ -37,10 +40,15 @@ export class Sriniz {
 		FamilyTree.templates.sriniz_female.node =
 			'<rect x="0" y="0" height="{h}" width="{w}" stroke-width="1" fill="#FF46A3" stroke="#aeaeae" rx="15" ry="15"></rect>';
 
+
 		FamilyTree.templates.sriniz_female.field_0 =
-			'<text style="font-size: 16px; font-weight: bold;" fill="#ffffff" x="100" y="30">{val}</text>';
+			'<text data-width="120px" style="font-size: 16px; font-weight: bold;" fill="#ffffff" x="90" y="45">{val}</text>';
 		FamilyTree.templates.sriniz_female.field_1 =
-			'<text style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="100" y="50">{val}</text>';
+			'<text data-width="120px" style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="90" y="65">{val}</text>';
+		FamilyTree.templates.sriniz.field_0 =
+			'<text data-width="150px" style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="81" y="47">{val}</text>';
+		FamilyTree.templates.sriniz.field_1 =
+			'<text data-width="150px" style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="83" y="65">{val}</text>';
 
 		const expandIconMale =
 			'<circle cx="97" cy="-16" r="10" fill="#039BE5" stroke="#fff" stroke-width="1"><title>Expand</title></circle>' +
@@ -54,6 +62,7 @@ export class Sriniz {
 
 		FamilyTree.templates.sriniz_male.plus = expandIconMale;
 		FamilyTree.templates.sriniz_female.plus = expandIconFemale;
+		FamilyTree.templates.sriniz.plus = expandIconFemale;
 
 		const imgTemplate =
 			'<clipPath id="ulaImg">' +
@@ -64,10 +73,13 @@ export class Sriniz {
 
 		FamilyTree.templates.sriniz_male.img_0 = imgTemplate;
 		FamilyTree.templates.sriniz_female.img_0 = imgTemplate;
+		FamilyTree.templates.sriniz.img_0 = imgTemplate;
 
 		FamilyTree.templates.sriniz_male.up =
 			'<use x="195" y="0" xlink:href="#sriniz_male_up"></use>';
 		FamilyTree.templates.sriniz_female.up =
+			'<use x="195" y="0" xlink:href="#sriniz_female_up"></use>';
+		FamilyTree.templates.sriniz.up =
 			'<use x="195" y="0" xlink:href="#sriniz_female_up"></use>';
 
 		FamilyTree.templates.sriniz.pointer =

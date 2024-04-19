@@ -410,6 +410,7 @@ this.BX.Up = this.BX.Up || {};
 	    key: "stylingNode",
 	    value: function stylingNode(family) {
 	      FamilyTree.templates.tommy_male.defs = "<g transform=\"matrix(0.05,0,0,0.05,-12,-9)\" id=\"heart\">\n       \t\t\t <path fill=\"#F57C00\" d=\"M438.482,58.61c-24.7-26.549-59.311-41.655-95.573-41.711c-36.291,0.042-70.938,15.14-95.676,41.694l-8.431,8.909  l-8.431-8.909C181.284,5.762,98.663,2.728,45.832,51.815c-2.341,2.176-4.602,4.436-6.778,6.778 c-52.072,56.166-52.072,142.968,0,199.134l187.358,197.581c6.482,6.843,17.284,7.136,24.127,0.654 c0.224-0.212,0.442-0.43,0.654-0.654l187.29-197.581C490.551,201.567,490.551,114.77,438.482,58.61z\"/>\n\t\t\t<g>\n\t\t\t";
+	      FamilyTree.templates.tommy.node = '<rect x="0" y="0" height="{h}" width="{w}" stroke-width="1" fill="grey" stroke="#aeaeae" rx="15" ry="15"></rect>';
 	      family.on('expcollclick', function (sender, isCollapsing, nodeId) {
 	        var node = family.getNode(nodeId);
 	        if (isCollapsing) {
@@ -441,21 +442,27 @@ this.BX.Up = this.BX.Up || {};
 	      FamilyTree.templates.sriniz.defs = "\n\t\t<g transform=\"matrix(0.05,0,0,0.05,-13 ,-12)\" id=\"heartsriniz\">\n\t\t\t<path d=\"M448,256c0-106-86-192-192-192S64,150,64,256s86,192,192,192S448,362,448,256Z\" style=\"fill:#fff;stroke:red;stroke-miterlimit:10;stroke-width:24px\" fill=\"red\"></path><path d=\"M256,360a16,16,0,0,1-9-2.78c-39.3-26.68-56.32-45-65.7-56.41-20-24.37-29.58-49.4-29.3-76.5.31-31.06,25.22-56.33,55.53-56.33,20.4,0,35,10.63,44.1,20.41a6,6,0,0,0,8.72,0c9.11-9.78,23.7-20.41,44.1-20.41,30.31,0,55.22,25.27,55.53,56.33.28,27.1-9.31,52.13-29.3,76.5-9.38,11.44-26.4,29.73-65.7,56.41A16,16,0,0,1,256,360Z\" fill=\"red\"></path>\n\t\t</g>\n\t\t<g id=\"sriniz_male_up\">\n\t\t\t<circle cx=\"15\" cy=\"15\" r=\"10\" fill=\"#fff\" stroke=\"#fff\" stroke-width=\"1\"></circle>\n\t\t\t".concat(FamilyTree.icon.ft(15, 15, '#039BE5', 7.5, 7.5), "\n\t\t</g>\n\t\t\n\t\t<g id=\"sriniz_female_up\">\n\t\t\t<circle cx=\"15\" cy=\"15\" r=\"10\" fill=\"#fff\" stroke=\"#fff\" stroke-width=\"1\"></circle>\n\t\t\t").concat(FamilyTree.icon.ft(15, 15, '#FF46A3', 7.5, 7.5), "\n\t\t</g>");
 	      FamilyTree.templates.sriniz_male = Object.assign({}, FamilyTree.templates.sriniz);
 	      FamilyTree.templates.sriniz_male.node = '<rect x="0" y="0" height="{h}" width="{w}" stroke-width="1" fill="#039BE5" stroke="#aeaeae" rx="15" ry="15"></rect>';
-	      FamilyTree.templates.sriniz_male.field_0 = '<text style="font-size: 16px; font-weight: bold;" fill="#ffffff" x="100" y="30">{val}</text>';
-	      FamilyTree.templates.sriniz_male.field_1 = '<text style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="100" y="50">{val}</text>';
+	      FamilyTree.templates.sriniz.node = '<rect x="0" y="0" height="{h}" width="{w}" stroke-width="1" fill="grey" stroke="#aeaeae" rx="15" ry="15"></rect>';
+	      FamilyTree.templates.sriniz_male.field_0 = '<text data-width="120px" style="font-size: 16px; font-weight: bold;" fill="#ffffff" x="90" y="45">{val}</text>';
+	      FamilyTree.templates.sriniz_male.field_1 = '<text data-width="120px" style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="90" y="65">{val}</text>';
 	      FamilyTree.templates.sriniz_female = Object.assign({}, FamilyTree.templates.sriniz);
 	      FamilyTree.templates.sriniz_female.node = '<rect x="0" y="0" height="{h}" width="{w}" stroke-width="1" fill="#FF46A3" stroke="#aeaeae" rx="15" ry="15"></rect>';
-	      FamilyTree.templates.sriniz_female.field_0 = '<text style="font-size: 16px; font-weight: bold;" fill="#ffffff" x="100" y="30">{val}</text>';
-	      FamilyTree.templates.sriniz_female.field_1 = '<text style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="100" y="50">{val}</text>';
+	      FamilyTree.templates.sriniz_female.field_0 = '<text data-width="120px" style="font-size: 16px; font-weight: bold;" fill="#ffffff" x="90" y="45">{val}</text>';
+	      FamilyTree.templates.sriniz_female.field_1 = '<text data-width="120px" style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="90" y="65">{val}</text>';
+	      FamilyTree.templates.sriniz.field_0 = '<text data-width="150px" style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="81" y="47">{val}</text>';
+	      FamilyTree.templates.sriniz.field_1 = '<text data-width="150px" style="font-size: 12px; font-weight: bold;" fill="#ffffff" x="83" y="65">{val}</text>';
 	      var expandIconMale = '<circle cx="97" cy="-16" r="10" fill="#039BE5" stroke="#fff" stroke-width="1"><title>Expand</title></circle>' + '<line x1="90" y1="-16" x2="104" y2="-16" stroke-width="1" stroke="#fff"></line>' + '<line x1="97" y1="-23" x2="97" y2="-9" stroke-width="1" stroke="#fff"></line>';
 	      var expandIconFemale = '<circle cx="97" cy="-16" r="10" fill="#FF46A3" stroke="#fff" stroke-width="1"></circle>' + '<line x1="90" y1="-16" x2="104" y2="-16" stroke-width="1" stroke="#fff"></line>' + '<line x1="97" y1="-23" x2="97" y2="-9" stroke-width="1" stroke="#fff"></line>';
 	      FamilyTree.templates.sriniz_male.plus = expandIconMale;
 	      FamilyTree.templates.sriniz_female.plus = expandIconFemale;
+	      FamilyTree.templates.sriniz.plus = expandIconFemale;
 	      var imgTemplate = '<clipPath id="ulaImg">' + '<rect  height="75" width="75" x="7" y="7" stroke-width="1" fill="#FF46A3" stroke="#aeaeae" rx="15" ry="15"></rect>' + '</clipPath>' + '<image x="7" y="7" preserveAspectRatio="xMidYMid slice" clip-path="url(#ulaImg)" xlink:href="{val}" width="75" height="75">' + '</image>';
 	      FamilyTree.templates.sriniz_male.img_0 = imgTemplate;
 	      FamilyTree.templates.sriniz_female.img_0 = imgTemplate;
+	      FamilyTree.templates.sriniz.img_0 = imgTemplate;
 	      FamilyTree.templates.sriniz_male.up = '<use x="195" y="0" xlink:href="#sriniz_male_up"></use>';
 	      FamilyTree.templates.sriniz_female.up = '<use x="195" y="0" xlink:href="#sriniz_female_up"></use>';
+	      FamilyTree.templates.sriniz.up = '<use x="195" y="0" xlink:href="#sriniz_female_up"></use>';
 	      FamilyTree.templates.sriniz.pointer = '<g data-pointer="pointer" transform="matrix(0,0,0,0,80,80)">><g transform="matrix(0.3,0,0,0.3,-17,-17)">' + '<polygon fill="#039BE5" points="53.004,173.004 53.004,66.996 0,120" />' + '<polygon fill="#039BE5" points="186.996,66.996 186.996,173.004 240,120" />' + '<polygon fill="#FF46A3" points="66.996,53.004 173.004,53.004 120,0" />' + '<polygon fill="#FF46A3" points="120,240 173.004,186.996 66.996,186.996" />' + '<circle fill="red" cx="120" cy="120" r="30" />' + '</g></g>';
 	      family.on('render-link', function (sender, args) {
 	        if (args.cnode.ppid != undefined) args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heartsriniz" x="' + args.p.xa + '" y="' + args.p.ya + '"/>';
@@ -561,7 +568,9 @@ this.BX.Up = this.BX.Up || {};
 	          if (person.active) {
 	            newStyles.innerHTML = "svg.hugo [data-n-id=\"".concat(person.id, "\"].node>rect {\n\t\t\t\t\t\t\tfill: #FFE13E\n\t\t\t\t\t\t}");
 	          } else {
-	            newStyles.innerHTML = "svg.hugo [data-n-id=\"".concat(person.id, "\"].node>rect {\n\t\t\t\t\t\t\tfill: url(#hugo_grad_").concat(person.gender, ")\n\t\t\t\t\t\t}");
+	            if (person.gender.length !== 0) {
+	              newStyles.innerHTML = "svg.hugo [data-n-id=\"".concat(person.id, "\"].node>rect {\n\t\t\t\t\t\t\tfill: url(#hugo_grad_").concat(person.gender, ")\n\t\t\t\t\t\t}");
+	            }
 	          }
 	        });
 	        _this2.render();

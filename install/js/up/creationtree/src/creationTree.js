@@ -69,9 +69,11 @@ export class CreationTree
 						}`
 				}
 				else {
-					newStyles.innerHTML = `svg.hugo [data-n-id="${person.id}"].node>rect {
+					if (person.gender.length !== 0) {
+						newStyles.innerHTML = `svg.hugo [data-n-id="${person.id}"].node>rect {
 							fill: url(#hugo_grad_${person.gender})
 						}`
+					}
 				}
 			})
 
