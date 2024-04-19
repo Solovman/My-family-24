@@ -30,7 +30,3 @@ CJSCore::Init(['popup']);
 		});
 	});
 </script>
-
-
-
-

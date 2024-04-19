@@ -77,7 +77,7 @@ export class Subscriptions
 	{
 		switch (customStatus){
 			case 1:
-				return "Доступна кастомизация деревьев";
+				return "Возможность кастомизации";
 			case 0:
 				return  "Кастомизация отсутствует";
 		}
@@ -95,19 +95,19 @@ export class Subscriptions
 
 	getCountNodesMessage(value){
 		if (value === 0){
-			return "Неограниченное количество вершин";
+			return "Неограниченное число вершин";
 		}
 		else {
-			return "Максимальное количество вершин: " + value;
+			return "Количество вершин: " + value;
 		}
 	}
 
 	getCountTreesMessage(value){
 		if (value === 0){
-			return "Неограниченное количество деревьев";
+			return "Неограниченное число деревьев";
 		}
 		else {
-			return "Максимальное количество деревьев: " + value;
+			return "Количество деревьев: " + value;
 		}
 	}
 

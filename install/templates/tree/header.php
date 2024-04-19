@@ -163,13 +163,14 @@ $currentUrl = request()->getRequestUri();
 					<?php endif; ?>
 				</div>
 				<div class="navbar-end">
-
-					<div class="btn-container">
-						<label class="switch btn-color-mode-switch">
-							<input type="checkbox" name="color_mode" id="color_mode">
-							<label for="color_mode" data-on="Dark" data-off="Light" class="btn-color-mode-switch-inner"></label>
-						</label>
-					</div>
+					<?php if (str_contains($currentUrl, '/tree/')):?>
+						<div class="btn-container">
+							<label class="switch btn-color-mode-switch">
+								<input type="checkbox" name="color_mode" id="color_mode">
+								<label for="color_mode" data-on="Dark" data-off="Light" class="btn-color-mode-switch-inner"></label>
+							</label>
+						</div>
+					<?php endif; ?>
 					<div class="navbar-item">
 						<div class="buttons">
 							<div class="header__icon">
