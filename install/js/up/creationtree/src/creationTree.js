@@ -83,17 +83,6 @@ export class CreationTree
 	{
 		localStorage.setItem('template', nameTemplate);
 
-		const lastNode = this.nodeList.persons.length > 0 ? this.nodeList.persons[this.nodeList.persons.length - 1] : null;
-		let root = null;
-
-		if (lastNode !== null) {
-			this.nodeList.persons.forEach(person => {
-				if (person.mid === lastNode.id || person.fid === lastNode.id) {
-					root = [lastNode.id];
-				}
-			})
-		}
-
 		let family = Family.create(this.nodeList.persons, nameTemplate);
 
 		if (nameTemplate === 'hugo') {
@@ -393,6 +382,10 @@ export class CreationTree
 				localStorage.setItem('titleTemplate', 'Royal');
 				this.reload();
 			})
+
+			BX.bind(BX('logout'), 'click', () => {
+				localStorage.clear();
+			});
 
 			this.isHandlerAdded = true;
 		}
