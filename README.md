@@ -46,7 +46,7 @@ Creating symbolic links for Windows:
 ```
 mklink /d C:\OSPanel\domains\dev.tree\local\components\up C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\components\up
 
-mklink /d C:\OSPanel\domains\dev.tree\local\routes\tree.php C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\routes\tree.php
+mklink /d C:\OSPanel\domains\dev.tree\local\routes\ C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\routes\
 
 mklink /d C:\OSPanel\domains\dev.tree\local\templates\ C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\templates\
 
