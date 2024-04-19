@@ -46,9 +46,19 @@ Creating symbolic links for Windows:
 ```
 mklink /d C:\OSPanel\domains\dev.tree\local\components\up C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\components\up
 
-mklink /d C:\OSPanel\domains\dev.tree\local\routes\tree.php C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\routes\tree.php
+mklink /d C:\OSPanel\domains\dev.tree\local\routes\ C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\routes\
 
 mklink /d C:\OSPanel\domains\dev.tree\local\templates\ C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\templates\
 
 mklink /d C:\OSPanel\domains\dev.tree\local\js\up C:\OSPanel\domains\dev.tree\local\modules\up.tree\install\js\up
+```
+
+For correct export to pdf, enter the terminal:
+```
+node node_modules/@balkangraph/export-service/app.js
+```
+
+After that also add a symbolic link:
+```
+mklink /d C:\OSPanel\domains\dev.tree\local\modules\up.tree\node_modules\@balkangraph\export-service\upload C:\OSPanel\domains\dev.tree\upload
 ```
