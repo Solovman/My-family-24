@@ -3,6 +3,11 @@ import {Requests} from "./requests.js";
 import {Helper} from "./helper.js";
 import {DownloadJson} from "./downloadJson.js";
 import {CreatedNode} from "./createdNode";
+import {Family} from "./templates/family.js";
+import {Original} from "./templates/original.js";
+import {Sriniz} from "./templates/sriniz.js";
+import {Multiple} from "./templates/multiple.js";
+import {John} from "./templates/john.js";
 
 export class CreationTree
 {
@@ -26,7 +31,7 @@ export class CreationTree
 
 		this.nodeList = [];
 
-		this.reload();
+		this.isHandlerAdded = false
 
 		const buttonJSON = BX('json');
 		BX.bind(buttonJSON, 'click', () => {
@@ -37,6 +42,11 @@ export class CreationTree
 			})
 			DownloadJson.download(this.nodeList.persons, "familyTree")
 		});
+
+		setTimeout(() => {
+			this.reload();
+		}, 300)
+
 	}
 
 	reload()
@@ -69,8 +79,10 @@ export class CreationTree
 		});
 	}
 
-	tree()
+	tree(nameTemplate)
 	{
+		localStorage.setItem('template', nameTemplate);
+
 		const lastNode = this.nodeList.persons.length > 0 ? this.nodeList.persons[this.nodeList.persons.length - 1] : null;
 		let root = null;
 
@@ -82,94 +94,28 @@ export class CreationTree
 			})
 		}
 
+		let family = Family.create(this.nodeList.persons, nameTemplate);
+
+		if (nameTemplate === 'hugo') {
+			Original.stylingNode(family);
+		}
+		else if (nameTemplate === 'sriniz') {
+			Sriniz.stylingNode(family);
+		}
+		else if (nameTemplate === 'main')
+		{
+			Multiple.stylingNode(family);
+		}
+		else if (nameTemplate === 'john')
+		{
+			John.stylingNode(family);
+		}
+
 		let treeID =  parseInt(window.location.href.match(/\d+/));
-		let family =  new FamilyTree(document.getElementById('tree'), {
-			mouseScrool: FamilyTree.action.scroll,
-			searchDisplayField: 'name',
-			searchFields: ["name", "surname"],
-			searchFieldsWeight: {
-				"name": 100,
-			},
-			mode: 'light',
-			template: 'hugo',
-			nodeTreeMenu: true,
-			nodeMenu: {
-				remove: {text: 'Remove'},
-				edit: {
-					text: 'Edit',
-				},
-				details: {text: 'Details'},
-			},
-			nodes: this.nodeList.persons,
-			nodeBinding: {
-				field_0: 'name',
-				field_1: "surname",
-				img_0: 'photo'
-			},
-			exportUrl: 'http://127.0.0.1:1337',
-			editForm: {
-				titleBinding: "name",
-				photoBinding: "photo",
-				addMore: null,
-				generateElementsFromFields: false,
-				buttons: {
-					share: null,
-					remove: null
-				},
-				elements: [
-					{type: 'textbox', label: 'Name', binding: 'name'},
-					{type: 'textbox', label: 'Surname', binding: 'surname'},
-					[
-						{type: 'date', label: 'Date Of Birth', binding: 'birthDate'},
-						{type: 'date', label: 'Date Of Death', binding: 'deathDate'}
-					],
-					[
-						{
-							type: 'select',
-							options: [{value: 'male', text: 'Male'}, {value: 'female', text: 'Female'}],
-							label: 'Gender',
-							binding: 'gender'
-						},
-					],
-					{ type: 'checkbox', label: 'Important', binding: 'active' }
-				]
-			},
-		});
-
 		const self = this;
-
-		family.on('exportstart', function(sender, args){
-			args.styles += document.getElementById('myStyles').outerHTML;
-		});
-
 		const buttonPDF = BX('pdf');
-
 		BX.bind(buttonPDF, 'click', () => {
 			family.exportPDF();
-		});
-
-
-        FamilyTree.templates.tommy_male.defs =
-			`<g transform="matrix(0.05,0,0,0.05,-12,-9)" id="heart">
-       			 <path fill="#F57C00" d="M438.482,58.61c-24.7-26.549-59.311-41.655-95.573-41.711c-36.291,0.042-70.938,15.14-95.676,41.694l-8.431,8.909  l-8.431-8.909C181.284,5.762,98.663,2.728,45.832,51.815c-2.341,2.176-4.602,4.436-6.778,6.778 c-52.072,56.166-52.072,142.968,0,199.134l187.358,197.581c6.482,6.843,17.284,7.136,24.127,0.654 c0.224-0.212,0.442-0.43,0.654-0.654l187.29-197.581C490.551,201.567,490.551,114.77,438.482,58.61z"/>
-			<g>
-			`
-
-		family.on('expcollclick', function (sender, isCollapsing, nodeId) {
-			let node = family.getNode(nodeId);
-			if (isCollapsing) {
-				family.expandCollapse(nodeId, [], node.ftChildrenIds);
-			} else {
-				family.expandCollapse(nodeId, node.ftChildrenIds, []);
-			}
-			return false;
-		});
-
-		family.on('render-link', function (sender, args) {
-			if (args.cnode.ppid != undefined)
-				args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + (args.p.xa) + '" y="' + (args.p.ya) + '"/>';
-			if (args.cnode.isPartner && args.node.partnerSeparation == 30)
-				args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + (args.p.xb) + '" y="' + (args.p.yb) + '"/>';
 		});
 
 		family.onUpdateNode((args) =>
@@ -392,6 +338,63 @@ export class CreationTree
 	{
 		Helper.addRelation(this.nodeList);
 
-		this.tree();
+		if (localStorage.getItem('template')) {
+			this.tree(localStorage.getItem('template'));
+		} else {
+			this.tree('hugo');
+		}
+
+		BX('tree').style.backgroundColor = localStorage.getItem('mode') ? localStorage.getItem('mode') : '#F1F9F8';
+
+		if (localStorage.getItem('mode')) {
+			if (localStorage.getItem('mode') === '#000000') {
+				BX('color_mode').checked = true;
+			}
+		}
+
+		BX('navbar-purchases').innerHTML = localStorage.getItem('titleTemplate') ? localStorage.getItem('titleTemplate') : 'Skins';
+
+		if (!this.isHandlerAdded) {
+			BX.bind(BX('Sriniz'), 'click', () => {
+				this.tree('sriniz');
+				localStorage.setItem('titleTemplate', 'Sriniz');
+				this.reload();
+			})
+
+			BX.bind(BX('color_mode'), 'click', () => {
+				const template = localStorage.getItem('template') ? localStorage.getItem('template'): 'hugo';
+				if (BX('color_mode').checked)
+				{
+					localStorage.setItem('mode', '#000000');
+					this.tree(template);
+					this.reload();
+				}
+				else {
+					localStorage.setItem('mode', '#F1F9F8');
+					this.tree(template);
+					this.reload();
+				}
+			})
+
+			BX.bind(BX('Hugo'), 'click', () => {
+				this.tree('hugo');
+				localStorage.setItem('titleTemplate', 'Hugo');
+				this.reload();
+			})
+
+			BX.bind(BX('Multiple'), 'click', () => {
+				this.tree('main');
+				localStorage.setItem('titleTemplate', 'Multiple');
+				this.reload();
+			})
+
+			BX.bind(BX('Royal'), 'click', () => {
+				this.tree('john');
+				localStorage.setItem('titleTemplate', 'Royal');
+				this.reload();
+			})
+
+			this.isHandlerAdded = true;
+		}
 	}
 }

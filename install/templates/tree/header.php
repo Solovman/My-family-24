@@ -153,7 +153,7 @@ $currentUrl = request()->getRequestUri();
 					<?php endif; ?>
 					<?php if (str_contains($currentUrl, '/tree/')):?>
 						<div class="navbar-item has-dropdown is-hoverable">
-							<a class="navbar-link header_item">
+							<a id = "navbar-purchases" class="navbar-link header_item">
 								Skins
 							</a>
 							<div class="navbar-dropdown">
@@ -162,8 +162,14 @@ $currentUrl = request()->getRequestUri();
 						</div>
 					<?php endif; ?>
 				</div>
-
 				<div class="navbar-end">
+
+					<div class="btn-container">
+						<label class="switch btn-color-mode-switch">
+							<input type="checkbox" name="color_mode" id="color_mode">
+							<label for="color_mode" data-on="Dark" data-off="Light" class="btn-color-mode-switch-inner"></label>
+						</label>
+					</div>
 					<div class="navbar-item">
 						<div class="buttons">
 							<div class="header__icon">
@@ -179,7 +185,6 @@ $currentUrl = request()->getRequestUri();
 				</div>
 			</div>
 		</nav>
-
 	</div>
 	</div>
 </header>

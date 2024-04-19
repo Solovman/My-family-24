@@ -2,10 +2,6 @@ body {
 	background-image: none !important;
 }
 
-#tree {
-	background-color: #F1F9F8;
-}
-
 text {
 	font-family: 'MorningBreeze', sans-serif, Helvetica;
 	font-size: 23px !important;
@@ -62,20 +58,34 @@ input {
 	display: none;
 }
 
-image {
+.hugo image {
 	x: 85;
 	y: -10;
 	width: 80px;
 	height: 80px;
 }
 
+.sriniz use[data-ctrl-n-t-menu-id] {
+	x: 190;
+}
+
+.sriniz use[data-ctrl-n-menu-id] {
+	x: 190;
+	y: 60;
+}
+
+.sriniz g[data-ctrl-up-id] use {
+	x: 0;
+}
+
+.john g[data-ctrl-up-id] use {
+	x: 80;
+	y: 5;
+}
+
 .bft-edit-form-fields-inner {
 	margin: 0 7px 0 7px !important;
 }
-
-/*g rect {*/
-/*	fill: #ffe866;*/
-/*}*/
 
 .active {
 	fill: #FFE13E !important;

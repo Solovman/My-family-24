@@ -57,9 +57,8 @@ export class Purchases
 	render()
 	{
 		this.purchases.forEach(purchases => {
-			console.log(purchases);
 			const item = Tag.render`
-			<a class="navbar-item header_item">
+			<a id="${purchases.TITLE}" class="navbar-item header_item">
 				✧ ${purchases.TITLE}
 			</a>
 		`;

@@ -1,5 +1,4 @@
 .subscriptions__tabs-item {
-	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
 }
@@ -72,6 +71,12 @@
 	width: 55%;
 }
 
+.subscriptions__purchase {
+	flex-wrap: wrap;
+	justify-content: inherit;
+	height: 67vh;
+}
+
 .subscriptions__purchase-item {
 	width: 30%;
 }
@@ -84,9 +89,6 @@
 	margin-bottom: 30px;
 }
 
-.subscriptions__purchase{
-	height: 53vh;
-}
 
 .subscriptions__purchase-button {
 	position: relative;

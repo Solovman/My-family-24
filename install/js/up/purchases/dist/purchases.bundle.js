@@ -52,8 +52,7 @@ this.BX.Up = this.BX.Up || {};
 	    value: function render() {
 	      var _this2 = this;
 	      this.purchases.forEach(function (purchases) {
-	        console.log(purchases);
-	        var item = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<a class=\"navbar-item header_item\">\n\t\t\t\t\u2727 ", "\n\t\t\t</a>\n\t\t"])), purchases.TITLE);
+	        var item = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<a id=\"", "\" class=\"navbar-item header_item\">\n\t\t\t\t\u2727 ", "\n\t\t\t</a>\n\t\t"])), purchases.TITLE, purchases.TITLE);
 	        BX.append(item, _this2.rootNode);
 	      });
 	    }
