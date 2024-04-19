@@ -149,7 +149,7 @@ this.BX.Up = this.BX.Up || {};
 	    key: "getCountNodesMessage",
 	    value: function getCountNodesMessage(value) {
 	      if (value === 0) {
-	        return "Неограниченное количество вершин";
+	        return "Неограниченное число вершин";
 	      } else {
 	        return "Количество вершин: " + value;
 	      }
@@ -158,7 +158,7 @@ this.BX.Up = this.BX.Up || {};
 	    key: "getCountTreesMessage",
 	    value: function getCountTreesMessage(value) {
 	      if (value === 0) {
-	        return "Неограниченное количество деревьев";
+	        return "Неограниченное число деревьев";
 	      } else {
 	        return "Количество деревьев: " + value;
 	      }

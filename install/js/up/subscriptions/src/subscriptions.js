@@ -95,7 +95,7 @@ export class Subscriptions
 
 	getCountNodesMessage(value){
 		if (value === 0){
-			return "Неограниченное количество вершин";
+			return "Неограниченное число вершин";
 		}
 		else {
 			return "Количество вершин: " + value;
@@ -104,7 +104,7 @@ export class Subscriptions
 
 	getCountTreesMessage(value){
 		if (value === 0){
-			return "Неограниченное количество деревьев";
+			return "Неограниченное число деревьев";
 		}
 		else {
 			return "Количество деревьев: " + value;
