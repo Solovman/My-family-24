@@ -15,7 +15,7 @@ export class Multiple
       </g>
       <g style="cursor: pointer;" id="base_tree_menu">
           <rect x="0" y="0" width="25" height="25" fill="transparent"></rect>
-          ${FamilyTree.icon.addUser(25, 25, '#fff', 0, 0)}
+          ${FamilyTree.icon.addUser(25, 25, 'black', 0, 0)}
       </g>
       <g style="cursor: pointer;" id="base_tree_menu_close">
           <circle cx="12.5" cy="12.5" r="12" fill="#F57C00"></circle>

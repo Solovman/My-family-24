@@ -1,5 +1,13 @@
 export class Sriniz {
 	static stylingNode(family) {
+
+		FamilyTree.templates.base.defs =
+			`
+		<g style="cursor: pointer;" id="base_tree_menu">
+		<rect x="0" y="0" width="25" height="25" fill="transparent"></rect>
+		${FamilyTree.icon.addUser(25, 25, '#fff', 0, 0)}
+		</g>`;
+
 		FamilyTree.templates.sriniz = Object.assign({}, FamilyTree.templates.base);
 
 		FamilyTree.templates.sriniz.size = [225, 90];

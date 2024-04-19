@@ -83,6 +83,11 @@ input {
 	y: 5;
 }
 
+.main g[data-n-id] use[data-ctrl-n-t-menu-id] {
+	x: 3;
+	y: 2;
+}
+
 .bft-edit-form-fields-inner {
 	margin: 0 7px 0 7px !important;
 }
