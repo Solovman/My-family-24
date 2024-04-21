@@ -25,6 +25,13 @@ text {
 	font-family: 'MorningBreeze', sans-serif, Helvetica;
 }
 
+.bft-form-field {
+	margin-top: 0 !important;
+}
+
+svg[data-edit-from-close] {
+	display: none;
+}
 
 .bft-light .bft-input>input, .bft-light .bft-input>select {
 	margin-bottom: 7px;
@@ -88,6 +95,18 @@ input {
 	y: 2;
 }
 
+button:disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.warning-text {
+	text-align: left;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	font-size: 20px;
+	font-weight: 200;
+}
+
 .bft-edit-form-fields-inner {
 	margin: 0 7px 0 7px !important;
 }
@@ -112,7 +131,7 @@ input {
 	overflow: hidden;
 	float: left;
 	box-sizing: border-box;
-	width: 61%;
+	width: 59%;
 	border-radius: 6px 0px 0 6px;
 	border: 1px solid #ddd;
 }

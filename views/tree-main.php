@@ -4,7 +4,6 @@
  * @var CMain $APPLICATION
  */
 
-use Bitrix\Main\Context;
 
 define('NEED_AUTH', true);
 

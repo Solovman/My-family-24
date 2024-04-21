@@ -1,4 +1,4 @@
-import {Type, Tag} from 'main.core';
+import {Tag, Type} from 'main.core';
 import {Requests} from "./requests.js";
 import {Helper} from "./helper.js";
 import {DownloadJson} from "./downloadJson.js";
@@ -102,7 +102,7 @@ export class CreationTree
 			John.stylingNode(family);
 		}
 
-		let treeID =  parseInt(window.location.href.match(/\d+/));
+
 		const self = this;
 		const buttonPDF = BX('pdf');
 		BX.bind(buttonPDF, 'click', () => {
@@ -143,6 +143,7 @@ export class CreationTree
 			}
 		});
 
+
 		family.nodeMenuUI.on('show', function(sender, args){
 			args.menu = {
 				edit: {
@@ -165,150 +166,147 @@ export class CreationTree
 
 					},
 				},
-				details: {
-					text: "Details"
-				},
 			}
 		});
 
 		let onUpdateNodeAdded = false;
 		let onUpdatePerson = false;
 
-		family.on('click', function(sender, args){
+		family.on('init', function (sender, args) {
+			if (self.nodeList.persons.length === 1) {
 
-			if (args.node.id && typeof args.node.id === "string" && !onUpdateNodeAdded)
-			{
-				onUpdateNodeAdded = true;
-				family.onUpdateNode((args) =>
-				{
-					const updateNodes = args.updateNodesData;
-					const addNodes = args.addNodesData;
-					const removeNodes = args.removeNodeId;
+				sender.editUI.show(self.nodeList.persons[0].id, false);
 
-					const formData = new FormData();
-					const fileInput = form.querySelector('input[type="file"]');
-					formData.append(fileInput.name, fileInput.files[0]);
-
-					if (BX('photoName').value !== '')
-					{
-						fetch(
-							`/tree/${treeID}/`,
-							{
-								method: 'POST',
-								headers: {
-									"X-Bitrix-Csrf-Token": BX.bitrix_sessid()
-								},
-								body: formData
-							}
-						)
-							.then((response) => {
-								if (!response.ok) {
-									throw new Error('Network response was not ok');
-								}
-								return response.json();
-							})
-							.then((response) => {
-								updateNodes[0].imageId = response.data.fileId;
-
-								CreatedNode.addNode(updateNodes, addNodes, removeNodes, self);
-							})
-							.catch((error) => {
-								console.error('Error while changing item:', error);
-							});
-					}
-					else
-					{
-						updateNodes[0].imageId = 1;
-						CreatedNode.addNode(updateNodes, addNodes, removeNodes, self);
-					}
-
-				});
-			}
-			else if(!onUpdatePerson)
-			{
-				onUpdatePerson = true;
-
-				family.onUpdateNode(async (args) => {
-
-					if (Object.keys(args.addNodesData).length !== 0) {
-						return;
-					}
-
-					const formData = new FormData();
-					const fileInput = form.querySelector('input[type="file"]');
-					formData.append(fileInput.name, fileInput.files[0]);
-
-					const updateNodes = args.updateNodesData;
-
-					const id = updateNodes[0].id;
-					const gender = updateNodes[0].gender[0];
-					const name = updateNodes[0].name;
-					const imageId = updateNodes[0].imageId;
-					const surname = updateNodes[0].surname;
-					let active = updateNodes[0].active;
-					let birthDate = Helper.formatDate(updateNodes[0].birthDate);
-					let deathDate = Helper.formatDate(updateNodes[0].deathDate);
-
-					if (active) {
-						active = '1'
-					} else {
-						active = '0'
-					}
-
-					if (updateNodes[0].deathDate.length === 0) {
-						deathDate = null;
-					}
-
-					if (updateNodes[0].birthDate.length === 0) {
-						birthDate = null;
-					}
-
-					if (BX('photoName').value !== '')
-					{
-						fetch(
-							`/tree/${treeID}/`,
-							{
-								method: 'POST',
-								headers: {
-									"X-Bitrix-Csrf-Token": BX.bitrix_sessid()
-								},
-								body: formData
-							}
-						)
-							.then((response) => {
-								if (!response.ok) {
-									throw new Error('Network response was not ok');
-								}
-								return response.json();
-							})
-							.then((response) => {
-								const lastImageId = updateNodes[0].imageId;
-								updateNodes[0].imageId = response.data.fileId;
-								const imageId = updateNodes[0].imageId;
-
-								Requests.updateNode(id, active, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeID).then(node => {
-									self.reload();
-									return node;
-								})
-							})
-							.catch((error) => {
-								console.error('Error while changing item:', error);
-							});
-					}
-					else
-					{
-						Requests.updateNode(id, active, imageId, 0, name, surname, birthDate, deathDate, gender, treeID).then(node => {
-							self.reload();
-							return node;
-						})
-					}
+				const saveButton = document.querySelector('[data-edit-from-save]');
+				const inputName = document.querySelector('[data-binding="name"]');
+				inputName.addEventListener('input', (el) => {
+					saveButton.disabled = inputName.value.length <= 0;
 				})
+
+				let statusRequest = CreatedNode.requestCreationNode(self.nodeList.persons[0].id, family, onUpdateNodeAdded, onUpdatePerson, self);
+
+				onUpdateNodeAdded = statusRequest[0];
+				onUpdatePerson = statusRequest[1];
+
+				const form = document.querySelector('.bft-edit-form');
+				const editForm = document.querySelector('.bft-form-fieldset');
+
+				const warningName = document.querySelector('[data-bft-edit-from-btns]');
+
+				const textWarning = Tag.render`
+						<div class="warning-text">*Поле "имя" является обязательным</div>
+					`;
+
+				BX.append(textWarning, warningName);
+
+				form.enctype = "multipart/form-data";
+				form.action = '/tree/{id}/';
+				const formFile = Tag.render`
+				<label class="input-file">
+					<span class="input-file-text" type="text"></span>
+					<input id="photoName" type="file" name="photo">
+					<span class="input-file-btn">Выберите файл</span>
+				</label>
+				`;
+
+				editForm.append(formFile);
+
+				BX('photoName').addEventListener('change', function(){
+						let file = this.files[0];
+						document.querySelector('.input-file-text').innerHTML = file.name;
+					}
+				);
+
 			}
+		})
+
+		family.on('updated', function (sender, args) {
+			if (args.addNodesData.length !== 0) {
+				if (typeof args.addNodesData[0].id === 'string') {
+
+					sender.editUI.show(args.addNodesData[0].id, false);
+
+					const saveButton = document.querySelector('[data-edit-from-save]');
+					saveButton.disabled = true;
+					const inputName = document.querySelector('[data-binding="name"]');
+					inputName.addEventListener('input', (el) => {
+						saveButton.disabled = inputName.value.length <= 0;
+					})
+
+					onUpdateNodeAdded = CreatedNode.addRequestNode(family, onUpdateNodeAdded, self);
+
+					const form = document.querySelector('.bft-edit-form');
+					const editForm = document.querySelector('.bft-form-fieldset');
+					const warningName = document.querySelector('[data-bft-edit-from-btns]');
+
+					const textWarning = Tag.render`
+						<div class="warning-text">*Поле "имя" является обязательным</div>
+					`;
+
+					BX.append(textWarning, warningName);
+
+					form.enctype = "multipart/form-data";
+					form.action = '/tree/{id}/';
+					const formFile = Tag.render`
+					<label class="input-file">
+						<span class="input-file-text" type="text"></span>
+						<input id="photoName" type="file" name="photo">
+						<span class="input-file-btn">Выберите файл</span>
+					</label>
+					`;
+
+					editForm.append(formFile);
+
+					BX('photoName').addEventListener('change', function(){
+							let file = this.files[0];
+							document.querySelector('.input-file-text').innerHTML = file.name;
+						}
+					);
+
+					const closeButton = document.querySelector('[data-edit-from-cancel]');
+					const clonedButton = closeButton.cloneNode(true);
+
+					closeButton.parentNode.replaceChild(clonedButton, closeButton);
+
+					clonedButton.addEventListener('click', () => {
+						if (confirm("The node you created will not be saved. Are you sure you want to close the form?")) {
+							sender.editUI.hide();
+							self.reload();
+						}
+					})
+
+					family.editUI.on('hide', function () {
+						self.reload();
+					})
+
+				}
+			}
+		})
+
+		family.on('click', function(sender, args){
+			let statusRequest = CreatedNode.requestCreationNode(args.node.id, family, onUpdateNodeAdded, onUpdatePerson, self);
+
+			onUpdateNodeAdded = statusRequest[0];
+			onUpdatePerson = statusRequest[1];
 
 			sender.editUI.show(args.node.id, false);
 
+			const saveButton = document.querySelector('[data-edit-from-save]');
+			const inputName = document.querySelector('[data-binding="name"]');
+			inputName.addEventListener('input', (el) => {
+				saveButton.disabled = inputName.value.length <= 0;
+			})
+
 			const form = document.querySelector('.bft-edit-form');
 			const editForm = document.querySelector('.bft-form-fieldset');
+
+			const warningName = document.querySelector('[data-bft-edit-from-btns]');
+
+			const textWarning = Tag.render`
+						<div class="warning-text">*Поле "имя" является обязательным</div>
+					`;
+
+			BX.append(textWarning, warningName);
 
 			form.enctype = "multipart/form-data";
 			form.action = '/tree/{id}/';

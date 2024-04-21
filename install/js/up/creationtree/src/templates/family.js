@@ -16,7 +16,6 @@ export class Family
 				edit: {
 					text: 'Edit',
 				},
-				details: {text: 'Details'},
 			},
 			nodes: list,
 			nodeBinding: {
@@ -29,10 +28,12 @@ export class Family
 				titleBinding: "name",
 				photoBinding: "photo",
 				addMore: null,
+				cancelBtn: 'Close',
+				saveAndCloseBtn: 'Save',
 				generateElementsFromFields: false,
 				buttons: {
 					share: null,
-					remove: null
+					remove: null,
 				},
 				elements: [
 					{type: 'textbox', label: 'Name', binding: 'name'},

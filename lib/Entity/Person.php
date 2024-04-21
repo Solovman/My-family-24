@@ -13,7 +13,7 @@ class Person implements Entity
 	public int $imageId;
 	public string $photo;
 	public string $name;
-	public string $surname;
+	public ?string $surname;
 	public ?Date $birthDate;
 	public ?Date $deathDate;
 	public string $gender;
@@ -93,7 +93,7 @@ class Person implements Entity
 	/**
 	 * @return string
 	 */
-	public function getSurname(): string
+	public function getSurname(): ?string
 	{
 		return $this->surname;
 	}

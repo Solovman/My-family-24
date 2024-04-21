@@ -81,7 +81,6 @@ class PersonTable extends DataManager
 			new StringField(
 				'SURNAME',
 				[
-					'required' => true,
 					'validation' => [__CLASS__, 'validateSurname'],
 					'title' => Loc::getMessage('PERSON_ENTITY_SURNAME_FIELD')
 				]
