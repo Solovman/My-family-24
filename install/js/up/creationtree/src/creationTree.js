@@ -274,11 +274,6 @@ export class CreationTree
 							self.reload();
 						}
 					})
-
-					family.editUI.on('hide', function () {
-						self.reload();
-					})
-
 				}
 			}
 		})

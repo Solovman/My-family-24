@@ -839,9 +839,6 @@ this.BX.Up = this.BX.Up || {};
 	                self.reload();
 	              }
 	            });
-	            family.editUI.on('hide', function () {
-	              self.reload();
-	            });
 	          }
 	        }
 	      });
