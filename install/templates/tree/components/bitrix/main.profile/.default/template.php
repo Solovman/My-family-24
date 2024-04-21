@@ -37,17 +37,15 @@ $APPLICATION->setAdditionalCSS('style.css');
 			});
 		});
 	</script>
-	<?
-	ShowError($arResult["strProfileError"]); ?>
-	<?
-	if ($arResult['DATA_SAVED'] == 'Y')
-	{
-		ShowNote(GetMessage('PROFILE_DATA_SAVED'));
-	}
-	?>
+	<? ShowError($arResult["strProfileError"]); ?>
+	<?//
+	// if ($arResult['DATA_SAVED'] == 'Y')
+	// {
+	// 	ShowNote(GetMessage('PROFILE_DATA_SAVED'));
+	// }
+	// ?>
 
-	<?
-	if ($arResult["SHOW_SMS_FIELD"] == true): ?>
+	<?php if ($arResult["SHOW_SMS_FIELD"] == true): ?>
 
 		<form method="post" action="<?= $arResult["FORM_TARGET"] ?>">
 			<?= $arResult["BX_SESSION_CHECK"] ?>
@@ -57,8 +55,8 @@ $APPLICATION->setAdditionalCSS('style.css');
 			<table class="profile-table data-table">
 				<tbody>
 				<tr>
-					<td><?
-						echo GetMessage("main_profile_code") ?><span class="starrequired">*</span></td>
+					<td>
+						<?php echo GetMessage("main_profile_code") ?><span class="starrequired">*</span></td>
 					<td><input size="30" type="text" name="SMS_CODE" value="<?= htmlspecialcharsbx(
 							$arResult["SMS_CODE"]
 						) ?>" autocomplete="off"/></td>
@@ -126,9 +124,10 @@ $APPLICATION->setAdditionalCSS('style.css');
 			<input type="hidden" name="lang" value="<?= LANG ?>"/>
 			<input type="hidden" name="ID" value=<?= $arResult["ID"] ?>/>
 
-			<div class="profile-link" style="text-align: center"><a title="<?= GetMessage(
+			<div class="profile-link" style="text-align: center"><div title="<?= GetMessage(
 					"REG_SHOW_HIDE"
-				) ?>" href="javascript:void(0)" onclick="SectionClick('reg')"><?= GetMessage("REG_SHOW_HIDE") ?></a>
+				) ?>"><?= GetMessage("REG_SHOW_HIDE") ?></div>
+				<!--				href="javascript:void(0)" onclick="SectionClick('reg')"-->
 			</div>
 			<div class="profile-block-<?= strpos($arResult["opened"], "reg") === false ? "hidden"
 				: "shown" ?>" id="user_div_reg">
@@ -139,35 +138,6 @@ $APPLICATION->setAdditionalCSS('style.css');
 					</tr>
 					</thead>
 					<tbody>
-					<?
-					if ($arResult["ID"] > 0)
-					{
-						?>
-						<?
-						if ($arResult["arUser"]["TIMESTAMP_X"] <> '')
-						{
-							?>
-							<tr>
-								<td><?= GetMessage('LAST_UPDATE') ?></td>
-								<td><?= $arResult["arUser"]["TIMESTAMP_X"] ?></td>
-							</tr>
-							<?
-						}
-						?>
-						<?
-						if ($arResult["arUser"]["LAST_LOGIN"] <> '')
-						{
-							?>
-							<tr>
-								<td><?= GetMessage('LAST_LOGIN') ?></td>
-								<td><?= $arResult["arUser"]["LAST_LOGIN"] ?></td>
-							</tr>
-							<?
-						}
-						?>
-						<?
-					}
-					?>
 					<tr>
 						<td><?= GetMessage('NAME') ?></td>
 						<td><input type="text" name="NAME" maxlength="50" value="<?= $arResult["arUser"]["NAME"] ?>"/>
@@ -180,23 +150,17 @@ $APPLICATION->setAdditionalCSS('style.css');
 						</td>
 					</tr>
 					<tr>
-						<td><?= GetMessage('SECOND_NAME') ?></td>
-						<td>
-							<input type="text" name="SECOND_NAME" maxlength="50" value="<?= $arResult["arUser"]["SECOND_NAME"] ?>"/>
-						</td>
-					</tr>
-					<tr>
 						<td><?= GetMessage('LOGIN') ?><span class="starrequired">*</span></td>
 						<td><input type="text" name="LOGIN" maxlength="50" value="<?
 							echo $arResult["arUser"]["LOGIN"] ?>"/></td>
 					</tr>
-					<tr>
-						<td><?= GetMessage('EMAIL') ?><?
-							if ($arResult["EMAIL_REQUIRED"]): ?><span class="starrequired">*</span><?
-							endif ?></td>
-						<td><input type="text" name="EMAIL" maxlength="50" value="<?
-							echo $arResult["arUser"]["EMAIL"] ?>"/></td>
-					</tr>
+<!--					<tr>-->
+<!--						<td>--><?php //= GetMessage('EMAIL') ?><!----><?//
+// 							if ($arResult["EMAIL_REQUIRED"]): ?><!--<span class="starrequired">*</span>--><?//
+// 							endif ?><!--</td>-->
+<!--						<td><input type="text" name="EMAIL" maxlength="50" value="--><?//
+// 							echo $arResult["arUser"]["EMAIL"] ?><!--"/></td>-->
+<!--					</tr>-->
 					<?
 					if ($arResult["PHONE_REGISTRATION"]): ?>
 						<tr>
