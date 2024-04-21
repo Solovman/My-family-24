@@ -18,5 +18,7 @@ return function (RoutingConfigurator $routes)
 	$routes->get('/account/', new PublicPageController('/local/modules/up.tree/views/tree-account.php'));
 	$routes->post('/account/', new PublicPageController('/local/modules/up.tree/views/tree-account.php'));
 
+	$routes->get('/admin/', new PublicPageController('/local/modules/up.tree/views/tree-admin.php'));
+
 	$routes->post('/', new PublicPageController('/local/modules/up.tree/views/tree-list.php'));
 };
