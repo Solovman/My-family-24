@@ -836,8 +836,10 @@ this.BX.Up = this.BX.Up || {};
 	            clonedButton.addEventListener('click', function () {
 	              if (confirm("The node you created will not be saved. Are you sure you want to close the form?")) {
 	                sender.editUI.hide();
-	                self.reload();
 	              }
+	            });
+	            family.editUI.on('hide', function () {
+	              self.reload();
 	            });
 	          }
 	        }
