@@ -41,9 +41,24 @@ function OnAfterUserRegisterHandler(&$arFields): void
 	}
 }
 
+function OnBeforeUserUpdateHandler(&$arFields)
+{
+	global $USER;
+	if (empty($arFields['NAME']))
+	{
+		$arFields['NAME'] = $USER->GetFirstName();
+	}
+	if (empty($arFields['LAST_NAME']))
+	{
+		$arFields['LAST_NAME'] = $USER->GetLastName();
+	}
+}
+
 AddEventHandler("main", "OnBeforeUserRegister", "OnBeforeUserRegisterHandler");
 
 AddEventHandler("main", "OnAfterUserRegister", "OnAfterUserRegisterHandler");
+
+AddEventHandler("main", "OnBeforeUserUpdate", "OnBeforeUserUpdateHandler");
 
 if (file_exists(__DIR__ . '/module_updater.php'))
 {
