@@ -81,6 +81,13 @@ class UserSubscriptionTable extends DataManager
 					'title' => Loc::getMessage('USER_SUBSCRIPTION_ENTITY_SUBSCRIPTION_BUY_TIME_FIELD')
 				]
 			),
+			new IntegerField(
+				'IS_ACTIVE',
+				[
+					'default' => 1,
+					'title' => Loc::getMessage('USER_SUBSCRIPTION_ENTITY_IS_ACTIVE_FIELD')
+				]
+			),
 			'RELATION_USER_SUBSCRIPTION' => (new Reference(
 				'RELATION_USER_SUBSCRIPTION',
 				UserTable::class,

@@ -88,4 +88,29 @@ __treeMigrate(7, static function ($updater, $DB)
 	}
 });
 
+__treeMigrate(8, static function ($updater, $DB)
+{
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query("
+		INSERT INTO up_single_purchase (ID, TITLE)
+		VALUES  (1, 'Sriniz'),
+                (2, 'Multiple'),
+                (3, 'Royal'),
+                (4, 'Hugo'),
+                (5, 'Dark Theme');");
+	}
+});
 
+__treeMigrate(9, static function ($updater, $DB)
+{
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query("
+		INSERT INTO up_relation_user_single_purchase (USER_ID, SINGLE_PURCHASE_ID)
+		VALUES  (1, 1),
+                (1, 2),
+                (1, 3),
+                (1, 4);");
+	}
+});

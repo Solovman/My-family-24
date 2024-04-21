@@ -20,10 +20,12 @@ class PurchaseService
 	 */
 	public static function getPurchaseIdsByUserId(int $id): array
 	{
-		$purchases = UserTable::query()->setSelect(['PURCHASE_' => 'USER_PURCHASE'])
+		$purchases = UserTable::query()
+							  ->setSelect(['PURCHASE_' => 'USER_PURCHASE'])
 							  ->setFilter(['ID' => $id])
 							  ->exec()
 							  ->fetchAll();
+
 		return array_column($purchases, 'PURCHASE_SINGLE_PURCHASE_ID');
 	}
 
@@ -40,8 +42,22 @@ class PurchaseService
 
 		$purchasesIds = self::getPurchaseIdsByUserId((int)$userId);
 
-		return PurchaseTable::query()->setSelect(['ID', 'TITLE'])
+		return PurchaseTable::query()
+							->setSelect(['ID', 'TITLE'])
 							->setFilter(['ID' => $purchasesIds])
+							->exec()
+							->fetchAll();
+	}
+
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function getPurchases(): array
+	{
+		return PurchaseTable::query()
+							->setSelect(['ID', 'TITLE'])
 							->exec()
 							->fetchAll();
 	}
