@@ -172,6 +172,7 @@ export class CreationTree
 		let onUpdateNodeAdded = false;
 		let onUpdatePerson = false;
 
+
 		family.on('init', function (sender, args) {
 			if (self.nodeList.persons.length === 1) {
 
@@ -216,12 +217,12 @@ export class CreationTree
 						document.querySelector('.input-file-text').innerHTML = file.name;
 					}
 				);
-
 			}
 		})
 
 		family.on('updated', function (sender, args) {
 			if (args.addNodesData.length !== 0) {
+
 				if (typeof args.addNodesData[0].id === 'string') {
 
 					sender.editUI.show(args.addNodesData[0].id, false);
@@ -277,7 +278,6 @@ export class CreationTree
 					family.editUI.on('hide', function () {
 						self.reload();
 					})
-
 				}
 			}
 		})
