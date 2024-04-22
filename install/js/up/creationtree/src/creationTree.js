@@ -77,6 +77,7 @@ export class CreationTree
 				}
 			})
 
+
 			this.render();
 		});
 	}
@@ -172,6 +173,18 @@ export class CreationTree
 		let onUpdateNodeAdded = false;
 		let onUpdatePerson = false;
 
+		// let id = this.nodeList.persons[0].id;
+		//
+		// family.onInit(() => {
+		// 	let root = Helper.getRootOf(family.getNode(id), family);
+		// 	family.config.roots = [root.id];
+		//
+		// 	if (root.id === id) {
+		// 		family.config.roots = null;
+		// 	}
+		//
+		// 	family.draw();
+		// });
 
 		family.on('init', function (sender, args) {
 			if (self.nodeList.persons.length === 1) {

@@ -54,4 +54,17 @@ export class Helper
 
 		return `${formattedDay}.${formattedMonth}.${year}`;
 	}
+
+	static getRootOf(node, family) {
+		while (node) {
+			if (!family.getNode(node.mid)) {
+				break;
+			}
+
+			node = family.getNode(node.mid);
+		}
+
+
+		return node;
+	}
 }

@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace Up\Tree\Entity;
 
-use Bitrix\Main\Type\Date;
 
 class Subscription
 {
-	public int $id;
+	public ?int $id;
 	public string $level;
 	public int $price;
 	public int $numberTrees;
 	public int $numberNodes;
 	public int $customization;
-	public string $subscriptionType;
-	public ?Date $startData;
-	public ?Date $endData;
+	public ?int $isActive;
 
 	public function __construct(
 		$id,
@@ -25,9 +22,7 @@ class Subscription
 		$numberTrees,
 		$numberNodes,
 		$customization,
-		$subscriptionType,
-		$startData,
-		$endData
+		$isActive
 	)
 	{
 		$this->id = $id;
@@ -36,9 +31,6 @@ class Subscription
 		$this->numberTrees = $numberTrees;
 		$this->numberNodes = $numberNodes;
 		$this->customization = $customization;
-		$this->subscriptionType = $subscriptionType;
-		$this->startData = $startData;
-		$this->endData = $endData;
-
+		$this->isActive = $isActive;
 	}
 }

@@ -5,11 +5,75 @@ declare(strict_types=1);
 namespace Up\Tree\Services\Repository;
 
 use Exception;
+use Up\Tree\Entity\Admin\AdminSubscription;
+use Up\Tree\Entity\Admin\AdminSubscriptionAdding;
+use Up\Tree\Entity\Subscription;
+use Up\Tree\Model\SubscriptionTable;
 use Up\Tree\Model\UserSinglePurchaseTable;
 use Up\Tree\Model\UserSubscriptionTable;
 
 class AdminService
 {
+
+	/**
+	 * @throws Exception
+	 */
+	public static function deactivationSubscription(int $id, bool $active): bool
+	{
+		$result = SubscriptionTable::update($id, ['IS_ACTIVE' => $active]);
+
+		if (!$result->isSuccess())
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function updateSubscription(Subscription $subscription): bool
+	{
+		$result = SubscriptionTable::update($subscription->id, [
+			'LEVEL' => $subscription->level,
+			'PRICE' => $subscription->price,
+			'NUMBER_TREES' => $subscription->numberTrees,
+			'NUMBER_NODES' => $subscription->numberNodes,
+			'CUSTOMIZATION' => $subscription->customization
+		]);
+
+		if (!$result->isSuccess())
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function addSubscription(Subscription $subscription): bool|int
+	{
+		$result = SubscriptionTable::add([
+			'LEVEL' => $subscription->level,
+			'PRICE' => $subscription->price,
+			'NUMBER_TREES' => $subscription->numberTrees,
+			'NUMBER_NODES' => $subscription->numberNodes,
+			'CUSTOMIZATION' => $subscription->customization
+		]);
+
+		if (!$result->isSuccess())
+		{
+			return false;
+
+		}
+
+		return $result->getId();
+	}
+
+
 	/**
 	 * @throws Exception
 	 */
@@ -24,7 +88,7 @@ class AdminService
 	 */
 	public static function deactivationSubscriptionByUserId(int $id): void
 	{
-		UserSubscriptionTable::update($id, ['IS_ACTIVE' => False]);
+		UserSubscriptionTable::update($id, ['IS_ACTIVE' => false]);
 	}
 
 	/**

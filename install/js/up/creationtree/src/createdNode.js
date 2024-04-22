@@ -1,6 +1,5 @@
 import {Helper} from "./helper.js";
 import {Requests} from "./requests.js";
-import {RenderForm} from "./renderForm.js";
 
 export class CreatedNode
 {
@@ -209,10 +208,6 @@ export class CreatedNode
 					if (node)
 					{
 						self.reload();
-					}else
-					{
-						RenderForm.render();
-						self.reload();
 					}
 				});
 
@@ -232,10 +227,6 @@ export class CreatedNode
 				Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(node => {
 					if (node)
 					{
-						self.reload();
-					}else
-					{
-						RenderForm.render();
 						self.reload();
 					}
 				});
@@ -262,10 +253,6 @@ export class CreatedNode
 					if (node)
 					{
 						self.reload();
-					}else
-					{
-						RenderForm.render();
-						self.reload();
 					}
 				});
 
@@ -278,10 +265,6 @@ export class CreatedNode
 					if (node)
 					{
 						self.reload();
-					}else
-					{
-						RenderForm.render();
-						self.reload();
 					}
 				});
 
@@ -291,10 +274,6 @@ export class CreatedNode
 			Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(node => {
 				if (node)
 				{
-					self.reload();
-				}else
-				{
-					RenderForm.render();
 					self.reload();
 				}
 			});

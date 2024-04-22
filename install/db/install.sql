@@ -6,9 +6,7 @@ CREATE TABLE up_subscription
 	NUMBER_TREES      INT(3)       DEFAULT 1,
 	NUMBER_NODES      INT(3)       DEFAULT 20,
 	CUSTOMIZATION     BOOL         DEFAULT FALSE,
-	SUBSCRIPTION_TYPE VARCHAR(50),
-	START_DATE        DATE,
-	END_DATE          DATE
+	IS_ACTIVE         BOOL         DEFAULT TRUE
 );
 
 CREATE TABLE up_relation_user_subscription

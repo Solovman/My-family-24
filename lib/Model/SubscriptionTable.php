@@ -25,7 +25,7 @@ Loc::loadMessages(__FILE__);
  * <li> END_DATE date optional
  * </ul>
  *
- * @package Bitrix\Subscription
+ * @package Bitrix\AdminSubscription
  **/
 class SubscriptionTable extends DataManager
 {
@@ -49,58 +49,55 @@ class SubscriptionTable extends DataManager
 	{
 		return [
 			new IntegerField(
-				'ID', [
-						'primary' => true,
-						'autocomplete' => true,
-						'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_ID_FIELD')
-					]
+				'ID',
+				[
+					'primary' => true,
+					'autocomplete' => true,
+					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_ID_FIELD')
+				]
 			),
 			new StringField(
-				'LEVEL', [
-						   'default' => 'Free',
-						   'validation' => [__CLASS__, 'validateLevel'],
-						   'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_LEVEL_FIELD')
-					   ]
+				'LEVEL',
+				[
+					'default' => 'Free',
+					'validation' => [__CLASS__, 'validateLevel'],
+					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_LEVEL_FIELD')
+				]
 			),
 			new IntegerField(
-				'PRICE', [
-						   'default' => 0,
-						   'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_PRICE_FIELD')
-					   ]
+				'PRICE',
+				[
+					'default' => 0,
+					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_PRICE_FIELD')
+				]
 			),
 			new IntegerField(
-				'NUMBER_TREES', [
-								  'default' => 1,
-								  'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_NUMBER_TREES_FIELD')
-							  ]
+				'NUMBER_TREES',
+				[
+					'default' => 1,
+					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_NUMBER_TREES_FIELD')
+				]
 			),
 			new IntegerField(
-				'NUMBER_NODES', [
-								  'default' => 20,
-								  'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_NUMBER_NODES_FIELD')
-							  ]
+				'NUMBER_NODES',
+				[
+					'default' => 20,
+					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_NUMBER_NODES_FIELD')
+				]
 			),
 			new IntegerField(
-				'CUSTOMIZATION', [
-								   'default' => 0,
-								   'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_CUSTOMIZATION_FIELD')
-							   ]
+				'CUSTOMIZATION',
+				[
+					'default' => 0,
+					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_CUSTOMIZATION_FIELD')
+				]
 			),
-			new StringField(
-				'SUBSCRIPTION_TYPE', [
-									   'validation' => [__CLASS__, 'validateSubscriptionType'],
-									   'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_SUBSCRIPTION_TYPE_FIELD')
-								   ]
-			),
-			new DateField(
-				'START_DATE', [
-								'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_START_DATE_FIELD')
-							]
-			),
-			new DateField(
-				'END_DATE', [
-							  'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_END_DATE_FIELD')
-						  ]
+			new IntegerField(
+				'IS_ACTIVE',
+				[
+					'default' => 1,
+					'title' => Loc::getMessage('SUBSCRIPTION_ENTITY_IS_ACTIVE_FIELD')
+				]
 			),
 
 			'RELATION_SUBSCRIPTION_USER' => (new OneToMany('RELATION_SUBSCRIPTION_USER', UserSubscriptionTable::class, 'RELATION_SUBSCRIPTION'))->configureJoinType('inner'),
