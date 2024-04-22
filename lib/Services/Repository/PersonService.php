@@ -17,6 +17,7 @@ use Up\Tree\Model\FileTable;
 use Up\Tree\Model\MarriedTable;
 use Up\Tree\Model\PersonParentTable;
 use Up\Tree\Model\PersonTable;
+use Up\Tree\Model\TreeTable;
 
 class PersonService
 {
@@ -142,17 +143,26 @@ class PersonService
 	 */
 	public static function getPersonsByTreeId(int $treeId): array
 	{
-		$persons = PersonTable::query()->setSelect([
-													   'ID',
-													   'IMAGE_ID',
-													   'NAME',
-													   'SURNAME',
-													   'BIRTH_DATE',
-													   'DEATH_DATE',
-													   'GENDER',
-													   'TREE_ID',
-													   'ACTIVE'
-												   ])->setFilter(['TREE_ID' => $treeId])->exec()->fetchAll();
+		$persons = PersonTable::query()
+							  ->registerRuntimeField('TREE_DATA', [
+								  'data_type' => TreeTable::class,
+								  'reference' => [
+									  '=this.TREE_ID' => 'ref.ID',
+								  ],
+							  ])
+							  ->setSelect([
+											  'ID',
+											  'IMAGE_ID',
+											  'NAME',
+											  'SURNAME',
+											  'BIRTH_DATE',
+											  'DEATH_DATE',
+											  'GENDER',
+											  'TREE_ID',
+											  'ACTIVE',
+											  'TREE_DATA_' => 'TREE_DATA'
+										  ])->setFilter(['TREE_ID' => $treeId])->exec()->fetchAll();
+
 
 		$personList = [];
 
@@ -167,7 +177,8 @@ class PersonService
 				$personData['BIRTH_DATE'],
 				$personData['DEATH_DATE'],
 				$personData['GENDER'],
-				(int)$personData['TREE_ID']
+				(int)$personData['TREE_ID'],
+				(int)$personData['TREE_DATA_USER_ID']
 			);
 			$person->setId((int)$personData['ID']);
 

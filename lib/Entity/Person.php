@@ -18,6 +18,7 @@ class Person implements Entity
 	public ?Date $deathDate;
 	public string $gender;
 	public int $treeId;
+	public ?int $userId;
 
 	/**
 	 * @param $active
@@ -29,8 +30,9 @@ class Person implements Entity
 	 * @param $deathDate
 	 * @param $gender
 	 * @param $treeId
+	 * @param $userId
 	 */
-	public function __construct($active, $imageId, $photo, $name, $surname, $birthDate, $deathDate, $gender, $treeId)
+	public function __construct($active, $imageId, $photo, $name, $surname, $birthDate, $deathDate, $gender, $treeId, $userId = null)
 	{
 		$this->active = $active;
 		$this->imageId = $imageId;
@@ -41,6 +43,7 @@ class Person implements Entity
 		$this->deathDate = $deathDate;
 		$this->gender = $gender;
 		$this->treeId = $treeId;
+		$this->userId = $userId;
 	}
 
 	/**
