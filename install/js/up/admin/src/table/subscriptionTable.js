@@ -30,7 +30,6 @@ export class SubscriptionTable
 			BX.append(el, table);
 		})
 
-
 		return table;
 	}
 

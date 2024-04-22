@@ -118,7 +118,7 @@ ul {
 	left: 100%;
 	top: 19%;
 	opacity: 0;
-	width: 300%;
+	width: 350%;
 	transition: opacity .3s ease-in-out;
 	background-color: #00ceaa;
 	border-radius: 0 20px 20px 0;

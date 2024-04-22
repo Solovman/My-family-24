@@ -20,5 +20,7 @@ return function (RoutingConfigurator $routes)
 
 	$routes->get('/admin/', new PublicPageController('/local/modules/up.tree/views/tree-admin.php'));
 
+	$routes->get('/search/', new PublicPageController('/local/modules/up.tree/views/tree-search.php'));
+
 	$routes->post('/', new PublicPageController('/local/modules/up.tree/views/tree-list.php'));
 };
