@@ -8,7 +8,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 \Bitrix\Main\UI\Extension::load('up.tree-list');
 
-CJSCore::Init(['popup']);
+CJSCore::Init(['popup', 'date']);
 ?>
 <div class="tree-list-container">
 	<form action="/" method="post" class="form my-container create-tree-form">

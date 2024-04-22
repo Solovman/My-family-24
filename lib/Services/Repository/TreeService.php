@@ -58,7 +58,7 @@ class TreeService
 		}
 
 		$tree = new Tree(
-			$treeData['TITLE'], (int)$treeData['USER_ID'], new DateTime($treeData['CREATED_AT']), $treeData['COLOR']
+			$treeData['TITLE'], (int)$treeData['USER_ID'], $treeData['CREATED_AT'], $treeData['COLOR']
 		);
 
 		$tree->setId($treeId);
@@ -127,7 +127,7 @@ class TreeService
 			$tree = new Tree(
 				$treeItem['TITLE'],
 				(int)$treeItem['USER_ID'],
-				new DateTime($treeItem['CREATED_AT']),
+				$treeItem['CREATED_AT'],
 				$treeItem['COLOR']
 			);
 			$tree->setId((int)$treeItem['ID']);
