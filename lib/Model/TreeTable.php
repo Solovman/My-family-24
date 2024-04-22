@@ -90,6 +90,13 @@ class TreeTable extends DataManager
 					'title' => Loc::getMessage('TREE_ENTITY_COLOR_FIELD')
 				]
 			),
+			new IntegerField(
+				'IS_SECURITY',
+				[
+					'default' => 1,
+					'title' => Loc::getMessage('TREE_ENTITY_IS_SECURITY_FIELD')
+				]
+			),
 			'TREE_PERSON' => (new OneToMany('TREE_PERSON', PersonTable::class, 'PERSON_TREE'))->configureJoinType('inner'),
 
 			'TREE_USER' => (new Reference(
