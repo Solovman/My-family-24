@@ -17,7 +17,7 @@ use Up\Tree\Services\Repository\TreeService;
 
 class SearchService
 {
-	public static function getAllPersonsForSearching()
+	public static function getAllPersonsForSearching(): array|bool
 	{
 		# Получение всех ids деревьев текущего юзера
 		global $USER;
@@ -34,7 +34,12 @@ class SearchService
 			$treesIdsForCurrentUser[] = $treId;
 		}
 
-		$treeIds = SearchService::getNotSecureTreeIds();
+		$treIds = SearchService::getNotSecureTreeIds();
+
+		if ($treIds === null)
+		{
+			return false;
+		}
 
 		/* Получаем всех персон, кроме тех, что находятся в деревьях текущего пользователя
 		 и кроме персон из деревьев с флагом IS_SECURE = True */
@@ -57,7 +62,7 @@ class SearchService
 													   'ACTIVE',
 													   'TREE_DATA_' => 'TREE_DATA'
 												   ])->whereNotIn('TREE_ID', $treesIdsForCurrentUser)
-													 ->whereIn('TREE_ID', $treeIds)
+													 ->whereIn('TREE_ID', $treIds)
 													 ->exec()
 													 ->fetchAll();
 
@@ -91,10 +96,15 @@ class SearchService
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public static function searchPersonByTreeId($id): array
+	public static function searchPersonByTreeId($id): array|bool
 	{
 		# Персоны дерева текущего пользователя
 		$personList = PersonService::getPersonsByTreeId($id);
+
+		if (!$personList)
+		{
+			return false;
+		}
 
 		# Все персоны из всех деревев
 		$allPersonList = self::getAllPersonsForSearching();
@@ -154,6 +164,11 @@ class SearchService
 	public static function getFoundUserInfo(int $treeId): array
 	{
 		$matchPersonList = self::searchPersonByTreeId($treeId);
+
+		if (!$matchPersonList)
+		{
+			return [];
+		}
 
 		$treeIds = [];
 
