@@ -18,6 +18,7 @@ use Up\Tree\Model\UserSubscriptionTable;
 use Up\Tree\Services\Repository\PersonService;
 use Bitrix\Main\Type\DateTime;
 use Up\Tree\Entity\Tree;
+use Up\Tree\Services\Repository\SearchService;
 use Up\Tree\Services\Repository\SubscriptionsService;
 use Up\Tree\Services\Repository\TreeService;
 use Up\Tree\Services\Repository\UserSubscriptionsService;
@@ -117,5 +118,13 @@ class Trees extends Engine\Controller
 		{
 			throw new SqlException("Error when deleting tree");
 		}
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function updateSecuritySearchStatusAction(int $id, bool $securityStatus): bool
+	{
+		return SearchService::updateSecuritySearchStatus($id, $securityStatus);
 	}
 }

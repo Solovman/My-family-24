@@ -8,6 +8,7 @@ use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\Rest\User;
 use Bitrix\Main\SystemException;
+use Exception;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\PersonTable;
 use Up\Tree\Model\TreeTable;
@@ -202,5 +203,20 @@ class SearchService
 			'foundUsers' => $foundUsers,
 			'foundPersons' => $foundPersons,
 		];
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function updateSecuritySearchStatus(int $id, bool $securityStatus): bool
+	{
+		$result = TreeTable::update($id, ['IS_SECURITY' => $securityStatus]);
+
+		if (!$result->isSuccess())
+		{
+			return false;
+		}
+
+		return true;
 	}
 }

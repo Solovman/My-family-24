@@ -62,7 +62,6 @@ export class TreeList
 
 	handleRemoveTreeButtonClick(element) {
 		const treeId = parseInt(element.id.match(/\d+/));
-
 		if (treeId !== '') {
 			const confirmDelete = confirm("Are you sure you want to remove the tree?");
 			if (confirmDelete) {
@@ -74,6 +73,41 @@ export class TreeList
 						console.error('Error when deleting a tree:', error);
 					});
 			}
+		}
+	}
+
+
+	handleUpdateSearchStatusButtonClick(element) {
+		const treeId = element.dataset.btnId;
+		console.log(treeId);
+		if (treeId !== '') {
+				if(element.dataset.btnType === 'activated') {
+					const confirmUpdate = confirm("Do you want to activate search in this tree? Your information about the tree will be available to other people")
+					if (confirmUpdate)
+					{
+						this.updateSecuritySearchStatus(treeId, 0)
+							.then(() => {
+								this.reload();
+							})
+							.catch((error) => {
+								console.error('Error when update security status a tree:', error);
+							});
+					}
+				}
+				else {
+					const confirmUpdate = confirm("Do you want to disable searching in this tree? Your information about the tree will not be available to other people")
+					if (confirmUpdate)
+					{
+						this.updateSecuritySearchStatus(treeId, 1)
+							.then(() => {
+								this.reload();
+							})
+							.catch((error) => {
+								console.error('Error when update security status a tree:', error);
+							});
+					}
+				}
+
 		}
 	}
 
@@ -142,6 +176,24 @@ export class TreeList
 		});
 	}
 
+	updateSecuritySearchStatus(id, securityStatus) {
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.trees.updateSecuritySearchStatus', {
+					data: {
+						id: id,
+						securityStatus: securityStatus
+					}
+				})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				})
+			;
+		});
+	}
+
 	render()
 	{
 		this.rootNode.innerHTML = '';
@@ -159,6 +211,17 @@ export class TreeList
 										${BX.util.htmlspecialchars(trees.title)}
 									</a>
 										<input class="tree-card" type="hidden" name="treeId" value="${trees.id}" id="treeId${trees.id}">
+										<button data-btn-type="disabled" data-btn-id="${trees.id}" type="button" class="card-header-icon updateSearchStatusButton" id = "disableSearch">
+											<span data-btn-type="disabled" data-btn-id="${trees.id}" id="span${trees.id}" class="icon disabled">
+												<img data-btn-type="disabled" data-btn-id="${trees.id}"  src="/local/modules/up.tree/images/disable-search.svg" alt="search/disable-search">
+											</span>
+										</button>
+										
+										<button data-btn-type="activated" data-btn-id="${trees.id}" type="button" class="card-header-icon updateSearchStatusButton" id = "activatedSearch">
+											<span data-btn-type="activated" data-btn-id="${trees.id}" id="span${trees.id}" class="icon disabled">
+												<img data-btn-type="activated" data-btn-id="${trees.id}"  src="/local/modules/up.tree/images/user-search.svg" alt="search/disable-search">
+											</span>
+										</button>
 											<button id="button${trees.id}" type="button" class="card-header-icon delTreeButton" aria-label="delete task" data-tree-id="${trees.id}">
 												<span id="span${trees.id}" class="icon disabled">
 												<?xml version="1.0" ?>
@@ -185,6 +248,13 @@ export class TreeList
 			treeContainerNode.appendChild(treeNode);
 		});
 		this.rootNode.appendChild(treeContainerNode);
+
+		const updateSearchStatusButtons = document.querySelectorAll('.updateSearchStatusButton');
+		updateSearchStatusButtons.forEach(button => {
+			button.addEventListener('click', (event) => {
+				this.handleUpdateSearchStatusButtonClick(event.target);
+			});
+		});
 
 		const removeButtons = document.querySelectorAll('.delTreeButton');
 		removeButtons.forEach(button => {

@@ -46,11 +46,12 @@ class TreeService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getTree(int $userId, int $treeId)
+	public static function getTree(int $userId, int $treeId): ?Tree
 	{
-		$treeData = TreeTable::query()->setSelect(['ID', 'TITLE', 'USER_ID', 'CREATED_AT', 'COLOR'])->setFilter(
-			['USER_ID' => $userId, 'ID'=> $treeId]
-		)->exec()->fetch();
+		$treeData = TreeTable::query()->setSelect(['ID', 'TITLE', 'USER_ID', 'CREATED_AT', 'COLOR'])
+									  ->setFilter(['USER_ID' => $userId, 'ID'=> $treeId])
+									  ->exec()
+									  ->fetch();
 
 		if (!$treeData)
 		{
@@ -114,7 +115,8 @@ class TreeService
 					'TITLE',
 					'USER_ID',
 					'CREATED_AT',
-					'COLOR'
+					'COLOR',
+					'IS_SECURITY'
 				]
 			)->setFilter(
 				[
@@ -128,7 +130,8 @@ class TreeService
 				$treeItem['TITLE'],
 				(int)$treeItem['USER_ID'],
 				$treeItem['CREATED_AT'],
-				$treeItem['COLOR']
+				$treeItem['COLOR'],
+				(int)$treeItem['IS_SECURITY']
 			);
 			$tree->setId((int)$treeItem['ID']);
 			$trees[] = $tree;
