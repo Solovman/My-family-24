@@ -34,8 +34,7 @@ class SearchService
 			$treesIdsForCurrentUser[] = $treId;
 		}
 
-		$treIds = SearchService::getNotSecureTreeIds();
-
+		$treeIds = SearchService::getNotSecureTreeIds();
 
 		/* Получаем всех персон, кроме тех, что находятся в деревьях текущего пользователя
 		 и кроме персон из деревьев с флагом IS_SECURE = True */
@@ -58,7 +57,7 @@ class SearchService
 													   'ACTIVE',
 													   'TREE_DATA_' => 'TREE_DATA'
 												   ])->whereNotIn('TREE_ID', $treesIdsForCurrentUser)
-													 ->whereIn('TREE_ID', $treIds)
+													 ->whereIn('TREE_ID', $treeIds)
 													 ->exec()
 													 ->fetchAll();
 
