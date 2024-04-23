@@ -432,9 +432,6 @@ this.BX.Up = this.BX.Up || {};
 	        nodeMenu: {
 	          remove: {
 	            text: 'Remove'
-	          },
-	          edit: {
-	            text: 'Edit'
 	          }
 	        },
 	        nodes: list,
@@ -720,9 +717,6 @@ this.BX.Up = this.BX.Up || {};
 	      });
 	      family.nodeMenuUI.on('show', function (sender, args) {
 	        args.menu = {
-	          edit: {
-	            text: 'Edit'
-	          },
 	          remove: {
 	            text: 'Remove',
 	            onClick: function onClick() {

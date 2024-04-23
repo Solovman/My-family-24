@@ -86,6 +86,7 @@ this.BX.Up = this.BX.Up || {};
 	      var _this = this;
 	      Requests.loadList().then(function (list) {
 	        _this.subscriptions = list;
+	        document.querySelector('.sub__spinner').style.display = "none";
 	        _this.renderCard();
 	      });
 	    }

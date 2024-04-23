@@ -37,13 +37,13 @@ export class SubscriptionTable
 		return data.map(sub => {
 			return Tag.render`
 				<li class="table-row">
-					<div class="col col-1" data-label="id">${sub.id}</div>
-					<div class="col col-1" data-label="level">${sub.level}</div>
-					<div class="col col-1" data-label="price">${sub.price}</div>
-					<div class="col col-1" data-label="numberTrees">${sub.numberTrees}</div>
-					<div class="col col-1" data-label="numberNodest">${sub.numberNodes}</div>
-					<div class="col col-1" data-label="customization">${String(!!sub.customization)}</div>
-					<div class="col col-1" data-label="customization">${String(!!sub.isActive)}</div>
+					<div class="col col-1" data-label="id">${BX.util.htmlspecialchars(sub.id)}</div>
+					<div class="col col-1" data-label="level">${BX.util.htmlspecialchars(sub.level)}</div>
+					<div class="col col-1" data-label="price">${BX.util.htmlspecialchars(sub.price)}</div>
+					<div class="col col-1" data-label="numberTrees">${BX.util.htmlspecialchars(sub.numberTrees)}</div>
+					<div class="col col-1" data-label="numberNodest">${BX.util.htmlspecialchars(sub.numberNodes)}</div>
+					<div class="col col-1" data-label="customization">${String(BX.util.htmlspecialchars(!!sub.customization))}</div>
+					<div class="col col-1" data-label="customization">${String(BX.util.htmlspecialchars(!!sub.isActive))}</div>
 					<div class="col col-1" data-label="action">
 						<ul class="action-list">
 							<li class="action-item">

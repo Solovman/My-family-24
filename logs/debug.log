@@ -360,3 +360,12 @@ debug: dir existsSync: ./logs {"timestamp":"2024-04-19T18:08:03.665Z"}
 debug: clear {"timestamp":"2024-04-19T18:08:03.666Z"}
 debug: readdir: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata {"timestamp":"2024-04-19T18:08:03.667Z"}
 debug: dir existsSync: ./logs {"timestamp":"2024-04-19T18:08:03.667Z"}
+debug: clear {"timestamp":"2024-04-23T17:02:41.300Z"}
+debug: readdir: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata {"timestamp":"2024-04-23T17:02:41.303Z"}
+debug: dir existsSync: ./logs {"timestamp":"2024-04-23T17:02:41.304Z"}
+debug: clear {"timestamp":"2024-04-23T17:02:41.343Z"}
+debug: readdir: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata {"timestamp":"2024-04-23T17:02:41.344Z"}
+debug: dir existsSync: ./logs {"timestamp":"2024-04-23T17:02:41.344Z"}
+debug: clear {"timestamp":"2024-04-23T17:02:41.346Z"}
+debug: readdir: C:\OSPanel\domains\bitrix.familyTree\local\modules\up.tree\node_modules\@balkangraph\export-service/appdata {"timestamp":"2024-04-23T17:02:41.346Z"}
+debug: dir existsSync: ./logs {"timestamp":"2024-04-23T17:02:41.346Z"}

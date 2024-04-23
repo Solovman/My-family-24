@@ -53,6 +53,7 @@ footer {
 }
 
 .card-header-icon {
+	margin-right: 15px !important;
 	z-index: 10;
 	padding: 0 !important;
 }

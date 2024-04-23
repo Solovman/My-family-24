@@ -13,9 +13,6 @@ export class Family
 			nodeTreeMenu: true,
 			nodeMenu: {
 				remove: {text: 'Remove'},
-				edit: {
-					text: 'Edit',
-				},
 			},
 			nodes: list,
 			nodeBinding: {

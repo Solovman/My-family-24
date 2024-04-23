@@ -17,7 +17,11 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 		<button id="userSub" class="admin__btn">Подписки пользователей</button>
 		<button id="userPurchase" class="admin__btn">Одноразовые покупки пользователей</button>
 	</div>
-	<div class="container" id="table"></div>
+	<div class="container" id="table">
+		<div class="admin__spinner spinner-grow text-primary" role="status">
+			<span class="visually-hidden">Loading...</span>
+		</div>
+	</div>
 	<div class="admin__btn-container">
 		<button id="add" class="admin__btn-add">Добавить</button>
 	</div>

@@ -210,14 +210,14 @@ export class TreeList
 					<div class="column is-two-fifth">
 						<div class="card" style="background: ${trees.color}">
 								<header class="card-header is-size-4">
-								<div style="display: flex; flex-direction:row; align-items: center">
+								<div style="display: flex; flex-direction:row; align-items: center; width:100%;">
 									<a href="/tree/${trees.id}/" class="card-header-title" style="color:white">
 											${BX.util.htmlspecialchars(trees.title)}
 										</a>
 										<input class="tree-card" type="hidden" name="treeId" value="${trees.id}" id="treeId${trees.id}">
 										<div style="display: flex; flex-direction:row; align-items: center; justify-content: center">
 											<button data-btn-type="${securityStatusAction}" data-btn-id="${trees.id}" type="button" class="card-header-icon updateSearchStatusButton" id = "activatedSearch">
-												<span data-btn-type="${securityStatusAction}" data-btn-id="${trees.id}" id="span${trees.id}" class="icon disabled">
+												<span style="padding-top: 7px" data-btn-type="${securityStatusAction}" data-btn-id="${trees.id}" id="span${trees.id}" class="icon disabled">
 													<img data-btn-type="${securityStatusAction}" data-btn-id="${trees.id}"  src="${securityStatusIcon}" alt="search/disable-search">
 												</span>
 											</button>

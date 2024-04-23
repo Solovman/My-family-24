@@ -1,4 +1,4 @@
-import {Type} from 'main.core';
+import {Type, Tag} from 'main.core';
 import {Requests} from "./requests.js";
 import {SubscriptionTable} from "./table/subscriptionTable.js";
 import {PurchaseTable} from "./table/purchaseTable.js";
@@ -62,6 +62,14 @@ export class Admin
 
 					event.preventDefault();
 
+					const spinner = Tag.render`
+						<div class="admin__spinner spinner-grow text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					`;
+
+					BX.append(spinner, this.rootNode);
+
 					const subscription = {
 						level: BX('name').value,
 						price: Number(BX('price').value),
@@ -90,7 +98,16 @@ export class Admin
 				BX.bind(btn, 'click', (event) => {
 					const id = event.target.dataset.btnId;
 
+					const spinner = Tag.render`
+						<div class="admin__spinner spinner-grow text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					`;
+
+					BX.append(spinner, this.rootNode);
+
 					Requests.deactivationSubscription(Number(id), 0).then(result => {
+
 						this.loadListSub();
 					});
 				});
@@ -99,6 +116,14 @@ export class Admin
 			btnActivation.forEach(btn => {
 				BX.bind(btn, 'click', (event) => {
 					const id = event.target.dataset.btnId;
+
+					const spinner = Tag.render`
+						<div class="admin__spinner spinner-grow text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					`;
+
+					BX.append(spinner, this.rootNode);
 
 					Requests.deactivationSubscription(Number(id), 1).then(result => {
 						this.loadListSub();

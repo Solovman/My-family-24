@@ -42,6 +42,36 @@ class SubscriptionsService
 	}
 
 	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getSubscriptionActive(): array
+	{
+		$subscriptions = SubscriptionTable::query()
+			->setSelect(['ID', 'LEVEL', 'PRICE', 'NUMBER_TREES', 'NUMBER_NODES', 'CUSTOMIZATION', 'IS_ACTIVE'])
+			->setFilter(['IS_ACTIVE' => true])
+			->exec();
+
+		$resultSubscriptions = [];
+
+		while($result = $subscriptions->fetchObject())
+		{
+			$resultSubscriptions[] = new Subscription(
+				$result->getId(),
+				$result->getLevel(),
+				$result->getPrice(),
+				$result->getNumberTrees(),
+				$result->getNumberNodes(),
+				$result->getCustomization(),
+				$result->getIsActive()
+			);
+		}
+
+		return $resultSubscriptions;
+	}
+
+	/**
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 * @throws ArgumentException

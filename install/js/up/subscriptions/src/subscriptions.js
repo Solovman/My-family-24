@@ -31,6 +31,7 @@ export class Subscriptions
 	{
 		Requests.loadList().then(list => {
 			this.subscriptions = list;
+			document.querySelector('.sub__spinner').style.display = "none";
 			this.renderCard();
 		})
 	}

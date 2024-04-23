@@ -8,7 +8,7 @@ class Subscriptions extends Engine\Controller
 {
 	public function getListAction(): array
 	{
-		$subscriptionsList = SubscriptionsService::getList();
+		$subscriptionsList = SubscriptionsService::getSubscriptionActive();
 
 		return [
 			'subscriptionsList' => $subscriptionsList

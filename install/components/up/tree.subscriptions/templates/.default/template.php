@@ -16,7 +16,11 @@ CJSCore::Init(['popup']);
 		<button class="subscriptions__btn _active" data-tab="tab_1">Подписки</button>
 		<button class="subscriptions__btn" data-tab="tab_2">Кастомизация</button>
 	</div>
-	<ul id="tab_1" class="subscriptions__list subscriptions__tabs-item _active"></ul>
+	<ul id="tab_1" class="subscriptions__list subscriptions__tabs-item _active">
+		<div class="sub__spinner spinner-grow text-primary" role="status">
+			<span class="visually-hidden">Loading...</span>
+		</div>
+	</ul>
 	<?php
 	$APPLICATION->IncludeComponent("up:tree.subscriptions", "single-purchase", []);
 	?>

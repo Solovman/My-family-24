@@ -60,6 +60,7 @@ AddEventHandler("main", "OnAfterUserRegister", "OnAfterUserRegisterHandler");
 
 AddEventHandler("main", "OnBeforeUserUpdate", "OnBeforeUserUpdateHandler");
 
+
 if (file_exists(__DIR__ . '/module_updater.php'))
 {
 	include(__DIR__ . '/module_updater.php');

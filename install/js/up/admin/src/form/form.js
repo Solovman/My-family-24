@@ -1,6 +1,7 @@
 import {RenderForm} from "./renderForm.js";
 import {Requests} from "../requests";
 import {Admin} from "../admin.js";
+import {Tag} from 'main.core';
 
 export class Form
 {
@@ -26,6 +27,14 @@ export class Form
 						BX.bind(BX('edit-button'), 'click', (event) => {
 
 							event.preventDefault();
+
+							const spinner = Tag.render`
+								<div class="admin__spinner spinner-grow text-primary" role="status">
+									<span class="visually-hidden">Loading...</span>
+								</div>
+							`;
+
+							BX.append(spinner, BX('table'));
 
 							const newSubscription = {
 								id: Number(data.id),
