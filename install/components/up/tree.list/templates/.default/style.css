@@ -54,6 +54,7 @@ footer {
 
 .card-header-icon {
 	z-index: 10;
+	padding: 0 !important;
 }
 
 svg {
