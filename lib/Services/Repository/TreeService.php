@@ -138,6 +138,46 @@ class TreeService
 	}
 
 	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getTreesByUserIdNotSecurity(int $userId): array
+	{
+		$treeData = TreeTable::query()->setSelect(
+			[
+				'ID',
+				'TITLE',
+				'USER_ID',
+				'CREATED_AT',
+				'COLOR'
+			]
+		)->setFilter(
+			[
+				'USER_ID' => $userId,
+				'IS_SECURITY' => false
+			]
+		)->exec();
+
+		$trees = [];
+
+		while ($result = $treeData->fetchObject())
+		{
+			$tree = new Tree(
+				$result->getTitle(),
+				(int)$result->getUserId(),
+				$result->getCreatedAt(),
+				$result->getColor()
+			);
+
+			$tree->setId((int)$result->getId());
+			$trees[] = $tree;
+		}
+
+		return $trees;
+	}
+
+	/**
 	 * @throws Exception
 	 */
 	public static function removeTreeById(int $id): void

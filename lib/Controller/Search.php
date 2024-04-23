@@ -25,7 +25,7 @@ class Search extends Engine\Controller
 
 		$userId = (int) $USER->GetID();
 
-		$result = TreeService::getTreesByUserId($userId);
+		$result = TreeService::getTreesByUserIdNotSecurity($userId);
 
 		return [
 			'trees' => $result

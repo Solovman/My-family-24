@@ -12,6 +12,7 @@ CJSCore::Init(['popup']);
 <div class="search">
 	<div id="trees-select"></div>
 	<div class="search__area">
+		<div id="search-area-user"></div>
 		<button id="search-relatives" class="search__btn">Поиск</button>
 	</div>
 </div>
@@ -22,6 +23,7 @@ CJSCore::Init(['popup']);
 	{
 		let search = new BX.Up.Tree.Search({
 			rootNodeId: 'trees-select',
+			rootSearchId: 'search-area-user',
 		});
 	});
 </script>
