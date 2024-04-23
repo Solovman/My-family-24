@@ -15,6 +15,11 @@
 	width: 100%;
 }
 
+td {
+	font-size: 1.2em;
+	margin-right: 2%;
+}
+
 .profile-link
 {
 	font-size: 1.7em;
@@ -23,7 +28,7 @@
 
 .profile-table td {
 	vertical-align: top;
-	width:50%;
+	width:20%;
 }
 
 div.bx-auth-profile input.bx-auth-input {vertical-align:middle;}
@@ -47,13 +52,10 @@ body {
 }
 
 .profile img {
-	border-radius: 50%;
 	width: 150px;
 	height: 150px;
-	object-fit: cover;
 	margin-bottom: 5%;
 }
-
 .profile-heading {
 	font-size: 24px;
 	margin-bottom: 10px;

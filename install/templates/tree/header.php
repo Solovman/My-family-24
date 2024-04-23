@@ -247,7 +247,6 @@ $currentUrl = request()->getRequestUri();
 									<a href="/account/" class="name__link">
 										My account: <?= htmlspecialcharsEx(UserService::getUserNameById()) ?: GetMessage('UP_HEADER_ICON_NAME') ?>
 									</a>
-									<img class="header__image-icon" src="/local/modules/up.tree/images/profile-user.svg" alt="user-icon">
 								</span>
 							</div>
 						</div>

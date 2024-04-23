@@ -53,7 +53,7 @@ this.BX.Up = this.BX.Up || {};
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var data = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<div class=\"profile-container\">\n\t\t\t\t<img src=\"/local/modules/up.tree/images/user_default.png\" alt=\"\u0424\u043E\u0442\u043E \u043F\u0440\u043E\u0444\u0438\u043B\u044F\">\n\t\t\t\t<h2 class=\"profile-heading font-account\">", "</h2>\n\t\t\t\t<div class=\"font-account\">\u0423\u0440\u043E\u0432\u0435\u043D\u044C \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0438: ", "</div>\n\t\t\t</div>\n\t\t"])), BX.util.htmlspecialchars(this.nodeList[1].name) + ' ' + BX.util.htmlspecialchars(this.nodeList[1].surname), this.nodeList[0]);
+	      var data = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<div class=\"profile-container\">\n\t\t\t\t<img src=\"/local/modules/up.tree/images/tree-account.png\" alt=\"\u0424\u043E\u0442\u043E \u043F\u0440\u043E\u0444\u0438\u043B\u044F\">\n\t\t\t\t<h2 class=\"profile-heading font-account\">", "</h2>\n\t\t\t\t<div class=\"font-account\">\u0423\u0440\u043E\u0432\u0435\u043D\u044C \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0438: ", "</div>\n\t\t\t</div>\n\t\t"])), BX.util.htmlspecialchars(this.nodeList[1].name) + ' ' + BX.util.htmlspecialchars(this.nodeList[1].surname), this.nodeList[0]);
 	      this.rootNode.append(data);
 	    }
 	  }]);

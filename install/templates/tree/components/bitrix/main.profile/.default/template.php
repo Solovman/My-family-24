@@ -463,7 +463,7 @@ $APPLICATION->setAdditionalCSS('style.css');
 			endif; ?>
 			<?
 			// ******************** /User properties ***************************************************?>
-			<p style="text-align: center;"><?php echo $arResult["GROUP_POLICY"]["PASSWORD_REQUIREMENTS"]; ?></p>
+			<p style="text-align: center; font-size: 1.2em"><?php echo $arResult["GROUP_POLICY"]["PASSWORD_REQUIREMENTS"]; ?></p>
 			<p style="text-align: center;"> <!-- Центрирование содержимого -->
 				<input type="submit" name="save" value="<?= (($arResult["ID"] > 0) ? GetMessage("MAIN_SAVE") : GetMessage("MAIN_ADD")) ?>">
 				&nbsp;&nbsp;

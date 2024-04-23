@@ -40,7 +40,7 @@ export class Account
 	{
 		const data = Tag.render`
 			<div class="profile-container">
-				<img src="/local/modules/up.tree/images/user_default.png" alt="Фото профиля">
+				<img src="/local/modules/up.tree/images/tree-account.png" alt="Фото профиля">
 				<h2 class="profile-heading font-account">${BX.util.htmlspecialchars(this.nodeList[1].name) + ' ' + BX.util.htmlspecialchars(this.nodeList[1].surname)}</h2>
 				<div class="font-account">Уровень подписки: ${this.nodeList[0]}</div>
 			</div>
