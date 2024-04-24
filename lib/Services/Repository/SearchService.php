@@ -121,7 +121,14 @@ class SearchService
 		foreach ($allPersonList as $allPerson)
 		{
 			$personKey = sha1($allPerson->getGender() . '_' . $allPerson->getName() . '_' . $allPerson->getSurname());
-			$personHash[$personKey] = $allPerson;
+			if (isset($personHash[$personKey]))
+			{
+				$personHash[$personKey][] = $allPerson;
+			}
+			else
+			{
+				$personHash[$personKey] = [$allPerson];
+			}
 		}
 
 		$matchPersonList = [];
@@ -132,7 +139,7 @@ class SearchService
 			$personKey = sha1($person->getGender() . '_' . $person->getName() . '_' . $person->getSurname());
 			if (isset($personHash[$personKey]))
 			{
-				$matchPersonList[] = $personHash[$personKey];
+				$matchPersonList = array_merge($matchPersonList, $personHash[$personKey]);
 			}
 		}
 
