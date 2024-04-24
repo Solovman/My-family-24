@@ -77,8 +77,8 @@ class SearchService
 				PersonService::getImageName((int)$personData['ID']),
 				$personData['NAME'],
 				$personData['SURNAME'],
-				$personData['BIRTH_DATE'],
-				$personData['DEATH_DATE'],
+				$personData['BIRTH_DATE'] ? $personData['BIRTH_DATE']->format('Y-m-d') : null,
+				$personData['DEATH_DATE'] ? $personData['DEATH_DATE']->format('Y-m-d') : null,
 				$personData['GENDER'],
 				(int)$personData['TREE_ID'],
 				(int)$personData['TREE_DATA_USER_ID']
