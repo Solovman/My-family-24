@@ -99,6 +99,7 @@ class SearchService
 	 */
 	public static function searchPersonByTreeId($id): array|bool
 	{
+
 		# Персоны дерева текущего пользователя
 		$personList = PersonService::getPersonsByTreeId($id);
 
@@ -110,24 +111,52 @@ class SearchService
 		# Все персоны из всех деревев
 		$allPersonList = self::getAllPersonsForSearching();
 
+
+		/**
+		 * Поиск с использованием хэш-таблиц:
+		 */
+
+		$personHash = [];
+
+		foreach ($allPersonList as $allPerson)
+		{
+			$personKey = sha1($allPerson->getGender() . '_' . $allPerson->getName() . '_' . $allPerson->getSurname());
+			$personHash[$personKey] = $allPerson;
+		}
+
 		$matchPersonList = [];
 
+		// Проверяем каждую персону из списка $personList на наличие в хеш-таблице
 		foreach ($personList as $person)
 		{
-			foreach ($allPersonList as $allPerson)
+			$personKey = sha1($person->getGender() . '_' . $person->getName() . '_' . $person->getSurname());
+			if (isset($personHash[$personKey]))
 			{
-				if (
-					$person->getGender() === $allPerson->getGender() &&
-					$person->getName() === $allPerson->getName() &&
-					$person->getSurname() === $allPerson->getSurname() //&&
-					//$person->getBirthDate()->getTimestamp() === $allPerson->getBirthDate()->getTimestamp() //&&
-					//$person->getDeathDate()->getTimestamp() === $allPerson->getDeathDate()->getTimestamp()
-				)
-				{
-					$matchPersonList[] =  $allPerson;
-				}
+				$matchPersonList[] = $personHash[$personKey];
 			}
 		}
+
+		/**
+		 * Старый вариант поиска:
+		*/
+
+		// foreach ($personList as $person)
+		// {
+		// 	foreach ($allPersonList as $allPerson)
+		// 	{
+		// 		if (
+		// 			$person->getGender() === $allPerson->getGender() &&
+		// 			$person->getName() === $allPerson->getName() &&
+		// 			$person->getSurname() === $allPerson->getSurname() //&&
+		// 			//$person->getBirthDate()->getTimestamp() === $allPerson->getBirthDate()->getTimestamp() //&&
+		// 			//$person->getDeathDate()->getTimestamp() === $allPerson->getDeathDate()->getTimestamp()
+		// 		)
+		// 		{
+		// 			$matchPersonList[] =  $allPerson;
+		// 		}
+		// 	}
+		// }
+
 		return $matchPersonList;
 	}
 
