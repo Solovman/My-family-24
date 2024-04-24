@@ -14,8 +14,8 @@ class Person implements Entity
 	public string $photo;
 	public string $name;
 	public ?string $surname;
-	public ?Date $birthDate;
-	public ?Date $deathDate;
+	public ?string $birthDate;
+	public ?string $deathDate;
 	public string $gender;
 	public int $treeId;
 	public ?int $userId;
@@ -26,13 +26,13 @@ class Person implements Entity
 	 * @param $photo
 	 * @param $name
 	 * @param $surname
-	 * @param $birthDate
-	 * @param $deathDate
+	 * @param string|null $birthDate
+	 * @param string|null $deathDate
 	 * @param $gender
 	 * @param $treeId
-	 * @param $userId
+	 * @param null $userId
 	 */
-	public function __construct($active, $imageId, $photo, $name, $surname, $birthDate, $deathDate, $gender, $treeId, $userId = null)
+	public function __construct($active, $imageId, $photo, $name, $surname, ?string $birthDate, ?string $deathDate, $gender, $treeId, $userId = null)
 	{
 		$this->active = $active;
 		$this->imageId = $imageId;
@@ -112,7 +112,7 @@ class Person implements Entity
 	/**
 	 * @return Date|null
 	 */
-	public function getBirthDate(): ?Date
+	public function getBirthDate(): ?string
 	{
 		return $this->birthDate;
 	}
@@ -120,17 +120,17 @@ class Person implements Entity
 	/**
 	 * @param mixed $birthDate
 	 */
-	public function setBirthDate(?Date $birthDate): void
+	public function setBirthDate(?string $birthDate): void
 	{
 		$this->birthDate = $birthDate;
 	}
 
-	public function getDeathDate(): ?Date
+	public function getDeathDate(): ?string
 	{
 		return $this->deathDate;
 	}
 
-	public function setDeathDate(?Date $deathDate): void
+	public function setDeathDate(?string $deathDate): void
 	{
 		$this->deathDate = $deathDate;
 	}

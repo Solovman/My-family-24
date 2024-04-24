@@ -9,6 +9,8 @@ use Bitrix\Main\ArgumentException;
 use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
+use Bitrix\Main\Type\Date;
+use Bitrix\Main\Type\DateTime;
 use CFile;
 use Exception;
 use Up\Tree\Entity\Image;
@@ -37,8 +39,8 @@ class PersonService
 			"IMAGE_ID" => $person->getImageId(),
 			"NAME" => $person->getName(),
 			"SURNAME" => $person->getSurname(),
-			"BIRTH_DATE" => $person->getBirthDate(),
-			"DEATH_DATE" => $person->getDeathDate(),
+			'BIRTH_DATE' => $person->getBirthDate() ? new Date($person->getBirthDate(), 'Y-m-d') : null,
+			'DEATH_DATE' => $person->getDeathDate() ? new Date($person->getDeathDate(), 'Y-m-d') : null,
 			"GENDER" => $person->getGender(),
 			"TREE_ID" => $person->getTreeId(),
 		];
@@ -174,8 +176,8 @@ class PersonService
 				self::getImageName((int)$personData['ID']),
 				$personData['NAME'],
 				$personData['SURNAME'],
-				$personData['BIRTH_DATE'],
-				$personData['DEATH_DATE'],
+				$personData['BIRTH_DATE'] ? $personData['BIRTH_DATE']->format('Y-m-d') : null,
+				$personData['DEATH_DATE'] ? $personData['DEATH_DATE']->format('Y-m-d') : null,
 				$personData['GENDER'],
 				(int)$personData['TREE_ID'],
 				(int)$personData['TREE_DATA_USER_ID']
@@ -198,8 +200,8 @@ class PersonService
 			'IMAGE_ID' => $updatablePerson->getImageId(),
 			'NAME' => $updatablePerson->getName(),
 			'SURNAME' => $updatablePerson->getSurname(),
-			'BIRTH_DATE' => $updatablePerson->getBirthDate(),
-			'DEATH_DATE' => $updatablePerson->getDeathDate(),
+			'BIRTH_DATE' => $updatablePerson->getBirthDate() ? new Date($updatablePerson->getBirthDate(), 'Y-m-d') : null,
+			'DEATH_DATE' => $updatablePerson->getDeathDate() ? new Date($updatablePerson->getDeathDate(), 'Y-m-d') : null,
 			'GENDER' => $updatablePerson->getGender(),
 		];
 

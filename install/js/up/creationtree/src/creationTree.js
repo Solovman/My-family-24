@@ -55,9 +55,9 @@ export class CreationTree
 		Requests.loadNodes(id).then(nodeList => {
 			this.nodeList = nodeList;
 
-			this.nodeList.persons.forEach(person => {
-				person.birthDate = new Date(person.birthDate);
+			console.log(this.nodeList);
 
+			this.nodeList.persons.forEach(person => {
 				person.active = person.active !== '0';
 
 				let newStyles = document.createElement('style')
@@ -76,8 +76,6 @@ export class CreationTree
 					}
 				}
 			})
-
-			console.log(this.nodeList);
 
 
 			this.render();
@@ -104,7 +102,6 @@ export class CreationTree
 		{
 			John.stylingNode(family);
 		}
-
 
 		const self = this;
 		const buttonPDF = BX('pdf');
@@ -158,12 +155,7 @@ export class CreationTree
 									self.reload();
 								});
 							}
-						} else {
-							if (confirm("Are you sure you are going to remove this family member?")) {
-								self.reload();
-							}
 						}
-
 					},
 				},
 			}

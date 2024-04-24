@@ -35,7 +35,7 @@ export class CreatedNode
 				const imageId = updateNodes[0].imageId;
 				let surname = updateNodes[0].surname;
 				let active = updateNodes[0].active;
-				let birthDate = Helper.formatDate(updateNodes[0].birthDate);
+				let birthDate = updateNodes[0].birthDate;
 				let deathDate = Helper.formatDate(updateNodes[0].deathDate);
 
 				if (surname.length === 0) {
@@ -91,6 +91,7 @@ export class CreatedNode
 				else
 				{
 					Requests.updateNode(id, active, imageId, 0, name, surname, birthDate, deathDate, gender, treeID).then(node => {
+						console.log(node);
 						self.reload();
 						return node;
 					})

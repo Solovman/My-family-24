@@ -53,8 +53,8 @@ class Node extends Engine\Controller
 			"",
 			$person['name'],
 			$person['surname'],
-			new Date($person['birthDate']),
-			new Date($person['deathDate']),
+			$person['birthDate'],
+			$person['deathDate'],
 			$person['gender'],
 			(int) $person['treeId']
 		);
@@ -96,8 +96,8 @@ class Node extends Engine\Controller
 			'',
 			$updatablePerson['name'],
 			$updatablePerson['surname'],
-			new Date($updatablePerson['birthDate']),
-			new Date($updatablePerson['deathDate']),
+			$updatablePerson['birthDate'],
+			$updatablePerson['deathDate'],
 			$updatablePerson['gender'],
 			(int) $updatablePerson['treeId']
 		);

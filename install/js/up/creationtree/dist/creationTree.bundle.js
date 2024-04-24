@@ -147,7 +147,7 @@ this.BX.Up = this.BX.Up || {};
 	      var year = dateObject.getFullYear();
 	      var formattedDay = day < 10 ? '0' + day : day;
 	      var formattedMonth = month < 10 ? '0' + month : month;
-	      return "".concat(formattedDay, ".").concat(formattedMonth, ".").concat(year);
+	      return "".concat(year, "-").concat(formattedMonth, "-").concat(formattedDay);
 	    }
 	  }, {
 	    key: "getRootOf",
@@ -226,7 +226,7 @@ this.BX.Up = this.BX.Up || {};
 	                  imageId = updateNodes[0].imageId;
 	                  surname = updateNodes[0].surname;
 	                  active = updateNodes[0].active;
-	                  birthDate = Helper.formatDate(updateNodes[0].birthDate);
+	                  birthDate = updateNodes[0].birthDate;
 	                  deathDate = Helper.formatDate(updateNodes[0].deathDate);
 	                  if (surname.length === 0) {
 	                    surname = null;
@@ -267,6 +267,7 @@ this.BX.Up = this.BX.Up || {};
 	                    });
 	                  } else {
 	                    Requests.updateNode(id, active, imageId, 0, name, surname, birthDate, deathDate, gender, treeID).then(function (node) {
+	                      console.log(node);
 	                      self.reload();
 	                      return node;
 	                    });
@@ -651,8 +652,8 @@ this.BX.Up = this.BX.Up || {};
 	      var id = parseInt(window.location.href.match(/\d+/));
 	      Requests.loadNodes(id).then(function (nodeList) {
 	        _this2.nodeList = nodeList;
+	        console.log(_this2.nodeList);
 	        _this2.nodeList.persons.forEach(function (person) {
-	          person.birthDate = new Date(person.birthDate);
 	          person.active = person.active !== '0';
 	          var newStyles = document.createElement('style');
 	          document.head.append(newStyles);
@@ -664,7 +665,6 @@ this.BX.Up = this.BX.Up || {};
 	            }
 	          }
 	        });
-	        console.log(_this2.nodeList);
 	        _this2.render();
 	      });
 	    }
@@ -726,10 +726,6 @@ this.BX.Up = this.BX.Up || {};
 	                  Requests.removeNode(args.firstNodeId).then(function (node) {
 	                    self.reload();
 	                  });
-	                }
-	              } else {
-	                if (confirm("Are you sure you are going to remove this family member?")) {
-	                  self.reload();
 	                }
 	              }
 	            }

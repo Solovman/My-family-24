@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Up\Tree\Entity;
 
-use Bitrix\Main\Type\DateTime;
 
 // use DateTime;
 
@@ -13,14 +12,14 @@ class Tree implements Entity
 	public ?int $id;
 	public string $title;
 	public int $userId;
-	public ?DateTime $createdAt;
+	public ?string $createdAt;
 	public ?string $color;
 	public ?int $is_security;
 	public array $familyRelations = [];
 	public array $familyRelationsMarried = [];
 	public array $persons = [];
 
-	public function __construct($title, $userId, $createdAt, $color, $is_security = null)
+	public function __construct($title, $userId, ?string $createdAt, $color, $is_security = null)
 	{
 		$this->title = $title;
 		$this->userId = $userId;
@@ -88,9 +87,9 @@ class Tree implements Entity
 	}
 
 	/**
-	 * @return DateTime|null
+	 * @return string
 	 */
-	public function getCreatedAt(): ?DateTime
+	public function getCreatedAt(): ?string
 	{
 		return $this->createdAt;
 	}
@@ -98,7 +97,7 @@ class Tree implements Entity
 	/**
 	 * @param mixed $createdAt
 	 */
-	public function setCreatedAt(?DateTime $createdAt): void
+	public function setCreatedAt(string $createdAt): void
 	{
 		$this->createdAt = $createdAt;
 	}

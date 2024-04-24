@@ -63,7 +63,7 @@ class Trees extends Engine\Controller
 		if ($numberTreesOnSubscription > $countTrees || $numberTreesOnSubscription === 0)
 		{
 			$randomColor = RandomService::getRandomGradientColorString();
-			$newTree = new Tree($treeTitle, $userId, new DateTime(), $randomColor);
+			$newTree = new Tree($treeTitle, $userId, '', $randomColor);
 			TreeService::addTree($newTree);
 			$newTreeId = $DB->LastID();
 
@@ -73,7 +73,7 @@ class Trees extends Engine\Controller
 				'/local/modules/up.tree/images/user_default.png',
 				'Enter your name',
 				'Enter your surname',
-				new Date(),
+				null,
 				null,
 				'',
 				(int)$newTreeId,

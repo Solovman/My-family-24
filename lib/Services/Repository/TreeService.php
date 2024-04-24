@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Up\Tree\Services\Repository;
 
 use Bitrix\Main\Application;
+use Bitrix\Main\Type\Date;
 use Exception;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\DB\SqlException;
@@ -27,7 +28,7 @@ class TreeService
 		$treeData = [
 			"TITLE" => $tree->getTitle(),
 			"USER_ID" => $tree->getUserId(),
-			"CREATED_AT" => $tree->getCreatedAt(),
+			"CREATED_AT" => new DateTime($tree->getCreatedAt(), 'Y-m-d'),
 			"COLOR" => $tree->getColor()
 		];
 
@@ -59,7 +60,10 @@ class TreeService
 		}
 
 		$tree = new Tree(
-			$treeData['TITLE'], (int)$treeData['USER_ID'], $treeData['CREATED_AT'], $treeData['COLOR']
+			$treeData['TITLE'],
+			(int)$treeData['USER_ID'],
+			$treeData['CREATED_AT']->format('Y-m-d'),
+			$treeData['COLOR']
 		);
 
 		$tree->setId($treeId);
@@ -129,7 +133,7 @@ class TreeService
 			$tree = new Tree(
 				$treeItem['TITLE'],
 				(int)$treeItem['USER_ID'],
-				$treeItem['CREATED_AT'],
+				$treeItem['CREATED_AT']->format('Y-m-d'),
 				$treeItem['COLOR'],
 				(int)$treeItem['IS_SECURITY']
 			);
@@ -169,7 +173,7 @@ class TreeService
 			$tree = new Tree(
 				$result->getTitle(),
 				(int)$result->getUserId(),
-				$result->getCreatedAt(),
+				$result->getCreatedAt()->format('Y-m-d'),
 				$result->getColor()
 			);
 
