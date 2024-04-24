@@ -147,23 +147,25 @@ class SearchService
 		/**
 		 * Старый вариант поиска:
 		*/
-//		$matchPersonList = [];
-//		 foreach ($personList as $person)
-//		 {
-//		 	foreach ($allPersonList as $allPerson)
-//		 	{
-//		 		if (
-//		 			$person->getGender() === $allPerson->getGender() &&
-//		 			$person->getName() === $allPerson->getName() &&
-//		 			$person->getSurname() === $allPerson->getSurname() //&&
-//		 			//$person->getBirthDate()->getTimestamp() === $allPerson->getBirthDate()->getTimestamp() //&&
-//		 			//$person->getDeathDate()->getTimestamp() === $allPerson->getDeathDate()->getTimestamp()
-//		 		)
-//		 		{
-//		 			$matchPersonList[] =  $allPerson;
-//		 		}
-//		 	}
-//		 }
+		/*
+		$matchPersonList = [];
+		 foreach ($personList as $person)
+		 {
+		 	foreach ($allPersonList as $allPerson)
+		 	{
+		 		if (
+		 			$person->getGender() === $allPerson->getGender() &&
+		 			$person->getName() === $allPerson->getName() &&
+		 			$person->getSurname() === $allPerson->getSurname() //&&
+		 			//$person->getBirthDate()->getTimestamp() === $allPerson->getBirthDate()->getTimestamp() //&&
+		 			//$person->getDeathDate()->getTimestamp() === $allPerson->getDeathDate()->getTimestamp()
+		 		)
+		 		{
+		 			$matchPersonList[] =  $allPerson;
+		 		}
+		 	}
+		 }
+		*/
 
 		return $matchPersonList;
 	}
