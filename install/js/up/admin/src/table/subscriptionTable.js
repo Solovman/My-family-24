@@ -1,5 +1,5 @@
 import {Tag} from 'main.core';
-import {Form} from "../form/form";
+import {Form} from "../form/subscriptions/form";
 
 export class SubscriptionTable
 {

@@ -45,6 +45,24 @@ export class Requests
 		});
 	}
 
+	static updateUserSubscription(newUserSubscription) {
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.admin.updateUserSubscription', {
+					data: {
+						newUserSubscription: newUserSubscription
+					}
+				})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				})
+			;
+		});
+	}
+
+
 	static getListUserPurchase() {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.getListUserPurchase')

@@ -1,6 +1,6 @@
 import {RenderForm} from "./renderForm.js";
-import {Requests} from "../requests";
-import {Admin} from "../admin.js";
+import {Requests} from "../../requests";
+import {Admin} from "../../admin.js";
 import {Tag} from 'main.core';
 
 export class Form

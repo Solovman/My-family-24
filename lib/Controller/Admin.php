@@ -10,6 +10,7 @@ use Exception;
 use Up\Tree\Entity\Admin\AdminSubscription;
 use Up\Tree\Entity\Admin\AdminSubscriptionAdding;
 use Up\Tree\Entity\Subscription;
+use Up\Tree\Entity\UserSubscription;
 use Up\Tree\Services\Repository\AdminService;
 use Up\Tree\Services\Repository\PurchaseService;
 use Up\Tree\Services\Repository\SubscriptionsService;
@@ -58,6 +59,22 @@ class Admin extends Engine\Controller
 		return [
 			'listUserSubscriptions' => $result
 		];
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function updateUserSubscriptionAction(array $newUserSubscription): bool
+	{
+		$result = new UserSubscription(
+			(int) $newUserSubscription['userId'],
+			(int) $newUserSubscription['subscriptionId'],
+			(int) $newUserSubscription['countTrees'],
+			(int) $newUserSubscription['countNodes'],
+			$newUserSubscription['buyTime']
+		);
+
+		return AdminService::updateSubscriptionUserRelation($result);
 	}
 
 	/**

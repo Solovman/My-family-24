@@ -58,8 +58,7 @@ class UserSubscriptionsService
 				$result->getSubscriptionId(),
 				$result->getCountTrees(),
 				$result->getCountNodes(),
-				$result->getSubscriptionBuyTime(),
-				$result->getIsActive()
+				$result->getSubscriptionBuyTime() ? $result->getSubscriptionBuyTime()->format('Y-m-d H:i:s') : null
 			);
 		}
 

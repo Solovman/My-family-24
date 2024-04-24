@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Up\Tree\Services\Repository;
 
+use Bitrix\Main\Type\DateTime;
 use Exception;
 use Up\Tree\Entity\Admin\AdminSubscription;
 use Up\Tree\Entity\Admin\AdminSubscriptionAdding;
 use Up\Tree\Entity\Subscription;
+use Up\Tree\Entity\UserSubscription;
 use Up\Tree\Model\PurchaseTable;
 use Up\Tree\Model\SubscriptionTable;
 use Up\Tree\Model\UserSinglePurchaseTable;
@@ -78,10 +80,21 @@ class AdminService
 	/**
 	 * @throws Exception
 	 */
-	public static function updateSubscriptionUserRelation(int $userId, int $subscriptionId): void
+	public static function updateSubscriptionUserRelation(UserSubscription $userSubscription): bool
 	{
+		$result = UserSubscriptionTable::update($userSubscription->userId, [
+			"COUNT_TREES" => $userSubscription->countTrees,
+			"COUNT_NODES" => $userSubscription->countNodes,
+			"SUBSCRIPTION_BUY_TIME" => $userSubscription->buyTime ? new DateTime($userSubscription->buyTime, 'Y-m-d H:i:s') : null,
+			"SUBSCRIPTION_ID" => $userSubscription->subscriptionId,
+		]);
 
-		UserSubscriptionTable::update($userId, ["SUBSCRIPTION_ID" => $subscriptionId]);
+		if (!$result->isSuccess())
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

@@ -8,27 +8,24 @@ use Bitrix\Main\Type\Date;
 
 class UserSubscription
 {
-	public int $id;
+	public int $userId;
 	public int $subscriptionId;
 	public int $countTrees;
 	public int $countNodes;
-	public ?Date $buyTime;
-	public int $isActive;
+	public ?string $buyTime;
 
 	public function __construct(
-		$id,
+		$userId,
 		$subscriptionId,
 		$countTrees,
 		$countNodes,
 		$buyTime,
-		$isActive,
 	)
 	{
-		$this->id = $id;
+		$this->userId = $userId;
 		$this->subscriptionId = $subscriptionId;
 		$this->countTrees = $countTrees;
 		$this->countNodes = $countNodes;
 		$this->buyTime = $buyTime;
-		$this->isActive = $isActive;
 	}
 }

@@ -4,7 +4,8 @@ import {SubscriptionTable} from "./table/subscriptionTable.js";
 import {PurchaseTable} from "./table/purchaseTable.js";
 import {UserSubscriptionsTable} from "./table/userSubscriptionsTable.js";
 import {UserPurchaseTable} from "./table/userPurchaseTable.js";
-import {Form} from "./form/form";
+import {Form} from "./form/subscriptions/form";
+import {FormUserSub} from "./form/userSubscription/form.js";
 
 export class Admin
 {
@@ -190,6 +191,17 @@ export class Admin
 			this.rootNode.innerHTML = '';
 
 			BX.append(UserSubscriptionsTable.render(list), this.rootNode);
+
+			const editBtn = document.querySelectorAll('.action-list-btn');
+
+			editBtn.forEach(btn => {
+				BX.bind(btn, 'click', (event) => {
+					const userId = event.target.dataset.userId;
+					const data = this.listUserSubscriptions.find(item => item.userId === Number(userId));
+					console.log(data);
+					FormUserSub.render(data);
+				});
+			})
 		})
 	}
 
