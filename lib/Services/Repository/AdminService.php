@@ -112,4 +112,12 @@ class AdminService
 	{
 		PurchaseTable::delete($purchaseId);
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function removePurchaseUser(int $userId, int $purchaseId): void
+	{
+		UserSinglePurchaseTable::delete(['USER_ID' => $userId, 'SINGLE_PURCHASE_ID' => $purchaseId]);
+	}
 }

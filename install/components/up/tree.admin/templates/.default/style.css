@@ -46,7 +46,7 @@ h2 small {
 	border-radius: 3px;
 	padding: 25px 30px;
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	margin-bottom: 25px;
 }
 .responsive-table .table-header {

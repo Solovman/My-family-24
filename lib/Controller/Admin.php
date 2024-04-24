@@ -130,4 +130,12 @@ class Admin extends Engine\Controller
 		AdminService::removePurchase($purchaseId);
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public static function removePurchaseUserRelationAction(int $userId, int $purchaseId): void
+	{
+		AdminService::removePurchaseUser($userId, $purchaseId);
+	}
+
 }

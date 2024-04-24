@@ -94,6 +94,23 @@ export class Requests
 			;
 		});
 	}
+	static removePurchaseUser(userId, purchaseId) {
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.admin.removePurchaseUserRelation', {
+					data: {
+						userId: userId,
+						purchaseId: purchaseId
+					}
+				})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				})
+			;
+		});
+	}
 
 	static updateSubscription(newSubscription) {
 		return new Promise((resolve, reject) => {
