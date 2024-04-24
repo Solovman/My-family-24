@@ -6,6 +6,7 @@ use Bitrix\Main\ArgumentException;
 use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
+use Exception;
 use Up\Tree\Entity\Admin\AdminSubscription;
 use Up\Tree\Entity\Admin\AdminSubscriptionAdding;
 use Up\Tree\Entity\Subscription;
@@ -74,7 +75,7 @@ class Admin extends Engine\Controller
 	}
 
 	/**
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function deactivationSubscriptionAction(int $id, bool $active): bool
 	{
@@ -82,7 +83,7 @@ class Admin extends Engine\Controller
 	}
 
 	/**
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function updateSubscriptionAction(array $newSubscription): bool
 	{
@@ -100,7 +101,7 @@ class Admin extends Engine\Controller
 	}
 
 	/**
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function addSubscriptionAction(array $subscription): array
 	{
@@ -120,4 +121,21 @@ class Admin extends Engine\Controller
 			'addId' => $result
 		];
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function removePurchaseAction(int $purchaseId): void
+	{
+		AdminService::removePurchase($purchaseId);
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function removePurchaseUserRelationAction(int $userId, int $purchaseId): void
+	{
+		AdminService::removePurchaseUser($userId, $purchaseId);
+	}
+
 }

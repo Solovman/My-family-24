@@ -9,6 +9,7 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\IntegerField,
 	Bitrix\Main\ORM\Fields\StringField,
 	Bitrix\Main\ORM\Fields\Validators\LengthValidator;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
 
 Loc::loadMessages(__FILE__);
 
@@ -59,6 +60,7 @@ class PurchaseTable extends DataManager
 					'title' => Loc::getMessage('PURCHASE_ENTITY_TITLE_FIELD')
 				]
 			),
+			'RELATION_USER_PURCHASE' => (new OneToMany('RELATION_USER_PURCHASE', UserSinglePurchaseTable::class, 'RELATION_PURCHASE'))->configureJoinType('inner'),
 		];
 	}
 

@@ -25,14 +25,14 @@ export class Admin
 			throw new Error(`Table: element with id "${this.rootNodeId}" not found`);
 		}
 
-		this.setEvents();
-
 		this.listSub = [];
 		this.listPurchase = [];
 		this.listUserSubscriptions = [];
 		this.listUserPurchase = [];
 
 		this.loadListSub();
+
+		this.setEvents();
 	}
 
 	loadListSub() {
@@ -136,9 +136,15 @@ export class Admin
 
 	loadListPurchase() {
 		Requests.getListPurchase().then(list => {
+			this.rootNode.innerHTML = '';
+
 			this.listPurchase = list;
 
+			BX.append(PurchaseTable.render(list), this.rootNode);
+
 			const btns = document.querySelectorAll('.admin__btn');
+
+			const btnRemove = document.querySelectorAll('.remove');
 
 			btns.forEach(btn => {
 				BX.removeClass(btn, 'btn-active');
@@ -146,9 +152,26 @@ export class Admin
 
 			BX.addClass(BX('purchase'), 'btn-active');
 
-			this.rootNode.innerHTML = '';
+			btnRemove.forEach(btn => {
+				BX.bind(btn, 'click', (event) => {
+					const id = event.target.dataset.btnId;
+					console.log(id)
 
-			BX.append(PurchaseTable.render(list), this.rootNode);
+					const spinner = Tag.render`
+						<div class="admin__spinner spinner-grow text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					`;
+
+					BX.append(spinner, this.rootNode);
+
+					Requests.removePurchase(Number(id)).then(result => {
+						this.loadListPurchase();
+					});
+				});
+			})
+
+
 		})
 	}
 
@@ -173,19 +196,45 @@ export class Admin
 	loadListUserPurchase()
 	{
 		Requests.getListUserPurchase().then(list => {
-			this.listUserPurchase = list;
+			this.rootNode.innerHTML = '';
+
+			this.listPurchase = list;
+
+			BX.append(UserPurchaseTable.render(list), this.rootNode);
 
 			const btns = document.querySelectorAll('.admin__btn');
 
+			const btnRemove = document.querySelectorAll('.remove__user_purchase');
+			console.log(btnRemove)
 			btns.forEach(btn => {
 				BX.removeClass(btn, 'btn-active');
 			})
 
 			BX.addClass(BX('userPurchase'), 'btn-active');
 
-			this.rootNode.innerHTML = '';
 
-			BX.append(UserPurchaseTable.render(list), this.rootNode);
+			btnRemove.forEach(btn => {
+				BX.bind(btn, 'click', (event) => {
+					const purchaseId = event.target.dataset.btnPurchaseId;
+					console.log(purchaseId)
+					const userId = event.target.dataset.btnUserId;
+					console.log(userId)
+					console.log(event.target.dataset)
+
+					const spinner = Tag.render`
+						<div class="admin__spinner spinner-grow text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					`;
+
+					BX.append(spinner, this.rootNode);
+
+					Requests.removePurchaseUser(Number(userId), Number(purchaseId)).then(result => {
+						this.loadListUserPurchase();
+					});
+				});
+			})
+
 		})
 	}
 

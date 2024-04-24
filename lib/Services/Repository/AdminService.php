@@ -8,6 +8,7 @@ use Exception;
 use Up\Tree\Entity\Admin\AdminSubscription;
 use Up\Tree\Entity\Admin\AdminSubscriptionAdding;
 use Up\Tree\Entity\Subscription;
+use Up\Tree\Model\PurchaseTable;
 use Up\Tree\Model\SubscriptionTable;
 use Up\Tree\Model\UserSinglePurchaseTable;
 use Up\Tree\Model\UserSubscriptionTable;
@@ -107,7 +108,15 @@ class AdminService
 	/**
 	 * @throws Exception
 	 */
-	public static function removePurchase(int $userId, int $purchaseId): void
+	public static function removePurchase(int $purchaseId): void
+	{
+		PurchaseTable::delete($purchaseId);
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function removePurchaseUser(int $userId, int $purchaseId): void
 	{
 		UserSinglePurchaseTable::delete(['USER_ID' => $userId, 'SINGLE_PURCHASE_ID' => $purchaseId]);
 	}
