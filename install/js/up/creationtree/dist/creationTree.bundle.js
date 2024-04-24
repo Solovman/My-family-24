@@ -664,6 +664,7 @@ this.BX.Up = this.BX.Up || {};
 	            }
 	          }
 	        });
+	        console.log(_this2.nodeList);
 	        _this2.render();
 	      });
 	    }

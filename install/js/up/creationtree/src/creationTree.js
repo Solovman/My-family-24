@@ -77,6 +77,8 @@ export class CreationTree
 				}
 			})
 
+			console.log(this.nodeList);
+
 
 			this.render();
 		});

@@ -120,8 +120,15 @@ class SearchService
 
 		foreach ($allPersonList as $allPerson)
 		{
-			$personKey = sha1($allPerson->getGender() . '_' . $allPerson->getName() . '_' . $allPerson->getSurname());
-			$personHash[$personKey] = $allPerson;
+			$personKey = hash('sha256',$allPerson->getGender() . '_' . $allPerson->getName() . '_' . $allPerson->getSurname());
+			if (isset($personHash[$personKey]))
+			{
+				$personHash[$personKey][] = $allPerson;
+			}
+			else
+			{
+				$personHash[$personKey] = [$allPerson];
+			}
 		}
 
 		$matchPersonList = [];
@@ -129,33 +136,34 @@ class SearchService
 		// Проверяем каждую персону из списка $personList на наличие в хеш-таблице
 		foreach ($personList as $person)
 		{
-			$personKey = sha1($person->getGender() . '_' . $person->getName() . '_' . $person->getSurname());
+			$personKey = hash('sha256',$person->getGender() . '_' . $person->getName() . '_' . $person->getSurname());
 			if (isset($personHash[$personKey]))
 			{
-				$matchPersonList[] = $personHash[$personKey];
+				$matchPersonList = [...$matchPersonList, ...$personHash[$personKey]];
 			}
 		}
+
 
 		/**
 		 * Старый вариант поиска:
 		*/
-
-		// foreach ($personList as $person)
-		// {
-		// 	foreach ($allPersonList as $allPerson)
-		// 	{
-		// 		if (
-		// 			$person->getGender() === $allPerson->getGender() &&
-		// 			$person->getName() === $allPerson->getName() &&
-		// 			$person->getSurname() === $allPerson->getSurname() //&&
-		// 			//$person->getBirthDate()->getTimestamp() === $allPerson->getBirthDate()->getTimestamp() //&&
-		// 			//$person->getDeathDate()->getTimestamp() === $allPerson->getDeathDate()->getTimestamp()
-		// 		)
-		// 		{
-		// 			$matchPersonList[] =  $allPerson;
-		// 		}
-		// 	}
-		// }
+//		$matchPersonList = [];
+//		 foreach ($personList as $person)
+//		 {
+//		 	foreach ($allPersonList as $allPerson)
+//		 	{
+//		 		if (
+//		 			$person->getGender() === $allPerson->getGender() &&
+//		 			$person->getName() === $allPerson->getName() &&
+//		 			$person->getSurname() === $allPerson->getSurname() //&&
+//		 			//$person->getBirthDate()->getTimestamp() === $allPerson->getBirthDate()->getTimestamp() //&&
+//		 			//$person->getDeathDate()->getTimestamp() === $allPerson->getDeathDate()->getTimestamp()
+//		 		)
+//		 		{
+//		 			$matchPersonList[] =  $allPerson;
+//		 		}
+//		 	}
+//		 }
 
 		return $matchPersonList;
 	}
