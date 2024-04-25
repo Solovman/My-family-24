@@ -24,7 +24,16 @@ export class FormPurchase
 					this.setContent(RenderForm.render(data));
 
 					if (data !== null) {
-						BX.bind(BX('edit-button'), 'click', (event) => { //
+						const options = document.querySelectorAll('.modal-option');
+
+						options.forEach(option => {
+							if (Number(option.value) === data.customization)
+							{
+								option.selected = true;
+							}
+						})
+
+						BX.bind(BX('edit-button'), 'click', (event) => {
 
 							event.preventDefault();
 
@@ -37,12 +46,13 @@ export class FormPurchase
 							BX.append(spinner, BX('table'));
 
 							const newPurchase = {
-								id: Number(data.id),
+								id: Number(data.ID),
 								title: BX('title').value, // id
 								price: BX('price').value,
 							};
+							console.log(newPurchase);
 
-							Requests.addPurchase(newPurchase).then(result => {
+							Requests.updatePurchase(newPurchase).then(result => {
 								new Admin({
 									rootNodeId: 'table',
 								});

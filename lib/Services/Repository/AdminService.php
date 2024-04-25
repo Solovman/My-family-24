@@ -58,6 +58,24 @@ class AdminService
 	/**
 	 * @throws Exception
 	 */
+	public static function updatePurchase(Purchase $purchase): bool
+	{
+		$result = PurchaseTable::update(
+			$purchase->id, [
+			'TITLE' => $purchase->title,
+			'PRICE' => $purchase->price,
+		]);
+
+		if (!$result->isSuccess())
+		{
+			return false;
+		}
+
+		return true;
+	}
+	/**
+	 * @throws Exception
+	 */
 	public static function addSubscription(Subscription $subscription): bool|int
 	{
 		$result = SubscriptionTable::add([

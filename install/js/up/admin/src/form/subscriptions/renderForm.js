@@ -27,22 +27,22 @@ export class RenderForm
 			<form class="details">
 				<div class="input-container">
 					<label class="modal-form-label" for="name">Название подписки:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.level : ''}" id="name" type="text" placeholder="Name" />
+					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.level : ''}" id="name" type="text" placeholder="Name"/>
 				</div>
 				<div class="input-container">
 					<label class="modal-form-label" for="price">Цена:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.price : ''}" id="price" type="number" placeholder="Price" />
+					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.price : ''}" id="price" type="number" placeholder="Price" min="0"/>
 				</div>
 				
 				<div class="input-container-number">
 					<div class="input-container">
 						<label class="modal-form-label" for="numberTrees">Количетсво деревьев:</label>
-						<input class="col-sm-12 with-placeholder" value="${data !== null ? data.numberTrees : ''}" id="numberTrees" type="number" placeholder="Number trees" />
+						<input class="col-sm-12 with-placeholder" value="${data !== null ? data.numberTrees : ''}" id="numberTrees" type="number" placeholder="Number trees" min="0"/>
 					</div>
 					
 					<div class="input-container">
 						<label class="modal-form-label" for="numberNodes">Количетсво вершин:</label>
-						<input class="col-sm-12 with-placeholder"  value="${data !== null ? data.numberNodes : '' }" id="numberNodes" type="number" placeholder="Number nodes" />
+						<input class="col-sm-12 with-placeholder"  value="${data !== null ? data.numberNodes : '' }" id="numberNodes" type="number" placeholder="Number nodes" min="0"/>
 					</div>
 				</div>
 			

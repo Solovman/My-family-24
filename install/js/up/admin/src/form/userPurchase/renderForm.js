@@ -30,11 +30,11 @@ export class RenderForm
 			<form class="details">
 				<div class="input-container">
 					<label class="modal-form-label" for="userId">ID пользователя:</label>
-					<input class="col-sm-12 with-placeholder" value="${data.userId}" id="userId" type="number" placeholder="USER ID" />
+					<input class="col-sm-12 with-placeholder" value="${data.userId}" id="userId" type="number" placeholder="User ID" min="0" />
 				</div>
 				<div class="input-container">
 					<label class="modal-form-label" for="purchaseId">ID покупки:</label>
-					<input class="col-sm-12 with-placeholder" value="${data.purchaseId}" id="purchaseId" type="number" placeholder="PURCHASE ID" />
+					<input class="col-sm-12 with-placeholder" value="${data.purchaseId}" id="purchaseId" type="number" placeholder="Purchase ID"  min="0"/>
 				</div>
 				<input id="action-button" type="submit" value="Edit">
 			</form>

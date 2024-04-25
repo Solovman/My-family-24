@@ -26,15 +26,15 @@ export class RenderForm
 			
 			<form class="details">
 				<div class="input-container">
-					<label class="modal-form-label" for="name">Название покупки:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.title : ''}" id="title" type="text" placeholder="Name" />
+					<label class="modal-form-label" for="title">Название покупки:</label>
+					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.TITLE : ''}" id="title" type="text" placeholder="Name" />
 				</div>
 				<div class="input-container">
 					<label class="modal-form-label" for="price">Цена:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.price : ''}" id="price" type="number" placeholder="Price" />
+					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.PRICE : ''}" id="price" type="number" placeholder="Price" min="0"/>
 				</div>
 				
-				<input id="action-button" type="submit" value="${data !== null ? 'Edit' : 'Add'}">
+				<input id="edit-button" class="add" type="submit" value="${data !== null ? 'Edit' : 'Add'}">
 			</form>
 		</div>
 		`;

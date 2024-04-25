@@ -91,7 +91,9 @@ export class Admin
 			btnEdit.forEach(btn => {
 				BX.bind(btn, 'click', (event) => {
 					const el = event.target;
+					console.log(el)
 					const data = this.listSub.find(item => item.id === Number(el.dataset.btnId));
+					console.log(data)
 					Form.render(data);
 				});
 			})
@@ -139,6 +141,8 @@ export class Admin
 
 			const btnRemove = document.querySelectorAll('.remove');
 
+			const btnEdit = document.querySelectorAll('.edit');
+
 			const btnAdd = BX('add');
 
 			btns.forEach(btn => {
@@ -166,9 +170,19 @@ export class Admin
 				});
 			})
 
+			btnEdit.forEach(btn => {
+				BX.bind(btn, 'click', (event) => {
+					const el = event.target;
+					console.log(this.listPurchase);
+					console.log(el.dataset.btnId);
+					const data = this.listPurchase.find(item => Number(item.ID) === Number(el.dataset.btnId));
+					FormPurchase.render(data);
+				});
+			})
+
 			BX.bind(btnAdd, 'click', () => {
 				FormPurchase.render();
-				BX.bind(BX('action-button'), 'click', (event) => {
+				BX.bind(BX('edit-button'), 'click', (event) => {
 
 					event.preventDefault();
 

@@ -5,9 +5,9 @@ export class UserPurchaseTable
 	{
 		const headingTable = Tag.render`
 			<li class="table-header">
-				<div class="table-head col col-1">USER ID</div>
-				<div class="table-head col col-1">PURCHASE ID</div>
-				<div class="table-head col col-1">ACTION</div>
+				<div class="table-head col col-1">ID ПОЛЬЗОВАТЕЛЯ</div>
+				<div class="table-head col col-1">ID ПОКУПКИ</div>
+				<div class="table-head col col-1">ДЕЙСТВИЯ</div>
 			</li>
 		`;
 

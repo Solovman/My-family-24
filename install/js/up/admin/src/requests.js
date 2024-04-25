@@ -151,6 +151,23 @@ export class Requests
 		});
 	}
 
+	static updatePurchase(newPurchase) {
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.admin.updatePurchase', {
+					data: {
+						newPurchase: newPurchase
+					}
+				})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				})
+			;
+		});
+	}
+
 	static addSubscription(subscription) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.addSubscription', {

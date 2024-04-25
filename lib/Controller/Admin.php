@@ -117,6 +117,17 @@ class Admin extends Engine\Controller
 		return AdminService::updateSubscription($subscription);
 	}
 
+	public static function updatePurchaseAction(array $newPurchase): bool
+	{
+		$purchase = new Purchase(
+			(int) $newPurchase['id'],
+			$newPurchase['title'],
+			(int) $newPurchase['price']
+		);
+
+		return AdminService::updatePurchase($purchase);
+	}
+
 	/**
 	 * @throws Exception
 	 */
