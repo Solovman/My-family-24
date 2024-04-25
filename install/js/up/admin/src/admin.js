@@ -6,6 +6,7 @@ import {UserSubscriptionsTable} from "./table/userSubscriptionsTable.js";
 import {UserPurchaseTable} from "./table/userPurchaseTable.js";
 import {Form} from "./form/subscriptions/form";
 import {FormPurchase} from "./form/purchase/form";
+import {FormUserPurchase} from "./form/userPurchase/form";
 import {FormUserSub} from "./form/userSubscription/form.js";
 
 export class Admin
@@ -90,7 +91,9 @@ export class Admin
 			btnEdit.forEach(btn => {
 				BX.bind(btn, 'click', (event) => {
 					const el = event.target;
+					console.log(el)
 					const data = this.listSub.find(item => item.id === Number(el.dataset.btnId));
+					console.log(data)
 					Form.render(data);
 				});
 			})
@@ -138,6 +141,8 @@ export class Admin
 
 			const btnRemove = document.querySelectorAll('.remove');
 
+			const btnEdit = document.querySelectorAll('.edit');
+
 			const btnAdd = BX('add');
 
 			btns.forEach(btn => {
@@ -165,9 +170,19 @@ export class Admin
 				});
 			})
 
+			btnEdit.forEach(btn => {
+				BX.bind(btn, 'click', (event) => {
+					const el = event.target;
+					console.log(this.listPurchase);
+					console.log(el.dataset.btnId);
+					const data = this.listPurchase.find(item => Number(item.ID) === Number(el.dataset.btnId));
+					FormPurchase.render(data);
+				});
+			})
+
 			BX.bind(btnAdd, 'click', () => {
 				FormPurchase.render();
-				BX.bind(BX('action-button'), 'click', (event) => {
+				BX.bind(BX('edit-button'), 'click', (event) => {
 
 					event.preventDefault();
 
@@ -237,6 +252,9 @@ export class Admin
 			const btns = document.querySelectorAll('.admin__btn');
 
 			const btnRemove = document.querySelectorAll('.remove__user_purchase');
+
+			const btnAdd = BX('add');
+
 			console.log(btnRemove)
 			btns.forEach(btn => {
 				BX.removeClass(btn, 'btn-active');
@@ -266,6 +284,31 @@ export class Admin
 					});
 				});
 			})
+
+			BX.bind(btnAdd, 'click', () => {
+				FormUserPurchase.render(list);
+				BX.bind(BX('action-button'), 'click', (event) => {
+
+					event.preventDefault();
+
+					const spinner = Tag.render`
+						<div class="admin__spinner spinner-grow text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					`;
+
+					BX.append(spinner, this.rootNode);
+
+					const userId = Number(BX('userId').value);
+					const purchaseId = Number(BX('purchaseId').value);
+
+					Requests.addPurchaseUser(userId, purchaseId).then(result => {
+						this.loadListUserPurchase();
+						document.querySelector('.popup-window').remove();
+						document.querySelector('.popup-window-overlay').remove();
+					});
+				});
+			});
 
 		})
 	}

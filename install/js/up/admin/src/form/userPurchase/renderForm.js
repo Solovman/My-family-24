@@ -4,6 +4,9 @@ export class RenderForm
 {
 	static render(data)
 	{
+		console.log(data);
+		console.log(data.userId);
+		console.log(data.purchaseId);
 		return Tag.render`
 		<div class="sign-up-modal">
 			<div class="logo-container">
@@ -26,15 +29,14 @@ export class RenderForm
 			
 			<form class="details">
 				<div class="input-container">
-					<label class="modal-form-label" for="title">Название покупки:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.TITLE : ''}" id="title" type="text" placeholder="Name" />
+					<label class="modal-form-label" for="userId">ID пользователя:</label>
+					<input class="col-sm-12 with-placeholder" value="${data.userId}" id="userId" type="number" placeholder="User ID" min="0" />
 				</div>
 				<div class="input-container">
-					<label class="modal-form-label" for="price">Цена:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.PRICE : ''}" id="price" type="number" placeholder="Price" min="0"/>
+					<label class="modal-form-label" for="purchaseId">ID покупки:</label>
+					<input class="col-sm-12 with-placeholder" value="${data.purchaseId}" id="purchaseId" type="number" placeholder="Purchase ID"  min="0"/>
 				</div>
-				
-				<input id="edit-button" class="add" type="submit" value="${data !== null ? 'Edit' : 'Add'}">
+				<input id="action-button" type="submit" value="Edit">
 			</form>
 		</div>
 		`;

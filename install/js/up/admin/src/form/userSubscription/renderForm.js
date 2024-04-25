@@ -27,16 +27,16 @@ export class RenderForm
 			<form class="details">
 				<div class="input-container">
 					<label class="modal-form-label" for="subId">ID подписки:</label>
-					<input class="col-sm-12 with-placeholder" value="${data.subscriptionId}" id="subId" type="number" placeholder="ID" />
+					<input class="col-sm-12 with-placeholder" value="${data.subscriptionId}" id="subId" type="number" placeholder="ID" min="0"/>
 				</div>
 				<div class="input-container">
 					<label class="modal-form-label" for="countTrees">Количество деревьев:</label>
-					<input class="col-sm-12 with-placeholder" value="${data.countTrees}" id="countTrees" type="number" placeholder="countTrees" />
+					<input class="col-sm-12 with-placeholder" value="${data.countTrees}" id="countTrees" type="number" placeholder="countTrees" min="0"/>
 				</div>
 				
 				<div class="input-container">
 					<label class="modal-form-label" for="countNodes">Количество вершин:</label>
-					<input class="col-sm-12 with-placeholder" value="${data.countNodes}" id="countNodes" type="number" placeholder="countNodes" />
+					<input class="col-sm-12 with-placeholder" value="${data.countNodes}" id="countNodes" type="number" placeholder="countNodes" min="0"/>
 				</div>
 				
 				<div class="input-container">

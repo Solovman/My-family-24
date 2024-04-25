@@ -2,12 +2,13 @@
 
 namespace Up\Tree\Controller;
 
+use Exception;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\UI\PageNavigation;
-use Exception;
+use Up\Tree\Entity\Purchase;
 use Up\Tree\Entity\Subscription;
 use Up\Tree\Entity\UserSubscription;
 use Up\Tree\Services\Repository\AdminService;
@@ -116,6 +117,17 @@ class Admin extends Engine\Controller
 		return AdminService::updateSubscription($subscription);
 	}
 
+	public static function updatePurchaseAction(array $newPurchase): bool
+	{
+		$purchase = new Purchase(
+			(int) $newPurchase['id'],
+			$newPurchase['title'],
+			(int) $newPurchase['price']
+		);
+
+		return AdminService::updatePurchase($purchase);
+	}
+
 	/**
 	 * @throws Exception
 	 */
@@ -155,6 +167,17 @@ class Admin extends Engine\Controller
 			'addId' => $result
 		];
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function addPurchaseUserRelationAction(int $userId, int $purchaseId): void
+	{
+
+		AdminService::addPurchaseUserRelation($userId ,$purchaseId);
+	}
+
+
 
 	/**
 	 * @throws Exception
