@@ -9,6 +9,7 @@ use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Admin\AdminSubscription;
 use Up\Tree\Entity\Admin\AdminSubscriptionAdding;
+use Up\Tree\Entity\Purchase;
 use Up\Tree\Entity\Subscription;
 use Up\Tree\Entity\UserSubscription;
 use Up\Tree\Services\Repository\AdminService;
@@ -133,6 +134,24 @@ class Admin extends Engine\Controller
 		);
 
 		$result = AdminService::addSubscription($addSubscription);
+
+		return [
+			'addId' => $result
+		];
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function addPurchaseAction(array $purchase): array
+	{
+		$newPurchase = new Purchase(
+			null,
+			$purchase['title'],
+			(int) $purchase['price'],
+		);
+
+		$result = AdminService::addPurchase($newPurchase);
 
 		return [
 			'addId' => $result

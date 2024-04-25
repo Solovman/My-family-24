@@ -7,6 +7,7 @@ export class PurchaseTable
 			<li class="table-header">
 				<div class="table-head col col-1">ID</div>
 				<div class="table-head col col-1">TITLE</div>
+				<div class="table-head col col-1">PRICE</div>
 				<div class="table-head col col-1">ACTION</div>
 			</li>
 		`;
@@ -30,9 +31,9 @@ export class PurchaseTable
 		return data.map(purchase => {
 			return Tag.render`
 				<li class="table-row">
-					<div class="col col-1" data-label="Job Id">${purchase.ID}</div>
-					<div class="col col-1" data-label="Customer Name">${purchase.TITLE}</div>
-					<div class="col col-1" data-label="Customer Name">
+					<div class="col col-1" data-label="Id">${purchase.ID}</div>
+					<div class="col col-1" data-label="Title">${purchase.TITLE}</div>
+					<div class="col col-1" data-label="Price">${purchase.PRICE}</div>
 						<ul class="action-list">
 							<li class="action-item">
 								<button class="action-list-btn remove" data-btn-id="${purchase.ID}" >

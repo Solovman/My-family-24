@@ -20,6 +20,7 @@ Loc::loadMessages(__FILE__);
  * <ul>
  * <li> ID int mandatory
  * <li> TITLE string(100) mandatory
+ * <li> PRICE int optional
  * </ul>
  *
  * @package Bitrix\Single
@@ -49,6 +50,7 @@ class PurchaseTable extends DataManager
 				'ID',
 				[
 					'primary' => true,
+					'autocomplete' => true,
 					'title' => Loc::getMessage('PURCHASE_ENTITY_ID_FIELD')
 				]
 			),
@@ -58,6 +60,12 @@ class PurchaseTable extends DataManager
 					'required' => true,
 					'validation' => [__CLASS__, 'validateTitle'],
 					'title' => Loc::getMessage('PURCHASE_ENTITY_TITLE_FIELD')
+				]
+			),
+			new IntegerField(
+				'PRICE',
+				[
+					'title' => Loc::getMessage('PURCHASE_ENTITY_PRICE_FIELD')
 				]
 			),
 			'RELATION_USER_PURCHASE' => (new OneToMany('RELATION_USER_PURCHASE', UserSinglePurchaseTable::class, 'RELATION_PURCHASE'))->configureJoinType('inner'),

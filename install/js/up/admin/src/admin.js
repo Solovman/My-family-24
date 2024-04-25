@@ -5,6 +5,7 @@ import {PurchaseTable} from "./table/purchaseTable.js";
 import {UserSubscriptionsTable} from "./table/userSubscriptionsTable.js";
 import {UserPurchaseTable} from "./table/userPurchaseTable.js";
 import {Form} from "./form/subscriptions/form";
+import {FormPurchase} from "./form/purchase/form";
 import {FormUserSub} from "./form/userSubscription/form.js";
 
 export class Admin
@@ -147,6 +148,8 @@ export class Admin
 
 			const btnRemove = document.querySelectorAll('.remove');
 
+			const btnAdd = BX('add');
+
 			btns.forEach(btn => {
 				BX.removeClass(btn, 'btn-active');
 			})
@@ -171,6 +174,33 @@ export class Admin
 					});
 				});
 			})
+
+			BX.bind(btnAdd, 'click', () => {
+				FormPurchase.render();
+				BX.bind(BX('action-button'), 'click', (event) => {
+
+					event.preventDefault();
+
+					const spinner = Tag.render`
+						<div class="admin__spinner spinner-grow text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					`;
+
+					BX.append(spinner, this.rootNode);
+
+					const purchase = {
+						title: BX('title').value,
+						price: Number(BX('price').value),
+					};
+
+					Requests.addPurchase(purchase).then(result => {
+						this.loadListPurchase();
+						document.querySelector('.popup-window').remove();
+						document.querySelector('.popup-window-overlay').remove();
+					});
+				});
+			});
 
 
 		})

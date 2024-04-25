@@ -21,8 +21,9 @@ CREATE TABLE up_relation_user_subscription
 
 CREATE TABLE up_single_purchase
 (
-	ID    INT PRIMARY KEY NOT NULL,
-	TITLE VARCHAR(100)    NOT NULL
+	ID    INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	TITLE VARCHAR(100)    NOT NULL,
+	PRICE INT
 );
 
 CREATE TABLE up_relation_user_single_purchase
