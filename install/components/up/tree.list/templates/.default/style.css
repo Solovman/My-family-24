@@ -61,3 +61,120 @@ footer {
 svg {
 	z-index: -1;
 }
+
+.check {
+	cursor: pointer;
+	position: relative;
+	margin: auto;
+	margin-right: 10px;
+	width: 18px;
+	height: 18px;
+	-webkit-tap-highlight-color: transparent;
+	transform: translate3d(0, 0, 0);
+}
+
+.check:before {
+	content: "";
+	position: absolute;
+	top: -15px;
+	left: -15px;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: rgba(34, 50, 84, 0.03);
+	opacity: 0;
+	transition: opacity .2s ease;
+}
+
+.check svg {
+	position: relative;
+	z-index: 1;
+	margin-top: -6px;
+	fill: none;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke: #C8CCD4;
+	stroke-width: 1.5;
+	transform: translate3d(0, 0, 0);
+	transition: all .2s ease;
+
+}
+.check svg path {
+	stroke-dasharray: 60;
+	stroke-dashoffset: 0;
+}
+
+.check svg polyline {
+	stroke-dasharray: 22;
+	stroke-dashoffset: 66;
+}
+
+.check:hover:before
+{
+	opacity: 1;
+}
+
+.check:hover svg {
+	stroke: #00ceaa;
+}
+
+#cbx:checked + .check svg
+{
+	stroke: #00ceaa;
+}
+
+#cbx:checked + .check svg path
+{
+	stroke-dashoffset: 60;
+	transition: all .3s linear;
+}
+
+#cbx:checked + .check svg polyline
+{
+	stroke-dashoffset: 42;
+	transition: all .2s linear;
+	transition-delay: .15s;
+}
+
+.popup-window {
+	width: 35%;
+	border-radius: 5px;
+}
+
+.security-text {
+	font-size: 22px;
+	line-height: 22px;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	color: #000000;
+}
+
+.security-info {
+	margin-bottom: 20px;
+	font-size: 22px;
+	text-align: center;
+	line-height: 22px;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	color: #000000;
+}
+
+.security-checkbox {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.security-save {
+	padding: 3px 30px;
+	border: none;
+	background-color: #00ceaa;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	border-radius: 5px;
+	font-size: 22px;
+	color: #fff;
+	cursor: pointer;
+	margin-left: auto;
+}
+
+.security {
+	display: flex !important;
+	flex-direction: column;
+}
