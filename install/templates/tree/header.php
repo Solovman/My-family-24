@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 global $USER;
 
-use Up\Tree\Services\Repository\UserService;
-
 $currentUrl = request()->getRequestUri();
 ?>
 
@@ -255,8 +253,8 @@ $currentUrl = request()->getRequestUri();
 						<div class="buttons">
 							<div class="header__icon">
 								<span class="header__icon-name">
-									<a href="/account/" class="name__link">
-										My account: <?= htmlspecialcharsEx(UserService::getUserNameById()) ?: GetMessage('UP_HEADER_ICON_NAME') ?>
+									<a href="/account/" class="name__link" style="display:flex;">
+										My account: <?= htmlspecialcharsEx($USER->GetLogin()) ?: GetMessage('UP_HEADER_ICON_NAME') ?>
 									</a>
 								</span>
 							</div>
