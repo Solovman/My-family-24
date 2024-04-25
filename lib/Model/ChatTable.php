@@ -8,29 +8,26 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,
 	Bitrix\Main\ORM\Fields\DatetimeField,
 	Bitrix\Main\ORM\Fields\IntegerField,
-	Bitrix\Main\ORM\Fields\TextField,
 	Bitrix\Main\Type\DateTime;
-use Bitrix\Main\ORM\Fields\Relations\Reference;
-use Bitrix\Main\ORM\Query\Join;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
 
 Loc::loadMessages(__FILE__);
 
 /**
- * Class CommentTable
+ * Class ChatTable
  *
  * Fields:
  * <ul>
  * <li> ID int mandatory
- * <li> PUBLICATION_ID int mandatory
  * <li> AUTHOR_ID int mandatory
- * <li> COMMENT text mandatory
+ * <li> RECIPIENT_ID int mandatory
  * <li> CREATED_AT datetime optional default current datetime
  * </ul>
  *
- * @package Bitrix\Comment
+ * @package Bitrix\Chat
  **/
 
-class CommentTable extends DataManager
+class ChatTable extends DataManager
 {
 	/**
 	 * Returns DB table name for entity.
@@ -39,7 +36,7 @@ class CommentTable extends DataManager
 	 */
 	public static function getTableName()
 	{
-		return 'up_comment';
+		return 'up_chat';
 	}
 
 	/**
@@ -55,28 +52,21 @@ class CommentTable extends DataManager
 				[
 					'primary' => true,
 					'autocomplete' => true,
-					'title' => Loc::getMessage('COMMENT_ENTITY_ID_FIELD')
-				]
-			),
-			new IntegerField(
-				'PUBLICATION_ID',
-				[
-					'required' => true,
-					'title' => Loc::getMessage('COMMENT_ENTITY_PUBLICATION_ID_FIELD')
+					'title' => Loc::getMessage('CHAT_ENTITY_ID_FIELD')
 				]
 			),
 			new IntegerField(
 				'AUTHOR_ID',
 				[
 					'required' => true,
-					'title' => Loc::getMessage('COMMENT_ENTITY_AUTHOR_ID_FIELD')
+					'title' => Loc::getMessage('CHAT_ENTITY_AUTHOR_ID_FIELD')
 				]
 			),
-			new TextField(
-				'COMMENT',
+			new IntegerField(
+				'RECIPIENT_ID',
 				[
 					'required' => true,
-					'title' => Loc::getMessage('COMMENT_ENTITY_COMMENT_FIELD')
+					'title' => Loc::getMessage('CHAT_ENTITY_RECIPIENT_ID_FIELD')
 				]
 			),
 			new DatetimeField(
@@ -86,14 +76,11 @@ class CommentTable extends DataManager
 					{
 						return new DateTime();
 					},
-					'title' => Loc::getMessage('COMMENT_ENTITY_CREATED_AT_FIELD')
+					'title' => Loc::getMessage('CHAT_ENTITY_CREATED_AT_FIELD')
 				]
 			),
-			'COMMENT_PUBLICATION' => (new Reference(
-				'COMMENT_PUBLICATION',
-				PublicationTable::class,
-				Join::on('this.PUBLICATION_ID', 'ref.ID')
-			)) ->configureJoinType('inner'),
+			'CHAT_MESSAGE' => (new OneToMany('CHAT_MESSAGE', MessageTable::class, 'MESSAGE_CHAT'))->configureJoinType('inner'),
 		];
 	}
 }
+
