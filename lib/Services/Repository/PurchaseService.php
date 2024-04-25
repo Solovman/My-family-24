@@ -57,7 +57,7 @@ class PurchaseService
 	public static function getPurchases(): array
 	{
 		return PurchaseTable::query()
-							->setSelect(['ID', 'TITLE'])
+							->setSelect(['ID', 'TITLE', 'PRICE'])
 							->exec()
 							->fetchAll();
 	}

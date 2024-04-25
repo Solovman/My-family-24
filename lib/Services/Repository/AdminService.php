@@ -8,6 +8,7 @@ use Bitrix\Main\Type\DateTime;
 use Exception;
 use Up\Tree\Entity\Admin\AdminSubscription;
 use Up\Tree\Entity\Admin\AdminSubscriptionAdding;
+use Up\Tree\Entity\Purchase;
 use Up\Tree\Entity\Subscription;
 use Up\Tree\Entity\UserSubscription;
 use Up\Tree\Model\PurchaseTable;
@@ -66,6 +67,25 @@ class AdminService
 			'NUMBER_NODES' => $subscription->numberNodes,
 			'CUSTOMIZATION' => $subscription->customization
 		]);
+
+		if (!$result->isSuccess())
+		{
+			return false;
+
+		}
+
+		return $result->getId();
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function addPurchase(Purchase $purchase ): bool|int|array
+	{
+		$result = PurchaseTable::add([
+											 'TITLE' => $purchase->title,
+											 'PRICE' => $purchase->price,
+										 ]);
 
 		if (!$result->isSuccess())
 		{

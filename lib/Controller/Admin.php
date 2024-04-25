@@ -141,6 +141,24 @@ class Admin extends Engine\Controller
 	/**
 	 * @throws Exception
 	 */
+	public static function addPurchaseAction(array $purchase): array
+	{
+		$newPurchase = new Purchase(
+			null,
+			$purchase['title'],
+			(int) $purchase['price'],
+		);
+
+		$result = AdminService::addPurchase($newPurchase);
+
+		return [
+			'addId' => $result
+		];
+	}
+
+	/**
+	 * @throws Exception
+	 */
 	public static function removePurchaseAction(int $purchaseId): void
 	{
 		AdminService::removePurchase($purchaseId);

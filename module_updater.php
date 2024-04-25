@@ -93,12 +93,12 @@ __treeMigrate(8, static function ($updater, $DB)
 	if ($updater->CanUpdateDatabase())
 	{
 		$DB->query("
-		INSERT INTO up_single_purchase (ID, TITLE)
-		VALUES  (1, 'Sriniz'),
-               (2, 'Multiple'),
-               (3, 'Royal'),
-               (4, 'Hugo'),
-               (5, 'Dark Theme');");
+		INSERT INTO up_single_purchase (ID, TITLE, PRICE)
+		VALUES  (1, 'Sriniz', 13),
+               (2, 'Multiple', 12),
+               (3, 'Royal', 11),
+               (4, 'Hugo', null),
+               (5, 'Dark Theme', 5);");
 	}
 });
 

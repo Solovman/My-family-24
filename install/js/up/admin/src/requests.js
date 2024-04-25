@@ -166,5 +166,25 @@ export class Requests
 				})
 			;
 		});
+
 	}
+
+	static addPurchase(purchase) {
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.admin.addPurchase', {
+					data: {
+						purchase: purchase
+					}
+				})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				})
+			;
+		});
+
+	}
+
 }
