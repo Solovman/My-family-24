@@ -1,5 +1,6 @@
 import {Type, Tag} from 'main.core';
 import {ModalWindow} from "./modalWindow";
+import {Modal} from "./modalWindow/modal.js";
 
 export class TreeList
 {
@@ -76,41 +77,6 @@ export class TreeList
 		}
 	}
 
-
-	handleUpdateSearchStatusButtonClick(element) {
-		const treeId = element.dataset.btnId;
-		console.log(treeId);
-		if (treeId !== '') {
-				if(element.dataset.btnType === 'activated') {
-					const confirmUpdate = confirm("Do you want to activate search in this tree? Your information about the tree will be available to other people")
-					if (confirmUpdate)
-					{
-						this.updateSecuritySearchStatus(treeId, 0)
-							.then(() => {
-								this.reload();
-							})
-							.catch((error) => {
-								console.error('Error when update security status a tree:', error);
-							});
-					}
-				}
-				else {
-					const confirmUpdate = confirm("Do you want to disable searching in this tree? Your information about the tree will not be available to other people")
-					if (confirmUpdate)
-					{
-						this.updateSecuritySearchStatus(treeId, 1)
-							.then(() => {
-								this.reload();
-							})
-							.catch((error) => {
-								console.error('Error when update security status a tree:', error);
-							});
-					}
-				}
-
-		}
-	}
-
 	reload()
 	{
 		this.loadList()
@@ -132,7 +98,6 @@ export class TreeList
 					})
 				.then((responce) => {
 					const treeList = responce.data.trees;
-					// console.log( typeof treeList[0].createdAt)
 					resolve(treeList);
 				})
 				.catch((error) => {
@@ -176,24 +141,6 @@ export class TreeList
 		});
 	}
 
-	updateSecuritySearchStatus(id, securityStatus) {
-		return new Promise((resolve, reject) => {
-			BX.ajax.runAction('up:tree.trees.updateSecuritySearchStatus', {
-					data: {
-						id: id,
-						securityStatus: securityStatus
-					}
-				})
-				.then((response) => {
-					resolve(response.data);
-				})
-				.catch((error) => {
-					reject(error);
-				})
-			;
-		});
-	}
-
 	render()
 	{
 		this.rootNode.innerHTML = '';
@@ -201,10 +148,6 @@ export class TreeList
 		const treeContainerNode = Tag.render`<div class="columns cards-container"></div>`;
 
 		this.treeList.forEach(trees => {
-			console.log(trees);
-			const securityStatusIcon = trees.is_security ? '/local/modules/up.tree/images/user-search.svg' : '/local/modules/up.tree/images/disable-search.svg';
-			const securityStatusAction = trees.is_security ? 'activated' : 'disabled'
-			console.log(securityStatusIcon);
 			const treeNode = Tag.render`
 				<div class="columns is-multiline">
 					<div class="column is-two-fifth">
@@ -216,11 +159,6 @@ export class TreeList
 										</a>
 										<input class="tree-card" type="hidden" name="treeId" value="${trees.id}" id="treeId${trees.id}">
 										<div style="display: flex; flex-direction:row; align-items: center; justify-content: center">
-											<button data-btn-type="${securityStatusAction}" data-btn-id="${trees.id}" type="button" class="card-header-icon updateSearchStatusButton" id = "activatedSearch">
-												<span style="padding-top: 7px" data-btn-type="${securityStatusAction}" data-btn-id="${trees.id}" id="span${trees.id}" class="icon disabled">
-													<img data-btn-type="${securityStatusAction}" data-btn-id="${trees.id}"  src="${securityStatusIcon}" alt="search/disable-search">
-												</span>
-											</button>
 											<button id="button${trees.id}" type="button" class="card-header-icon delTreeButton" aria-label="delete task" data-tree-id="${trees.id}">
 												<span id="span${trees.id}" class="icon disabled">
 													<?xml version="1.0" ?>
@@ -231,6 +169,11 @@ export class TreeList
 														<path fill="white" d="M26.9,35.1c-0.6,0-1-0.4-1-1V17.4c0-0.6,0.4-1,1-1s1,0.4,1,1v16.7C27.9,34.6,27.4,35.1,26.9,35.1z"/>
 														</g><g><path fill="white"  d="M19.9,35.1c-0.6,0-1-0.4-1-1V17.4c0-0.6,0.4-1,1-1s1,0.4,1,1v16.7C20.9,34.6,20.4,35.1,19.9,35.1z"/></g></svg>
 													</span>
+											</button>
+											<button data-btn-tree = "${trees.id}" class="card-header-icon action-tree">
+												<svg data-btn-tree = "${trees.id}" width="20px" height="20px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#fff" class="bi bi-three-dots-vertical">
+												  <path data-btn-tree = "${trees.id}" d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+												</svg>
 											</button>
 										</div>
 									</div>
@@ -250,12 +193,6 @@ export class TreeList
 		});
 		this.rootNode.appendChild(treeContainerNode);
 
-		const updateSearchStatusButtons = document.querySelectorAll('.updateSearchStatusButton');
-		updateSearchStatusButtons.forEach(button => {
-			button.addEventListener('click', (event) => {
-				this.handleUpdateSearchStatusButtonClick(event.target);
-			});
-		});
 
 		const removeButtons = document.querySelectorAll('.delTreeButton');
 		removeButtons.forEach(button => {
@@ -263,5 +200,15 @@ export class TreeList
 				this.handleRemoveTreeButtonClick(event.target);
 			});
 		});
+
+		const actionTreeBtn = document.querySelectorAll('.action-tree');
+
+		actionTreeBtn.forEach(btn => {
+			BX.bind(btn, 'click', (event) => {
+				const treeId = event.target.dataset.btnTree;
+				const data = this.treeList.find(item => item.id === Number(treeId));
+				Modal.render(data)
+			})
+		})
 	}
 }
