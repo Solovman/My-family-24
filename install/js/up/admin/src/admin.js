@@ -38,6 +38,7 @@ export class Admin
 
 	loadListSub() {
 		Requests.getListSubscription().then(list => {
+			this.rootNode.innerHTML = '';
 			this.listSub = list;
 
 			const btns = document.querySelectorAll('.admin__btn');
@@ -47,8 +48,6 @@ export class Admin
 			})
 
 			BX.addClass(BX('sub'), 'btn-active');
-
-			this.rootNode.innerHTML = '';
 
 			BX.append(SubscriptionTable.render(list), this.rootNode);
 
@@ -76,7 +75,7 @@ export class Admin
 						price: Number(BX('price').value),
 						numberTrees: Number(BX('numberTrees').value),
 						numberNodes: Number(BX('numberNodes').value),
-						customization: Number(BX('customization').value)
+						customization:  Number(BX('customization-select').value)
 					};
 
 					Requests.addSubscription(subscription).then(result => {
@@ -95,8 +94,10 @@ export class Admin
 				});
 			})
 
-			btnDeactivation.forEach(btn => {
-				BX.bind(btn, 'click', (event) => {
+			const checkbox = document.querySelectorAll('.input-checkbox');
+
+			checkbox.forEach(el => {
+				BX.bind(el, 'click', (event) => {
 					const id = event.target.dataset.btnId;
 
 					const spinner = Tag.render`
@@ -107,29 +108,18 @@ export class Admin
 
 					BX.append(spinner, this.rootNode);
 
-					Requests.deactivationSubscription(Number(id), 0).then(result => {
+					if (!el.checked) {
+						Requests.deactivationSubscription(Number(id), 0).then(result => {
 
-						this.loadListSub();
-					});
-				});
-			})
+							this.loadListSub();
+						});
+					} else {
+						Requests.deactivationSubscription(Number(id), 1).then(result => {
+							this.loadListSub();
+						});
+					}
 
-			btnActivation.forEach(btn => {
-				BX.bind(btn, 'click', (event) => {
-					const id = event.target.dataset.btnId;
-
-					const spinner = Tag.render`
-						<div class="admin__spinner spinner-grow text-primary" role="status">
-							<span class="visually-hidden">Loading...</span>
-						</div>
-					`;
-
-					BX.append(spinner, this.rootNode);
-
-					Requests.deactivationSubscription(Number(id), 1).then(result => {
-						this.loadListSub();
-					});
-				});
+				})
 			})
 
 		})

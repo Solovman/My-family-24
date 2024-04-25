@@ -48,12 +48,17 @@ export class RenderForm
 			
 				<div class="input-container">
 					<label class="modal-form-label" for="customization">Разрешить костамизацию:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.customization : ''}" id="customization" type="text" placeholder="Customization" />
+					<select id="customization-select" class="modal-select" name="customization">
+						<option class="modal-option" value="1">Разрешить</option>
+						<option class="modal-option" value="0">Запретить</option>
+					</select>
 				</div>
 			
 				<input id="edit-button" type="submit" value="${data !== null ? 'Edit' : 'Add'}">
 			</form>
 		</div>
 		`;
+
+
 	}
 }

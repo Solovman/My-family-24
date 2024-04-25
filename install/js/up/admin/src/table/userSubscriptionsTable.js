@@ -6,12 +6,12 @@ export class UserSubscriptionsTable
 	{
 		const headingTable = Tag.render`
 			<li class="table-header">
-				<div class="table-head col col-1">USER_ID</div>
-				<div class="table-head col col-1">SUBSCRIPTION_ID</div>
-				<div class="table-head col col-1">COUNT_TREES</div>
-				<div class="table-head col col-1">COUNT_NODES</div>
-				<div class="table-head col col-1">SUBSCRIPTION_BUY_TIME</div>
-				<div class="table-head col col-1">ACTION</div>
+				<div class="table-head col col-1">ID пользователя</div>
+				<div class="table-head col col-1">ID подписки</div>
+				<div class="table-head col col-1">Кол-во деревьев</div>
+				<div class="table-head col col-1">Кол-во вершин</div>
+				<div class="table-head col col-1">Время покупки</div>
+				<div class="table-head col col-1">Действия</div>
 			</li>
 		`;
 

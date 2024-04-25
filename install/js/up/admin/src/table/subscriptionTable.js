@@ -8,13 +8,13 @@ export class SubscriptionTable
 		const headingTable = Tag.render`
 			<li class="table-header">
 				<div class="table-head col col-1">ID</div>
-				<div class="table-head col col-1">NAME</div>
-				<div class="table-head col col-1">PRICE</div>
-				<div class="table-head col col-1">NUMBER_TREES</div>
-				<div class="table-head col col-1">NUMBER_NODES</div>
-				<div class="table-head col col-1">CUSTOMIZATION</div>
-				<div class="table-head col col-1">IS_ACTIVE</div>
-				<div class="table-head col col-1">ACTION</div>
+				<div class="table-head col col-1">Подписка</div>
+				<div class="table-head col col-1">Цена</div>
+				<div class="table-head col col-1">Кол-во деревьев</div>
+				<div class="table-head col col-1">Кол-во вершин</div>
+				<div class="table-head col col-1">Кастомизация</div>
+				<div class="table-head col col-1">Статус</div>
+				<div class="table-head col col-1">Действия</div>
 			</li>
 		`;
 
@@ -42,27 +42,31 @@ export class SubscriptionTable
 					<div class="col col-1" data-label="price">${BX.util.htmlspecialchars(sub.price)}</div>
 					<div class="col col-1" data-label="numberTrees">${BX.util.htmlspecialchars(sub.numberTrees)}</div>
 					<div class="col col-1" data-label="numberNodest">${BX.util.htmlspecialchars(sub.numberNodes)}</div>
-					<div class="col col-1" data-label="customization">${String(BX.util.htmlspecialchars(!!sub.customization))}</div>
-					<div class="col col-1" data-label="customization">${String(BX.util.htmlspecialchars(!!sub.isActive))}</div>
+					<div class="col col-1" data-label="customization">${!!sub.customization ? 'Разрешить' : 'Запретить'}</div>
+					<div class="col col-1" data-label="customization">${!!sub.isActive ? 'Активна' : 'Неактивна'}</div>
 					<div class="col col-1" data-label="action">
 						<ul class="action-list">
 							<li class="action-item">
-								<button id="btnDeactivation" data-btn-id="${sub.id}" class="deactivation action-list-btn">
-									<svg data-btn-id="${sub.id}" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path data-btn-id="${sub.id}" d="M10 12V17" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										<path data-btn-id="${sub.id}" d="M14 12V17" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										<path data-btn-id="${sub.id}" d="M4 7H20" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										<path data-btn-id="${sub.id}" d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										<path data-btn-id="${sub.id}" d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<label class="checkbox">
+									<input class="input-checkbox" data-btn-id="${sub.id}" ${sub.isActive ? "checked" : ''} type="checkbox" />
+									<svg viewBox="0 0 21 18">
+										<symbol id="tick-path${sub.id}" viewBox="0 0 21 18" xmlns="http://www.w3.org/2000/svg">
+											<path d="M5.22003 7.26C5.72003 7.76 7.57 9.7 8.67 11.45C12.2 6.05 15.65 3.5 19.19 1.69" fill="none" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" />
+										</symbol>
+										<defs>
+											<mask id="tick${sub.id}">
+												<use class="tick mask" href="#tick-path${sub.id}" />
+											</mask>
+										</defs>
+										<use class="tick" href="#tick-path${sub.id}" stroke="currentColor" />
+										<path fill="white" mask="url(#tick${sub.id})" d="M18 9C18 10.4464 17.9036 11.8929 17.7589 13.1464C17.5179 15.6054 15.6054 17.5179 13.1625 17.7589C11.8929 17.9036 10.4464 18 9 18C7.55357 18 6.10714 17.9036 4.85357 17.7589C2.39464 17.5179 0.498214 15.6054 0.241071 13.1464C0.0964286 11.8929 0 10.4464 0 9C0 7.55357 0.0964286 6.10714 0.241071 4.8375C0.498214 2.39464 2.39464 0.482143 4.85357 0.241071C6.10714 0.0964286 7.55357 0 9 0C10.4464 0 11.8929 0.0964286 13.1625 0.241071C15.6054 0.482143 17.5179 2.39464 17.7589 4.8375C17.9036 6.10714 18 7.55357 18 9Z" />
 									</svg>
-								</button>
-							</li>
-							<li class="action-item">
-								<button id="btnActivation" data-btn-id="${sub.id}" class="activation action-list-btn">
-									<svg data-btn-id="${sub.id}" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path data-btn-id="${sub.id}" fill-rule="evenodd" clip-rule="evenodd" d="M8.70711 4.70711C9.09763 4.31658 9.09763 3.68342 8.70711 3.29289C8.31658 2.90237 7.68342 2.90237 7.29289 3.29289L3.29289 7.29289C2.90237 7.68342 2.90237 8.31658 3.29289 8.70711L7.29289 12.7071C7.68342 13.0976 8.31658 13.0976 8.70711 12.7071C9.09763 12.3166 9.09763 11.6834 8.70711 11.2929L6.41421 9H16C16.5523 9 17 8.55228 17 8C17 7.44772 16.5523 7 16 7H6.41421L8.70711 4.70711ZM20.7071 15.2929L16.7071 11.2929C16.3166 10.9024 15.6834 10.9024 15.2929 11.2929C14.9024 11.6834 14.9024 12.3166 15.2929 12.7071L17.5858 15H8C7.44772 15 7 15.4477 7 16C7 16.5523 7.44772 17 8 17H17.5858L15.2929 19.2929C14.9024 19.6834 14.9024 20.3166 15.2929 20.7071C15.6834 21.0976 16.3166 21.0976 16.7071 20.7071L20.7071 16.7071C21.0976 16.3166 21.0976 15.6834 20.7071 15.2929Z" fill="blue"/>
+									<svg class="lines" viewBox="0 0 11 11">
+										<path d="M5.88086 5.89441L9.53504 4.26746" />
+										<path d="M5.5274 8.78838L9.45391 9.55161" />
+										<path d="M3.49371 4.22065L5.55387 0.79198" />
 									</svg>
-								</button>
+								</label>
 							</li>
 							<li class="action-item">
 								<button data-btn-id="${sub.id}" id="btnEdit" class="action-list-btn edit">

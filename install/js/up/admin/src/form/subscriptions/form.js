@@ -24,6 +24,15 @@ export class Form
 					this.setContent(RenderForm.render(data));
 
 					if (data !== null) {
+						const options = document.querySelectorAll('.modal-option');
+
+						options.forEach(option => {
+							if (Number(option.value) === data.customization)
+							{
+								option.selected = true;
+							}
+						})
+
 						BX.bind(BX('edit-button'), 'click', (event) => {
 
 							event.preventDefault();
@@ -42,7 +51,7 @@ export class Form
 								price: BX('price').value,
 								numberTrees: BX('numberTrees').value,
 								numberNodes: BX('numberNodes').value,
-								customization: BX('customization').value
+								customization: Number(BX('customization-select').value)
 							};
 
 							Requests.updateSubscription(newSubscription).then(result => {

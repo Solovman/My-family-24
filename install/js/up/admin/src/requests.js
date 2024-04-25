@@ -2,7 +2,11 @@ export class Requests
 {
 	static getListSubscription() {
 		return new Promise((resolve, reject) => {
-			BX.ajax.runAction('up:tree.admin.getListSubscription')
+			BX.ajax.runAction('up:tree.admin.getListSubscription', {
+					navigation: {
+						page: 3
+					}
+				})
 				.then((response) => {
 					const listSubscription = response.data.listSubscription;
 
