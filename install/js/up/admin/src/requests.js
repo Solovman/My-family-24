@@ -180,7 +180,24 @@ export class Requests
 				})
 			;
 		});
+	}
 
+	static addPurchaseUser(userId, purchaseId) {
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.admin.addPurchaseUserRelation', {
+					data: {
+						userId: userId,
+						purchaseId: purchaseId
+					}
+				})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				})
+			;
+		});
 	}
 
 }

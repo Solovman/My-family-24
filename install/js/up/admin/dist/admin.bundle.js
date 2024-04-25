@@ -163,6 +163,22 @@ this.BX.Up = this.BX.Up || {};
 	        });
 	      });
 	    }
+	  }, {
+	    key: "addPurchaseUser",
+	    value: function addPurchaseUser(userId, purchaseId) {
+	      return new Promise(function (resolve, reject) {
+	        BX.ajax.runAction('up:tree.admin.addPurchaseUserRelation', {
+	          data: {
+	            userId: userId,
+	            purchaseId: purchaseId
+	          }
+	        }).then(function (response) {
+	          resolve(response.data);
+	        })["catch"](function (error) {
+	          reject(error);
+	        });
+	      });
+	    }
 	  }]);
 	  return Requests;
 	}();
@@ -334,7 +350,7 @@ this.BX.Up = this.BX.Up || {};
 	  babelHelpers.createClass(UserPurchaseTable, null, [{
 	    key: "render",
 	    value: function render(data) {
-	      var headingTable = main_core.Tag.render(_templateObject$5 || (_templateObject$5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<li class=\"table-header\">\n\t\t\t\t<div class=\"table-head col col-1\">USER_ID</div>\n\t\t\t\t<div class=\"table-head col col-1\">SINGLE_PURCHASE_ID</div>\n\t\t\t\t<div class=\"table-head col col-1\">ACTION</div>\n\t\t\t</li>\n\t\t"])));
+	      var headingTable = main_core.Tag.render(_templateObject$5 || (_templateObject$5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<li class=\"table-header\">\n\t\t\t\t<div class=\"table-head col col-1\">USER ID</div>\n\t\t\t\t<div class=\"table-head col col-1\">PURCHASE ID</div>\n\t\t\t\t<div class=\"table-head col col-1\">ACTION</div>\n\t\t\t</li>\n\t\t"])));
 	      var dataUserPurchase = this.renderList(data);
 	      var table = main_core.Tag.render(_templateObject2$3 || (_templateObject2$3 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<ul class=\"responsive-table\"></ul>\n\t\t"])));
 	      BX.append(headingTable, table);
@@ -437,13 +453,88 @@ this.BX.Up = this.BX.Up || {};
 	  babelHelpers.createClass(RenderForm, null, [{
 	    key: "render",
 	    value: function render(data) {
-	      return main_core.Tag.render(_templateObject$8 || (_templateObject$8 = babelHelpers.taggedTemplateLiteral(["\n\t\t<div class=\"sign-up-modal\">\n\t\t\t<div class=\"logo-container\">\n\t\t\t\t<svg height=\"90px\" width=\"90px\" version=\"1.1\" id=\"_x32_\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" \n\t\t\t\tviewBox=\"0 0 512 512\"  xml:space=\"preserve\">\n\t\t\t\t\t<style type=\"text/css\">\n\t\t\t\t\t.st0{fill:#fff;}\n\t\t\t\t\t</style>\n\t\t\t\t\t<g>\n\t\t\t\t\t\t<path class=\"st0\" d=\"M465.771,234.587c0-26.914-10.749-51.289-28.142-69.166c0.629-4.688,1.075-9.437,1.075-14.301\n\t\t\t\t\t\tc0-54.151-40.625-98.726-93.05-105.14C319.308,17.754,281.874,0,240.206,0C160.476,0,95.853,64.624,95.853,144.361\n\t\t\t\t\t\tc0,0.422,0.062,0.821,0.062,1.236c-29.975,20.27-49.686,54.58-49.686,93.494c0,53.346,37.08,97.937,86.842,109.667\n\t\t\t\t\t\tc10.089,24.69,34.318,42.106,62.636,42.106c10.557,0,20.508-2.486,29.407-6.798V512h77.528v-83.988l30.236-51.657\n\t\t\t\t\t\tc30.95-2.256,57.097-21.766,68.743-49.033C439.087,313.128,465.771,277.022,465.771,234.587z M260.615,342.229\n\t\t\t\t\t\tc0.66,0.928,1.343,1.826,2.041,2.724l-3.43,1.396C259.725,344.984,260.208,343.625,260.615,342.229z M284.874,405.402v-40.579\n\t\t\t\t\t\tc7.181,4.366,15.076,7.642,23.492,9.622L284.874,405.402z\"/>\n\t\t\t\t\t</g>\n\t\t\t\t</svg>\n\t\t\t</div>\n\t\t\t\n\t\t\t<form class=\"details\">\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"subId\">ID \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0438:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"subId\" type=\"number\" placeholder=\"ID\" />\n\t\t\t\t</div>\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"countTrees\">\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0434\u0435\u0440\u0435\u0432\u044C\u0435\u0432:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"countTrees\" type=\"number\" placeholder=\"countTrees\" />\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"countNodes\">\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0432\u0435\u0440\u0448\u0438\u043D:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"countNodes\" type=\"number\" placeholder=\"countNodes\" />\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"buyTime\">\u0412\u0440\u0435\u043C\u044F \u043F\u043E\u043A\u0443\u043F\u043A\u0438:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"buyTime\" type=\"datetime-local\" step=\"2\" placeholder=\"buyTime\" />\n\t\t\t\t</div>\n\t\t\t\n\t\t\t\n\t\t\t\t<input id=\"edit-button\" type=\"submit\" value=\"Edit\">\n\t\t\t</form>\n\t\t</div>\n\t\t"])), data.subscriptionId, data.countTrees, data.countNodes, data.buyTime);
+	      console.log(data);
+	      console.log(data.userId);
+	      console.log(data.purchaseId);
+	      return main_core.Tag.render(_templateObject$8 || (_templateObject$8 = babelHelpers.taggedTemplateLiteral(["\n\t\t<div class=\"sign-up-modal\">\n\t\t\t<div class=\"logo-container\">\n\t\t\t\t<svg height=\"90px\" width=\"90px\" version=\"1.1\" id=\"_x32_\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" \n\t\t\t\tviewBox=\"0 0 512 512\"  xml:space=\"preserve\">\n\t\t\t\t\t<style type=\"text/css\">\n\t\t\t\t\t.st0{fill:#fff;}\n\t\t\t\t\t</style>\n\t\t\t\t\t<g>\n\t\t\t\t\t\t<path class=\"st0\" d=\"M465.771,234.587c0-26.914-10.749-51.289-28.142-69.166c0.629-4.688,1.075-9.437,1.075-14.301\n\t\t\t\t\t\tc0-54.151-40.625-98.726-93.05-105.14C319.308,17.754,281.874,0,240.206,0C160.476,0,95.853,64.624,95.853,144.361\n\t\t\t\t\t\tc0,0.422,0.062,0.821,0.062,1.236c-29.975,20.27-49.686,54.58-49.686,93.494c0,53.346,37.08,97.937,86.842,109.667\n\t\t\t\t\t\tc10.089,24.69,34.318,42.106,62.636,42.106c10.557,0,20.508-2.486,29.407-6.798V512h77.528v-83.988l30.236-51.657\n\t\t\t\t\t\tc30.95-2.256,57.097-21.766,68.743-49.033C439.087,313.128,465.771,277.022,465.771,234.587z M260.615,342.229\n\t\t\t\t\t\tc0.66,0.928,1.343,1.826,2.041,2.724l-3.43,1.396C259.725,344.984,260.208,343.625,260.615,342.229z M284.874,405.402v-40.579\n\t\t\t\t\t\tc7.181,4.366,15.076,7.642,23.492,9.622L284.874,405.402z\"/>\n\t\t\t\t\t</g>\n\t\t\t\t</svg>\n\t\t\t</div>\n\t\t\t\n\t\t\t<form class=\"details\">\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"userId\">ID \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"userId\" type=\"number\" placeholder=\"USER ID\" />\n\t\t\t\t</div>\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"purchaseId\">ID \u043F\u043E\u043A\u0443\u043F\u043A\u0438:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"purchaseId\" type=\"number\" placeholder=\"PURCHASE ID\" />\n\t\t\t\t</div>\n\t\t\t\t<input id=\"action-button\" type=\"submit\" value=\"Edit\">\n\t\t\t</form>\n\t\t</div>\n\t\t"])), data.userId, data.purchaseId);
 	    }
 	  }]);
 	  return RenderForm;
 	}();
 
 	var _templateObject$9;
+	var FormUserPurchase = /*#__PURE__*/function () {
+	  function FormUserPurchase() {
+	    babelHelpers.classCallCheck(this, FormUserPurchase);
+	  }
+	  babelHelpers.createClass(FormUserPurchase, null, [{
+	    key: "render",
+	    value: function render(data) {
+	      var popupId = "ModalPopup_" + new Date().getTime();
+	      var modalPopup = BX.PopupWindowManager.create(popupId, null, {
+	        autoHide: true,
+	        offsetLeft: 0,
+	        offsetTop: 0,
+	        overlay: true,
+	        draggable: {
+	          restrict: true
+	        },
+	        closeByEsc: true,
+	        closeIcon: {
+	          right: "12px",
+	          top: "10px"
+	        },
+	        content: "<div style=\"width:400px;height:400px; text-align: center;\"><span style=\"position:absolute;left:50%; top:50%\"><img src=\"/bitrix/templates/eshop_adapt_yellow/img/wait.gif\"/></span></div>",
+	        events: {
+	          onPopupShow: function onPopupShow() {
+	            var _this = this;
+	            this.setContent(RenderForm$2.render(data));
+	            BX.bind(BX('action-button'), 'click', function (event) {
+	              event.preventDefault();
+	              var spinner = main_core.Tag.render(_templateObject$9 || (_templateObject$9 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t"])));
+	              BX.append(spinner, BX('table'));
+	              var newUserSubscription = {
+	                //
+	                userId: Number(data.userId),
+	                subscriptionId: BX('subId').value,
+	                countTrees: BX('countTrees').value,
+	                countNodes: BX('countNodes').value,
+	                buyTime: BX('buyTime').value.length !== 0 ? BX('buyTime').value : null
+	              };
+	              Requests.updateUserSubscription(newUserSubscription).then(function (result) {
+	                new Admin({
+	                  rootNodeId: 'table'
+	                });
+	                _this.destroy();
+	              });
+	            });
+	          },
+	          onPopupClose: function onPopupClose() {
+	            this.destroy();
+	          }
+	        }
+	      });
+	      modalPopup.show();
+	    }
+	  }]);
+	  return FormUserPurchase;
+	}();
+
+	var _templateObject$a;
+	var RenderForm$3 = /*#__PURE__*/function () {
+	  function RenderForm() {
+	    babelHelpers.classCallCheck(this, RenderForm);
+	  }
+	  babelHelpers.createClass(RenderForm, null, [{
+	    key: "render",
+	    value: function render(data) {
+	      return main_core.Tag.render(_templateObject$a || (_templateObject$a = babelHelpers.taggedTemplateLiteral(["\n\t\t<div class=\"sign-up-modal\">\n\t\t\t<div class=\"logo-container\">\n\t\t\t\t<svg height=\"90px\" width=\"90px\" version=\"1.1\" id=\"_x32_\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" \n\t\t\t\tviewBox=\"0 0 512 512\"  xml:space=\"preserve\">\n\t\t\t\t\t<style type=\"text/css\">\n\t\t\t\t\t.st0{fill:#fff;}\n\t\t\t\t\t</style>\n\t\t\t\t\t<g>\n\t\t\t\t\t\t<path class=\"st0\" d=\"M465.771,234.587c0-26.914-10.749-51.289-28.142-69.166c0.629-4.688,1.075-9.437,1.075-14.301\n\t\t\t\t\t\tc0-54.151-40.625-98.726-93.05-105.14C319.308,17.754,281.874,0,240.206,0C160.476,0,95.853,64.624,95.853,144.361\n\t\t\t\t\t\tc0,0.422,0.062,0.821,0.062,1.236c-29.975,20.27-49.686,54.58-49.686,93.494c0,53.346,37.08,97.937,86.842,109.667\n\t\t\t\t\t\tc10.089,24.69,34.318,42.106,62.636,42.106c10.557,0,20.508-2.486,29.407-6.798V512h77.528v-83.988l30.236-51.657\n\t\t\t\t\t\tc30.95-2.256,57.097-21.766,68.743-49.033C439.087,313.128,465.771,277.022,465.771,234.587z M260.615,342.229\n\t\t\t\t\t\tc0.66,0.928,1.343,1.826,2.041,2.724l-3.43,1.396C259.725,344.984,260.208,343.625,260.615,342.229z M284.874,405.402v-40.579\n\t\t\t\t\t\tc7.181,4.366,15.076,7.642,23.492,9.622L284.874,405.402z\"/>\n\t\t\t\t\t</g>\n\t\t\t\t</svg>\n\t\t\t</div>\n\t\t\t\n\t\t\t<form class=\"details\">\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"subId\">ID \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0438:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"subId\" type=\"number\" placeholder=\"ID\" />\n\t\t\t\t</div>\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"countTrees\">\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0434\u0435\u0440\u0435\u0432\u044C\u0435\u0432:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"countTrees\" type=\"number\" placeholder=\"countTrees\" />\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"countNodes\">\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0432\u0435\u0440\u0448\u0438\u043D:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"countNodes\" type=\"number\" placeholder=\"countNodes\" />\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"buyTime\">\u0412\u0440\u0435\u043C\u044F \u043F\u043E\u043A\u0443\u043F\u043A\u0438:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"buyTime\" type=\"datetime-local\" step=\"2\" placeholder=\"buyTime\" />\n\t\t\t\t</div>\n\t\t\t\n\t\t\t\n\t\t\t\t<input id=\"edit-button\" type=\"submit\" value=\"Edit\">\n\t\t\t</form>\n\t\t</div>\n\t\t"])), data.subscriptionId, data.countTrees, data.countNodes, data.buyTime);
+	    }
+	  }]);
+	  return RenderForm;
+	}();
+
+	var _templateObject$b;
 	var FormUserSub = /*#__PURE__*/function () {
 	  function FormUserSub() {
 	    babelHelpers.classCallCheck(this, FormUserSub);
@@ -469,10 +560,10 @@ this.BX.Up = this.BX.Up || {};
 	        events: {
 	          onPopupShow: function onPopupShow() {
 	            var _this = this;
-	            this.setContent(RenderForm$2.render(data));
+	            this.setContent(RenderForm$3.render(data));
 	            BX.bind(BX('edit-button'), 'click', function (event) {
 	              event.preventDefault();
-	              var spinner = main_core.Tag.render(_templateObject$9 || (_templateObject$9 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t"])));
+	              var spinner = main_core.Tag.render(_templateObject$b || (_templateObject$b = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t"])));
 	              BX.append(spinner, BX('table'));
 	              var newUserSubscription = {
 	                userId: Number(data.userId),
@@ -500,7 +591,7 @@ this.BX.Up = this.BX.Up || {};
 	  return FormUserSub;
 	}();
 
-	var _templateObject$a, _templateObject2$4, _templateObject3$4, _templateObject4, _templateObject5, _templateObject6;
+	var _templateObject$c, _templateObject2$4, _templateObject3$4, _templateObject4, _templateObject5, _templateObject6, _templateObject7;
 	var Admin = /*#__PURE__*/function () {
 	  function Admin() {
 	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -542,7 +633,7 @@ this.BX.Up = this.BX.Up || {};
 	          Form.render();
 	          BX.bind(BX('edit-button'), 'click', function (event) {
 	            event.preventDefault();
-	            var spinner = main_core.Tag.render(_templateObject$a || (_templateObject$a = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            var spinner = main_core.Tag.render(_templateObject$c || (_templateObject$c = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
 	            BX.append(spinner, _this.rootNode);
 	            var subscription = {
 	              level: BX('name').value,
@@ -670,6 +761,7 @@ this.BX.Up = this.BX.Up || {};
 	        BX.append(UserPurchaseTable.render(list), _this4.rootNode);
 	        var btns = document.querySelectorAll('.admin__btn');
 	        var btnRemove = document.querySelectorAll('.remove__user_purchase');
+	        var btnAdd = BX('add');
 	        console.log(btnRemove);
 	        btns.forEach(function (btn) {
 	          BX.removeClass(btn, 'btn-active');
@@ -686,6 +778,21 @@ this.BX.Up = this.BX.Up || {};
 	            BX.append(spinner, _this4.rootNode);
 	            Requests.removePurchaseUser(Number(userId), Number(purchaseId)).then(function (result) {
 	              _this4.loadListUserPurchase();
+	            });
+	          });
+	        });
+	        BX.bind(btnAdd, 'click', function () {
+	          FormUserPurchase.render(list);
+	          BX.bind(BX('action-button'), 'click', function (event) {
+	            event.preventDefault();
+	            var spinner = main_core.Tag.render(_templateObject7 || (_templateObject7 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            BX.append(spinner, _this4.rootNode);
+	            var userId = Number(BX('userId').value);
+	            var purchaseId = Number(BX('purchaseId').value);
+	            Requests.addPurchaseUser(userId, purchaseId).then(function (result) {
+	              _this4.loadListUserPurchase();
+	              document.querySelector('.popup-window').remove();
+	              document.querySelector('.popup-window-overlay').remove();
 	            });
 	          });
 	        });
