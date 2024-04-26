@@ -1,3 +1,9 @@
 body {
 	background-image: none !important;
 }
+
+#chat-container {
+	overflow: hidden;
+	overflow-y: scroll;
+	height: 700px;
+}
