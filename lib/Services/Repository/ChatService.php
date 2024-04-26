@@ -19,24 +19,36 @@ class ChatService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getChatIdsForCurrentUser(): array
+	public static function getChatsForCurrentUser(): array
 	{
 		global $USER;
-		$recipientId = $USER->GetID();
+		$recipientId = (int) $USER->GetID();
 		$chats = ChatTable::query()
-										  ->setSelect(['ID'])
-										  ->where('RECIPIENT_ID', $recipientId)
-										  ->exec();
+			->setSelect(['ID',
+				'AUTHOR_ID', 'RECIPIENT_ID',
+				'AUTHOR_DATA_NAME' => 'AUTHOR_DATA.NAME',
+				'AUTHOR_DATA_SURNAME' => 'AUTHOR_DATA.LAST_NAME',
+				'RECIPIENT_DATA_NAME' => 'RECIPIENT_DATA.NAME',
+				'RECIPIENT_DATA_SURNAME' => 'RECIPIENT_DATA.LAST_NAME',
+				'CREATED_AT'])
+			->setFilter([ 'LOGIC' => 'OR', 'RECIPIENT_ID' => $recipientId, 'AUTHOR_ID' => $recipientId])
+			->exec();
 
-		$chatIds = [];
+		$chatsList = [];
 
 		while($result = $chats->fetchObject())
 		{
-			$chatIds[] = $result->getId();
-
+			$chatsList[] = new Chat(
+				$result->getAuthorId(),
+				$result->getAuthorData()->getName() . ' ' . $result->getAuthorData()->getLastName(),
+				$result->getRecipientId(),
+				$result->getRecipientData()->getName() . ' ' . $result->getRecipientData()->getLastName(),
+				$result->getCreatedAt()->format('Y-m-d H:i:s'),
+				$result->getId()
+			);
 		}
 
-		return $chatIds;
+		return $chatsList;
 	}
 
 	/**

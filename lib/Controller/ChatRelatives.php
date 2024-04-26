@@ -23,10 +23,10 @@ class ChatRelatives extends Engine\Controller
 	public static function getChatsAction(): array
 	{
 
-		$chatsRelation = ChatService::getChatsForCurrentUser();
+		$chats = ChatService::getChatsForCurrentUser();
 
 		return [
-			//'listChats'  => $chats
+			'listChats'  => $chats
 		];
 	}
 
@@ -58,7 +58,8 @@ class ChatRelatives extends Engine\Controller
 	{
 		$chatResult = new Chat(
 			$authorId,
-			$recipientId
+			$recipientId,
+			null
 		);
 
 		try {
