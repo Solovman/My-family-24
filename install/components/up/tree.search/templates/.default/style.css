@@ -11,6 +11,11 @@ body {
 	font-size: 18px;
 	color: #60666d;
 }
+
+.notice-container {
+	text-align: end;
+}
+
 @media (min-width: 768px) {
 	.select-box {
 		width: 70%;
