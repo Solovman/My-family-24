@@ -45,11 +45,11 @@ export class Chat
 			const chats = Tag.render`
 				<div class="message is-info">
 					<div class="message-header" style="background-color: #00ceaa">
-						<p>${Number(currentUserId) === chat.authorId ? chat.recipientName : chat.authorName}</p>
+						<p>${Number(currentUserId) === chat.authorId ? BX.util.htmlspecialchars(chat.recipientName) : BX.util.htmlspecialchars(chat.authorName)}</p>
 						<button class="delete" aria-label="delete"></button>
 					</div>
 					<div class="message-body">
-						<a class="message-link" href="/chat/${chat.id}">Перейти к чату</a>
+						<a class="message-link" href="/chat/${chat.id}/">Перейти к чату</a>
 					</div>
 				</div>
 			`;
