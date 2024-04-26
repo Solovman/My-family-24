@@ -55,11 +55,11 @@ class ChatService
 	 * @throws SqlException
 	 * @throws Exception
 	 */
-	public static function addChat(Chat $chat): int|array
+	public static function addChat(int $recipientId, int $authorId): int|array
 	{
 		$chatData = [
-			"AUTHOR_ID" => $chat->getAuthorId(),
-			"RECIPIENT_ID" => $chat->getRecipientId(),
+			"AUTHOR_ID" => $authorId,
+			"RECIPIENT_ID" => $recipientId,
 		];
 
 		$result = ChatTable::add($chatData);
