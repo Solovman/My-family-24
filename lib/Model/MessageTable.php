@@ -90,11 +90,17 @@ class MessageTable extends DataManager
 				]
 			),
 
+			'AUTHOR_DATA' => (new Reference(
+				'AUTHOR_DATA',
+				UserTable::class,
+				Join::on('this.AUTHOR_ID', 'ref.ID')
+			))->configureJoinType('inner'),
+
 			'MESSAGE_CHAT' => (new Reference(
 				'MESSAGE_CHAT',
 				ChatTable::class,
 				Join::on('this.CHAT_ID', 'ref.ID')
-			)) ->configureJoinType('inner'),
+			))->configureJoinType('inner'),
 		];
 	}
 }

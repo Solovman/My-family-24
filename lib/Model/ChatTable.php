@@ -10,6 +10,8 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\IntegerField,
 	Bitrix\Main\Type\DateTime;
 use Bitrix\Main\ORM\Fields\Relations\OneToMany;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
+use Bitrix\Main\ORM\Query\Join;
 
 Loc::loadMessages(__FILE__);
 
@@ -80,6 +82,18 @@ class ChatTable extends DataManager
 				]
 			),
 			'CHAT_MESSAGE' => (new OneToMany('CHAT_MESSAGE', MessageTable::class, 'MESSAGE_CHAT'))->configureJoinType('inner'),
+
+			'AUTHOR_DATA' => (new Reference(
+				'AUTHOR_DATA',
+				UserTable::class,
+				Join::on('this.AUTHOR_ID', 'ref.ID')
+			))->configureJoinType('inner'),
+
+			'RECIPIENT_DATA' => (new Reference(
+				'RECIPIENT_DATA',
+				UserTable::class,
+				Join::on('this.RECIPIENT_ID', 'ref.ID')
+			))->configureJoinType('inner'),
 		];
 	}
 }
