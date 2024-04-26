@@ -15,7 +15,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
 <div class="content">
 	<section class="main__container">
-		<h1 class="main__heading">My Family 24</h1>
+		<h1 class="main__heading">Family Tree</h1>
 		<div class="bx-auth container">
 
 			<?php
@@ -64,18 +64,20 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 								<input type="text" placeholder="<?= GetMessage('REGISTER_PLACEHOLDER_SURNAME') ?>" name="USER_LAST_NAME" maxlength="50" value="<?=$arResult["USER_LAST_NAME"]?>" class="bx-auth-input main__input-form-reg" />
 							</td>
 						</tr>
-						<tr>
-							<td class="main__title-input"><span class="starrequired">*</span><?=GetMessage("AUTH_LOGIN_MIN")?></td>
-							<td class="main__container-input">
-								<span class="main__icon-input-reg">
-									<svg width="20px" height="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-										<circle cx="512" cy="512" r="512" style="fill:#ff6068"/>
-										<path d="m458.15 617.7 18.8-107.3a56.94 56.94 0 0 1 35.2-101.9V289.4h-145.2a56.33 56.33 0 0 0-56.3 56.3v275.8a33.94 33.94 0 0 0 3.4 15c12.2 24.6 60.2 103.7 197.9 164.5V622.1a313.29 313.29 0 0 1-53.8-4.4zM656.85 289h-144.9v119.1a56.86 56.86 0 0 1 35.7 101.4l18.8 107.8A320.58 320.58 0 0 1 512 622v178.6c137.5-60.5 185.7-139.9 197.9-164.5a33.94 33.94 0 0 0 3.4-15V345.5a56 56 0 0 0-16.4-40 56.76 56.76 0 0 0-40.05-16.5z" style="fill:#fff"/>
-									</svg>
-								</span>
-								<input type="text" name="USER_LOGIN" placeholder="<?= GetMessage('REGISTER_PLACEHOLDER_LOGIN') ?>" maxlength="50" value="<?=$arResult["USER_LOGIN"]?>" class="bx-auth-input main__input-form-reg" />
-							</td>
-						</tr>
+						<?php if($arResult["EMAIL_REGISTRATION"]):?>
+							<tr>
+								<td class="main__title-input"><?php if($arResult["EMAIL_REQUIRED"]):?><span class="starrequired">*</span><?php endif?><?=GetMessage("AUTH_EMAIL")?></td>
+								<td class="main__container-input">
+									<span class="main__icon-input-reg">
+										<svg width="20px" height="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+											<circle cx="512" cy="512" r="512" style="fill:#ff6068"/>
+											<path d="m458.15 617.7 18.8-107.3a56.94 56.94 0 0 1 35.2-101.9V289.4h-145.2a56.33 56.33 0 0 0-56.3 56.3v275.8a33.94 33.94 0 0 0 3.4 15c12.2 24.6 60.2 103.7 197.9 164.5V622.1a313.29 313.29 0 0 1-53.8-4.4zM656.85 289h-144.9v119.1a56.86 56.86 0 0 1 35.7 101.4l18.8 107.8A320.58 320.58 0 0 1 512 622v178.6c137.5-60.5 185.7-139.9 197.9-164.5a33.94 33.94 0 0 0 3.4-15V345.5a56 56 0 0 0-16.4-40 56.76 56.76 0 0 0-40.05-16.5z" style="fill:#fff"/>
+										</svg>
+									</span>
+									<input class="bx-auth-input main__input-form-reg" placeholder="<?= GetMessage('REGISTER_PLACEHOLDER_EMAIL') ?>" type="text" name="USER_EMAIL" maxlength="255" value="<?=$arResult["USER_EMAIL"]?>" class="bx-auth-input" />
+								</td>
+							</tr>
+						<?php endif?>
 						<tr>
 							<td class="main__title-input"><span class="starrequired">*</span><?=GetMessage("AUTH_PASSWORD_REQ")?></td>
 							<td class="main__container-input">

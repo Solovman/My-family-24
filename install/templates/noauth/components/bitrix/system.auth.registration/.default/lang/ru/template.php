@@ -25,4 +25,5 @@ $MESS['REGISTER_PLACEHOLDER_NANE'] = 'Введите имя';
 $MESS['REGISTER_PLACEHOLDER_SURNAME'] = 'Введите фамилию';
 $MESS['REGISTER_PLACEHOLDER_LOGIN'] = 'Введите логин';
 $MESS['REGISTER_PLACEHOLDER_PASSWORD'] = 'Введите пароль';
+$MESS['REGISTER_PLACEHOLDER_EMAIL'] = 'Введите E-mail'
 ?>

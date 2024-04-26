@@ -6,7 +6,7 @@ export class UsersTable
 		const headingTable = Tag.render`
 			<li class="table-header">
 				<div class="table-head col col-1">ID</div>
-				<div class="table-head col col-1">Логин</div>
+				<div class="table-head col col-1">E-mail</div>
 				<div class="table-head col col-1">Имя</div>
 				<div class="table-head col col-1">Фамилия</div>
 				<div class="table-head col col-1">Статус</div>
@@ -34,9 +34,9 @@ export class UsersTable
 			return Tag.render`
 				<li class="table-row">
 					<div class="col col-1" data-label="Id">${user.id}</div>
-					<div class="col col-1" data-label="Title">${user.login}</div>
-					<div class="col col-1" data-label="Price">${user.name}</div>
-					<div class="col col-1" data-label="Price">${user.lastName}</div>
+					<div class="col col-1" data-label="Title">${BX.util.htmlspecialchars(user.login)}</div>
+					<div class="col col-1" data-label="Price">${BX.util.htmlspecialchars(user.name)}</div>
+					<div class="col col-1" data-label="Price">${BX.util.htmlspecialchars(user.lastName)}</div>
 					<div class="col col-1" data-label="Price">${user.active ? 'Активен' : 'Неактивен'}</div>
 					<div class="col col-1">
 					<ul class="action-list">

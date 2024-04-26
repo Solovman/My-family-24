@@ -24,4 +24,5 @@ $MESS['REGISTER_PLACEHOLDER_NANE'] = 'Write your name';
 $MESS['REGISTER_PLACEHOLDER_SURNAME'] = 'Write your surname';
 $MESS['REGISTER_PLACEHOLDER_LOGIN'] = 'Write your login';
 $MESS['REGISTER_PLACEHOLDER_PASSWORD'] = 'Write your password';
+$MESS['REGISTER_PLACEHOLDER_EMAIL'] = 'Write your E-mail';
 ?>

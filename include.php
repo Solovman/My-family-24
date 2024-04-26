@@ -22,6 +22,30 @@ function OnBeforeUserRegisterHandler(&$arFields): void
 	{
 		$arFields['CONFIRM_PASSWORD'] = $arFields['PASSWORD'];
 	}
+
+	if(empty($args['LOGIN']))
+	{
+		$arFields['LOGIN'] = $arFields['EMAIL'];
+	}
+}
+
+function DoBeforeUserLoginHandler(&$arFields): void
+{
+	$userLogin = $_POST["USER_LOGIN"];
+	if (isset($userLogin))
+	{
+		$isEmail = strpos($userLogin,"@");
+		if ($isEmail>0)
+		{
+			$arFilter = Array("EMAIL"=>$userLogin);
+			$rsUsers = CUser::GetList(($by="id"), ($order="desc"), $arFilter);
+			if($res = $rsUsers->Fetch())
+			{
+				if($res["EMAIL"]==$arFields["LOGIN"])
+					$arFields["LOGIN"] = $res["LOGIN"];
+			}
+		}
+	}
 }
 
 function OnAfterUserRegisterHandler(&$arFields): void
@@ -60,6 +84,7 @@ AddEventHandler("main", "OnAfterUserRegister", "OnAfterUserRegisterHandler");
 
 AddEventHandler("main", "OnBeforeUserUpdate", "OnBeforeUserUpdateHandler");
 
+AddEventHandler("main", "OnBeforeUserLogin", "DoBeforeUserLoginHandler");
 
 if (file_exists(__DIR__ . '/module_updater.php'))
 {
