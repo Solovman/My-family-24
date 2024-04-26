@@ -8,22 +8,30 @@ class Chat
 {
 	public ?int $id;
 	public int $authorId;
+	public string $authorName;
 	public int $recipientId;
+	public string $recipientName;
 
-	public string $createdAt;
+	public ?string $createdAt;
 
 	/**
-	 * @param $authorId
-	 * @param $recipientId
+	 * @param $authorName
+	 * @param $recipientName
 	 */
 	public function __construct(
 		$authorId,
+		$authorName,
 		$recipientId,
-		$id = null
+		$recipientName,
+		$createdAt,
+		$id = null,
 	)
 	{
 		$this->authorId = $authorId;
+		$this->authorName = $authorName;
 		$this->recipientId = $recipientId;
+		$this->recipientName = $recipientName;
+		$this->createdAt = $createdAt;
 		$this->id = $id;
 	}
 
