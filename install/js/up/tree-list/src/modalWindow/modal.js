@@ -26,6 +26,7 @@ export class Modal
 					const checkbox = BX('cbx');
 
 					BX.bind(saveBtn, 'click', () => {
+						BX('security-save').disabled = true;
 						if (checkbox.checked) {
 							Requests.updateSecuritySearchStatus(data.id, 0)
 								.then(() => {

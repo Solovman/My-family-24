@@ -6,6 +6,7 @@ export class Content
 	{
 		return Tag.render`
 			<div class="security">
+				<h2 class="security__heading">Пользовательское соглашение</h2>
 				<p class="security-info">
 					Вы хотите активировать поиск в этом дереве? 
  					Ваша информация о дереве будет доступна другим пользователям. Вы также разрешаете пользователю отправлять вам сообщения.
@@ -18,9 +19,14 @@ export class Content
 						<polyline points="1 9 7 14 15 4"></polyline>
 					  </svg>
 					</label>
-					<span class="security-text">Я принимаю условия Пользовательского соглашения</span>
+					<label for="cbx" class="security-text">Я принимаю условия Пользовательского соглашения</label>
 				</div>
-				<button id="security-save" class="security-save">Сохранить</button>
+				<button id="security-save" class="security-save">
+					<div class="spinner-border text-light" role="status">
+					  <span class="visually-hidden">Loading...</span>
+					</div>
+					<span>Сохранить</span>
+				</button>
 			</div>
 		`;
 	}
