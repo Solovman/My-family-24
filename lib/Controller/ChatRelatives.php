@@ -14,6 +14,22 @@ use Up\Tree\Services\Repository\MessageService;
 
 class ChatRelatives extends Engine\Controller
 {
+
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function getChatsAction(): array
+	{
+
+		$chatsRelation = ChatService::getChatsForCurrentUser();
+
+		return [
+			//'listChats'  => $chats
+		];
+	}
+
 	/**
 	 * @throws SqlException
 	 */

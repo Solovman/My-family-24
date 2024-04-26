@@ -11,16 +11,26 @@ class Message
 	public int $authorId;
 	public string $message;
 	public ?string $createdAt;
+	public ?string $authorName;
+	public ?string $recipientName;
 
 	public function __construct(
 		$chatId,
 		$authorId,
 		$message,
+		$createdAt = null,
+		$id = null,
+		$authorName = null,
+		$recipientName = null,
 	)
 	{
 		$this->chatId = $chatId;
 		$this->authorId = $authorId;
 		$this->message = $message;
+		$this->createdAt = $createdAt;
+		$this->id = $id;
+		$this->authorName = $authorName;
+		$this->recipientName = $recipientName;
 	}
 
 	public function getId(): int

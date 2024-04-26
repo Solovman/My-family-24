@@ -15,6 +15,31 @@ use Bitrix\Main\DB\SqlException;
 class ChatService
 {
 	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getChatIdsForCurrentUser(): array
+	{
+		global $USER;
+		$recipientId = $USER->GetID();
+		$chats = ChatTable::query()
+										  ->setSelect(['ID'])
+										  ->where('RECIPIENT_ID', $recipientId)
+										  ->exec();
+
+		$chatIds = [];
+
+		while($result = $chats->fetchObject())
+		{
+			$chatIds[] = $result->getId();
+
+		}
+
+		return $chatIds;
+	}
+
+	/**
 	 * @throws SqlException
 	 * @throws Exception
 	 */

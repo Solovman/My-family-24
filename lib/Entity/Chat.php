@@ -6,7 +6,7 @@ namespace Up\Tree\Entity;
 
 class Chat
 {
-	public int $id;
+	public ?int $id;
 	public int $authorId;
 	public int $recipientId;
 
@@ -19,10 +19,12 @@ class Chat
 	public function __construct(
 		$authorId,
 		$recipientId,
+		$id = null
 	)
 	{
 		$this->authorId = $authorId;
 		$this->recipientId = $recipientId;
+		$this->id = $id;
 	}
 
 	public function getCreatedAt(): string
