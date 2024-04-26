@@ -11,6 +11,7 @@ use Bitrix\Main\Security\Password;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\DateTime;
 use Exception;
+use Up\Tree\Entity\User;
 use Up\Tree\Model\UserTable;
 
 class UserService
@@ -18,6 +19,29 @@ class UserService
 	/**
 	 * @throws Exception
 	 */
+
+	static function getList(): array
+	{
+		$users = UserTable::query()
+			->setSelect(['ID', 'LOGIN', 'NAME', 'LAST_NAME', 'ACTIVE'])
+			->exec();
+
+		$usersList = [];
+
+		while ($result = $users->fetchObject())
+		{
+			$usersList[] = new User(
+				$result->getId(),
+				$result->getLogin(),
+				$result->getName(),
+				$result->getLastName(),
+				$result->getActive()
+			);
+		}
+
+		return $usersList;
+	}
+
 	static function addUser($email, $name, $password): int|array
 	{
 		$passwordHash = Password::hash($password);

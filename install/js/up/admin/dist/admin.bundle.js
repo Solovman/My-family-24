@@ -49,6 +49,34 @@ this.BX.Up = this.BX.Up || {};
 	      });
 	    }
 	  }, {
+	    key: "getListUser",
+	    value: function getListUser() {
+	      return new Promise(function (resolve, reject) {
+	        BX.ajax.runAction('up:tree.admin.getListUser').then(function (response) {
+	          var listUser = response.data.listUser;
+	          resolve(listUser);
+	        })["catch"](function (error) {
+	          reject(error);
+	        });
+	      });
+	    }
+	  }, {
+	    key: "deactivationUser",
+	    value: function deactivationUser(userId, active) {
+	      return new Promise(function (resolve, reject) {
+	        BX.ajax.runAction('up:tree.admin.deactivationUser', {
+	          data: {
+	            userId: userId,
+	            active: active
+	          }
+	        }).then(function (response) {
+	          resolve(response.data);
+	        })["catch"](function (error) {
+	          reject(error);
+	        });
+	      });
+	    }
+	  }, {
 	    key: "updateUserSubscription",
 	    value: function updateUserSubscription(newUserSubscription) {
 	      return new Promise(function (resolve, reject) {
@@ -621,7 +649,35 @@ this.BX.Up = this.BX.Up || {};
 	  return FormUserSub;
 	}();
 
-	var _templateObject$c, _templateObject2$4, _templateObject3$4, _templateObject4, _templateObject5, _templateObject6;
+	var _templateObject$c, _templateObject2$4, _templateObject3$4;
+	var UsersTable = /*#__PURE__*/function () {
+	  function UsersTable() {
+	    babelHelpers.classCallCheck(this, UsersTable);
+	  }
+	  babelHelpers.createClass(UsersTable, null, [{
+	    key: "render",
+	    value: function render(data) {
+	      var headingTable = main_core.Tag.render(_templateObject$c || (_templateObject$c = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<li class=\"table-header\">\n\t\t\t\t<div class=\"table-head col col-1\">ID</div>\n\t\t\t\t<div class=\"table-head col col-1\">\u041B\u043E\u0433\u0438\u043D</div>\n\t\t\t\t<div class=\"table-head col col-1\">\u0418\u043C\u044F</div>\n\t\t\t\t<div class=\"table-head col col-1\">\u0424\u0430\u043C\u0438\u043B\u0438\u044F</div>\n\t\t\t\t<div class=\"table-head col col-1\">\u0421\u0442\u0430\u0442\u0443\u0441</div>\n\t\t\t\t<div class=\"table-head col col-1\">\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F</div>\n\t\t\t</li>\n\t\t"])));
+	      var dataUsers = this.renderList(data);
+	      var table = main_core.Tag.render(_templateObject2$4 || (_templateObject2$4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<ul class=\"responsive-table\"></ul>\n\t\t"])));
+	      BX.append(headingTable, table);
+	      dataUsers.forEach(function (el) {
+	        BX.append(el, table);
+	      });
+	      return table;
+	    }
+	  }, {
+	    key: "renderList",
+	    value: function renderList(data) {
+	      return data.map(function (user) {
+	        return main_core.Tag.render(_templateObject3$4 || (_templateObject3$4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<li class=\"table-row\">\n\t\t\t\t\t<div class=\"col col-1\" data-label=\"Id\">", "</div>\n\t\t\t\t\t<div class=\"col col-1\" data-label=\"Title\">", "</div>\n\t\t\t\t\t<div class=\"col col-1\" data-label=\"Price\">", "</div>\n\t\t\t\t\t<div class=\"col col-1\" data-label=\"Price\">", "</div>\n\t\t\t\t\t<div class=\"col col-1\" data-label=\"Price\">", "</div>\n\t\t\t\t\t<div class=\"col col-1\">\n\t\t\t\t\t<ul class=\"action-list\">\n\t\t\t\t\t\t\t<li class=\"action-item\">\n\t\t\t\t\t\t\t\t<label class=\"checkbox\">\n\t\t\t\t\t\t\t\t\t<input class=\"input-checkbox\" data-btn-id=\"", "\" ", " type=\"checkbox\" />\n\t\t\t\t\t\t\t\t\t<svg viewBox=\"0 0 21 18\">\n\t\t\t\t\t\t\t\t\t\t<symbol id=\"tick-path", "\" viewBox=\"0 0 21 18\" xmlns=\"http://www.w3.org/2000/svg\">\n\t\t\t\t\t\t\t\t\t\t\t<path d=\"M5.22003 7.26C5.72003 7.76 7.57 9.7 8.67 11.45C12.2 6.05 15.65 3.5 19.19 1.69\" fill=\"none\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n\t\t\t\t\t\t\t\t\t\t</symbol>\n\t\t\t\t\t\t\t\t\t\t<defs>\n\t\t\t\t\t\t\t\t\t\t\t<mask id=\"tick", "\">\n\t\t\t\t\t\t\t\t\t\t\t\t<use class=\"tick mask\" href=\"#tick-path", "\" />\n\t\t\t\t\t\t\t\t\t\t\t</mask>\n\t\t\t\t\t\t\t\t\t\t</defs>\n\t\t\t\t\t\t\t\t\t\t<use class=\"tick\" href=\"#tick-path", "\" stroke=\"currentColor\" />\n\t\t\t\t\t\t\t\t\t\t<path fill=\"white\" mask=\"url(#tick", ")\" d=\"M18 9C18 10.4464 17.9036 11.8929 17.7589 13.1464C17.5179 15.6054 15.6054 17.5179 13.1625 17.7589C11.8929 17.9036 10.4464 18 9 18C7.55357 18 6.10714 17.9036 4.85357 17.7589C2.39464 17.5179 0.498214 15.6054 0.241071 13.1464C0.0964286 11.8929 0 10.4464 0 9C0 7.55357 0.0964286 6.10714 0.241071 4.8375C0.498214 2.39464 2.39464 0.482143 4.85357 0.241071C6.10714 0.0964286 7.55357 0 9 0C10.4464 0 11.8929 0.0964286 13.1625 0.241071C15.6054 0.482143 17.5179 2.39464 17.7589 4.8375C17.9036 6.10714 18 7.55357 18 9Z\" />\n\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t<svg class=\"lines\" viewBox=\"0 0 11 11\">\n\t\t\t\t\t\t\t\t\t\t<path d=\"M5.88086 5.89441L9.53504 4.26746\" />\n\t\t\t\t\t\t\t\t\t\t<path d=\"M5.5274 8.78838L9.45391 9.55161\" />\n\t\t\t\t\t\t\t\t\t\t<path d=\"M3.49371 4.22065L5.55387 0.79198\" />\n\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</li>\n\t\t\t"])), user.id, user.login, user.name, user.lastName, user.active ? 'Активен' : 'Неактивен', user.id, user.active ? "checked" : '', user.id, user.id, user.id, user.id, user.id);
+	      });
+	    }
+	  }]);
+	  return UsersTable;
+	}();
+
+	var _templateObject$d, _templateObject2$5, _templateObject3$5, _templateObject4, _templateObject5, _templateObject6, _templateObject7;
 	var Admin = /*#__PURE__*/function () {
 	  function Admin() {
 	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -639,32 +695,83 @@ this.BX.Up = this.BX.Up || {};
 	    this.listPurchase = [];
 	    this.listUserSubscriptions = [];
 	    this.listUserPurchase = [];
-	    this.loadListSub();
+	    this.listUsers = [];
+	    switch (localStorage.getItem('tab')) {
+	      case 'sub':
+	        this.loadListSub();
+	        break;
+	      case 'purchase':
+	        this.loadListPurchase();
+	        break;
+	      case 'userSub':
+	        this.loadListUserSubscriptions();
+	        break;
+	      case 'userPurchase':
+	        this.loadListUserPurchase();
+	        break;
+	      case 'user':
+	        this.loadListUsers();
+	        break;
+	      default:
+	        this.loadListUsers();
+	    }
 	    this.setEvents();
 	  }
 	  babelHelpers.createClass(Admin, [{
+	    key: "loadListUsers",
+	    value: function loadListUsers() {
+	      var _this = this;
+	      Requests.getListUser().then(function (list) {
+	        _this.rootNode.innerHTML = '';
+	        _this.listUsers = list;
+	        BX('add').style.display = 'none';
+	        var btns = document.querySelectorAll('.admin__btn');
+	        btns.forEach(function (btn) {
+	          BX.removeClass(btn, 'btn-active');
+	        });
+	        BX.addClass(BX('users'), 'btn-active');
+	        BX.append(UsersTable.render(_this.listUsers), _this.rootNode);
+	        var checkbox = document.querySelectorAll('.input-checkbox');
+	        checkbox.forEach(function (el) {
+	          BX.bind(el, 'click', function (event) {
+	            var id = event.target.dataset.btnId;
+	            var spinner = main_core.Tag.render(_templateObject$d || (_templateObject$d = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            BX.append(spinner, _this.rootNode);
+	            if (!el.checked) {
+	              Requests.deactivationUser(Number(id), 'N').then(function (result) {
+	                _this.loadListUsers();
+	              });
+	            } else {
+	              Requests.deactivationUser(Number(id), 'Y').then(function (result) {
+	                _this.loadListUsers();
+	              });
+	            }
+	          });
+	        });
+	      });
+	    }
+	  }, {
 	    key: "loadListSub",
 	    value: function loadListSub() {
-	      var _this = this;
+	      var _this2 = this;
 	      Requests.getListSubscription().then(function (list) {
-	        _this.rootNode.innerHTML = '';
-	        _this.listSub = list;
+	        _this2.rootNode.innerHTML = '';
+	        _this2.listSub = list;
+	        BX('add').style.display = 'inline-block';
 	        var btns = document.querySelectorAll('.admin__btn');
 	        btns.forEach(function (btn) {
 	          BX.removeClass(btn, 'btn-active');
 	        });
 	        BX.addClass(BX('sub'), 'btn-active');
-	        BX.append(SubscriptionTable.render(list), _this.rootNode);
+	        BX.append(SubscriptionTable.render(list), _this2.rootNode);
 	        var btnEdit = document.querySelectorAll('.edit');
-	        var btnDeactivation = document.querySelectorAll('.deactivation');
-	        var btnActivation = document.querySelectorAll('.activation');
 	        var btnAdd = BX('add');
 	        BX.bind(btnAdd, 'click', function () {
 	          Form.render();
 	          BX.bind(BX('edit-button'), 'click', function (event) {
 	            event.preventDefault();
-	            var spinner = main_core.Tag.render(_templateObject$c || (_templateObject$c = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
-	            BX.append(spinner, _this.rootNode);
+	            var spinner = main_core.Tag.render(_templateObject2$5 || (_templateObject2$5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            BX.append(spinner, _this2.rootNode);
 	            var subscription = {
 	              level: BX('name').value,
 	              price: Number(BX('price').value),
@@ -673,7 +780,7 @@ this.BX.Up = this.BX.Up || {};
 	              customization: Number(BX('customization-select').value)
 	            };
 	            Requests.addSubscription(subscription).then(function (result) {
-	              _this.loadListSub();
+	              _this2.loadListSub();
 	              document.querySelector('.popup-window').remove();
 	              document.querySelector('.popup-window-overlay').remove();
 	            });
@@ -683,7 +790,7 @@ this.BX.Up = this.BX.Up || {};
 	          BX.bind(btn, 'click', function (event) {
 	            var el = event.target;
 	            console.log(el);
-	            var data = _this.listSub.find(function (item) {
+	            var data = _this2.listSub.find(function (item) {
 	              return item.id === Number(el.dataset.btnId);
 	            });
 	            console.log(data);
@@ -694,15 +801,15 @@ this.BX.Up = this.BX.Up || {};
 	        checkbox.forEach(function (el) {
 	          BX.bind(el, 'click', function (event) {
 	            var id = event.target.dataset.btnId;
-	            var spinner = main_core.Tag.render(_templateObject2$4 || (_templateObject2$4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
-	            BX.append(spinner, _this.rootNode);
+	            var spinner = main_core.Tag.render(_templateObject3$5 || (_templateObject3$5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            BX.append(spinner, _this2.rootNode);
 	            if (!el.checked) {
 	              Requests.deactivationSubscription(Number(id), 0).then(function (result) {
-	                _this.loadListSub();
+	                _this2.loadListSub();
 	              });
 	            } else {
 	              Requests.deactivationSubscription(Number(id), 1).then(function (result) {
-	                _this.loadListSub();
+	                _this2.loadListSub();
 	              });
 	            }
 	          });
@@ -712,11 +819,12 @@ this.BX.Up = this.BX.Up || {};
 	  }, {
 	    key: "loadListPurchase",
 	    value: function loadListPurchase() {
-	      var _this2 = this;
+	      var _this3 = this;
 	      Requests.getListPurchase().then(function (list) {
-	        _this2.rootNode.innerHTML = '';
-	        _this2.listPurchase = list;
-	        BX.append(PurchaseTable.render(list), _this2.rootNode);
+	        _this3.rootNode.innerHTML = '';
+	        _this3.listPurchase = list;
+	        BX('add').style.display = 'inline-block';
+	        BX.append(PurchaseTable.render(list), _this3.rootNode);
 	        var btns = document.querySelectorAll('.admin__btn');
 	        var btnRemove = document.querySelectorAll('.remove');
 	        var btnEdit = document.querySelectorAll('.edit');
@@ -728,20 +836,17 @@ this.BX.Up = this.BX.Up || {};
 	        btnRemove.forEach(function (btn) {
 	          BX.bind(btn, 'click', function (event) {
 	            var id = event.target.dataset.btnId;
-	            console.log(id);
-	            var spinner = main_core.Tag.render(_templateObject3$4 || (_templateObject3$4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
-	            BX.append(spinner, _this2.rootNode);
+	            var spinner = main_core.Tag.render(_templateObject4 || (_templateObject4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            BX.append(spinner, _this3.rootNode);
 	            Requests.removePurchase(Number(id)).then(function (result) {
-	              _this2.loadListPurchase();
+	              _this3.loadListPurchase();
 	            });
 	          });
 	        });
 	        btnEdit.forEach(function (btn) {
 	          BX.bind(btn, 'click', function (event) {
 	            var el = event.target;
-	            console.log(_this2.listPurchase);
-	            console.log(el.dataset.btnId);
-	            var data = _this2.listPurchase.find(function (item) {
+	            var data = _this3.listPurchase.find(function (item) {
 	              return Number(item.ID) === Number(el.dataset.btnId);
 	            });
 	            FormPurchase.render(data);
@@ -751,14 +856,14 @@ this.BX.Up = this.BX.Up || {};
 	          FormPurchase.render();
 	          BX.bind(BX('edit-button'), 'click', function (event) {
 	            event.preventDefault();
-	            var spinner = main_core.Tag.render(_templateObject4 || (_templateObject4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
-	            BX.append(spinner, _this2.rootNode);
+	            var spinner = main_core.Tag.render(_templateObject5 || (_templateObject5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            BX.append(spinner, _this3.rootNode);
 	            var purchase = {
 	              title: BX('title').value,
 	              price: Number(BX('price').value)
 	            };
 	            Requests.addPurchase(purchase).then(function (result) {
-	              _this2.loadListPurchase();
+	              _this3.loadListPurchase();
 	              document.querySelector('.popup-window').remove();
 	              document.querySelector('.popup-window-overlay').remove();
 	            });
@@ -769,21 +874,22 @@ this.BX.Up = this.BX.Up || {};
 	  }, {
 	    key: "loadListUserSubscriptions",
 	    value: function loadListUserSubscriptions() {
-	      var _this3 = this;
+	      var _this4 = this;
 	      Requests.getListUserSubscriptions().then(function (list) {
-	        _this3.listUserSubscriptions = list;
+	        _this4.listUserSubscriptions = list;
+	        BX('add').style.display = 'none';
 	        var btns = document.querySelectorAll('.admin__btn');
 	        btns.forEach(function (btn) {
 	          BX.removeClass(btn, 'btn-active');
 	        });
 	        BX.addClass(BX('userSub'), 'btn-active');
-	        _this3.rootNode.innerHTML = '';
-	        BX.append(UserSubscriptionsTable.render(list), _this3.rootNode);
+	        _this4.rootNode.innerHTML = '';
+	        BX.append(UserSubscriptionsTable.render(list), _this4.rootNode);
 	        var editBtn = document.querySelectorAll('.action-list-btn');
 	        editBtn.forEach(function (btn) {
 	          BX.bind(btn, 'click', function (event) {
 	            var userId = event.target.dataset.userId;
-	            var data = _this3.listUserSubscriptions.find(function (item) {
+	            var data = _this4.listUserSubscriptions.find(function (item) {
 	              return item.userId === Number(userId);
 	            });
 	            console.log(data);
@@ -795,11 +901,12 @@ this.BX.Up = this.BX.Up || {};
 	  }, {
 	    key: "loadListUserPurchase",
 	    value: function loadListUserPurchase() {
-	      var _this4 = this;
+	      var _this5 = this;
 	      Requests.getListUserPurchase().then(function (list) {
-	        _this4.rootNode.innerHTML = '';
-	        _this4.listPurchase = list;
-	        BX.append(UserPurchaseTable.render(list), _this4.rootNode);
+	        _this5.rootNode.innerHTML = '';
+	        _this5.listPurchase = list;
+	        BX('add').style.display = 'inline-block';
+	        BX.append(UserPurchaseTable.render(list), _this5.rootNode);
 	        var btns = document.querySelectorAll('.admin__btn');
 	        var btnRemove = document.querySelectorAll('.remove__user_purchase');
 	        var btnAdd = BX('add');
@@ -815,10 +922,10 @@ this.BX.Up = this.BX.Up || {};
 	            var userId = event.target.dataset.btnUserId;
 	            console.log(userId);
 	            console.log(event.target.dataset);
-	            var spinner = main_core.Tag.render(_templateObject5 || (_templateObject5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
-	            BX.append(spinner, _this4.rootNode);
+	            var spinner = main_core.Tag.render(_templateObject6 || (_templateObject6 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            BX.append(spinner, _this5.rootNode);
 	            Requests.removePurchaseUser(Number(userId), Number(purchaseId)).then(function (result) {
-	              _this4.loadListUserPurchase();
+	              _this5.loadListUserPurchase();
 	            });
 	          });
 	        });
@@ -826,12 +933,12 @@ this.BX.Up = this.BX.Up || {};
 	          FormUserPurchase.render(list);
 	          BX.bind(BX('action-button'), 'click', function (event) {
 	            event.preventDefault();
-	            var spinner = main_core.Tag.render(_templateObject6 || (_templateObject6 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
-	            BX.append(spinner, _this4.rootNode);
+	            var spinner = main_core.Tag.render(_templateObject7 || (_templateObject7 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            BX.append(spinner, _this5.rootNode);
 	            var userId = Number(BX('userId').value);
 	            var purchaseId = Number(BX('purchaseId').value);
 	            Requests.addPurchaseUser(userId, purchaseId).then(function (result) {
-	              _this4.loadListUserPurchase();
+	              _this5.loadListUserPurchase();
 	              document.querySelector('.popup-window').remove();
 	              document.querySelector('.popup-window-overlay').remove();
 	            });
@@ -842,22 +949,31 @@ this.BX.Up = this.BX.Up || {};
 	  }, {
 	    key: "setEvents",
 	    value: function setEvents() {
-	      var _this5 = this;
+	      var _this6 = this;
 	      var btnSub = BX('sub');
 	      var btnPurchase = BX('purchase');
 	      var btnUserSub = BX('userSub');
 	      var btnUserPurchase = BX('userPurchase');
+	      var btnUser = BX('users');
 	      BX.bind(btnSub, 'click', function () {
-	        _this5.loadListSub();
+	        localStorage.setItem('tab', 'sub');
+	        _this6.loadListSub();
 	      });
 	      BX.bind(btnPurchase, 'click', function () {
-	        _this5.loadListPurchase();
+	        localStorage.setItem('tab', 'purchase');
+	        _this6.loadListPurchase();
 	      });
 	      BX.bind(btnUserSub, 'click', function () {
-	        _this5.loadListUserSubscriptions();
+	        localStorage.setItem('tab', 'userSub');
+	        _this6.loadListUserSubscriptions();
 	      });
 	      BX.bind(btnUserPurchase, 'click', function () {
-	        _this5.loadListUserPurchase();
+	        localStorage.setItem('tab', 'userPurchase');
+	        _this6.loadListUserPurchase();
+	      });
+	      BX.bind(btnUser, 'click', function () {
+	        localStorage.setItem('tab', 'user');
+	        _this6.loadListUsers();
 	      });
 	    }
 	  }]);
