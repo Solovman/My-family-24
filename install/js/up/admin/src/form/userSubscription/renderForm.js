@@ -23,7 +23,6 @@ export class RenderForm
 					</g>
 				</svg>
 			</div>
-			z
 			<form class="details">
 				<div class="input-container">
 					<label class="modal-form-label" for="subId">ID подписки:</label>

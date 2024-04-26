@@ -7,7 +7,6 @@ use Bitrix\Main\ArgumentException;
 use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
-use Bitrix\Main\UI\PageNavigation;
 use Up\Tree\Entity\Purchase;
 use Up\Tree\Entity\Subscription;
 use Up\Tree\Entity\UserSubscription;

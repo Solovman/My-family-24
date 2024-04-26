@@ -12,6 +12,7 @@ use Bitrix\Main\DB\SqlException;
 class MessageService
 {
 	/**
+	 * @throws SqlException
 	 * @throws Exception
 	 */
 	public static function addMessage(Message $message): int|array
