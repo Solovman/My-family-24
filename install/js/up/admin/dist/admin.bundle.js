@@ -12,7 +12,11 @@ this.BX.Up = this.BX.Up || {};
 	    key: "getListSubscription",
 	    value: function getListSubscription() {
 	      return new Promise(function (resolve, reject) {
-	        BX.ajax.runAction('up:tree.admin.getListSubscription').then(function (response) {
+	        BX.ajax.runAction('up:tree.admin.getListSubscription', {
+	          navigation: {
+	            page: 3
+	          }
+	        }).then(function (response) {
 	          var listSubscription = response.data.listSubscription;
 	          resolve(listSubscription);
 	        })["catch"](function (error) {
@@ -125,6 +129,21 @@ this.BX.Up = this.BX.Up || {};
 	        BX.ajax.runAction('up:tree.admin.updateSubscription', {
 	          data: {
 	            newSubscription: newSubscription
+	          }
+	        }).then(function (response) {
+	          resolve(response.data);
+	        })["catch"](function (error) {
+	          reject(error);
+	        });
+	      });
+	    }
+	  }, {
+	    key: "updatePurchase",
+	    value: function updatePurchase(newPurchase) {
+	      return new Promise(function (resolve, reject) {
+	        BX.ajax.runAction('up:tree.admin.updatePurchase', {
+	          data: {
+	            newPurchase: newPurchase
 	          }
 	        }).then(function (response) {
 	          resolve(response.data);
@@ -539,7 +558,7 @@ this.BX.Up = this.BX.Up || {};
 	  babelHelpers.createClass(RenderForm, null, [{
 	    key: "render",
 	    value: function render(data) {
-	      return main_core.Tag.render(_templateObject$a || (_templateObject$a = babelHelpers.taggedTemplateLiteral(["\n\t\t<div class=\"sign-up-modal\">\n\t\t\t<div class=\"logo-container\">\n\t\t\t\t<svg height=\"90px\" width=\"90px\" version=\"1.1\" id=\"_x32_\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" \n\t\t\t\tviewBox=\"0 0 512 512\"  xml:space=\"preserve\">\n\t\t\t\t\t<style type=\"text/css\">\n\t\t\t\t\t.st0{fill:#fff;}\n\t\t\t\t\t</style>\n\t\t\t\t\t<g>\n\t\t\t\t\t\t<path class=\"st0\" d=\"M465.771,234.587c0-26.914-10.749-51.289-28.142-69.166c0.629-4.688,1.075-9.437,1.075-14.301\n\t\t\t\t\t\tc0-54.151-40.625-98.726-93.05-105.14C319.308,17.754,281.874,0,240.206,0C160.476,0,95.853,64.624,95.853,144.361\n\t\t\t\t\t\tc0,0.422,0.062,0.821,0.062,1.236c-29.975,20.27-49.686,54.58-49.686,93.494c0,53.346,37.08,97.937,86.842,109.667\n\t\t\t\t\t\tc10.089,24.69,34.318,42.106,62.636,42.106c10.557,0,20.508-2.486,29.407-6.798V512h77.528v-83.988l30.236-51.657\n\t\t\t\t\t\tc30.95-2.256,57.097-21.766,68.743-49.033C439.087,313.128,465.771,277.022,465.771,234.587z M260.615,342.229\n\t\t\t\t\t\tc0.66,0.928,1.343,1.826,2.041,2.724l-3.43,1.396C259.725,344.984,260.208,343.625,260.615,342.229z M284.874,405.402v-40.579\n\t\t\t\t\t\tc7.181,4.366,15.076,7.642,23.492,9.622L284.874,405.402z\"/>\n\t\t\t\t\t</g>\n\t\t\t\t</svg>\n\t\t\t</div>\n\t\t\t\n\t\t\t<form class=\"details\">\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"subId\">ID \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0438:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"subId\" type=\"number\" placeholder=\"ID\" min=\"0\"/>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"countTrees\">\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0434\u0435\u0440\u0435\u0432\u044C\u0435\u0432:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"countTrees\" type=\"number\" placeholder=\"countTrees\" min=\"0\"/>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"countNodes\">\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0432\u0435\u0440\u0448\u0438\u043D:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"countNodes\" type=\"number\" placeholder=\"countNodes\" min=\"0\"/>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"buyTime\">\u0412\u0440\u0435\u043C\u044F \u043F\u043E\u043A\u0443\u043F\u043A\u0438:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"buyTime\" type=\"datetime-local\" step=\"2\" placeholder=\"buyTime\" />\n\t\t\t\t</div>\n\t\t\t\n\t\t\t\n\t\t\t\t<input id=\"edit-button\" type=\"submit\" value=\"Edit\">\n\t\t\t</form>\n\t\t</div>\n\t\t"])), data.subscriptionId, data.countTrees, data.countNodes, data.buyTime);
+	      return main_core.Tag.render(_templateObject$a || (_templateObject$a = babelHelpers.taggedTemplateLiteral(["\n\t\t<div class=\"sign-up-modal\">\n\t\t\t<div class=\"logo-container\">\n\t\t\t\t<svg height=\"90px\" width=\"90px\" version=\"1.1\" id=\"_x32_\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" \n\t\t\t\tviewBox=\"0 0 512 512\"  xml:space=\"preserve\">\n\t\t\t\t\t<style type=\"text/css\">\n\t\t\t\t\t.st0{fill:#fff;}\n\t\t\t\t\t</style>\n\t\t\t\t\t<g>\n\t\t\t\t\t\t<path class=\"st0\" d=\"M465.771,234.587c0-26.914-10.749-51.289-28.142-69.166c0.629-4.688,1.075-9.437,1.075-14.301\n\t\t\t\t\t\tc0-54.151-40.625-98.726-93.05-105.14C319.308,17.754,281.874,0,240.206,0C160.476,0,95.853,64.624,95.853,144.361\n\t\t\t\t\t\tc0,0.422,0.062,0.821,0.062,1.236c-29.975,20.27-49.686,54.58-49.686,93.494c0,53.346,37.08,97.937,86.842,109.667\n\t\t\t\t\t\tc10.089,24.69,34.318,42.106,62.636,42.106c10.557,0,20.508-2.486,29.407-6.798V512h77.528v-83.988l30.236-51.657\n\t\t\t\t\t\tc30.95-2.256,57.097-21.766,68.743-49.033C439.087,313.128,465.771,277.022,465.771,234.587z M260.615,342.229\n\t\t\t\t\t\tc0.66,0.928,1.343,1.826,2.041,2.724l-3.43,1.396C259.725,344.984,260.208,343.625,260.615,342.229z M284.874,405.402v-40.579\n\t\t\t\t\t\tc7.181,4.366,15.076,7.642,23.492,9.622L284.874,405.402z\"/>\n\t\t\t\t\t</g>\n\t\t\t\t</svg>\n\t\t\t</div>\n\t\t\tz\n\t\t\t<form class=\"details\">\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"subId\">ID \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0438:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"subId\" type=\"number\" placeholder=\"ID\" min=\"0\"/>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"countTrees\">\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0434\u0435\u0440\u0435\u0432\u044C\u0435\u0432:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"countTrees\" type=\"number\" placeholder=\"countTrees\" min=\"0\"/>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"countNodes\">\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0432\u0435\u0440\u0448\u0438\u043D:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"countNodes\" type=\"number\" placeholder=\"countNodes\" min=\"0\"/>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"input-container\">\n\t\t\t\t\t<label class=\"modal-form-label\" for=\"buyTime\">\u0412\u0440\u0435\u043C\u044F \u043F\u043E\u043A\u0443\u043F\u043A\u0438:</label>\n\t\t\t\t\t<input class=\"col-sm-12 with-placeholder\" value=\"", "\" id=\"buyTime\" type=\"datetime-local\" step=\"2\" placeholder=\"buyTime\" />\n\t\t\t\t</div>\n\t\t\t\n\t\t\t\n\t\t\t\t<input id=\"edit-button\" type=\"submit\" value=\"Edit\">\n\t\t\t</form>\n\t\t</div>\n\t\t"])), data.subscriptionId, data.countTrees, data.countNodes, data.buyTime);
 	    }
 	  }]);
 	  return RenderForm;
