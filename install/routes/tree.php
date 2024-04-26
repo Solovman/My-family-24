@@ -16,13 +16,16 @@ return function (RoutingConfigurator $routes)
 	$routes->get('/', new PublicPageController('/local/modules/up.tree/views/tree-list.php'));
 
 	$routes->get('/account/', new PublicPageController('/local/modules/up.tree/views/tree-account.php'));
+
 	$routes->post('/account/', new PublicPageController('/local/modules/up.tree/views/tree-account.php'));
 
 	$routes->get('/admin/', new PublicPageController('/local/modules/up.tree/views/tree-admin.php'));
 
 	$routes->get('/search/', new PublicPageController('/local/modules/up.tree/views/tree-search.php'));
 
-	$routes->get('/chat/', new PublicPageController('/local/modules/up.tree/views/tree-chat.php'));
+	$routes->get('/chat/', new PublicPageController('/local/modules/up.tree/views/tree-chats.php'));
+
+	$routes->get('/chat/{id}/', new PublicPageController('/local/modules/up.tree/views/tree-messages.php'));
 
 	$routes->post('/', new PublicPageController('/local/modules/up.tree/views/tree-list.php'));
 };
