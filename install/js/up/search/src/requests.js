@@ -35,4 +35,39 @@ export class Requests
 			;
 		});
 	}
+
+	static addMessages(recipientId, message)
+	{
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.chatRelatives.addMessages', {
+					data: {
+						recipientId: recipientId,
+						message: message
+					}
+				})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
+
+	static searchChatByRecipientId(recipientId)
+	{
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.chatRelatives.searchChatByRecipientId', {
+				data: {
+					recipientId: recipientId,
+				}
+			})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
 }
