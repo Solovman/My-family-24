@@ -58,7 +58,7 @@ this.BX.Up = this.BX.Up || {};
 	      console.log(babelHelpers["typeof"](currentUserId));
 	      console.log(this.listChats);
 	      this.listChats.forEach(function (chat) {
-	        var chats = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"message is-info\">\n\t\t\t\t\t<div class=\"message-header\" style=\"background-color: #00ceaa\">\n\t\t\t\t\t\t<p>", "</p>\n\t\t\t\t\t\t<button class=\"delete\" aria-label=\"delete\"></button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"message-body\">\n\t\t\t\t\t\t<a class=\"message-link\" href=\"/chat/", "\">\u041F\u0435\u0440\u0435\u0439\u0442\u0438 \u043A \u0447\u0430\u0442\u0443</a>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t"])), Number(currentUserId) === chat.authorId ? chat.recipientName : chat.authorName, chat.id);
+	        var chats = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"message is-info\">\n\t\t\t\t\t<div class=\"message-header\" style=\"background-color: #00ceaa\">\n\t\t\t\t\t\t<p>", "</p>\n\t\t\t\t\t\t<button class=\"delete\" aria-label=\"delete\"></button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"message-body\">\n\t\t\t\t\t\t<a class=\"message-link\" href=\"/chat/", "/\">\u041F\u0435\u0440\u0435\u0439\u0442\u0438 \u043A \u0447\u0430\u0442\u0443</a>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t"])), Number(currentUserId) === chat.authorId ? BX.util.htmlspecialchars(chat.recipientName) : BX.util.htmlspecialchars(chat.authorName), chat.id);
 	        BX.append(chats, _this2.rootNode);
 	      });
 	    }

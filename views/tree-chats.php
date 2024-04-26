@@ -8,8 +8,8 @@ define('NEED_AUTH', true);
 
 require($_SERVER['DOCUMENT_ROOT'] . "/bitrix/header.php");
 
-$APPLICATION->SetTitle('Messages');
+$APPLICATION->SetTitle('Chats');
 
-$APPLICATION->IncludeComponent("up:tree.chat", "", []);
+$APPLICATION->IncludeComponent("up:tree.chats", "", []);
 
 require($_SERVER['DOCUMENT_ROOT'] . "/bitrix/footer.php");
