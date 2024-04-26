@@ -56,14 +56,8 @@ class ChatRelatives extends Engine\Controller
 
 	private static function addChatAction(int $recipientId, int $authorId): array|int
 	{
-		$chatResult = new Chat(
-			$authorId,
-			$recipientId,
-			null
-		);
-
 		try {
-			return ChatService::addChat($chatResult);
+			return ChatService::addChat($recipientId, $authorId);
 		}
 		catch (SqlException)
 		{
