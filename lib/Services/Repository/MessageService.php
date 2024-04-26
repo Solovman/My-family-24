@@ -34,7 +34,7 @@ class MessageService
 		throw new SqlException("Error adding a message");
 	}
 
-	public static function getMessagesByChatIds(int $chatId): array
+	public static function getMessagesByChatId(int $chatId): array
 	{
 		$messages = MessageTable::query()
 			->setSelect(['ID', 'CHAT_ID', 'AUTHOR_ID', 'MESSAGE', 'CREATED_AT', 'AUTHOR_DATA_NAME' => 'AUTHOR_DATA.NAME'])
