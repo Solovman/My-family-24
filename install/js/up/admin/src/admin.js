@@ -8,23 +8,19 @@ import {Form} from "./form/subscriptions/form";
 import {FormPurchase} from "./form/purchase/form";
 import {FormUserPurchase} from "./form/userPurchase/form";
 import {FormUserSub} from "./form/userSubscription/form.js";
+import {UsersTable} from "./table/usersTable";
 
-export class Admin
-{
-	constructor(options = {})
-	{v
-		if(Type.isStringFilled(options.rootNodeId))
-		{
+export class Admin {
+	constructor(options = {}) {
+		v
+		if (Type.isStringFilled(options.rootNodeId)) {
 			this.rootNodeId = options.rootNodeId;
-		}
-		else
-		{
+		} else {
 			throw new Error('Table: options.rootNodeId required');
 		}
 		this.rootNode = document.getElementById(this.rootNodeId);
 
-		if (!this.rootNode)
-		{
+		if (!this.rootNode) {
 			throw new Error(`Table: element with id "${this.rootNodeId}" not found`);
 		}
 
@@ -32,16 +28,83 @@ export class Admin
 		this.listPurchase = [];
 		this.listUserSubscriptions = [];
 		this.listUserPurchase = [];
+		this.listUsers = [];
 
-		this.loadListSub();
+		switch (localStorage.getItem('tab')) {
+			case 'sub':
+				this.loadListSub();
+				break;
+			case 'purchase':
+				this.loadListPurchase();
+				break;
+			case 'userSub':
+				this.loadListUserSubscriptions();
+				break;
+			case 'userPurchase':
+				this.loadListUserPurchase();
+				break;
+			case 'user':
+				this.loadListUsers();
+				break;
+			default:
+				this.loadListUsers();
+		}
 
 		this.setEvents();
+	}
+
+	loadListUsers() {
+		Requests.getListUser().then(list => {
+			this.rootNode.innerHTML = '';
+			this.listUsers = list;
+
+			BX('add').style.display = 'none';
+
+			const btns = document.querySelectorAll('.admin__btn');
+
+			btns.forEach(btn => {
+				BX.removeClass(btn, 'btn-active');
+			})
+
+			BX.addClass(BX('users'), 'btn-active');
+
+			BX.append(UsersTable.render(this.listUsers), this.rootNode);
+
+			const checkbox = document.querySelectorAll('.input-checkbox');
+
+			checkbox.forEach(el => {
+				BX.bind(el, 'click', (event) => {
+					const id = event.target.dataset.btnId;
+
+					const spinner = Tag.render`
+						<div class="admin__spinner spinner-grow text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					`;
+
+					BX.append(spinner, this.rootNode);
+
+					if (!el.checked) {
+						Requests.deactivationUser(Number(id), 'N').then(result => {
+							this.loadListUsers();
+						});
+					} else {
+						Requests.deactivationUser(Number(id), 'Y').then(result => {
+							this.loadListUsers();
+						});
+					}
+
+				})
+			})
+		})
 	}
 
 	loadListSub() {
 		Requests.getListSubscription().then(list => {
 			this.rootNode.innerHTML = '';
 			this.listSub = list;
+
+			BX('add').style.display = 'inline-block';
 
 			const btns = document.querySelectorAll('.admin__btn');
 
@@ -54,8 +117,6 @@ export class Admin
 			BX.append(SubscriptionTable.render(list), this.rootNode);
 
 			const btnEdit = document.querySelectorAll('.edit');
-			const btnDeactivation = document.querySelectorAll('.deactivation');
-			const btnActivation = document.querySelectorAll('.activation');
 			const btnAdd = BX('add');
 
 			BX.bind(btnAdd, 'click', () => {
@@ -135,6 +196,8 @@ export class Admin
 
 			this.listPurchase = list;
 
+			BX('add').style.display = 'inline-block';
+
 			BX.append(PurchaseTable.render(list), this.rootNode);
 
 			const btns = document.querySelectorAll('.admin__btn');
@@ -154,7 +217,6 @@ export class Admin
 			btnRemove.forEach(btn => {
 				BX.bind(btn, 'click', (event) => {
 					const id = event.target.dataset.btnId;
-					console.log(id)
 
 					const spinner = Tag.render`
 						<div class="admin__spinner spinner-grow text-primary" role="status">
@@ -173,8 +235,7 @@ export class Admin
 			btnEdit.forEach(btn => {
 				BX.bind(btn, 'click', (event) => {
 					const el = event.target;
-					console.log(this.listPurchase);
-					console.log(el.dataset.btnId);
+
 					const data = this.listPurchase.find(item => Number(item.ID) === Number(el.dataset.btnId));
 					FormPurchase.render(data);
 				});
@@ -215,6 +276,8 @@ export class Admin
 		Requests.getListUserSubscriptions().then(list => {
 			this.listUserSubscriptions = list;
 
+			BX('add').style.display = 'none';
+
 			const btns = document.querySelectorAll('.admin__btn');
 
 			btns.forEach(btn => {
@@ -246,6 +309,8 @@ export class Admin
 			this.rootNode.innerHTML = '';
 
 			this.listPurchase = list;
+
+			BX('add').style.display = 'inline-block';
 
 			BX.append(UserPurchaseTable.render(list), this.rootNode);
 
@@ -319,21 +384,31 @@ export class Admin
 		const btnPurchase = BX('purchase');
 		const btnUserSub = BX('userSub');
 		const btnUserPurchase = BX('userPurchase');
+		const btnUser = BX('users');
 
 		BX.bind(btnSub, 'click', () => {
+			localStorage.setItem('tab', 'sub');
 			this.loadListSub();
 		});
 
 		BX.bind(btnPurchase, 'click', () => {
+			localStorage.setItem('tab', 'purchase');
 			this.loadListPurchase();
 		});
 
 		BX.bind(btnUserSub, 'click', () => {
+			localStorage.setItem('tab', 'userSub');
 			this.loadListUserSubscriptions();
 		});
 
 		BX.bind(btnUserPurchase, 'click', () => {
+			localStorage.setItem('tab', 'userPurchase');
 			this.loadListUserPurchase();
+		});
+
+		BX.bind(btnUser, 'click', () => {
+			localStorage.setItem('tab', 'user');
+			this.loadListUsers();
 		});
 	}
 }

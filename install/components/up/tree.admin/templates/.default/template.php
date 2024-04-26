@@ -12,6 +12,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 <div class="admin my-container">
 	<div class="admin__btn-container">
+		<button id="users" class="admin__btn">Пользователи</button>
 		<button id="sub" class="admin__btn">Подписки</button>
 		<button id="purchase" class="admin__btn">Одноразовые покупки</button>
 		<button id="userSub" class="admin__btn">Подписки пользователей</button>
