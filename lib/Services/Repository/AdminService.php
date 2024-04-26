@@ -15,6 +15,7 @@ use Up\Tree\Model\PurchaseTable;
 use Up\Tree\Model\SubscriptionTable;
 use Up\Tree\Model\UserSinglePurchaseTable;
 use Up\Tree\Model\UserSubscriptionTable;
+use Up\Tree\Model\UserTable;
 
 class AdminService
 {
@@ -25,6 +26,21 @@ class AdminService
 	public static function deactivationSubscription(int $id, bool $active): bool
 	{
 		$result = SubscriptionTable::update($id, ['IS_ACTIVE' => $active]);
+
+		if (!$result->isSuccess())
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function deactivationUser(int $userId, string $active): bool
+	{
+		$result = UserTable::update($userId, ['ACTIVE' => $active]);
 
 		if (!$result->isSuccess())
 		{

@@ -14,6 +14,7 @@ use Up\Tree\Services\Repository\AdminService;
 use Up\Tree\Services\Repository\PurchaseService;
 use Up\Tree\Services\Repository\SubscriptionsService;
 use Up\Tree\Services\Repository\UserPurchaseService;
+use Up\Tree\Services\Repository\UserService;
 use Up\Tree\Services\Repository\UserSubscriptionsService;
 
 class Admin extends Engine\Controller
@@ -57,6 +58,18 @@ class Admin extends Engine\Controller
 
 		return [
 			'listUserSubscriptions' => $result
+		];
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function getListUserAction(): array
+	{
+		$result = UserService::getList();
+
+		return [
+			'listUser' => $result
 		];
 	}
 
@@ -176,8 +189,6 @@ class Admin extends Engine\Controller
 		AdminService::addPurchaseUserRelation($userId ,$purchaseId);
 	}
 
-
-
 	/**
 	 * @throws Exception
 	 */
@@ -194,4 +205,11 @@ class Admin extends Engine\Controller
 		AdminService::removePurchaseUser($userId, $purchaseId);
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public static function deactivationUserAction(int $userId, string $active): bool
+	{
+		return AdminService::deactivationUser($userId, $active);
+	}
 }

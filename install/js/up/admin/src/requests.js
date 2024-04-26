@@ -49,6 +49,41 @@ export class Requests
 		});
 	}
 
+	static getListUser()
+	{
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.admin.getListUser')
+				.then((response) => {
+					const listUser = response.data.listUser;
+
+					resolve(listUser);
+				})
+				.catch((error) => {
+					reject(error);
+				})
+			;
+		});
+	}
+
+	static deactivationUser(userId, active)
+	{
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.admin.deactivationUser', {
+				data: {
+					userId: userId,
+					active: active
+				}
+			})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				})
+			;
+		});
+	}
+
 	static updateUserSubscription(newUserSubscription) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.updateUserSubscription', {
@@ -65,7 +100,6 @@ export class Requests
 			;
 		});
 	}
-
 
 	static getListUserPurchase() {
 		return new Promise((resolve, reject) => {
