@@ -83,4 +83,5 @@ $MESS['main_profile_time_zones_auto_no'] = "No, select from list";
 $MESS['main_profile_time_zones_auto_yes'] = "Yes, use browser settings";
 $MESS['main_profile_time_zones_zones'] = "Time Zone:";
 $MESS['main_profile_title'] = "Salutation:";
+$MESS["UP_ACCOUNT_LEVEL_SUBSCRIPTION"] = "Level subscription:";
 ?>

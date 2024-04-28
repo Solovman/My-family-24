@@ -36,6 +36,9 @@ $APPLICATION->setAdditionalCSS('style.css');
 				rootNodeId: 'data-profile',
 			});
 		});
+		BX.message({
+			UP_ACCOUNT_LEVEL_SUBSCRIPTION : '<?=GetMessageJS("UP_ACCOUNT_LEVEL_SUBSCRIPTION")?>',
+		});
 	</script>
 	<? ShowError($arResult["strProfileError"]); ?>
 	<?//

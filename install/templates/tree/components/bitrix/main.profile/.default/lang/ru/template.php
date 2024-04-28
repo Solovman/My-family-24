@@ -83,4 +83,5 @@ $MESS["main_profile_title"] = "Обращение:";
 $MESS["main_profile_code"] = "Код подтверждения из СМС:";
 $MESS["main_profile_send"] = "Отправить";
 $MESS["main_profile_phone_number"] = "Номер телефона для регистрации:";
+$MESS["UP_ACCOUNT_LEVEL_SUBSCRIPTION"] = "Уровень подписки:";
 ?>
