@@ -78,10 +78,10 @@ this.BX.Up = this.BX.Up || {};
 	  babelHelpers.createClass(Helper, null, [{
 	    key: "dateFormat",
 	    value: function dateFormat(dateString) {
-	      var months = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
+	      var months = ["UP_TREE_CHATS_HELPER_JAN", "UP_TREE_CHATS_HELPER_FEB", "UP_TREE_CHATS_HELPER_MAR", "UP_TREE_CHATS_HELPER_APR", "UP_TREE_CHATS_HELPER_MAY", "UP_TREE_CHATS_HELPER_JUN", "UP_TREE_CHATS_HELPER_JUL", "UP_TREE_CHATS_HELPER_AUG", "UP_TREE_CHATS_HELPER_SEP", "UP_TREE_CHATS_HELPER_OCT", "UP_TREE_CHATS_HELPER_NOV", "UP_TREE_CHATS_HELPER_DEC"];
 	      var date = new Date(dateString);
 	      var day = date.getDate();
-	      var month = months[date.getMonth()];
+	      var month = BX.message(months[date.getMonth()]);
 	      var year = date.getFullYear();
 	      var hours = date.getHours().toString().padStart(2, '0');
 	      var minutes = date.getMinutes().toString().padStart(2, '0');

@@ -21,11 +21,11 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 				</div>
 				<div id="messages" class="messages-chat">
 					<div class="choice-chat">
-						<h2 class="choice-chat-heading">Выберите чат</h2>
+						<h2 class="choice-chat-heading"><?= GetMessage('UP_TREE_CHATS_SELECT_CHAT') ?></h2>
 					</div>
 				</div>
 				<form id="form-send" class="footer-chat">
-					<input id="input-message" type="text" class="write-message" placeholder="Type your message here">
+					<input id="input-message" type="text" class="write-message" placeholder="<?= GetMessage('UP_TREE_CHATS_MESSAGE_PLACEHOLDER') ?>">
 					<div id="footer-send"></div>
 				</form>
 			</div>
@@ -40,5 +40,21 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 			rootNodeId : 'chat-container',
 			rootMessages: 'messages'
 		});
+	});
+	BX.message({
+		UP_TREE_CHATS_HELPER_JAN : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_JAN")?>',
+		UP_TREE_CHATS_HELPER_FEB : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_FEB")?>',
+		UP_TREE_CHATS_HELPER_MAR : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_MAR")?>',
+		UP_TREE_CHATS_HELPER_APR : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_APR")?>',
+		UP_TREE_CHATS_HELPER_MAY : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_MAY")?>',
+
+		UP_TREE_CHATS_HELPER_JUN : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_JUN")?>',
+		UP_TREE_CHATS_HELPER_JUL : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_JUL")?>',
+		UP_TREE_CHATS_HELPER_AUG : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_AUG")?>',
+		UP_TREE_CHATS_HELPER_SEP : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_SEP")?>',
+		UP_TREE_CHATS_HELPER_OCT : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_OCT")?>',
+
+		UP_TREE_CHATS_HELPER_NOV : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_NOV")?>',
+		UP_TREE_CHATS_HELPER_DEC : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_DEC")?>'
 	});
 </script>
