@@ -28,4 +28,6 @@ return function (RoutingConfigurator $routes)
 	$routes->get('/chat/{id}/', new PublicPageController('/local/modules/up.tree/views/tree-messages.php'));
 
 	$routes->post('/', new PublicPageController('/local/modules/up.tree/views/tree-list.php'));
+
+	$routes->get('/statistics/', new PublicPageController('/local/modules/up.tree/views/tree-statistics.php'));
 };
