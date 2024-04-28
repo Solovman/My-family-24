@@ -83,7 +83,7 @@ $currentUrl = request()->getRequestUri();
 			</li>
 
 			<li data-title="<?= GetMessage('UP_HEADER_NAV_STATISTIC') ?>" class="header__nav-item">
-				<a href="#" class="header__nav-link">
+				<a href="/statistics/" class="header__nav-link">
 					<svg class="header__svg" width="30px" height="30px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 						<line class="a" x1="2" x2="22" y1="20" y2="20"/>
 						<path fill="#ffff" class="a header__svg-path" d="M5,20V8.2A.2.2,0,0,1,5.2,8H7.8a.2.2,0,0,1,.2.2V20"/>

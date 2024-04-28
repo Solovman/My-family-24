@@ -6,8 +6,6 @@ namespace Up\Tree\Services\Repository;
 
 use Bitrix\Main\Type\DateTime;
 use Exception;
-use Up\Tree\Entity\Admin\AdminSubscription;
-use Up\Tree\Entity\Admin\AdminSubscriptionAdding;
 use Up\Tree\Entity\Purchase;
 use Up\Tree\Entity\Subscription;
 use Up\Tree\Entity\UserSubscription;
