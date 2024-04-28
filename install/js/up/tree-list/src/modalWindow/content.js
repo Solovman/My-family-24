@@ -6,10 +6,9 @@ export class Content
 	{
 		return Tag.render`
 			<div class="security">
-				<h2 class="security__heading">Пользовательское соглашение</h2>
+				<h2 class="security__heading">${BX.message('UP_TREE_LIST_USER_AGREEMENT')}</h2>
 				<p class="security-info">
-					Вы хотите активировать поиск в этом дереве? 
- 					Ваша информация о дереве будет доступна другим пользователям. Вы также разрешаете пользователю отправлять вам сообщения.
+				${BX.message('UP_TREE_LIST_USER_AGREEMENT_CONTENT')}
 				</p>
 				<div class="security-checkbox">
 					<input ${!data.is_security ? "checked" : ''} type="checkbox" id="cbx" style="display: none;">
@@ -19,7 +18,7 @@ export class Content
 						<polyline points="1 9 7 14 15 4"></polyline>
 					  </svg>
 					</label>
-					<label for="cbx" class="security-text">Я принимаю условия Пользовательского соглашения</label>
+					<label for="cbx" class="security-text">${BX.message('UP_TREE_LIST_USER_AGREEMENT_CHECKBOX')}</label>
 				</div>
 				<button id="security-save" class="security-save">
 					<div class="spinner-border text-light" role="status">
