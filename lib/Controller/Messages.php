@@ -3,14 +3,27 @@
 declare(strict_types=1);
 
 namespace Up\Tree\Controller;
+use Bitrix\Main\ArgumentException;
 use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\Engine;
+use Bitrix\Main\ObjectPropertyException;
+use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Message;
 use Up\Tree\Services\Repository\MessageService;
 
 class Messages extends Engine\Controller
 {
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function getLastMessageAction(int $chatId): string
+	{
+		return MessageService::getLastMessages($chatId);
+	}
+
 	public static function getMessagesAction(int $chatId): array
 	{
 

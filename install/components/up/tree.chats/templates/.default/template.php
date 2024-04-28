@@ -11,7 +11,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 <div class="my-container">
 	<div class="section">
-		<h1 class="title">Список чатов:</h1>
 		<div class="chat__container">
 			<div class="discussions" id="chat-container"></div>
 			<div class="chat">
@@ -20,11 +19,15 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 					<p id="name-user" class="name"></p>
 					<i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
 				</div>
-				<div id="messages" class="messages-chat"></div>
-				<div class="footer-chat">
+				<div id="messages" class="messages-chat">
+					<div class="choice-chat">
+						<h2 class="choice-chat-heading">Выберите чат</h2>
+					</div>
+				</div>
+				<form id="form-send" class="footer-chat">
 					<input id="input-message" type="text" class="write-message" placeholder="Type your message here">
 					<div id="footer-send"></div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>

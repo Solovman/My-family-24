@@ -4,15 +4,36 @@ declare(strict_types=1);
 
 namespace Up\Tree\Services\Repository;
 
-use Bitrix\Main\Type\DateTime;
+use Bitrix\Main\ArgumentException;
+use Bitrix\Main\ObjectPropertyException;
+use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Message;
 use Up\Tree\Model\MessageTable;
 use Bitrix\Main\DB\SqlException;
-use Up\Tree\Model\UserTable;
+
 
 class MessageService
 {
+
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getLastMessages(int $chatId): string
+	{
+		$result = MessageTable::query()
+			->setSelect(['MESSAGE'])
+			->setFilter(['CHAT_ID' => $chatId])
+			->setOrder(['ID'=>'DESC'])
+			->setLimit(1)
+			->exec()
+			->fetchObject();
+
+		return $result->getMessage();
+	}
+
 	/**
 	 * @throws SqlException
 	 * @throws Exception
@@ -40,7 +61,6 @@ class MessageService
 			->setSelect(['ID', 'CHAT_ID', 'AUTHOR_ID', 'MESSAGE', 'CREATED_AT', 'AUTHOR_DATA_NAME' => 'AUTHOR_DATA.NAME'])
 			->setFilter(['CHAT_ID' => $chatId])
 			->exec();
-
 
 		$messagesList = [];
 
