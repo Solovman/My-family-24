@@ -49,4 +49,21 @@ export class Requests
 				});
 		});
 	}
+
+	static getLastMessage(chatId)
+	{
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.messages.getLastMessage', {
+				data: {
+					chatId: chatId,
+				}
+			})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
 }

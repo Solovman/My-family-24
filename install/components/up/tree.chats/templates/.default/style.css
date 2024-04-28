@@ -150,10 +150,10 @@ body {
 	right: 40px;
 }
 
-.chat .messages-chat {
+#messages {
 	padding: 25px 35px;
 	height: 400px;
-	overflow-y: scroll;
+	overflow: auto;
 }
 
 .chat .messages-chat .message {
@@ -175,10 +175,26 @@ body {
 }
 
 .chat .messages-chat .text {
+	display: flex;
+	flex-direction: column;
 	margin: 0 35px;
 	background-color: #f6f6f6;
 	padding: 15px;
 	border-radius: 12px;
+}
+
+.text-message {
+	text-align: end;
+	font-size: 20px;
+}
+
+.date-message {
+	color: #8d8d8d;
+	font-size: 15px;
+}
+
+.messages-chat {
+	position: relative;
 }
 
 .text-only {
@@ -242,6 +258,7 @@ body {
 	width: 100%;
 	height: 100%;
 	padding: 10px;
+	display: none;
 }
 
 .footer-chat *::-webkit-input-placeholder {
@@ -279,4 +296,25 @@ body {
 	background-color: transparent;
 	border: none;
 	cursor: pointer;
+}
+
+.choice-chat {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.choice-chat-heading {
+	font-size: 28px;
+	color: #8d8d8d;
+}
+
+.spinner-grow  {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	color: #00ceaa;
+	width: 60px;
+	height: 60px;
 }
