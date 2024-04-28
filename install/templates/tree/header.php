@@ -207,32 +207,21 @@ $currentUrl = request()->getRequestUri();
 				<div class="navbar-start">
 
 					<a class="navbar-item header_item">
-						Documentation
+						<?= GetMessage('UP_HEADER_DOCUMENTATION') ?>
 					</a>
 
 					<?php if (str_contains($currentUrl, '/tree/') === false):?>
 						<div class="navbar-item has-dropdown is-hoverable">
-							<a class="navbar-link header_item">
-								More
-							</a>
-
-							<div class="navbar-dropdown">
-								<a class="navbar-item header_item">
-									About
-								</a>
-								<a class="navbar-item header_item">
-									Contact
-								</a>
 								<a class="navbar-item header_item" href="mailto:familyTreeTechnicalSupport@gmail.com">
-									Report an issue
+									<?= GetMessage('UP_HEADER_REPORT_ISSUE') ?>
 								</a>
-							</div>
+
 						</div>
 					<?php endif; ?>
 					<?php if (str_contains($currentUrl, '/tree/')):?>
 						<div class="navbar-item has-dropdown is-hoverable">
 							<a id = "navbar-purchases" class="navbar-link header_item">
-								Skins
+								<?= GetMessage('UP_HEADER_SKINS') ?>
 							</a>
 							<div class="navbar-dropdown">
 									<?= $APPLICATION->IncludeComponent("up:tree.purchases", "", []);?>
@@ -253,8 +242,8 @@ $currentUrl = request()->getRequestUri();
 						<div class="buttons">
 							<div class="header__icon">
 								<span class="header__icon-name">
-									<a href="/account/" class="name__link" style="display:flex;">
-										My account: <?= htmlspecialcharsEx($USER->GetLogin()) ?: GetMessage('UP_HEADER_ICON_NAME') ?>
+									<a href="/account/" class="name__link">
+										<?= htmlspecialcharsEx($USER->GetEmail()) ?: GetMessage('UP_HEADER_ICON_NAME') ?>
 									</a>
 								</span>
 							</div>

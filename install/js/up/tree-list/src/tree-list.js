@@ -147,6 +147,7 @@ export class TreeList
 
 		const treeContainerNode = Tag.render`<div class="columns cards-container"></div>`;
 
+
 		this.treeList.forEach(trees => {
 			const treeNode = Tag.render`
 				<div class="columns is-multiline">
@@ -175,14 +176,14 @@ export class TreeList
 														<path fill="black" d="M26.9,35.1c-0.6,0-1-0.4-1-1V17.4c0-0.6,0.4-1,1-1s1,0.4,1,1v16.7C27.9,34.6,27.4,35.1,26.9,35.1z"/>
 														</g><g><path fill="black"  d="M19.9,35.1c-0.6,0-1-0.4-1-1V17.4c0-0.6,0.4-1,1-1s1,0.4,1,1v16.7C20.9,34.6,20.4,35.1,19.9,35.1z"/></g></svg>
 													</span>
-													<span id="delete${trees.id}">Удалить дерево</span>
+													<span id="delete${trees.id}">${BX.message('UP_TREE_LIST_DELETE_TREE')}</span>
 												</button>
 												<button data-btn-tree = "${trees.id}" class="card-header-icon action-tree">
 													<svg data-btn-tree = "${trees.id}" width="20px" height="20px" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg">
 														<path data-btn-tree = "${trees.id}" d="M182.52 146.2h585.14v256h73.15V73.06H109.38v877.71h256v-73.14H182.52z" fill="#0F1F3C" />
 														<path data-btn-tree = "${trees.id}" d="M255.67 219.34h438.86v73.14H255.67zM255.67 365.63h365.71v73.14H255.67zM255.67 511.91H475.1v73.14H255.67zM775.22 458.24L439.04 794.42l-0.52 154.64 155.68 0.52L930.38 613.4 775.22 458.24z m51.72 155.16l-25.43 25.43-51.73-51.72 25.44-25.44 51.72 51.73z m-77.14 77.15L620.58 819.77l-51.72-51.72 129.22-129.22 51.72 51.72zM511.91 876.16l0.17-51.34 5.06-5.06 51.72 51.72-4.85 4.85-52.1-0.17z" fill="#0F1F3C" />
 													</svg>
-													<span data-btn-tree = "${trees.id}">Пользовательское соглашение</span>
+													<span data-btn-tree = "${trees.id}">${BX.message('UP_TREE_LIST_USER_AGREEMENT')}</span>
 												</button>
 											</div>
 										</div>
@@ -190,7 +191,7 @@ export class TreeList
 								</header>
 								<footer class="card-footer">
 									<span class="card-footer-item is-size-6">
-										<div style="font-size: 1.2em; color:white"><strong style="color:white">Created at :</strong> ${BX.date.format('d F Y', trees.createdAt)}</div>
+										<div style="font-size: 1.2em; color:white"><strong style="color:white">${BX.message('UP_TREE_LIST_CREATED_AT')}</strong> ${BX.date.format('d F Y', trees.createdAt)}</div>
 									</span>
 								</footer>
 							</div>

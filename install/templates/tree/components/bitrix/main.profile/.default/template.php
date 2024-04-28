@@ -149,18 +149,18 @@ $APPLICATION->setAdditionalCSS('style.css');
 							<input type="text" name="LAST_NAME" maxlength="50" value="<?= $arResult["arUser"]["LAST_NAME"] ?>"/>
 						</td>
 					</tr>
-					<tr>
-						<td><?= GetMessage('LOGIN') ?><span class="starrequired">*</span></td>
-						<td><input type="text" name="LOGIN" maxlength="50" value="<?
-							echo $arResult["arUser"]["LOGIN"] ?>"/></td>
-					</tr>
 <!--					<tr>-->
-<!--						<td>--><?php //= GetMessage('EMAIL') ?><!----><?//
-// 							if ($arResult["EMAIL_REQUIRED"]): ?><!--<span class="starrequired">*</span>--><?//
-// 							endif ?><!--</td>-->
-<!--						<td><input type="text" name="EMAIL" maxlength="50" value="--><?//
-// 							echo $arResult["arUser"]["EMAIL"] ?><!--"/></td>-->
+<!--						<td>--><?php //= GetMessage('LOGIN') ?><!--<span class="starrequired">*</span></td>-->
+<!--						<td><input type="text" name="LOGIN" maxlength="50" value="--><?//
+// 							echo $arResult["arUser"]["LOGIN"] ?><!--"/></td>-->
 <!--					</tr>-->
+					<tr>
+						<td><?= GetMessage('EMAIL') ?><?
+							if ($arResult["EMAIL_REQUIRED"]): ?><span class="starrequired">*</span><?
+							endif ?></td>
+						<td><input type="text" name="EMAIL" maxlength="50" value="<?
+							echo $arResult["arUser"]["EMAIL"] ?>"/></td>
+					</tr>
 					<?
 					if ($arResult["PHONE_REGISTRATION"]): ?>
 						<tr>
