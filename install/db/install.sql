@@ -46,15 +46,18 @@ CREATE TABLE up_family_tree
 
 CREATE TABLE up_person
 (
-	ID         INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	IMAGE_ID   INT  DEFAULT 0,
-	NAME       VARCHAR(50) NULL,
-	SURNAME    VARCHAR(50) NULL,
-	BIRTH_DATE DATE,
-	DEATH_DATE DATE,
-	GENDER     ENUM ('male', 'female'),
-	TREE_ID    INT         NOT NULL,
-	ACTIVE     BOOL DEFAULT FALSE
+	ID              INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	IMAGE_ID        INT                                                         DEFAULT 0,
+	NAME            VARCHAR(50) NULL,
+	SURNAME         VARCHAR(50) NULL,
+	BIRTH_DATE      DATE,
+	DEATH_DATE      DATE,
+	GENDER          ENUM ('male', 'female'),
+	WEIGHT          FLOAT                                                       DEFAULT NULL,
+	HEIGHT          FLOAT                                                       DEFAULT NULL,
+	EDUCATION_LEVEL ENUM ('without education', 'school', 'secondary', 'higher') DEFAULT NULL,
+	TREE_ID         INT         NOT NULL,
+	ACTIVE          BOOL                                                        DEFAULT FALSE
 );
 
 CREATE TABLE up_relation_person_parent
@@ -73,18 +76,18 @@ CREATE TABLE up_relation_married
 
 CREATE TABLE up_chat
 (
-	ID           INT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	AUTHOR_ID    INT  NOT NULL,
-	RECIPIENT_ID INT  NOT NULL,
+	ID           INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	AUTHOR_ID    INT NOT NULL,
+	RECIPIENT_ID INT NOT NULL,
 	CREATED_AT   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
 CREATE TABLE up_message
 (
-	ID             INT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	CHAT_ID        INT  NOT NULL,
-	AUTHOR_ID      INT  NOT NULL,
-	MESSAGE        TEXT NOT NULL,
-	CREATED_AT     TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	ID         INT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	CHAT_ID    INT  NOT NULL,
+	AUTHOR_ID  INT  NOT NULL,
+	MESSAGE    TEXT NOT NULL,
+	CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

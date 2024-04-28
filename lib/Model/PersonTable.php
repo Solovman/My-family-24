@@ -104,6 +104,25 @@ class PersonTable extends DataManager
 					'values' => ['male', 'female']
 				]
 			),
+			new FloatField(
+				'WEIGHT',
+				[
+					'title' => Loc::getMessage('PERSON_ENTITY_WEIGHT_FIELD')
+				]
+			),
+			new FloatField(
+				'HEIGHT',
+				[
+					'title' => Loc::getMessage('PERSON_ENTITY_HEIGHT_FIELD')
+				]
+			),
+			new EnumField(
+			'EDUCATION_LEVEL',
+				[
+				'title' => Loc::getMessage('PERSON_ENTITY_EDUCATION_LEVEL_FIELD'),
+				'values' => ['without education', 'school', 'secondary', 'higher']
+			]
+			),
 			new IntegerField(
 				'TREE_ID',
 				[
