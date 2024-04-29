@@ -55,8 +55,6 @@ export class CreationTree
 		Requests.loadNodes(id).then(nodeList => {
 			this.nodeList = nodeList;
 
-			console.log(this.nodeList);
-
 			this.nodeList.persons.forEach(person => {
 				person.active = person.active !== '0';
 
@@ -76,7 +74,6 @@ export class CreationTree
 					}
 				}
 			})
-
 
 			this.render();
 		});
@@ -182,6 +179,12 @@ export class CreationTree
 
 				sender.editUI.show(self.nodeList.persons[0].id, false);
 
+				document.querySelectorAll('input').forEach(input => {
+					BX.bind(input, 'input', (event) => {
+						event.target.value = event.target.value.replace(/[<>\/]/g, '');
+					})
+				})
+
 				const checkedInput = document.querySelector('.bft-checkbox input')
 
 				checkedInput.dataset.btnChecked = !!checkedInput.checked;
@@ -238,6 +241,12 @@ export class CreationTree
 				if (typeof args.addNodesData[0].id === 'string') {
 
 					sender.editUI.show(args.addNodesData[0].id, false);
+
+					document.querySelectorAll('input').forEach(input => {
+						BX.bind(input, 'input', (event) => {
+							event.target.value = event.target.value.replace(/[<>\/]/g, '');
+						})
+					})
 
 					const checkedInput = document.querySelector('.bft-checkbox input')
 
@@ -309,6 +318,12 @@ export class CreationTree
 			onUpdatePerson = statusRequest[1];
 
 			sender.editUI.show(args.node.id, false);
+
+			document.querySelectorAll('input').forEach(input => {
+				BX.bind(input, 'input', (event) => {
+					event.target.value = event.target.value.replace(/[<>\/]/g, '');
+				})
+			})
 
 			const checkedInput = document.querySelector('.bft-checkbox input')
 
