@@ -26,31 +26,31 @@ export class RenderForm
 			
 			<form class="details">
 				<div class="input-container">
-					<label class="modal-form-label" for="name">Название подписки:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.level : ''}" id="name" type="text" placeholder="Name"/>
+					<label class="modal-form-label" for="name">${BX.message('UP_TREE_ADMIN_SUBSCRIPTION_NAME')}</label>
+					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.level : ''}" id="name" type="text" placeholder="${BX.message('UP_TREE_ADMIN_TITLE')}"/>
 				</div>
 				<div class="input-container">
-					<label class="modal-form-label" for="price">Цена:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.price : ''}" id="price" type="number" placeholder="Price" min="0"/>
+					<label class="modal-form-label" for="price">${BX.message('UP_TREE_ADMIN_PRICE')}:</label>
+					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.price : ''}" id="price" type="number" placeholder="${BX.message('UP_TREE_ADMIN_PRICE')}" min="0"/>
 				</div>
 				
 				<div class="input-container-number">
 					<div class="input-container">
-						<label class="modal-form-label" for="numberTrees">Количетсво деревьев:</label>
-						<input class="col-sm-12 with-placeholder" value="${data !== null ? data.numberTrees : ''}" id="numberTrees" type="number" placeholder="Number trees" min="0"/>
+						<label class="modal-form-label" for="numberTrees">${BX.message('UP_TREE_ADMIN_NUMBER_TREES')}:</label>
+						<input class="col-sm-12 with-placeholder" value="${data !== null ? data.numberTrees : ''}" id="numberTrees" type="number" placeholder="0" min="0"/>
 					</div>
 					
 					<div class="input-container">
-						<label class="modal-form-label" for="numberNodes">Количетсво вершин:</label>
-						<input class="col-sm-12 with-placeholder"  value="${data !== null ? data.numberNodes : '' }" id="numberNodes" type="number" placeholder="Number nodes" min="0"/>
+						<label class="modal-form-label" for="numberNodes">${BX.message('UP_TREE_ADMIN_NUMBER_NODES')}:</label>
+						<input class="col-sm-12 with-placeholder"  value="${data !== null ? data.numberNodes : '' }" id="numberNodes" type="number" placeholder="0" min="0"/>
 					</div>
 				</div>
 			
 				<div class="input-container">
-					<label class="modal-form-label" for="customization">Разрешить костамизацию:</label>
+					<label class="modal-form-label" for="customization">${BX.message('UP_TREE_ADMIN_ALLOW_CUSTOMIZATION')}</label>
 					<select id="customization-select" class="modal-select" name="customization">
-						<option class="modal-option" value="1">Разрешить</option>
-						<option class="modal-option" value="0">Запретить</option>
+						<option class="modal-option" value="1">${BX.message('UP_TREE_ADMIN_ALLOW_CUSTOMIZATION_YES')}</option>
+						<option class="modal-option" value="0">${BX.message('UP_TREE_ADMIN_ALLOW_CUSTOMIZATION_NO')}</option>
 					</select>
 				</div>
 			
@@ -58,7 +58,5 @@ export class RenderForm
 			</form>
 		</div>
 		`;
-
-
 	}
 }

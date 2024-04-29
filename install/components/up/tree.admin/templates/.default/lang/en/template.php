@@ -1,0 +1,28 @@
+<?php
+
+$MESS['UP_TREE_ADMIN_USERS'] = 'Users';
+$MESS['UP_TREE_ADMIN_SUBSCRIPTIONS'] = 'Subscriptions';
+$MESS['UP_TREE_ADMIN_PURCHASES'] = 'Purchases';
+$MESS['UP_TREE_ADMIN_USER_SUBSCRIPTIONS'] = 'User subscriptions';
+$MESS['UP_TREE_ADMIN_USER_PURCHASES'] = 'User purchases';
+$MESS['UP_TREE_ADMIN_ADD_BUTTON'] = 'Add';
+$MESS['UP_TREE_ADMIN_TITLE'] = 'Title';
+$MESS['UP_TREE_ADMIN_PRICE'] = 'Price';
+$MESS['UP_TREE_ADMIN_ACTIONS'] = 'actions';
+$MESS['UP_TREE_ADMIN_EMAIL'] = 'e-mail';
+$MESS['UP_TREE_ADMIN_NAME'] = 'name';
+$MESS['UP_TREE_ADMIN_SURNAME'] = 'surname';
+$MESS['UP_TREE_ADMIN_STATUS'] = 'status';
+$MESS['UP_TREE_ADMIN_CUSTOMIZATION'] = 'customization';
+$MESS['UP_TREE_ADMIN_SUBSCRIPTION'] = 'subscription';
+$MESS['UP_TREE_ADMIN_NUMBER_NODES'] = 'Number nodes';
+$MESS['UP_TREE_ADMIN_NUMBER_TREES'] = 'Number trees';
+$MESS['UP_TREE_ADMIN_USER_ID'] = 'user id';
+$MESS['UP_TREE_ADMIN_SUBSCRIPTION_ID'] = 'subscription id';
+$MESS['UP_TREE_ADMIN_PURCHASE_ID'] = 'purchase id';
+$MESS['UP_TREE_ADMIN_BUY_TIME'] = 'time to buy';
+$MESS['UP_TREE_ADMIN_PURCHASE_NAME'] = 'Purchase name:';
+$MESS['UP_TREE_ADMIN_SUBSCRIPTION_NAME'] = 'Subscription name:';
+$MESS['UP_TREE_ADMIN_ALLOW_CUSTOMIZATION'] = 'Allow customization:';
+$MESS['UP_TREE_ADMIN_ALLOW_CUSTOMIZATION_YES'] = 'Allow';
+$MESS['UP_TREE_ADMIN_ALLOW_CUSTOMIZATION_NO'] = 'Prohibit';

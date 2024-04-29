@@ -8,13 +8,13 @@ export class SubscriptionTable
 		const headingTable = Tag.render`
 			<li class="table-header">
 				<div class="table-head col col-1">ID</div>
-				<div class="table-head col col-1">Подписка</div>
-				<div class="table-head col col-1">Цена</div>
-				<div class="table-head col col-1">Кол-во деревьев</div>
-				<div class="table-head col col-1">Кол-во вершин</div>
-				<div class="table-head col col-1">Кастомизация</div>
-				<div class="table-head col col-1">Статус</div>
-				<div class="table-head col col-1">Действия</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_SUBSCRIPTION')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_PRICE')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_NUMBER_TREES')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_NUMBER_NODES')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_CUSTOMIZATION')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_STATUS')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_ACTIONS')}</div>
 			</li>
 		`;
 

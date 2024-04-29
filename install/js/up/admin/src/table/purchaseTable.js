@@ -6,9 +6,9 @@ export class PurchaseTable
 		const headingTable = Tag.render`
 			<li class="table-header">
 				<div class="table-head col col-1">ID</div>
-				<div class="table-head col col-1">НАЗВАНИЕ</div>
-				<div class="table-head col col-1">ЦЕНА</div>
-				<div class="table-head col col-1">ДЕЙСТВИЯ</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_TITLE')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_PRICE')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_ACTIONS')}</div>
 			</li>
 		`;
 

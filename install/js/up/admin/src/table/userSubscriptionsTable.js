@@ -6,12 +6,12 @@ export class UserSubscriptionsTable
 	{
 		const headingTable = Tag.render`
 			<li class="table-header">
-				<div class="table-head col col-1">ID пользователя</div>
-				<div class="table-head col col-1">ID подписки</div>
-				<div class="table-head col col-1">Кол-во деревьев</div>
-				<div class="table-head col col-1">Кол-во вершин</div>
-				<div class="table-head col col-1">Время покупки</div>
-				<div class="table-head col col-1">Действия</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_USER_ID')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_SUBSCRIPTION_ID')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_NUMBER_TREES')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_NUMBER_NODES')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_BUY_TIME')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_ACTIONS')}</div>
 			</li>
 		`;
 

@@ -25,21 +25,21 @@ export class RenderForm
 			</div>
 			<form class="details">
 				<div class="input-container">
-					<label class="modal-form-label" for="subId">ID подписки:</label>
+					<label class="modal-form-label" for="subId">${BX.message('UP_TREE_ADMIN_SUBSCRIPTION_ID')}:</label>
 					<input class="col-sm-12 with-placeholder" value="${data.subscriptionId}" id="subId" type="number" placeholder="ID" min="0"/>
 				</div>
 				<div class="input-container">
-					<label class="modal-form-label" for="countTrees">Количество деревьев:</label>
-					<input class="col-sm-12 with-placeholder" value="${data.countTrees}" id="countTrees" type="number" placeholder="countTrees" min="0"/>
+					<label class="modal-form-label" for="countTrees">${BX.message('UP_TREE_ADMIN_NUMBER_TREES')}:</label>
+					<input class="col-sm-12 with-placeholder" value="${data.countTrees}" id="countTrees" type="number" min="0"/>
 				</div>
 				
 				<div class="input-container">
-					<label class="modal-form-label" for="countNodes">Количество вершин:</label>
-					<input class="col-sm-12 with-placeholder" value="${data.countNodes}" id="countNodes" type="number" placeholder="countNodes" min="0"/>
+					<label class="modal-form-label" for="countNodes">${BX.message('UP_TREE_ADMIN_NUMBER_NODES')}:</label>
+					<input class="col-sm-12 with-placeholder" value="${data.countNodes}" id="countNodes" type="number" placeholder="0" min="0"/>
 				</div>
 				
 				<div class="input-container">
-					<label class="modal-form-label" for="buyTime">Время покупки:</label>
+					<label class="modal-form-label" for="buyTime">${BX.message('UP_TREE_ADMIN_BUY_TIME')}:</label>
 					<input class="col-sm-12 with-placeholder" value="${data.buyTime}" id="buyTime" type="datetime-local" step="2" placeholder="buyTime" />
 				</div>
 			

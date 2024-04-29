@@ -26,12 +26,12 @@ export class RenderForm
 			
 			<form class="details">
 				<div class="input-container">
-					<label class="modal-form-label" for="title">Название покупки:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.TITLE : ''}" id="title" type="text" placeholder="Name" />
+					<label class="modal-form-label" for="title">${BX.message('UP_TREE_ADMIN_PURCHASE_NAME')}</label>
+					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.TITLE : ''}" id="title" type="text" />
 				</div>
 				<div class="input-container">
-					<label class="modal-form-label" for="price">Цена:</label>
-					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.PRICE : ''}" id="price" type="number" placeholder="Price" min="0"/>
+					<label class="modal-form-label" for="price">${BX.message('UP_TREE_ADMIN_PRICE')}:</label>
+					<input class="col-sm-12 with-placeholder" value="${data !== null ? data.PRICE : ''}" id="price" type="number" min="0"/>
 				</div>
 				
 				<input id="edit-button" class="add" type="submit" value="${data !== null ? 'Edit' : 'Add'}">

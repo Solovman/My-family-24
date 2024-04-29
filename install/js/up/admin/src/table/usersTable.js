@@ -6,11 +6,11 @@ export class UsersTable
 		const headingTable = Tag.render`
 			<li class="table-header">
 				<div class="table-head col col-1">ID</div>
-				<div class="table-head col col-1">E-mail</div>
-				<div class="table-head col col-1">Имя</div>
-				<div class="table-head col col-1">Фамилия</div>
-				<div class="table-head col col-1">Статус</div>
-				<div class="table-head col col-1">Действия</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_EMAIL')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_NAME')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_SURNAME')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_STATUS')}</div>
+				<div class="table-head col col-1">${BX.message('UP_TREE_ADMIN_ACTIONS')}</div>
 			</li>
 		`;
 
