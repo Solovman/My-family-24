@@ -823,11 +823,13 @@ this.BX.Up = this.BX.Up || {};
 	        if (args.addNodesData.length !== 0) {
 	          if (typeof args.addNodesData[0].id === 'string') {
 	            sender.editUI.show(args.addNodesData[0].id, false);
-	            document.querySelectorAll('input').forEach(function (input) {
-	              BX.bind(input, 'input', function (event) {
-	                event.target.value = event.target.value.replace(/[<>\/]/g, '');
-	              });
-	            });
+
+	            // document.querySelectorAll('input').forEach(input => {
+	            // 	BX.bind(input, 'input', (event) => {
+	            // 		event.target.value = event.target.value.replace(/[<>\/]/g, '');
+	            // 	})
+	            // })
+
 	            var checkedInput = document.querySelector('.bft-checkbox input');
 	            checkedInput.dataset.btnChecked = !!checkedInput.checked;
 	            checkedInput.addEventListener('click', function (event) {
