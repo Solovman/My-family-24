@@ -43,6 +43,9 @@ class PersonService
 			'DEATH_DATE' => $person->getDeathDate() ? new Date($person->getDeathDate(), 'Y-m-d') : null,
 			"GENDER" => $person->getGender(),
 			"TREE_ID" => $person->getTreeId(),
+			'WEIGHT' => $person->getWeight(),
+			'HEIGHT' => $person->getHeight(),
+			'EDUCATION_LEVEL' => $person->getEducationLevel(),
 		];
 
 		$ids = [];
@@ -162,6 +165,9 @@ class PersonService
 											  'GENDER',
 											  'TREE_ID',
 											  'ACTIVE',
+											  'WEIGHT',
+											  'HEIGHT',
+											  'EDUCATION_LEVEL',
 											  'TREE_DATA_' => 'TREE_DATA'
 										  ])->setFilter(['TREE_ID' => $treeId])->exec()->fetchAll();
 
@@ -180,7 +186,10 @@ class PersonService
 				$personData['DEATH_DATE'] ? $personData['DEATH_DATE']->format('Y-m-d') : null,
 				$personData['GENDER'],
 				(int)$personData['TREE_ID'],
-				(int)$personData['TREE_DATA_USER_ID']
+				(int)$personData['TREE_DATA_USER_ID'],
+				(float)$personData['WEIGHT'],
+				(float)$personData['HEIGHT'],
+				$personData['EDUCATION_LEVEL'],
 			);
 			$person->setId((int)$personData['ID']);
 
@@ -203,6 +212,9 @@ class PersonService
 			'BIRTH_DATE' => $updatablePerson->getBirthDate() ? new Date($updatablePerson->getBirthDate(), 'Y-m-d') : null,
 			'DEATH_DATE' => $updatablePerson->getDeathDate() ? new Date($updatablePerson->getDeathDate(), 'Y-m-d') : null,
 			'GENDER' => $updatablePerson->getGender(),
+			'WEIGHT' => $updatablePerson->getWeight(),
+			'HEIGHT' => $updatablePerson->getHeight(),
+			'EDUCATION_LEVEL' => $updatablePerson->getEducationLevel(),
 		];
 
 		$result = PersonTable::update($id , $personData);

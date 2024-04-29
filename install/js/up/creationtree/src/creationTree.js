@@ -182,6 +182,14 @@ export class CreationTree
 
 				sender.editUI.show(self.nodeList.persons[0].id, false);
 
+				const checkedInput = document.querySelector('.bft-checkbox input')
+
+				checkedInput.dataset.btnChecked = !!checkedInput.checked;
+
+				checkedInput.addEventListener('click', (event) => {
+					event.target.dataset.btnChecked = !!event.target.checked;
+				})
+
 				const saveButton = document.querySelector('[data-edit-from-save]');
 				const inputName = document.querySelector('[data-binding="name"]');
 				inputName.addEventListener('input', (el) => {
@@ -230,6 +238,14 @@ export class CreationTree
 				if (typeof args.addNodesData[0].id === 'string') {
 
 					sender.editUI.show(args.addNodesData[0].id, false);
+
+					const checkedInput = document.querySelector('.bft-checkbox input')
+
+					checkedInput.dataset.btnChecked = !!checkedInput.checked;
+
+					checkedInput.addEventListener('click', (event) => {
+						event.target.dataset.btnChecked = !!event.target.checked;
+					})
 
 					const saveButton = document.querySelector('[data-edit-from-save]');
 					saveButton.disabled = true;
@@ -293,6 +309,14 @@ export class CreationTree
 			onUpdatePerson = statusRequest[1];
 
 			sender.editUI.show(args.node.id, false);
+
+			const checkedInput = document.querySelector('.bft-checkbox input')
+
+			checkedInput.dataset.btnChecked = !!checkedInput.checked;
+
+			checkedInput.addEventListener('click', (event) => {
+				event.target.dataset.btnChecked = !!event.target.checked;
+			})
 
 			const saveButton = document.querySelector('[data-edit-from-save]');
 			const inputName = document.querySelector('[data-binding="name"]');
