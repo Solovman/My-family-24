@@ -40,11 +40,28 @@ export class Family
 						{type: 'date', label: 'Date Of Death', binding: 'deathDate'}
 					],
 					[
+						{type: 'textbox', label: 'Weight', binding: 'weight'},
+						{type: 'textbox', label: 'Height', binding: 'height'}
+					],
+					[
 						{
 							type: 'select',
 							options: [{value: 'male', text: 'Male'}, {value: 'female', text: 'Female'}],
 							label: 'Gender',
 							binding: 'gender'
+						},
+					],
+					[
+						{
+							type: 'select',
+							options: [
+								{value: 'without education', text: 'Without education'},
+								{value: 'school', text: 'School'},
+								{value: 'secondary', text: 'Secondary'},
+								{value: 'higher', text: 'Higher'},
+							],
+							label: 'Education Level',
+							binding: 'education'
 						},
 					],
 					{ type: 'checkbox', label: 'Important', binding: 'active' }

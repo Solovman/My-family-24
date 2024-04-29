@@ -56,7 +56,11 @@ class Node extends Engine\Controller
 			$person['birthDate'],
 			$person['deathDate'],
 			$person['gender'],
-			(int) $person['treeId']
+			(int) $person['treeId'],
+			null,
+			(float) $person['weight'],
+			(float) $person['height'],
+			$person['education']
 		);
 
 		$userId = (int) $USER->GetID();
@@ -99,7 +103,12 @@ class Node extends Engine\Controller
 			$updatablePerson['birthDate'],
 			$updatablePerson['deathDate'],
 			$updatablePerson['gender'],
-			(int) $updatablePerson['treeId']
+			(int) $updatablePerson['treeId'],
+			null,
+			(float) $updatablePerson['weight'],
+			(float) $updatablePerson['height'],
+			$updatablePerson['education']
+
 		);
 
 

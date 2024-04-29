@@ -23,14 +23,21 @@ class AdminService
 	 */
 	public static function deactivationSubscription(int $id, bool $active): bool
 	{
-		$result = SubscriptionTable::update($id, ['IS_ACTIVE' => $active]);
+		global $USER;
 
-		if (!$result->isSuccess())
+		if ($USER->IsAdmin())
 		{
-			return false;
+			$result = SubscriptionTable::update($id, ['IS_ACTIVE' => $active]);
+
+			if (!$result->isSuccess())
+			{
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
@@ -38,14 +45,22 @@ class AdminService
 	 */
 	public static function deactivationUser(int $userId, string $active): bool
 	{
-		$result = UserTable::update($userId, ['ACTIVE' => $active]);
+		global $USER;
 
-		if (!$result->isSuccess())
+		if ($USER->IsAdmin())
 		{
-			return false;
+			$result = UserTable::update($userId, ['ACTIVE' => $active]);
+
+			if (!$result->isSuccess())
+			{
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		return false;
+
 	}
 
 	/**
@@ -53,20 +68,28 @@ class AdminService
 	 */
 	public static function updateSubscription(Subscription $subscription): bool
 	{
-		$result = SubscriptionTable::update($subscription->id, [
-			'LEVEL' => $subscription->level,
-			'PRICE' => $subscription->price,
-			'NUMBER_TREES' => $subscription->numberTrees,
-			'NUMBER_NODES' => $subscription->numberNodes,
-			'CUSTOMIZATION' => $subscription->customization
-		]);
+		global $USER;
 
-		if (!$result->isSuccess())
+		if ($USER->IsAdmin())
 		{
-			return false;
+			$result = SubscriptionTable::update($subscription->id, [
+				'LEVEL' => $subscription->level,
+				'PRICE' => $subscription->price,
+				'NUMBER_TREES' => $subscription->numberTrees,
+				'NUMBER_NODES' => $subscription->numberNodes,
+				'CUSTOMIZATION' => $subscription->customization
+			]);
+
+			if (!$result->isSuccess())
+			{
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		return false;
+
 	}
 
 	/**
@@ -74,39 +97,54 @@ class AdminService
 	 */
 	public static function updatePurchase(Purchase $purchase): bool
 	{
-		$result = PurchaseTable::update(
-			$purchase->id, [
-			'TITLE' => $purchase->title,
-			'PRICE' => $purchase->price,
-		]);
+		global $USER;
 
-		if (!$result->isSuccess())
+		if($USER->IsAdmin())
 		{
-			return false;
+			$result = PurchaseTable::update(
+				$purchase->id, [
+				'TITLE' => $purchase->title,
+				'PRICE' => $purchase->price,
+			]);
+
+			if (!$result->isSuccess())
+			{
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 	/**
 	 * @throws Exception
 	 */
 	public static function addSubscription(Subscription $subscription): bool|int
 	{
-		$result = SubscriptionTable::add([
-			'LEVEL' => $subscription->level,
-			'PRICE' => $subscription->price,
-			'NUMBER_TREES' => $subscription->numberTrees,
-			'NUMBER_NODES' => $subscription->numberNodes,
-			'CUSTOMIZATION' => $subscription->customization
-		]);
+		global $USER;
 
-		if (!$result->isSuccess())
+		if ($USER->IsAdmin())
 		{
-			return false;
+			$result = SubscriptionTable::add([
+				'LEVEL' => $subscription->level,
+				'PRICE' => $subscription->price,
+				'NUMBER_TREES' => $subscription->numberTrees,
+				'NUMBER_NODES' => $subscription->numberNodes,
+				'CUSTOMIZATION' => $subscription->customization
+			]);
 
+			if (!$result->isSuccess())
+			{
+				return false;
+
+			}
+
+			return $result->getId();
 		}
 
-		return $result->getId();
+		return false;
+
 	}
 
 	/**
@@ -114,18 +152,25 @@ class AdminService
 	 */
 	public static function addPurchase(Purchase $purchase ): bool|int|array
 	{
-		$result = PurchaseTable::add([
-											 'TITLE' => $purchase->title,
-											 'PRICE' => $purchase->price,
-										 ]);
+		global $USER;
 
-		if (!$result->isSuccess())
+		if($USER->IsAdmin())
 		{
-			return false;
+			$result = PurchaseTable::add([
+				'TITLE' => $purchase->title,
+				'PRICE' => $purchase->price,
+			]);
 
+			if (!$result->isSuccess())
+			{
+				return false;
+
+			}
+
+			return $result->getId();
 		}
 
-		return $result->getId();
+		return false;
 	}
 
 
@@ -134,55 +179,90 @@ class AdminService
 	 */
 	public static function updateSubscriptionUserRelation(UserSubscription $userSubscription): bool
 	{
-		$result = UserSubscriptionTable::update($userSubscription->userId, [
-			"COUNT_TREES" => $userSubscription->countTrees,
-			"COUNT_NODES" => $userSubscription->countNodes,
-			"SUBSCRIPTION_BUY_TIME" => $userSubscription->buyTime ? new DateTime($userSubscription->buyTime, 'Y-m-d H:i:s') : null,
-			"SUBSCRIPTION_ID" => $userSubscription->subscriptionId,
-		]);
+		global $USER;
 
-		if (!$result->isSuccess())
+		if($USER->IsAdmin())
 		{
-			return false;
+			$result = UserSubscriptionTable::update($userSubscription->userId, [
+				"COUNT_TREES" => $userSubscription->countTrees,
+				"COUNT_NODES" => $userSubscription->countNodes,
+				"SUBSCRIPTION_BUY_TIME" => $userSubscription->buyTime ? new DateTime($userSubscription->buyTime, 'Y-m-d H:i:s') : null,
+				"SUBSCRIPTION_ID" => $userSubscription->subscriptionId,
+			]);
+
+			if (!$result->isSuccess())
+			{
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
 	 * @throws Exception
 	 */
-	public static function deactivationSubscriptionByUserId(int $id): void
+	public static function deactivationSubscriptionByUserId(int $id): bool
 	{
-		UserSubscriptionTable::update($id, ['IS_ACTIVE' => false]);
+		global $USER;
+
+		if ($USER->IsAdmin())
+		{
+			UserSubscriptionTable::update($id, ['IS_ACTIVE' => false]);
+		}
+
+		return false;
 	}
 
 	/**
 	 * @throws Exception
 	 */
-	public static function addPurchaseUserRelation(int $userId, int $purchaseId): void
+	public static function addPurchaseUserRelation(int $userId, int $purchaseId): bool
 	{
-		$userPurchaseData = [
-			"USER_ID" =>  $userId,
-			"SINGLE_PURCHASE_ID" => $purchaseId,
-		];
+		global $USER;
 
-		UserSinglePurchaseTable::add($userPurchaseData);
+		if ($USER->IsAdmin())
+		{
+			$userPurchaseData = [
+				"USER_ID" =>  $userId,
+				"SINGLE_PURCHASE_ID" => $purchaseId,
+			];
+
+			UserSinglePurchaseTable::add($userPurchaseData);
+		}
+
+		return false;
 	}
 
 	/**
 	 * @throws Exception
 	 */
-	public static function removePurchase(int $purchaseId): void
+	public static function removePurchase(int $purchaseId): bool
 	{
-		PurchaseTable::delete($purchaseId);
+		global $USER;
+
+		if ($USER->IsAdmin())
+		{
+			PurchaseTable::delete($purchaseId);
+		}
+
+		return false;
 	}
 
 	/**
 	 * @throws Exception
 	 */
-	public static function removePurchaseUser(int $userId, int $purchaseId): void
+	public static function removePurchaseUser(int $userId, int $purchaseId): bool
 	{
-		UserSinglePurchaseTable::delete(['USER_ID' => $userId, 'SINGLE_PURCHASE_ID' => $purchaseId]);
+		global $USER;
+
+		if ($USER->IsAdmin())
+		{
+			UserSinglePurchaseTable::delete(['USER_ID' => $userId, 'SINGLE_PURCHASE_ID' => $purchaseId]);
+		}
+
+		return false;
 	}
 }

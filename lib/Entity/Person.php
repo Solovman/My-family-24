@@ -19,6 +19,9 @@ class Person implements Entity
 	public string $gender;
 	public int $treeId;
 	public ?int $userId;
+	public ?float $weight;
+	public ?float $height;
+	public ?string $education;
 
 	/**
 	 * @param $active
@@ -32,7 +35,7 @@ class Person implements Entity
 	 * @param $treeId
 	 * @param null $userId
 	 */
-	public function __construct($active, $imageId, $photo, $name, $surname, ?string $birthDate, ?string $deathDate, $gender, $treeId, $userId = null)
+	public function __construct($active, $imageId, $photo, $name, $surname, ?string $birthDate, ?string $deathDate, $gender, $treeId, $userId = null, $weight = null, $height = null, $education = null)
 	{
 		$this->active = $active;
 		$this->imageId = $imageId;
@@ -44,6 +47,9 @@ class Person implements Entity
 		$this->gender = $gender;
 		$this->treeId = $treeId;
 		$this->userId = $userId;
+		$this->weight = $weight;
+		$this->height = $height;
+		$this->education = $education;
 	}
 
 	/**
@@ -153,5 +159,20 @@ class Person implements Entity
 	public function setTreeId(int $treeId): void
 	{
 		$this->treeId = $treeId;
+	}
+
+	public function getWeight(): ?float
+	{
+		return $this->weight;
+	}
+
+	public function getHeight(): ?float
+	{
+		return $this->height;
+	}
+
+	public function getEducationLevel(): ?string
+	{
+		return $this->education;
 	}
 }
