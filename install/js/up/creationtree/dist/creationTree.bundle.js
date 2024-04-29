@@ -26,7 +26,7 @@ this.BX.Up = this.BX.Up || {};
 	    }
 	  }, {
 	    key: "updateNode",
-	    value: function updateNode(id, active, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeId) {
+	    value: function updateNode(id, active, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeId, weight, height, education) {
 	      return new Promise(function (resolve, reject) {
 	        BX.ajax.runAction('up:tree.node.update', {
 	          data: {
@@ -40,7 +40,10 @@ this.BX.Up = this.BX.Up || {};
 	              birthDate: birthDate,
 	              deathDate: deathDate,
 	              gender: gender,
-	              treeId: treeId
+	              treeId: treeId,
+	              weight: weight,
+	              height: height,
+	              education: education
 	            }
 	          }
 	        }).then(function (response) {
@@ -52,7 +55,7 @@ this.BX.Up = this.BX.Up || {};
 	    }
 	  }, {
 	    key: "addNode",
-	    value: function addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeId, personConnectedIds, relationType) {
+	    value: function addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeId, weight, height, education, personConnectedIds, relationType) {
 	      return new Promise(function (resolve, reject) {
 	        BX.ajax.runAction('up:tree.node.add', {
 	          data: {
@@ -64,7 +67,10 @@ this.BX.Up = this.BX.Up || {};
 	              birthDate: birthDate,
 	              deathDate: deathDate,
 	              gender: gender,
-	              treeId: treeId
+	              treeId: treeId,
+	              weight: weight,
+	              height: height,
+	              education: education
 	            },
 	            personConnectedIds: personConnectedIds,
 	            relationType: relationType
@@ -206,7 +212,7 @@ this.BX.Up = this.BX.Up || {};
 	        onUpdatePerson = true;
 	        family.onUpdateNode( /*#__PURE__*/function () {
 	          var _ref = babelHelpers.asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(args) {
-	            var formData, fileInput, updateNodes, id, gender, name, imageId, surname, active, birthDate, deathDate;
+	            var formData, fileInput, updateNodes, id, gender, name, imageId, surname, active, birthDate, deathDate, weight, height, education;
 	            return _regeneratorRuntime().wrap(function _callee$(_context) {
 	              while (1) switch (_context.prev = _context.next) {
 	                case 0:
@@ -228,6 +234,9 @@ this.BX.Up = this.BX.Up || {};
 	                  active = updateNodes[0].active;
 	                  birthDate = updateNodes[0].birthDate;
 	                  deathDate = Helper.formatDate(updateNodes[0].deathDate);
+	                  weight = updateNodes[0].weight;
+	                  height = updateNodes[0].height;
+	                  education = updateNodes[0].education[0];
 	                  if (surname.length === 0) {
 	                    surname = null;
 	                  }
@@ -258,7 +267,7 @@ this.BX.Up = this.BX.Up || {};
 	                      var lastImageId = updateNodes[0].imageId;
 	                      updateNodes[0].imageId = response.data.fileId;
 	                      var imageId = updateNodes[0].imageId;
-	                      Requests.updateNode(id, active, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeID).then(function (node) {
+	                      Requests.updateNode(id, active, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeID, weight, height, education).then(function (node) {
 	                        self.reload();
 	                        return node;
 	                      });
@@ -266,13 +275,13 @@ this.BX.Up = this.BX.Up || {};
 	                      console.error('Error while changing item:', error);
 	                    });
 	                  } else {
-	                    Requests.updateNode(id, active, imageId, 0, name, surname, birthDate, deathDate, gender, treeID).then(function (node) {
+	                    Requests.updateNode(id, active, imageId, 0, name, surname, birthDate, deathDate, gender, treeID, weight, height, education).then(function (node) {
 	                      console.log(node);
 	                      self.reload();
 	                      return node;
 	                    });
 	                  }
-	                case 19:
+	                case 22:
 	                case "end":
 	                  return _context.stop();
 	              }
@@ -335,6 +344,9 @@ this.BX.Up = this.BX.Up || {};
 	        var surname = updateNodes[0].surname;
 	        var birthDate = Helper.formatDate(updateNodes[0].birthDate);
 	        var deathDate = Helper.formatDate(updateNodes[0].deathDate);
+	        var weight = updateNodes[0].weight;
+	        var height = updateNodes[0].height;
+	        var education = updateNodes[0].education[0];
 	        if (surname.length === 0) {
 	          surname = null;
 	        }
@@ -359,7 +371,7 @@ this.BX.Up = this.BX.Up || {};
 	          } else if (Helper.isNumeric(updateNodes[0].fid) && !Helper.isNumeric(updateNodes[0].mid)) {
 	            personConnectedId = [Number(updateNodes[0].fid)];
 	          }
-	          Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'child').then(function (node) {
+	          Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, weight, height, education, personConnectedId, 'child').then(function (node) {
 	            if (node) {
 	              self.reload();
 	            }
@@ -372,7 +384,7 @@ this.BX.Up = this.BX.Up || {};
 	          } else {
 	            personConnectedId = [updateNodes[0].child.fid];
 	          }
-	          Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'parent').then(function (node) {
+	          Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, weight, height, education, personConnectedId, 'parent').then(function (node) {
 	            if (node) {
 	              self.reload();
 	            }
@@ -388,7 +400,7 @@ this.BX.Up = this.BX.Up || {};
 	            childID = updateNodes[0].child.fid;
 	          }
 	          personConnectedId = [partner, childID];
-	          Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partnerParent').then(function (node) {
+	          Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, weight, height, education, personConnectedId, 'partnerParent').then(function (node) {
 	            if (node) {
 	              self.reload();
 	            }
@@ -396,14 +408,14 @@ this.BX.Up = this.BX.Up || {};
 	          return;
 	        }
 	        if (updateNodes[0].pids.length !== 0) {
-	          Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, personConnectedId, 'partner').then(function (node) {
+	          Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, weight, height, education, personConnectedId, 'partner').then(function (node) {
 	            if (node) {
 	              self.reload();
 	            }
 	          });
 	          return;
 	        }
-	        Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, [0], 'init').then(function (node) {
+	        Requests.addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeID, weight, height, education, [0], 'init').then(function (node) {
 	          if (node) {
 	            self.reload();
 	          }
@@ -470,6 +482,14 @@ this.BX.Up = this.BX.Up || {};
 	            label: 'Date Of Death',
 	            binding: 'deathDate'
 	          }], [{
+	            type: 'textbox',
+	            label: 'Weight',
+	            binding: 'weight'
+	          }, {
+	            type: 'textbox',
+	            label: 'Height',
+	            binding: 'height'
+	          }], [{
 	            type: 'select',
 	            options: [{
 	              value: 'male',
@@ -480,6 +500,23 @@ this.BX.Up = this.BX.Up || {};
 	            }],
 	            label: 'Gender',
 	            binding: 'gender'
+	          }], [{
+	            type: 'select',
+	            options: [{
+	              value: 'without education',
+	              text: 'Without education'
+	            }, {
+	              value: 'school',
+	              text: 'School'
+	            }, {
+	              value: 'secondary',
+	              text: 'Secondary'
+	            }, {
+	              value: 'higher',
+	              text: 'Higher'
+	            }],
+	            label: 'Education Level',
+	            binding: 'education'
 	          }], {
 	            type: 'checkbox',
 	            label: 'Important',
@@ -751,6 +788,11 @@ this.BX.Up = this.BX.Up || {};
 	      family.on('init', function (sender, args) {
 	        if (self.nodeList.persons.length === 1) {
 	          sender.editUI.show(self.nodeList.persons[0].id, false);
+	          var checkedInput = document.querySelector('.bft-checkbox input');
+	          checkedInput.dataset.btnChecked = !!checkedInput.checked;
+	          checkedInput.addEventListener('click', function (event) {
+	            event.target.dataset.btnChecked = !!event.target.checked;
+	          });
 	          var saveButton = document.querySelector('[data-edit-from-save]');
 	          var inputName = document.querySelector('[data-binding="name"]');
 	          inputName.addEventListener('input', function (el) {
@@ -778,6 +820,11 @@ this.BX.Up = this.BX.Up || {};
 	        if (args.addNodesData.length !== 0) {
 	          if (typeof args.addNodesData[0].id === 'string') {
 	            sender.editUI.show(args.addNodesData[0].id, false);
+	            var checkedInput = document.querySelector('.bft-checkbox input');
+	            checkedInput.dataset.btnChecked = !!checkedInput.checked;
+	            checkedInput.addEventListener('click', function (event) {
+	              event.target.dataset.btnChecked = !!event.target.checked;
+	            });
 	            var saveButton = document.querySelector('[data-edit-from-save]');
 	            saveButton.disabled = true;
 	            var inputName = document.querySelector('[data-binding="name"]');
@@ -817,6 +864,11 @@ this.BX.Up = this.BX.Up || {};
 	        onUpdateNodeAdded = statusRequest[0];
 	        onUpdatePerson = statusRequest[1];
 	        sender.editUI.show(args.node.id, false);
+	        var checkedInput = document.querySelector('.bft-checkbox input');
+	        checkedInput.dataset.btnChecked = !!checkedInput.checked;
+	        checkedInput.addEventListener('click', function (event) {
+	          event.target.dataset.btnChecked = !!event.target.checked;
+	        });
 	        var saveButton = document.querySelector('[data-edit-from-save]');
 	        var inputName = document.querySelector('[data-binding="name"]');
 	        inputName.addEventListener('input', function (el) {

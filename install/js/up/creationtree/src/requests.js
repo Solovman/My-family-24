@@ -19,7 +19,7 @@ export class Requests
 		})
 	}
 
-	static updateNode(id, active, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeId)
+	static updateNode(id, active, imageId, lastImageId, name, surname, birthDate, deathDate, gender, treeId, weight, height, education)
 	{
 		return new Promise((resolve, reject) =>
 		{
@@ -37,6 +37,9 @@ export class Requests
 						deathDate: deathDate,
 						gender: gender,
 						treeId: treeId,
+						weight: weight,
+						height: height,
+						education: education
 					},
 				}
 			}).then((response) =>
@@ -50,7 +53,7 @@ export class Requests
 		});
 	}
 
-	static addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeId, personConnectedIds, relationType)
+	static addNode(active, imageId, name, surname, gender, birthDate, deathDate, treeId, weight, height, education, personConnectedIds, relationType)
 	{
 		return new Promise((resolve, reject) =>
 		{
@@ -65,6 +68,9 @@ export class Requests
 						deathDate: deathDate,
 						gender: gender,
 						treeId: treeId,
+						weight: weight,
+						height: height,
+						education: education
 					},
 
 					personConnectedIds: personConnectedIds,
