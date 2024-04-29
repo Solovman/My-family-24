@@ -94,7 +94,6 @@ export class CreatedNode
 				else
 				{
 					Requests.updateNode(id, active, imageId, 0, name, surname, birthDate, deathDate, gender, treeID, weight, height, education).then(node => {
-						console.log(node);
 						self.reload();
 						return node;
 					})

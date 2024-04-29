@@ -276,7 +276,6 @@ this.BX.Up = this.BX.Up || {};
 	                    });
 	                  } else {
 	                    Requests.updateNode(id, active, imageId, 0, name, surname, birthDate, deathDate, gender, treeID, weight, height, education).then(function (node) {
-	                      console.log(node);
 	                      self.reload();
 	                      return node;
 	                    });
@@ -689,7 +688,6 @@ this.BX.Up = this.BX.Up || {};
 	      var id = parseInt(window.location.href.match(/\d+/));
 	      Requests.loadNodes(id).then(function (nodeList) {
 	        _this2.nodeList = nodeList;
-	        console.log(_this2.nodeList);
 	        _this2.nodeList.persons.forEach(function (person) {
 	          person.active = person.active !== '0';
 	          var newStyles = document.createElement('style');
@@ -788,6 +786,11 @@ this.BX.Up = this.BX.Up || {};
 	      family.on('init', function (sender, args) {
 	        if (self.nodeList.persons.length === 1) {
 	          sender.editUI.show(self.nodeList.persons[0].id, false);
+	          document.querySelectorAll('input').forEach(function (input) {
+	            BX.bind(input, 'input', function (event) {
+	              event.target.value = event.target.value.replace(/[<>\/]/g, '');
+	            });
+	          });
 	          var checkedInput = document.querySelector('.bft-checkbox input');
 	          checkedInput.dataset.btnChecked = !!checkedInput.checked;
 	          checkedInput.addEventListener('click', function (event) {
@@ -820,6 +823,11 @@ this.BX.Up = this.BX.Up || {};
 	        if (args.addNodesData.length !== 0) {
 	          if (typeof args.addNodesData[0].id === 'string') {
 	            sender.editUI.show(args.addNodesData[0].id, false);
+	            document.querySelectorAll('input').forEach(function (input) {
+	              BX.bind(input, 'input', function (event) {
+	                event.target.value = event.target.value.replace(/[<>\/]/g, '');
+	              });
+	            });
 	            var checkedInput = document.querySelector('.bft-checkbox input');
 	            checkedInput.dataset.btnChecked = !!checkedInput.checked;
 	            checkedInput.addEventListener('click', function (event) {
@@ -864,6 +872,11 @@ this.BX.Up = this.BX.Up || {};
 	        onUpdateNodeAdded = statusRequest[0];
 	        onUpdatePerson = statusRequest[1];
 	        sender.editUI.show(args.node.id, false);
+	        document.querySelectorAll('input').forEach(function (input) {
+	          BX.bind(input, 'input', function (event) {
+	            event.target.value = event.target.value.replace(/[<>\/]/g, '');
+	          });
+	        });
 	        var checkedInput = document.querySelector('.bft-checkbox input');
 	        checkedInput.dataset.btnChecked = !!checkedInput.checked;
 	        checkedInput.addEventListener('click', function (event) {
