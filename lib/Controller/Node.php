@@ -51,8 +51,8 @@ class Node extends Engine\Controller
 			$person['active'],
 			(int) $person['imageId'],
 			"",
-			$person['name'],
-			$person['surname'],
+			str_replace(['<', '>', '/'], '', $person['name']),
+			str_replace(['<', '>', '/'], '', $person['surname']),
 			$person['birthDate'],
 			$person['deathDate'],
 			$person['gender'],
@@ -98,8 +98,8 @@ class Node extends Engine\Controller
 			$updatablePerson['active'],
 			(int) $updatablePerson['imageId'],
 			'',
-			$updatablePerson['name'],
-			$updatablePerson['surname'],
+			str_replace(['<', '>', '/'], '', $updatablePerson['name']),
+			str_replace(['<', '>', '/'], '', $updatablePerson['surname']),
 			$updatablePerson['birthDate'],
 			$updatablePerson['deathDate'],
 			$updatablePerson['gender'],
@@ -110,7 +110,6 @@ class Node extends Engine\Controller
 			$updatablePerson['education']
 
 		);
-
 
 		return PersonService::updatePersonById($id,  (int) $updatablePerson['lastImageId'], $node);
 	}
