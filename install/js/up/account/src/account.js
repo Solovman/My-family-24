@@ -42,7 +42,7 @@ export class Account
 			<div class="profile-container">
 				<img src="/local/modules/up.tree/images/tree-account.png" alt="Фото профиля">
 				<h2 class="profile-heading font-account">${BX.util.htmlspecialchars(this.nodeList[1].name) + ' ' + BX.util.htmlspecialchars(this.nodeList[1].surname)}</h2>
-				<div class="font-account">${BX.message('UP_ACCOUNT_LEVEL_SUBSCRIPTION')} ${this.nodeList[0]}</div>
+				<div class="font-account">${BX.message('UP_ACCOUNT_LEVEL_SUBSCRIPTION')} ${BX.util.htmlspecialchars(this.nodeList[0])}</div>
 			</div>
 		`;
 
