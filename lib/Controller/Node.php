@@ -108,7 +108,6 @@ class Node extends Engine\Controller
 			(float) $updatablePerson['weight'],
 			(float) $updatablePerson['height'],
 			$updatablePerson['education']
-
 		);
 
 		return PersonService::updatePersonById($id,  (int) $updatablePerson['lastImageId'], $node);
