@@ -168,9 +168,9 @@ this.BX.Up = this.BX.Up || {};
 	    key: "getEmojiByTitle",
 	    value: function getEmojiByTitle(title) {
 	      if (title === 'Premium') {
-	        return title + "👑";
+	        return BX.util.htmlspecialchars(title) + "👑";
 	      } else {
-	        return title;
+	        return BX.util.htmlspecialchars(title);
 	      }
 	    }
 	  }, {

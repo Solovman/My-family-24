@@ -116,10 +116,10 @@ export class Subscriptions
 	getEmojiByTitle(title)
 	{
 		if (title ==='Premium'){
-			return title + "👑";
+			return BX.util.htmlspecialchars(title) + "👑";
 			}
 		else{
-			return title;
+			return  BX.util.htmlspecialchars(title);
 		}
 
 	}
