@@ -34,7 +34,7 @@ export class UsersTable
 			return Tag.render`
 				<li class="table-row">
 					<div class="col col-1" data-label="Id">${user.id}</div>
-					<div class="col col-1" data-label="Title">${BX.util.htmlspecialchars(user.login)}</div>
+					<div class="col col-1" data-label="Title">${BX.util.htmlspecialchars(user.email)}</div>
 					<div class="col col-1" data-label="Price">${BX.util.htmlspecialchars(user.name)}</div>
 					<div class="col col-1" data-label="Price">${BX.util.htmlspecialchars(user.lastName)}</div>
 					<div class="col col-1" data-label="Price">${user.active ? 'Активен' : 'Неактивен'}</div>

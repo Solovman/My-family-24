@@ -20,10 +20,10 @@ class UserService
 	 * @throws Exception
 	 */
 
-	static function getList(): array
+	public static function getList(): array
 	{
 		$users = UserTable::query()
-			->setSelect(['ID', 'LOGIN', 'NAME', 'LAST_NAME', 'ACTIVE'])
+			->setSelect(['ID', 'EMAIL', 'NAME', 'LAST_NAME', 'ACTIVE'])
 			->exec();
 
 		$usersList = [];
@@ -32,7 +32,7 @@ class UserService
 		{
 			$usersList[] = new User(
 				$result->getId(),
-				$result->getLogin(),
+				$result->getEmail(),
 				$result->getName(),
 				$result->getLastName(),
 				$result->getActive()
@@ -40,51 +40,6 @@ class UserService
 		}
 
 		return $usersList;
-	}
-
-	static function addUser($email, $name, $password): int|array
-	{
-		$passwordHash = Password::hash($password);
-
-		$userData = [
-			"NAME" => $name,
-			"EMAIL" => $email,
-			"LOGIN" => $email,
-			"PASSWORD" => $passwordHash,
-			"DATE_REGISTER" => new DateTime(),
-		];
-
-		$result = UserTable::add($userData);
-		if ($result->isSuccess())
-		{
-			return $result->getId();
-		}
-
-		throw new SqlException("Error when creating user");
-	}
-	/**
-	 * @throws ObjectPropertyException
-	 * @throws SystemException
-	 * @throws ArgumentException
-	 */
-	public static function getUserNameById(): ?string
-	{
-		global $USER;
-
-		if ($USER->IsAuthorized())
-		{
-			$userId = (int) $USER->GetID();
-			$user = UserTable::getList([
-										   'filter' => ['=ID' => $userId],
-										   'select' => ['NAME']
-									   ])->fetch();
-
-			if ($user)
-			{
-				return $user['NAME'];
-			}
-		}
-		return null;
 	}
 
 	/**
