@@ -111,7 +111,11 @@ class Node extends Engine\Controller
 
 		);
 
-		return PersonService::updatePersonById($id,  (int) $updatablePerson['lastImageId'], $node);
+		if (PersonService::checkPersonInTree($id, $node->getTreeId()))
+		{
+			return PersonService::updatePersonById($id, (int)$updatablePerson['lastImageId'], $node);
+		}
+		return false;
 	}
 
 	public function uploadFileAction(): array

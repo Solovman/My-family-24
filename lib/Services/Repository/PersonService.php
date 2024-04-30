@@ -274,5 +274,21 @@ class PersonService
 
 		return $imageId->getImageID();
 	}
-}
 
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function checkPersonInTree(int $personId, int $treeIdUpdated): bool
+	{
+		$treeId = PersonTable::query()->setSelect(['TREE_ID'])
+							  ->setFilter(['ID' => $personId])
+							  ->exec()
+							  ->fetchAll();
+
+		$treeId = (int)$treeId[0]['TREE_ID'];
+
+		return $treeId === $treeIdUpdated;
+	}
+}
