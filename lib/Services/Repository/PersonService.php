@@ -215,6 +215,7 @@ class PersonService
 			'WEIGHT' => $updatablePerson->getWeight(),
 			'HEIGHT' => $updatablePerson->getHeight(),
 			'EDUCATION_LEVEL' => $updatablePerson->getEducationLevel(),
+			'TREE_ID' => $updatablePerson->getTreeId()
 		];
 
 		$result = PersonTable::update($id , $personData);
