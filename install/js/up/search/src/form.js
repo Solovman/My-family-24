@@ -36,8 +36,6 @@ export class Form
 
 						const message = BX('message').value;
 
-
-
 						Requests.addMessages(Number(id), message).then(result => {
 							const notice = document.querySelector(`[data-user-check="${id}"]`);
 

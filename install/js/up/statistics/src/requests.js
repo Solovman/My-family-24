@@ -90,4 +90,21 @@ export class Requests
 			;
 		});
 	}
+
+	static getEducationCountByTreeId(treeId)
+	{
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.statistics.getEducationCountByTreeId', {
+					data: {
+						treeId: treeId
+					}
+				})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
 }
