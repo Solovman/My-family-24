@@ -217,6 +217,7 @@ this.BX.Up = this.BX.Up || {};
 	            noData.textContent = 'Нет данных для построения графика';
 	            BX.addClass(noData, 'no-data');
 	            BX.append(noData, _this2.rootNode);
+	            BX('statistics-send').disabled = false;
 	            return;
 	          }
 	          _this2.renderStatistics(type, data[0], data[1], ['rgba(54, 162, 235, 0.5)', 'rgba(255, 99, 132, 0.5)'], 'Статистика по полу');
@@ -235,6 +236,7 @@ this.BX.Up = this.BX.Up || {};
 	            noData.textContent = 'Нет данных для построения графика';
 	            BX.addClass(noData, 'no-data');
 	            BX.append(noData, _this2.rootNode);
+	            BX('statistics-send').disabled = false;
 	            return;
 	          }
 	          _this2.renderStatistics(type, data[0], data[1], backgroundColor, 'Статистика по возрасту');
@@ -253,6 +255,7 @@ this.BX.Up = this.BX.Up || {};
 	            noData.textContent = 'Нет данных для построения графика';
 	            BX.addClass(noData, 'no-data');
 	            BX.append(noData, _this2.rootNode);
+	            BX('statistics-send').disabled = false;
 	            return;
 	          }
 	          _this2.renderStatistics(type, data[0], data[1], backgroundColor, 'Статистика по росту');
@@ -271,6 +274,7 @@ this.BX.Up = this.BX.Up || {};
 	            noData.textContent = 'Нет данных для построения графика';
 	            BX.addClass(noData, 'no-data');
 	            BX.append(noData, _this2.rootNode);
+	            BX('statistics-send').disabled = false;
 	            return;
 	          }
 	          _this2.renderStatistics(type, data[0], data[1], backgroundColor, 'Статистика по весу');
@@ -289,6 +293,7 @@ this.BX.Up = this.BX.Up || {};
 	            noData.textContent = 'Нет данных для построения графика';
 	            BX.addClass(noData, 'no-data');
 	            BX.append(noData, _this2.rootNode);
+	            BX('statistics-send').disabled = false;
 	            return;
 	          }
 	          _this2.renderStatistics(type, data[0], data[1], backgroundColor, 'Статистика по уровню образования');
