@@ -4,12 +4,18 @@ body {
 
 .select-box {
 	position: relative;
-	display: block;
 	width: 100%;
 	margin: 0 auto;
 	font-family: "Open Sans", "Helvetica Neue", "Segoe UI", "Calibri", "Arial", sans-serif;
 	font-size: 18px;
+	display: flex;
+	align-items: flex-end;
 	color: #60666d;
+}
+
+.select-container {
+	position: relative;
+	width: 100%;
 }
 
 .notice-container {
@@ -64,7 +70,7 @@ body {
 }
 .select-box__input:checked + .select-box__input-text {
 	display: block;
-	border-radius: 5px;
+	border-radius: 5px 0 0 5px;
 }
 .select-box__input-text {
 	display: none;
@@ -151,15 +157,15 @@ body {
 }
 
 .search__btn {
-	margin-top: auto;
-	padding: 12px 43px;
+	padding: 11px 43px;
 	background-color: #00ceaa;
 	border: none;
-	border-radius: 5px;
+	border-radius: 0 5px 5px 0;
 	font-size: 23px;
 	font-family: 'MorningBreeze', sans-serif, Helvetica;
 	color: #fff;
 }
+
 
 .notFound {
 	position: absolute;

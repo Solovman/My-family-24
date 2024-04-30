@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Up\Tree\Services\Repository;
+
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
@@ -17,16 +18,18 @@ class SubscriptionsService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getList(): array
+	public static function getList($pageNumber, $pageSize): array
 	{
+		$offset = ($pageNumber - 1) * $pageSize;
 		$subscriptions = SubscriptionTable::query()
 			->setSelect(['ID', 'LEVEL', 'PRICE', 'NUMBER_TREES', 'NUMBER_NODES', 'CUSTOMIZATION', 'IS_ACTIVE'])
+			->setLimit($pageSize)
+			->setOffset($offset)
 			->exec();
 
 		$resultSubscriptions = [];
 
-		while($result = $subscriptions->fetchObject())
-		{
+		while ($result = $subscriptions->fetchObject()) {
 			$resultSubscriptions[] = new Subscription(
 				$result->getId(),
 				$result->getLevel(),
@@ -55,8 +58,7 @@ class SubscriptionsService
 
 		$resultSubscriptions = [];
 
-		while($result = $subscriptions->fetchObject())
-		{
+		while ($result = $subscriptions->fetchObject()) {
 			$resultSubscriptions[] = new Subscription(
 				$result->getId(),
 				$result->getLevel(),
@@ -81,7 +83,7 @@ class SubscriptionsService
 	{
 		global $USER;
 
-		$userId = (int) $USER->GetID();
+		$userId = (int)$USER->GetID();
 
 		$subscriptions = SubscriptionTable::query()
 			->setSelect(['LEVEL'])
@@ -101,12 +103,11 @@ class SubscriptionsService
 	{
 		$subscription = UserSubscriptionTable::query()
 			->setSelect(['SUBSCRIPTION_ID'])
-			->setFilter(['USER_ID'=> $userId])
+			->setFilter(['USER_ID' => $userId])
 			->exec()
 			->fetchObject();
 
-		if ($subscription === null)
-		{
+		if ($subscription === null) {
 			return 1;
 		}
 
@@ -116,13 +117,12 @@ class SubscriptionsService
 	public static function getNumberTreesById(int $id)
 	{
 		$numberTrees = SubscriptionTable::query()
-											 ->setSelect(['NUMBER_TREES'])
-											 ->setFilter(['ID' => $id])
-											 ->exec()
-											 ->fetchObject();
+			->setSelect(['NUMBER_TREES'])
+			->setFilter(['ID' => $id])
+			->exec()
+			->fetchObject();
 
-		if ($numberTrees === null)
-		{
+		if ($numberTrees === null) {
 			return 1;
 		}
 

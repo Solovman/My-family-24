@@ -420,6 +420,25 @@ h2 small {
 	--border: var(--border-hover);
 }
 
+.pagination-btn {
+	padding: 4px 16px;
+	border: 1px solid #00ceaa;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	border-radius: 5px;
+	font-size: 22px;
+	font-weight: 200;
+	background-color: #00ceaa;
+	color: #fff;
+}
+
+.pagination-container {
+	text-align: end;
+}
+
+.pagination-btn:not(:last-child) {
+	margin-right: 10px;
+}
+
 @keyframes check {
 	100% {
 		stroke-dashoffset: 4.5px;
