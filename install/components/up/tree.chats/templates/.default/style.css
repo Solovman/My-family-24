@@ -154,6 +154,13 @@ body {
 	padding: 25px 35px;
 	height: 400px;
 	overflow: auto;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+#messages::-webkit-scrollbar {
+	width: 0;
+	height: 0;
 }
 
 .chat .messages-chat .message {

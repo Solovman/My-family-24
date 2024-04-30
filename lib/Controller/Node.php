@@ -108,7 +108,6 @@ class Node extends Engine\Controller
 			(float) $updatablePerson['weight'],
 			(float) $updatablePerson['height'],
 			$updatablePerson['education']
-
 		);
 
 		if (PersonService::checkPersonInTree($id, $node->getTreeId()))
