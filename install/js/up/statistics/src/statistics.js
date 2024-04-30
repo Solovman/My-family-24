@@ -143,6 +143,7 @@ export class Statistics {o
 					noData.textContent = 'Нет данных для построения графика';
 					BX.addClass(noData, 'no-data');
 					BX.append(noData, this.rootNode);
+					BX('statistics-send').disabled = false;
 					return;
 				}
 
@@ -171,6 +172,7 @@ export class Statistics {o
 					noData.textContent = 'Нет данных для построения графика';
 					BX.addClass(noData, 'no-data');
 					BX.append(noData, this.rootNode);
+					BX('statistics-send').disabled = false;
 					return;
 				}
 
@@ -195,6 +197,7 @@ export class Statistics {o
 					noData.textContent = 'Нет данных для построения графика';
 					BX.addClass(noData, 'no-data');
 					BX.append(noData, this.rootNode);
+					BX('statistics-send').disabled = false;
 					return;
 				}
 
@@ -219,6 +222,7 @@ export class Statistics {o
 					noData.textContent = 'Нет данных для построения графика';
 					BX.addClass(noData, 'no-data');
 					BX.append(noData, this.rootNode);
+					BX('statistics-send').disabled = false;
 					return;
 				}
 
@@ -244,6 +248,7 @@ export class Statistics {o
 					noData.textContent = 'Нет данных для построения графика';
 					BX.addClass(noData, 'no-data');
 					BX.append(noData, this.rootNode);
+					BX('statistics-send').disabled = false;
 					return;
 				}
 
