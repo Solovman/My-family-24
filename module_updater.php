@@ -114,3 +114,6 @@ $DB->query("
                (1, 4);");
 }
 });
+
+// TODO: for makefile
+//exec('C:\"Program Files"\nodejs\node.exe C:\OSPanel\domains\dev.tree\local\modules\up.tree\node_modules\@balkangraph\export-service\app.js');
