@@ -10,11 +10,11 @@ this.BX.Up = this.BX.Up || {};
 	  }
 	  babelHelpers.createClass(Requests, null, [{
 	    key: "getListSubscription",
-	    value: function getListSubscription() {
+	    value: function getListSubscription(pageNumber) {
 	      return new Promise(function (resolve, reject) {
 	        BX.ajax.runAction('up:tree.admin.getListSubscription', {
-	          navigation: {
-	            page: 3
+	          data: {
+	            pageNumber: pageNumber
 	          }
 	        }).then(function (response) {
 	          var listSubscription = response.data.listSubscription;
@@ -677,7 +677,7 @@ this.BX.Up = this.BX.Up || {};
 	  return UsersTable;
 	}();
 
-	var _templateObject$d, _templateObject2$5, _templateObject3$5, _templateObject4, _templateObject5, _templateObject6, _templateObject7;
+	var _templateObject$d, _templateObject2$5, _templateObject3$5, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8;
 	var Admin = /*#__PURE__*/function () {
 	  function Admin() {
 	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -754,23 +754,31 @@ this.BX.Up = this.BX.Up || {};
 	    key: "loadListSub",
 	    value: function loadListSub() {
 	      var _this2 = this;
-	      Requests.getListSubscription().then(function (list) {
+	      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+	      Requests.getListSubscription(page).then(function (list) {
 	        _this2.rootNode.innerHTML = '';
 	        _this2.listSub = list;
 	        BX('add').style.display = 'inline-block';
 	        var btns = document.querySelectorAll('.admin__btn');
+	        var paginationBtn = main_core.Tag.render(_templateObject2$5 || (_templateObject2$5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"pagination-container\">\n\t\t\t\t\t<button class=\"pagination-btn\">1</button>\n\t\t\t\t\t<button class=\"pagination-btn\">2</button>\n\t\t\t\t</div>\n\t\t\t"])));
 	        btns.forEach(function (btn) {
 	          BX.removeClass(btn, 'btn-active');
 	        });
 	        BX.addClass(BX('sub'), 'btn-active');
 	        BX.append(SubscriptionTable.render(list), _this2.rootNode);
+	        BX.append(paginationBtn, _this2.rootNode);
+	        document.querySelectorAll('.pagination-btn').forEach(function (btn) {
+	          BX.bind(btn, 'click', function () {
+	            _this2.loadListSub(Number(btn.textContent));
+	          });
+	        });
 	        var btnEdit = document.querySelectorAll('.edit');
 	        var btnAdd = BX('add');
 	        BX.bind(btnAdd, 'click', function () {
 	          Form.render();
 	          BX.bind(BX('edit-button'), 'click', function (event) {
 	            event.preventDefault();
-	            var spinner = main_core.Tag.render(_templateObject2$5 || (_templateObject2$5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            var spinner = main_core.Tag.render(_templateObject3$5 || (_templateObject3$5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
 	            BX.append(spinner, _this2.rootNode);
 	            var subscription = {
 	              level: BX('name').value,
@@ -789,11 +797,9 @@ this.BX.Up = this.BX.Up || {};
 	        btnEdit.forEach(function (btn) {
 	          BX.bind(btn, 'click', function (event) {
 	            var el = event.target;
-	            console.log(el);
 	            var data = _this2.listSub.find(function (item) {
 	              return item.id === Number(el.dataset.btnId);
 	            });
-	            console.log(data);
 	            Form.render(data);
 	          });
 	        });
@@ -801,7 +807,7 @@ this.BX.Up = this.BX.Up || {};
 	        checkbox.forEach(function (el) {
 	          BX.bind(el, 'click', function (event) {
 	            var id = event.target.dataset.btnId;
-	            var spinner = main_core.Tag.render(_templateObject3$5 || (_templateObject3$5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            var spinner = main_core.Tag.render(_templateObject4 || (_templateObject4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
 	            BX.append(spinner, _this2.rootNode);
 	            if (!el.checked) {
 	              Requests.deactivationSubscription(Number(id), 0).then(function (result) {
@@ -836,7 +842,7 @@ this.BX.Up = this.BX.Up || {};
 	        btnRemove.forEach(function (btn) {
 	          BX.bind(btn, 'click', function (event) {
 	            var id = event.target.dataset.btnId;
-	            var spinner = main_core.Tag.render(_templateObject4 || (_templateObject4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            var spinner = main_core.Tag.render(_templateObject5 || (_templateObject5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
 	            BX.append(spinner, _this3.rootNode);
 	            Requests.removePurchase(Number(id)).then(function (result) {
 	              _this3.loadListPurchase();
@@ -856,7 +862,7 @@ this.BX.Up = this.BX.Up || {};
 	          FormPurchase.render();
 	          BX.bind(BX('edit-button'), 'click', function (event) {
 	            event.preventDefault();
-	            var spinner = main_core.Tag.render(_templateObject5 || (_templateObject5 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            var spinner = main_core.Tag.render(_templateObject6 || (_templateObject6 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
 	            BX.append(spinner, _this3.rootNode);
 	            var purchase = {
 	              title: BX('title').value,
@@ -922,7 +928,7 @@ this.BX.Up = this.BX.Up || {};
 	            var userId = event.target.dataset.btnUserId;
 	            console.log(userId);
 	            console.log(event.target.dataset);
-	            var spinner = main_core.Tag.render(_templateObject6 || (_templateObject6 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            var spinner = main_core.Tag.render(_templateObject7 || (_templateObject7 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
 	            BX.append(spinner, _this5.rootNode);
 	            Requests.removePurchaseUser(Number(userId), Number(purchaseId)).then(function (result) {
 	              _this5.loadListUserPurchase();
@@ -933,7 +939,7 @@ this.BX.Up = this.BX.Up || {};
 	          FormUserPurchase.render(list);
 	          BX.bind(BX('action-button'), 'click', function (event) {
 	            event.preventDefault();
-	            var spinner = main_core.Tag.render(_templateObject7 || (_templateObject7 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
+	            var spinner = main_core.Tag.render(_templateObject8 || (_templateObject8 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"admin__spinner spinner-grow text-primary\" role=\"status\">\n\t\t\t\t\t\t\t<span class=\"visually-hidden\">Loading...</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t"])));
 	            BX.append(spinner, _this5.rootNode);
 	            var userId = Number(BX('userId').value);
 	            var purchaseId = Number(BX('purchaseId').value);

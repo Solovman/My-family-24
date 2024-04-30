@@ -1,12 +1,11 @@
-export class Requests
-{
-	static getListSubscription() {
+export class Requests {
+	static getListSubscription(pageNumber) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.getListSubscription', {
-					navigation: {
-						page: 3
-					}
-				})
+				data: {
+					pageNumber: pageNumber
+				}
+			})
 				.then((response) => {
 					const listSubscription = response.data.listSubscription;
 
@@ -49,8 +48,7 @@ export class Requests
 		});
 	}
 
-	static getListUser()
-	{
+	static getListUser() {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.getListUser')
 				.then((response) => {
@@ -65,8 +63,7 @@ export class Requests
 		});
 	}
 
-	static deactivationUser(userId, active)
-	{
+	static deactivationUser(userId, active) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.deactivationUser', {
 				data: {
@@ -87,10 +84,10 @@ export class Requests
 	static updateUserSubscription(newUserSubscription) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.updateUserSubscription', {
-					data: {
-						newUserSubscription: newUserSubscription
-					}
-				})
+				data: {
+					newUserSubscription: newUserSubscription
+				}
+			})
 				.then((response) => {
 					resolve(response.data);
 				})
@@ -137,10 +134,10 @@ export class Requests
 	static removePurchase(purchaseId) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.removePurchase', {
-					data: {
-						purchaseId: purchaseId
-					}
-				})
+				data: {
+					purchaseId: purchaseId
+				}
+			})
 				.then((response) => {
 					resolve(response.data);
 				})
@@ -150,14 +147,15 @@ export class Requests
 			;
 		});
 	}
+
 	static removePurchaseUser(userId, purchaseId) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.removePurchaseUserRelation', {
-					data: {
-						userId: userId,
-						purchaseId: purchaseId
-					}
-				})
+				data: {
+					userId: userId,
+					purchaseId: purchaseId
+				}
+			})
 				.then((response) => {
 					resolve(response.data);
 				})
@@ -171,10 +169,10 @@ export class Requests
 	static updateSubscription(newSubscription) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.updateSubscription', {
-					data: {
-						newSubscription: newSubscription
-					}
-				})
+				data: {
+					newSubscription: newSubscription
+				}
+			})
 				.then((response) => {
 					resolve(response.data);
 				})
@@ -188,10 +186,10 @@ export class Requests
 	static updatePurchase(newPurchase) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.updatePurchase', {
-					data: {
-						newPurchase: newPurchase
-					}
-				})
+				data: {
+					newPurchase: newPurchase
+				}
+			})
 				.then((response) => {
 					resolve(response.data);
 				})
@@ -205,10 +203,10 @@ export class Requests
 	static addSubscription(subscription) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.addSubscription', {
-					data: {
-						subscription: subscription
-					}
-				})
+				data: {
+					subscription: subscription
+				}
+			})
 				.then((response) => {
 					resolve(response.data);
 				})
@@ -223,10 +221,10 @@ export class Requests
 	static addPurchase(purchase) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.addPurchase', {
-					data: {
-						purchase: purchase
-					}
-				})
+				data: {
+					purchase: purchase
+				}
+			})
 				.then((response) => {
 					resolve(response.data);
 				})
@@ -240,11 +238,11 @@ export class Requests
 	static addPurchaseUser(userId, purchaseId) {
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.admin.addPurchaseUserRelation', {
-					data: {
-						userId: userId,
-						purchaseId: purchaseId
-					}
-				})
+				data: {
+					userId: userId,
+					purchaseId: purchaseId
+				}
+			})
 				.then((response) => {
 					resolve(response.data);
 				})

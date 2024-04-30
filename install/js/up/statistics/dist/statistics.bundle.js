@@ -226,6 +226,7 @@ this.BX.Up = this.BX.Up || {};
 	      }
 	      if (statistics === 'age') {
 	        Requests.getAgesByTreeId(treeID).then(function (result) {
+	          console.log(result);
 	          var data = _this2.splittingData(result);
 	          var backgroundColor = [];
 	          for (var i = 0; i < data[0].length; i++) {
@@ -366,6 +367,10 @@ this.BX.Up = this.BX.Up || {};
 	            y: {
 	              beginAtZero: true
 	            }
+	          },
+	          hover: {
+	            mode: "index",
+	            intersect: false
 	          }
 	        }
 	      });

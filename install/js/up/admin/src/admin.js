@@ -99,14 +99,20 @@ export class Admin {
 		})
 	}
 
-	loadListSub() {
-		Requests.getListSubscription().then(list => {
+	loadListSub(page= 1) {
+		Requests.getListSubscription(page).then(list => {
 			this.rootNode.innerHTML = '';
 			this.listSub = list;
 
 			BX('add').style.display = 'inline-block';
 
 			const btns = document.querySelectorAll('.admin__btn');
+			const paginationBtn = Tag.render`
+				<div class="pagination-container">
+					<button class="pagination-btn">1</button>
+					<button class="pagination-btn">2</button>
+				</div>
+			`;
 
 			btns.forEach(btn => {
 				BX.removeClass(btn, 'btn-active');
@@ -115,6 +121,13 @@ export class Admin {
 			BX.addClass(BX('sub'), 'btn-active');
 
 			BX.append(SubscriptionTable.render(list), this.rootNode);
+			BX.append(paginationBtn, this.rootNode);
+
+			document.querySelectorAll('.pagination-btn').forEach(btn => {
+				BX.bind(btn, 'click', () => {
+					this.loadListSub(Number(btn.textContent));
+				})
+			})
 
 			const btnEdit = document.querySelectorAll('.edit');
 			const btnAdd = BX('add');
@@ -152,9 +165,7 @@ export class Admin {
 			btnEdit.forEach(btn => {
 				BX.bind(btn, 'click', (event) => {
 					const el = event.target;
-					console.log(el)
 					const data = this.listSub.find(item => item.id === Number(el.dataset.btnId));
-					console.log(data)
 					Form.render(data);
 				});
 			})

@@ -158,6 +158,7 @@ export class Statistics {o
 
 		if (statistics === 'age') {
 			Requests.getAgesByTreeId(treeID).then(result => {
+				console.log(result);
 				const data = this.splittingData(result);
 
 				let backgroundColor = [];
@@ -325,12 +326,12 @@ export class Statistics {o
 					y: {
 						beginAtZero: true
 					}
-				}
+				},
 			},
 
 		});
 
-		BX.append(containerCanvas, this.rootNode)
+		BX.append(containerCanvas, this.rootNode);
 	}
 
 	renderSelect()

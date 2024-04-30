@@ -89,27 +89,35 @@ export class Search
 	{
 		const select = Tag.render`
 		<div class="select-box">
-			<h2 class="search__heading">Выберите дерево, по которому хотите сделать поиск</h2>
-			<div class="select-box__current" tabindex="1">
-				${this.trees.map(item => `
-					<div class="select-box__value">
-						<input class="select-box__input" type="radio" id="${item.id}" value="${item.id}" name="trees" checked="checked"/>
-						<p id="tree${item.id}" class="select-box__input-text">${item.title}</p>
-					</div>
-				`).join('')}
-			
-				<img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
+			<div class="select-container">
+				<div class="select-box__current" tabindex="1">
+					${this.trees.map(item => `
+						<div class="select-box__value">
+							<input class="select-box__input" type="radio" id="${item.id}" value="${item.id}" name="trees" checked="checked"/>
+							<p id="tree${item.id}" class="select-box__input-text">${item.title}</p>
+						</div>
+					`).join('')}
+				
+					<img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
+				</div>
+				<ul class="select-box__list">
+					${this.trees.map(item => `
+						<li>
+							<label class="select-box__option" for="${item.id}" aria-hidden="aria-hidden">${item.title}</label>
+						</li>
+					 `).join('')}
+				</ul>
 			</div>
-			<ul class="select-box__list">
-				${this.trees.map(item => `
-					<li>
-						<label class="select-box__option" for="${item.id}" aria-hidden="aria-hidden">${item.title}</label>
-					</li>
-           		 `).join('')}
-			</ul>
+			<button id="search-relatives" class="search__btn">Поиск</button>
 		</div>`
 
-		BX.append(select, this.rootNode)
+		const textInfo = Tag.render`
+		<h2 class="search__heading">Выберите дерево, по которому хотите сделать поиск</h2>
+		`;
+
+		BX.append(textInfo, this.rootNode);
+
+		BX.append(select, this.rootNode);
 	}
 
 	renderListUser()

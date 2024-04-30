@@ -49,6 +49,7 @@ export class Chat
 	{
 		Requests.getChats().then(list => {
 			this.listChats = list;
+
 			this.render();
 		});
 	}
@@ -65,6 +66,10 @@ export class Chat
 	render()
 	{
 		this.listChats.innerHTML = '';
+
+		const sendAboutProblems = Tag.render`
+			<button class="send-problem">Сообщить о проблеме</button>
+		`;
 
 		const currentUserId = BX.message('USER_ID');
 
@@ -87,6 +92,8 @@ export class Chat
 			</button>`;
 
 			BX.append(chats, this.rootNode);
+
+			BX.append(sendAboutProblems, this.rootNode);
 
 			Requests.getLastMessage(chat.id).then(result => {
 				BX(`lastMassage${chat.id}`).textContent = result;
@@ -163,7 +170,7 @@ export class Chat
 				?
 				`<div class="message text-only">
 						<div class="response">
-							<p class="text">  
+							<p class="text">
 								<span class="text-message">${BX.util.htmlspecialchars(message.message)}</span> 
 								<span class="date-message">${Helper.dateFormat(message.createdAt)}</span> 
 							</p
