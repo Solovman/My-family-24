@@ -9,9 +9,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 \Bitrix\Main\UI\Extension::load('up.statistics');
 ?>
 
-<div class="my-container">
-	<div id="trees-select"></div>
+<div class="my-container container-statistics">
 	<div id="statistics"></div>
+	<div id="trees-select"></div>
 </div>
 
 

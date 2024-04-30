@@ -67,4 +67,15 @@ class Statistics extends Engine\Controller
 
 		return TreeService::getTreesByUserId($userId);
 	}
+
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public function getEducationCountByTreeIdAction($treeId): array
+	{
+		return StatisticService::getEducationCountByTreeId($treeId);
+	}
+
 }
