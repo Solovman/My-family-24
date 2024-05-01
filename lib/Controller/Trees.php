@@ -107,7 +107,7 @@ class Trees extends Engine\Controller
 
 			$userId = (int)$USER->GetID();
 
-			if (TreeService::checkTreeBelongsToUser($id))
+			if (TreeService::checkTreeBelongsToUser((int)$id))
 			{
 				$countTrees = (int)UserSubscriptionsService::getCountTreesByUserId($userId);
 
