@@ -24,4 +24,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 			rootSelectId: 'trees-select',
 		});
 	});
+	BX.message({
+		UP_TREE_STATISTIC_BAR : '<?=GetMessageJS("UP_TREE_STATISTIC_BAR")?>',
+		UP_TREE_STATISTIC_PIE : '<?=GetMessageJS("UP_TREE_STATISTIC_PIE")?>',
+		UP_TREE_STATISTIC_DOUGHNUT : '<?=GetMessageJS("UP_TREE_STATISTIC_DOUGHNUT")?>',
+	});
 </script>
