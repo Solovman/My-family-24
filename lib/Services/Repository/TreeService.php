@@ -198,4 +198,30 @@ class TreeService
 		$connection->queryExecute($deletePersonsQuery);
 
 	}
+
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function checkTreeBelongsToUser(int $treeIdUpdated): bool
+	{
+		global $USER;
+		$userId = (int)$USER->GetID();
+
+
+		$treeIdsForCurrent = TreeTable::query()
+									  ->setSelect(['ID'])
+									  ->setFilter(['USER_ID' => $userId])
+									  ->exec();
+
+		$treeIds = [];
+
+		while($result = $treeIdsForCurrent ->fetchObject())
+		{
+			$treeIds[] = $result->getId();
+		}
+
+		return in_array($treeIdUpdated, $treeIds, true);
+	}
 }

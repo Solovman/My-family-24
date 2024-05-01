@@ -94,6 +94,7 @@ class Node extends Engine\Controller
 	 */
 	public function updateAction(int $id, array $updatablePerson): bool
 	{
+		$treeId = (int) $updatablePerson['treeId'];
 		$node  = new Person(
 			$updatablePerson['active'],
 			(int) $updatablePerson['imageId'],
@@ -103,14 +104,14 @@ class Node extends Engine\Controller
 			$updatablePerson['birthDate'],
 			$updatablePerson['deathDate'],
 			$updatablePerson['gender'],
-			(int) $updatablePerson['treeId'],
+			$treeId,
 			null,
 			(float) $updatablePerson['weight'],
 			(float) $updatablePerson['height'],
 			$updatablePerson['education']
 		);
 
-		if (PersonService::checkPersonInTree($id, $node->getTreeId()))
+		if (TreeService::checkTreeBelongsToUser($treeId) && PersonService::checkPersonInTree($id, $node->getTreeId()))
 		{
 			return PersonService::updatePersonById($id, (int)$updatablePerson['lastImageId'], $node);
 		}
