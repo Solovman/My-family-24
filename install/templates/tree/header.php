@@ -241,8 +241,9 @@ $currentUrl = request()->getRequestUri();
 						<div class="buttons">
 							<div class="header__icon">
 								<span class="header__icon-name">
-									<a href="/account/" class="name__link">
-										<?= htmlspecialcharsEx($USER->GetEmail()) ?: GetMessage('UP_HEADER_ICON_NAME') ?>
+									<a href="/account/" class="name__link" style="display:flex; align-items: baseline; gap: 5pt">
+										<img src="/local/modules/up.tree/images/profile.svg" alt="My profile">
+										<?= htmlspecialcharsEx($USER->GetFirstName()) . ' ' .  htmlspecialcharsEx($USER->GetLastName())?: GetMessage('UP_HEADER_ICON_NAME') ?>
 									</a>
 								</span>
 							</div>
