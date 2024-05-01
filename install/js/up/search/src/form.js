@@ -22,7 +22,7 @@ export class Form
 					this.setContent(Tag.render`
 						<div id="form-message" class="message">
 							<form id="formSend" class="message__form">
-								<label class="message__label" for="message">Напишите сообщение: ${name + ' ' + surname}</label>
+								<label class="message__label" for="message">Напишите сообщение: ${BX.util.htmlspecialchars(name) + ' ' + BX.util.htmlspecialchars(surname)}</label>
 								<input id="message" placeholder="Ваше сообщение" type="text">
 								<button id="send" class="message__button">Отправить</button>
 							</form>
