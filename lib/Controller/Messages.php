@@ -27,7 +27,7 @@ class Messages extends Engine\Controller
 	public static function getMessagesAction(int $chatId): array
 	{
 
-		$messages = MessageService::getMessagesByChatId((int)$chatId);
+		$messages = MessageService::getMessagesByChatId($chatId);
 
 		return [
 			'listMessages'  => $messages

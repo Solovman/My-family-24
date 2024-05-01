@@ -18,8 +18,42 @@ class Statistics extends Engine\Controller
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public function getGenderCountByTreeIdAction(int $treeId): array
+
+	private static function checkIsValidTreeId(int $treeId): bool
 	{
+		global $USER;
+
+		$userId = (int) $USER->GetID();
+
+		$treesUser = TreeService::getTreesByUserId($userId);
+
+		$treesUserIds = [];
+
+		foreach ($treesUser as $tree)
+		{
+			$treesUserIds[] = $tree->getId();
+		}
+
+		if (!in_array($treeId, $treesUserIds, true))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getGenderCountByTreeIdAction(int $treeId): bool|array
+	{
+		if (!self::checkIsValidTreeId($treeId))
+		{
+			return false;
+		}
+
 		return StatisticService::getGenderCountByTreeId($treeId);
 	}
 
@@ -28,8 +62,13 @@ class Statistics extends Engine\Controller
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public function getHeightsByTreeIdAction(int $treeId): array
+	public function getHeightsByTreeIdAction(int $treeId): bool|array
 	{
+		if (!self::checkIsValidTreeId($treeId))
+		{
+			return false;
+		}
+
 		return StatisticService::getHeightsByTreeId($treeId);
 	}
 
@@ -38,8 +77,13 @@ class Statistics extends Engine\Controller
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public function getWeightByTreeIdAction(int $treeId): array
+	public function getWeightByTreeIdAction(int $treeId): bool|array
 	{
+		if (!self::checkIsValidTreeId($treeId))
+		{
+			return false;
+		}
+
 		return StatisticService::getWeightByTreeId($treeId);
 	}
 
@@ -48,8 +92,12 @@ class Statistics extends Engine\Controller
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public function getAgesByTreeIdAction(int $treeId): array
+	public function getAgesByTreeIdAction(int $treeId): bool|array
 	{
+		if (!self::checkIsValidTreeId($treeId))
+		{
+			return false;
+		}
 		return StatisticService::getAgesByTreeId($treeId);
 	}
 
@@ -73,8 +121,13 @@ class Statistics extends Engine\Controller
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public function getEducationCountByTreeIdAction($treeId): array
+	public function getEducationCountByTreeIdAction($treeId): bool|array
 	{
+		if (!self::checkIsValidTreeId($treeId))
+		{
+			return false;
+		}
+
 		return StatisticService::getEducationCountByTreeId($treeId);
 	}
 

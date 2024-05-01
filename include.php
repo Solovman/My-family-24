@@ -6,6 +6,12 @@ use Bitrix\Main\Request;
 use Bitrix\Main\Web\Uri;
 use Up\Tree\Model\UserSubscriptionTable;
 
+
+if (!CModule::IncludeModule('pull')) {
+	return false;
+}
+
+
 function request(): Request
 {
 	return Application::getInstance()->getContext()->getRequest();
