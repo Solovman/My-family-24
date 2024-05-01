@@ -1,0 +1,5 @@
+<?php
+
+$MESS['UP_TREE_STATISTIC_BAR'] = 'Bar';
+$MESS['UP_TREE_STATISTIC_PIE'] = 'Pie';
+$MESS['UP_TREE_STATISTIC_DOUGHNUT'] = 'Doughnut';

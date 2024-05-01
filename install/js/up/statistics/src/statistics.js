@@ -364,27 +364,27 @@ export class Statistics {o
 				<div class="select-box__current" tabindex="1">
 					<div  class="select-box__value">
 						<input class="select-box__input" type="radio" id="doughnutinput" value="doughnut" name="typeStatistics" checked="checked"/>
-						<p id="doughnut" class="select-box__input-text-type">Doughnut</p>
+						<p id="doughnut" class="select-box__input-text-type">${BX.message('UP_TREE_STATISTIC_DOUGHNUT')}</p>
 					</div>
 					<div class="select-box__value">
 						<input class="select-box__input" type="radio" id="barinput" value="bar" name="typeStatistics" checked="checked"/>
-						<p id="bar" class="select-box__input-text-type">Bar</p>
+						<p id="bar" class="select-box__input-text-type">${BX.message('UP_TREE_STATISTIC_BAR')}</p>
 					</div>
 						<div class="select-box__value">
 						<input class="select-box__input" type="radio" id="pieinput" value="pie" name="typeStatistics" checked="checked"/>
-						<p id="pie" class="select-box__input-text-type">Pie</p>
+						<p id="pie" class="select-box__input-text-type">${BX.message('UP_TREE_STATISTIC_PIE')}</p>
 					</div>
 					<img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
 				</div>
 				<ul class="select-box__list">
 					<li>
-						<label class="select-box__option" for="doughnutinput" aria-hidden="aria-hidden">Doughnut</label>
+						<label class="select-box__option" for="doughnutinput" aria-hidden="aria-hidden">${BX.message('UP_TREE_STATISTIC_DOUGHNUT')}</label>
 					</li>
 					<li>
-						<label class="select-box__option" for="barinput" aria-hidden="aria-hidden">Bar</label>
+						<label class="select-box__option" for="barinput" aria-hidden="aria-hidden">${BX.message('UP_TREE_STATISTIC_BAR')}</label>
 					</li>
 					<li>
-						<label class="select-box__option" for="pieinput" aria-hidden="aria-hidden">Pie</label>
+						<label class="select-box__option" for="pieinput" aria-hidden="aria-hidden">${BX.message('UP_TREE_STATISTIC_PIE')}</label>
 					</li>
 				</ul>
 			</div>

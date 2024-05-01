@@ -107,12 +107,15 @@ class Trees extends Engine\Controller
 
 			$userId = (int)$USER->GetID();
 
-			$countTrees = (int)UserSubscriptionsService::getCountTreesByUserId($userId);
+			if (TreeService::checkTreeBelongsToUser((int)$id))
+			{
+				$countTrees = (int)UserSubscriptionsService::getCountTreesByUserId($userId);
 
-			TreeService::removeTreeById((int)$id);
-			$countTrees -= 1;
+				TreeService::removeTreeById((int)$id);
+				$countTrees -= 1;
 
-			UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees]);
+				UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees]);
+			}
 		}
 		catch (SqlException)
 		{

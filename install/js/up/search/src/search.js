@@ -141,7 +141,7 @@ export class Search
 						  <article class="leaderboard__profile">
 							<img src="/local/modules/up.tree/images/tree-account.png" alt="user" class="leaderboard__picture">
 							<span class="leaderboard__name">
-								<span>User: ${user.NAME + ' ' + user.LAST_NAME}</span>
+								<span>User: ${BX.util.htmlspecialchars(user.NAME) + ' ' + BX.util.htmlspecialchars(user.LAST_NAME)}</span>
 							 	 <span class="leaderboard__persons">
 									<span class="heading-persons">Found relatives:</span>
 										${this.usersPersons.foundPersons.filter(person => person.userId === Number(user.ID)).map(person => `
