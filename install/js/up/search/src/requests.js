@@ -21,7 +21,7 @@ export class Requests
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:tree.search.getPersonsUsers', {
 					data: {
-						treeId: treeId
+						treeId: [treeId]
 					}
 				})
 				.then((response) => {

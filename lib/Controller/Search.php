@@ -37,7 +37,7 @@ class Search extends Engine\Controller
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public function getPersonsUsersAction(int $treeId): array
+	public function getPersonsUsersAction(array $treeId): array
 	{
 		$result = SearchService::getFoundUserInfo($treeId);
 

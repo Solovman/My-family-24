@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Up\Tree\Services\Repository;
 
 use Bitrix\Main\Application;
-use Bitrix\Main\Type\Date;
 use Exception;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\DB\SqlException;
@@ -14,7 +13,6 @@ use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\DateTime;
 use Up\Tree\Entity\Tree;
-use Up\Tree\Model\PersonParentTable;
 use Up\Tree\Model\TreeTable;
 
 class TreeService
@@ -68,7 +66,7 @@ class TreeService
 
 		$tree->setId($treeId);
 
-		$persons = PersonService::getPersonsByTreeId($tree->getId());
+		$persons = PersonService::getPersonsByTreeId([$tree->getId()]);
 
 		foreach ($persons as $person)
 		{
@@ -223,5 +221,31 @@ class TreeService
 		}
 
 		return in_array($treeIdUpdated, $treeIds, true);
+	}
+
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getTreesByUserNotSecure(): array
+	{
+		global $USER;
+
+		$userId = (int) $USER->GetID();
+
+		$trees = TreeTable::query()
+			->setSelect(['ID'])
+			->setFilter(['USER_ID' => $userId, 'IS_SECURITY' => false])
+			->exec();
+
+		$treesIds = [];
+
+		while ($result = $trees->fetchObject())
+		{
+			$treesIds[] = $result->getId();
+		}
+
+		return $treesIds;
 	}
 }

@@ -5,19 +5,23 @@ declare(strict_types=1);
 namespace Up\Tree\Services\Repository;
 
 use Bitrix\Main\ArgumentException;
+use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
-use Bitrix\Main\Rest\User;
 use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\PersonTable;
 use Up\Tree\Model\TreeTable;
 use Up\Tree\Model\UserTable;
-use Up\Tree\Services\Repository\PersonService;
-use Up\Tree\Services\Repository\TreeService;
 
 class SearchService
 {
+	/**
+	 * @throws ObjectException
+	 * @throws ObjectPropertyException
+	 * @throws ArgumentException
+	 * @throws SystemException
+	 */
 	public static function getAllPersonsForSearching(): array|bool
 	{
 		# Получение всех ids деревьев текущего юзера
@@ -89,7 +93,6 @@ class SearchService
 		}
 
 		return $personList;
-
 	}
 
 	/**
@@ -97,20 +100,19 @@ class SearchService
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public static function searchPersonByTreeId($id): array|bool
+	public static function searchPersonByTreeId($ids): array|bool
 	{
 
 		# Персоны дерева текущего пользователя
-		$personList = PersonService::getPersonsByTreeId($id);
+		$personList = PersonService::getPersonsByTreeId($ids);
 
 		if (!$personList)
 		{
 			return false;
 		}
 
-		# Все персоны из всех деревев
+		# Все персоны из всех деревьев
 		$allPersonList = self::getAllPersonsForSearching();
-
 
 		/**
 		 * Поиск с использованием хэш-таблиц:
@@ -201,9 +203,9 @@ class SearchService
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public static function getFoundUserInfo(int $treeId): array
+	public static function getFoundUserInfo(array $treeIdsList): array
 	{
-		$matchPersonList = self::searchPersonByTreeId($treeId);
+		$matchPersonList = self::searchPersonByTreeId($treeIdsList);
 
 		if (!$matchPersonList)
 		{

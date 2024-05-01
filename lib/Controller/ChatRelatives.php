@@ -7,10 +7,11 @@ use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
-use Up\Tree\Entity\Chat;
 use Up\Tree\Entity\Message;
 use Up\Tree\Services\Repository\ChatService;
 use Up\Tree\Services\Repository\MessageService;
+use Up\Tree\Services\Repository\SearchService;
+use Up\Tree\Services\Repository\TreeService;
 
 class ChatRelatives extends Engine\Controller
 {
@@ -33,11 +34,16 @@ class ChatRelatives extends Engine\Controller
 	/**
 	 * @throws SqlException
 	 */
-	public static function addMessagesAction(int $recipientId, string $message): void
+	public static function addMessagesAction(int $recipientId, string $message): bool
 	{
 		global $USER;
 
 		$authorId = (int) $USER->GetID();
+
+		if (!self::addChatAction($recipientId, $authorId))
+		{
+			return false;
+		}
 
 		$messageResult = new Message(
 			self::addChatAction($recipientId, $authorId),
@@ -47,6 +53,7 @@ class ChatRelatives extends Engine\Controller
 
 		try {
 			MessageService::addMessage($messageResult);
+			return true;
 		}
 		catch (SqlException)
 		{
@@ -54,8 +61,25 @@ class ChatRelatives extends Engine\Controller
 		}
 	}
 
-	private static function addChatAction(int $recipientId, int $authorId): array|int
+	private static function addChatAction(int $recipientId, int $authorId): bool|int
 	{
+
+		$treesIds = TreeService::getTreesByUserNotSecure();
+
+		$matchListPersonsUsers = SearchService::getFoundUserInfo($treesIds)['foundUsers'];
+
+		$userIds = [];
+
+		foreach ($matchListPersonsUsers as $user)
+		{
+			$userIds[] = (int) $user['ID'];
+		}
+
+		if (!in_array($recipientId, $userIds, true))
+		{
+			return false;
+		}
+
 		try {
 			return ChatService::addChat($recipientId, $authorId);
 		}

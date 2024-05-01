@@ -26,7 +26,7 @@ this.BX.Up = this.BX.Up || {};
 	      return new Promise(function (resolve, reject) {
 	        BX.ajax.runAction('up:tree.search.getPersonsUsers', {
 	          data: {
-	            treeId: treeId
+	            treeId: [treeId]
 	          }
 	        }).then(function (response) {
 	          var infoUsersPersons = response.data.infoUsersPersons;

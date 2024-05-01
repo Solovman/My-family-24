@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Up\Tree\Services\Repository;
 
 use Bitrix\Main\ArgumentException;
+use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Chat;
 use Up\Tree\Model\ChatTable;
-use Bitrix\Main\DB\SqlException;
 
 class ChatService
 {
@@ -22,7 +22,7 @@ class ChatService
 	public static function getChatsForCurrentUser(): array
 	{
 		global $USER;
-		$recipientId = (int) $USER->GetID();
+		$recipientId = (int)$USER->GetID();
 		$chats = ChatTable::query()
 			->setSelect(['ID',
 				'AUTHOR_ID', 'RECIPIENT_ID',
@@ -31,13 +31,12 @@ class ChatService
 				'RECIPIENT_DATA_NAME' => 'RECIPIENT_DATA.NAME',
 				'RECIPIENT_DATA_SURNAME' => 'RECIPIENT_DATA.LAST_NAME',
 				'CREATED_AT'])
-			->setFilter([ 'LOGIC' => 'OR', 'RECIPIENT_ID' => $recipientId, 'AUTHOR_ID' => $recipientId])
+			->setFilter(['LOGIC' => 'OR', 'RECIPIENT_ID' => $recipientId, 'AUTHOR_ID' => $recipientId])
 			->exec();
 
 		$chatsList = [];
 
-		while($result = $chats->fetchObject())
-		{
+		while ($result = $chats->fetchObject()) {
 			$chatsList[] = new Chat(
 				$result->getAuthorId(),
 				$result->getAuthorData()->getName() . ' ' . $result->getAuthorData()->getLastName(),
@@ -63,8 +62,7 @@ class ChatService
 		];
 
 		$result = ChatTable::add($chatData);
-		if ($result->isSuccess())
-		{
+		if ($result->isSuccess()) {
 			return $result->getId();
 		}
 
@@ -80,7 +78,7 @@ class ChatService
 	{
 		global $USER;
 
-		$userId = (int) $USER->GetID();
+		$userId = (int)$USER->GetID();
 
 		$result = ChatTable::query()
 			->setSelect(['ID'])
@@ -90,4 +88,9 @@ class ChatService
 
 		return $result !== null;
 	}
+
+	public static function checkUsersBelongsToChats(int $recipientId) {
+
+	}
+
 }

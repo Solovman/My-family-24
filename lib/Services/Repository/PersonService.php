@@ -146,7 +146,7 @@ class PersonService
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public static function getPersonsByTreeId(int $treeId): array
+	public static function getPersonsByTreeId(array $treeIds): array
 	{
 		$persons = PersonTable::query()
 							  ->registerRuntimeField('TREE_DATA', [
@@ -169,7 +169,7 @@ class PersonService
 											  'HEIGHT',
 											  'EDUCATION_LEVEL',
 											  'TREE_DATA_' => 'TREE_DATA'
-										  ])->setFilter(['TREE_ID' => $treeId])->exec()->fetchAll();
+										  ])->whereIn('TREE_ID', $treeIds)->exec()->fetchAll();
 
 
 		$personList = [];
