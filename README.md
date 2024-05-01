@@ -58,6 +58,25 @@ For correct export to pdf, enter the terminal:
 node node_modules/@balkangraph/export-service/app.js
 ```
 
+Going to the directory `${doc_root}/local/modules/up.tree`
+
+Run command:
+```
+npm install
+```
+
+
+Create a folder in the `local` folder with the file `php_interface/init.php` and write in it:
+
+```
+<?php
+
+\Bitrix\Main\Loader::includeModule('up.tree');
+```
+
+In the Bitrix admin panel, check the box:
+![register2.png](screenshots%2Fregister2.png)
+
 After that also add a symbolic link:
 ```
 mklink /d C:\OSPanel\domains\dev.tree\local\modules\up.tree\node_modules\@balkangraph\export-service\upload C:\OSPanel\domains\dev.tree\upload
