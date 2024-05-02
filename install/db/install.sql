@@ -37,7 +37,7 @@ CREATE TABLE up_relation_user_single_purchase
 CREATE TABLE up_family_tree
 (
 	ID          INT                       NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	TITLE       VARCHAR(100)              NOT NULL,
+	TITLE       VARCHAR(70)              NOT NULL,
 	USER_ID     INT                       NOT NULL,
 	CREATED_AT  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
 	COLOR       VARCHAR(100) DEFAULT NULL,
