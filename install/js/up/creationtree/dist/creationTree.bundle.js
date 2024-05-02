@@ -931,7 +931,7 @@ this.BX.Up = this.BX.Up || {};
 	          BX('color_mode').checked = true;
 	        }
 	      }
-	      BX('navbar-purchases').innerHTML = localStorage.getItem('titleTemplate') ? localStorage.getItem('titleTemplate') : 'Skins';
+	      BX('navbar-purchases').innerHTML = localStorage.getItem('titleTemplate');
 	      if (!this.isHandlerAdded) {
 	        BX.bind(BX('Sriniz'), 'click', function () {
 	          _this3.tree('sriniz');

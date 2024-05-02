@@ -390,7 +390,7 @@ export class CreationTree
 			}
 		}
 
-		BX('navbar-purchases').innerHTML = localStorage.getItem('titleTemplate') ? localStorage.getItem('titleTemplate') : 'Skins';
+		BX('navbar-purchases').innerHTML = localStorage.getItem('titleTemplate');
 
 		if (!this.isHandlerAdded) {
 			BX.bind(BX('Sriniz'), 'click', () => {
