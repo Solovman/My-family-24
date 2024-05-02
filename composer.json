@@ -1,0 +1,21 @@
+{
+    "name": "252/up.tree",
+    "autoload": {
+        "psr-4": {
+            "Up\\Tree\\": "/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Karina Demchenko",
+            "email": "karina.demchenko.02@mail.ru"
+        }
+    ],
+    "require": {
+        "tga/simhash-php": "^2.0"
+    }
+	,
+	"require-dev": {
+		"roave/security-advisories": "dev-latest"
+	}
+}

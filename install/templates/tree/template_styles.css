@@ -52,9 +52,8 @@ ul {
 	position:absolute;
 	left:0;
 	right:0;
-	bottom: 0;
-	top: 3.5%;
 	width: 4%;
+	min-height: 96.5%;
 	background-color: #00ceaa;
 	z-index: 10;
 }
@@ -63,7 +62,7 @@ ul {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin-top: 125%;
+	margin-top: 78px;
 	align-items: center;
 }
 

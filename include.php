@@ -1,5 +1,8 @@
 <?php
 
+require 'vendor/autoload.php';
+
+
 use Bitrix\Main\Application;
 use Bitrix\Main\DB\Connection;
 use Bitrix\Main\Request;
@@ -7,9 +10,21 @@ use Bitrix\Main\Web\Uri;
 use Up\Tree\Model\UserSubscriptionTable;
 
 
-if (!CModule::IncludeModule('pull')) {
-	return false;
-}
+$text1 = "Karina Demchinko";
+
+$text2 = "Karina Demchenko";
+
+$simhash = new \Tga\SimHash\SimHash();
+$extractor = new \Tga\SimHash\Extractor\SimpleTextExtractor();
+$comparator = new Tga\SimHash\Comparator\GaussianComparator(1);
+
+$fp1 = $simhash->hash($extractor->extract($text1), \Tga\SimHash\SimHash::SIMHASH_32);
+$fp2 = $simhash->hash($extractor->extract($text2), \Tga\SimHash\SimHash::SIMHASH_32);
+
+//var_dump($fp1->getBinary());
+//var_dump($fp2->getBinary());
+//
+//var_dump($comparator->compare($fp1, $fp2));
 
 
 function request(): Request
