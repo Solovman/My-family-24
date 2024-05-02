@@ -9,6 +9,7 @@ use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Message;
+use Up\Tree\Model\ChatTable;
 use Up\Tree\Model\MessageTable;
 use Bitrix\Main\DB\SqlException;
 
@@ -78,5 +79,24 @@ class MessageService
 
 		return $messagesList;
 	}
-}
 
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function isUserChatParticipant(int $currentChatId , int $userId): bool
+	{
+		$chatIds = ChatTable::query()->setSelect(['ID'])
+							->setFilter(['LOGIC' => 'OR', 'RECIPIENT_ID' => $userId, 'AUTHOR_ID' => $userId])
+							->exec()
+							->fetchAll();
+		$idsForCurrentUser = [];
+		foreach ($chatIds as $chatId)
+		{
+			$idsForCurrentUser[] = (int)$chatId['ID'];
+		}
+
+		return in_array($currentChatId, $idsForCurrentUser, true);
+	}
+}

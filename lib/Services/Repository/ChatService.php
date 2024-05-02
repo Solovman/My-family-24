@@ -89,8 +89,4 @@ class ChatService
 		return $result !== null;
 	}
 
-	public static function checkUsersBelongsToChats(int $recipientId) {
-
-	}
-
 }
