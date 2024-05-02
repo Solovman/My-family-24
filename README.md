@@ -6,10 +6,11 @@ Install module using admin panel
 
 Set `Family tree template` as your primary site template
 
-## Installing the template
+## Installing the template:
 ![template.png](screenshots/template.png)
-## Uncheck the boxes in the Bitrix authentication settings
-![register.png](screenshots/register.png)
+
+## Check the boxes in the Bitrix authentication settings:
+![register2.png](screenshots%2Fregister2.png)
 
 ## Setup modern Bitrix routing
 
@@ -73,9 +74,6 @@ Create a folder in the `local` folder with the file `php_interface/init.php` and
 
 \Bitrix\Main\Loader::includeModule('up.tree');
 ```
-
-In the Bitrix admin panel, check the box:
-![register2.png](screenshots%2Fregister2.png)
 
 After that also add a symbolic link:
 ```
