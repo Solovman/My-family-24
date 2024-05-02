@@ -41,6 +41,10 @@ export class TreeList
 		const treeTitle = inputTitle.value.trim();
 		const warningMessage = BX('warningMessage');
 
+		inputTitle.addEventListener('input', function()
+		{
+			warningMessage.textContent = '';
+		});
 
 		if (treeTitle !== '') {
 			if (treeTitle.length > 70)

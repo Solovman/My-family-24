@@ -172,6 +172,9 @@ this.BX.Up = this.BX.Up || {};
 	      var inputTitle = BX('treeTitleInput');
 	      var treeTitle = inputTitle.value.trim();
 	      var warningMessage = BX('warningMessage');
+	      inputTitle.addEventListener('input', function () {
+	        warningMessage.textContent = '';
+	      });
 	      if (treeTitle !== '') {
 	        if (treeTitle.length > 70) {
 	          warningMessage.textContent = 'Tree title is too long!';
