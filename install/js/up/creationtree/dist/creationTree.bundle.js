@@ -237,6 +237,12 @@ this.BX.Up = this.BX.Up || {};
 	                  weight = updateNodes[0].weight;
 	                  height = updateNodes[0].height;
 	                  education = updateNodes[0].education[0];
+	                  if (Number(weight) < 0) {
+	                    weight = null;
+	                  }
+	                  if (Number(height) < 0) {
+	                    height = null;
+	                  }
 	                  if (surname.length === 0) {
 	                    surname = null;
 	                  }
@@ -280,7 +286,7 @@ this.BX.Up = this.BX.Up || {};
 	                      return node;
 	                    });
 	                  }
-	                case 22:
+	                case 24:
 	                case "end":
 	                  return _context.stop();
 	              }
@@ -348,6 +354,12 @@ this.BX.Up = this.BX.Up || {};
 	        var education = updateNodes[0].education[0];
 	        if (surname.length === 0) {
 	          surname = null;
+	        }
+	        if (Number(weight) < 0) {
+	          weight = null;
+	        }
+	        if (Number(height) < 0) {
+	          height = null;
 	        }
 	        console.log(surname);
 	        if (active) {

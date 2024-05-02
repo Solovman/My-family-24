@@ -37,9 +37,17 @@ export class CreatedNode
 				let active = updateNodes[0].active;
 				let birthDate = updateNodes[0].birthDate;
 				let deathDate = Helper.formatDate(updateNodes[0].deathDate);
-				const weight = updateNodes[0].weight;
-				const height = updateNodes[0].height;
+				let weight = updateNodes[0].weight;
+				let height = updateNodes[0].height;
 				const education = updateNodes[0].education[0];
+
+				if (Number(weight) < 0) {
+					weight = null;
+				}
+
+				if (Number(height)  < 0) {
+					height = null;
+				}
 
 				if (surname.length === 0) {
 					surname = null;
@@ -169,12 +177,20 @@ export class CreatedNode
 			let surname = updateNodes[0].surname;
 			let birthDate = Helper.formatDate(updateNodes[0].birthDate);
 			let deathDate = Helper.formatDate(updateNodes[0].deathDate);
-			const weight = updateNodes[0].weight;
-			const height = updateNodes[0].height;
+			let weight = updateNodes[0].weight;
+			let height = updateNodes[0].height;
 			const education = updateNodes[0].education[0];
 
 			if (surname.length === 0) {
 				surname = null;
+			}
+
+			if (Number(weight) < 0) {
+				weight = null;
+			}
+
+			if (Number(height)  < 0) {
+				height = null;
 			}
 
 			console.log(surname);
