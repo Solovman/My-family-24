@@ -22,6 +22,7 @@ class Person implements Entity
 	public ?float $weight;
 	public ?float $height;
 	public ?string $education;
+	public ?string $hash;
 
 	/**
 	 * @param $active
@@ -35,7 +36,22 @@ class Person implements Entity
 	 * @param $treeId
 	 * @param null $userId
 	 */
-	public function __construct($active, $imageId, $photo, $name, $surname, ?string $birthDate, ?string $deathDate, $gender, $treeId, $userId = null, $weight = null, $height = null, $education = null)
+	public function __construct(
+		$active,
+		$imageId,
+		$photo,
+		$name,
+		$surname,
+		?string $birthDate,
+		?string $deathDate,
+		$gender,
+		$treeId,
+		$userId = null,
+		$weight = null,
+		$height = null,
+		$education = null,
+		$hash = null
+	)
 	{
 		$this->active = $active;
 		$this->imageId = $imageId;
@@ -50,6 +66,17 @@ class Person implements Entity
 		$this->weight = $weight;
 		$this->height = $height;
 		$this->education = $education;
+		$this->hash = $hash;
+	}
+
+	public function getHash(): ?string
+	{
+		return $this->hash;
+	}
+
+	public function setHash(?string $hash): void
+	{
+		$this->hash = $hash;
 	}
 
 	/**

@@ -115,7 +115,7 @@ class TreeTable extends DataManager
 	public static function validateTitle()
 	{
 		return [
-			new LengthValidator(null, 100),
+			new LengthValidator(null, 70)
 		];
 	}
 }

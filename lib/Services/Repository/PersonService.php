@@ -46,6 +46,7 @@ class PersonService
 			'WEIGHT' => $person->getWeight(),
 			'HEIGHT' => $person->getHeight(),
 			'EDUCATION_LEVEL' => $person->getEducationLevel(),
+			'HASH' => self::generatePersonHash($person),
 		];
 
 		$ids = [];
@@ -140,7 +141,6 @@ class PersonService
 		return $ids;
 	}
 
-
 	/**
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
@@ -148,29 +148,27 @@ class PersonService
 	 */
 	public static function getPersonsByTreeId(array $treeIds): array
 	{
-		$persons = PersonTable::query()
-							  ->registerRuntimeField('TREE_DATA', [
-								  'data_type' => TreeTable::class,
-								  'reference' => [
-									  '=this.TREE_ID' => 'ref.ID',
-								  ],
-							  ])
-							  ->setSelect([
-											  'ID',
-											  'IMAGE_ID',
-											  'NAME',
-											  'SURNAME',
-											  'BIRTH_DATE',
-											  'DEATH_DATE',
-											  'GENDER',
-											  'TREE_ID',
-											  'ACTIVE',
-											  'WEIGHT',
-											  'HEIGHT',
-											  'EDUCATION_LEVEL',
-											  'TREE_DATA_' => 'TREE_DATA'
-										  ])->whereIn('TREE_ID', $treeIds)->exec()->fetchAll();
-
+		$persons = PersonTable::query()->registerRuntimeField('TREE_DATA', [
+				'data_type' => TreeTable::class,
+				'reference' => [
+					'=this.TREE_ID' => 'ref.ID',
+				],
+			])->setSelect([
+							  'ID',
+							  'IMAGE_ID',
+							  'NAME',
+							  'SURNAME',
+							  'BIRTH_DATE',
+							  'DEATH_DATE',
+							  'GENDER',
+							  'TREE_ID',
+							  'ACTIVE',
+							  'WEIGHT',
+							  'HEIGHT',
+							  'EDUCATION_LEVEL',
+							  'TREE_DATA_' => 'TREE_DATA',
+							  'HASH',
+						  ])->whereIn('TREE_ID', $treeIds)->exec()->fetchAll();
 
 		$personList = [];
 
@@ -190,6 +188,7 @@ class PersonService
 				(float)$personData['WEIGHT'],
 				(float)$personData['HEIGHT'],
 				$personData['EDUCATION_LEVEL'],
+				$personData['HASH']
 			);
 			$person->setId((int)$personData['ID']);
 
@@ -209,16 +208,19 @@ class PersonService
 			'IMAGE_ID' => $updatablePerson->getImageId(),
 			'NAME' => $updatablePerson->getName(),
 			'SURNAME' => $updatablePerson->getSurname(),
-			'BIRTH_DATE' => $updatablePerson->getBirthDate() ? new Date($updatablePerson->getBirthDate(), 'Y-m-d') : null,
-			'DEATH_DATE' => $updatablePerson->getDeathDate() ? new Date($updatablePerson->getDeathDate(), 'Y-m-d') : null,
+			'BIRTH_DATE' => $updatablePerson->getBirthDate() ? new Date($updatablePerson->getBirthDate(), 'Y-m-d')
+				: null,
+			'DEATH_DATE' => $updatablePerson->getDeathDate() ? new Date($updatablePerson->getDeathDate(), 'Y-m-d')
+				: null,
 			'GENDER' => $updatablePerson->getGender(),
 			'WEIGHT' => $updatablePerson->getWeight(),
 			'HEIGHT' => $updatablePerson->getHeight(),
 			'EDUCATION_LEVEL' => $updatablePerson->getEducationLevel(),
-			'TREE_ID' => $updatablePerson->getTreeId()
+			'TREE_ID' => $updatablePerson->getTreeId(),
+			'HASH' => self::generatePersonHash($updatablePerson)
 		];
 
-		$result = PersonTable::update($id , $personData);
+		$result = PersonTable::update($id, $personData);
 
 		if ($lastImageId !== 1)
 		{
@@ -229,6 +231,7 @@ class PersonService
 		{
 			return false;
 		}
+
 		return true;
 	}
 
@@ -245,7 +248,6 @@ class PersonService
 		$deleteMarriedRelationQuery = "DELETE FROM up_relation_married WHERE PERSON_ID = $id OR PARTNER_ID = $id";
 		$connection->queryExecute($deleteMarriedRelationQuery);
 		$connection->queryExecute($deleteMarriedRelationQuery);
-
 
 		PersonTable::delete($id);
 	}
@@ -290,5 +292,18 @@ class PersonService
 		$treeId = (int)$treeId[0]['TREE_ID'];
 
 		return $treeId === $treeIdUpdated;
+	}
+
+	public static function generatePersonHash($person): string
+	{
+		return hash('sha256',
+					$person->getGender()
+					. '_'
+					. $person->getName()
+					. '_'
+					. $person->getSurname()
+					. '_'
+					. $person->getBirthDate()
+		);
 	}
 }

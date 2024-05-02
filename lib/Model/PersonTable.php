@@ -138,6 +138,13 @@ class PersonTable extends DataManager
 					'title' => Loc::getMessage('PERSON_ENTITY_ACTIVE_FIELD')
 				]
 			),
+			new StringField(
+				'HASH',
+				[
+					'required' => true,
+					'title' => Loc::getMessage('PERSON_ENTITY_HASH_FIELD')
+				]
+			),
 			'RELATION_PARENT_PERSON' => (new OneToMany('RELATION_PARENT_PERSON', PersonParentTable::class, 'PARENT_PERSON'))->configureJoinType('inner'),
 
 			'RELATION_CHILD_PERSON' => (new OneToMany('RELATION_CHILD_PERSON', PersonParentTable::class, 'CHILD_PERSON'))->configureJoinType('inner'),

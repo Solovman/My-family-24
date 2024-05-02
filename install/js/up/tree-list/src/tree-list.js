@@ -43,18 +43,22 @@ export class TreeList
 
 
 		if (treeTitle !== '') {
+			if (treeTitle.length > 70)
+			{
+				warningMessage.textContent = 'Tree title is too long!';
+				console.error('Tree title is too long');
+			} else {
+				this.addTree(treeTitle).then((result) => {
+					if (result === false) {
+						ModalWindow.render();
+					}
 
-			this.addTree(treeTitle).then((result) => {
-				if (result === false)
-				{
-					ModalWindow.render();
-				}
-
-				inputTitle.value = '';
-				this.reload();
-			}).catch((error) => {
-				console.error('Error adding tree:', error);
-			});
+					inputTitle.value = '';
+					this.reload();
+				}).catch((error) => {
+					console.error('Error adding tree:', error);
+				});
+			}
 		} else {
 			warningMessage.textContent = 'Please enter a tree title!';
 			console.error('Tree title is empty');

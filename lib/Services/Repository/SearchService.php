@@ -65,6 +65,7 @@ class SearchService
 													   'GENDER',
 													   'TREE_ID',
 													   'ACTIVE',
+													   'HASH',
 													   'TREE_DATA_' => 'TREE_DATA'
 												   ])->whereNotIn('TREE_ID', $treesIdsForCurrentUser)
 													 ->whereIn('TREE_ID', $treIds)
@@ -85,7 +86,11 @@ class SearchService
 				$personData['DEATH_DATE'] ? $personData['DEATH_DATE']->format('Y-m-d') : null,
 				$personData['GENDER'],
 				(int)$personData['TREE_ID'],
-				(int)$personData['TREE_DATA_USER_ID']
+				(int)$personData['TREE_DATA_USER_ID'],
+				null,
+				null,
+				null,
+				$personData['HASH']
 			);
 			$person->setId((int)$personData['ID']);
 
@@ -100,7 +105,7 @@ class SearchService
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public static function searchPersonByTreeId($ids): array|bool
+	public static function searchPersonByTreeIds(array $ids): array|bool
 	{
 
 		# Персоны дерева текущего пользователя
@@ -122,7 +127,8 @@ class SearchService
 
 		foreach ($allPersonList as $allPerson)
 		{
-			$personKey = hash('sha256',$allPerson->getGender() . '_' . $allPerson->getName() . '_' . $allPerson->getSurname());
+			$personKey = $allPerson->getHash();
+
 			if (isset($personHash[$personKey]))
 			{
 				$personHash[$personKey][] = $allPerson;
@@ -138,17 +144,16 @@ class SearchService
 		// Проверяем каждую персону из списка $personList на наличие в хеш-таблице
 		foreach ($personList as $person)
 		{
-			$personKey = hash('sha256',$person->getGender() . '_' . $person->getName() . '_' . $person->getSurname());
+			$personKey = $person->getHash();
+
 			if (isset($personHash[$personKey]))
 			{
 				$matchPersonList = [...$matchPersonList, ...$personHash[$personKey]];
 			}
 		}
 
+		/**Старый вариант поиска:*/
 
-		/**
-		 * Старый вариант поиска:
-		*/
 		/*
 		$matchPersonList = [];
 		 foreach ($personList as $person)
@@ -205,7 +210,7 @@ class SearchService
 	 */
 	public static function getFoundUserInfo(array $treeIdsList): array
 	{
-		$matchPersonList = self::searchPersonByTreeId($treeIdsList);
+		$matchPersonList = self::searchPersonByTreeIds($treeIdsList);
 
 		if (!$matchPersonList)
 		{

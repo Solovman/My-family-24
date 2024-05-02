@@ -173,15 +173,20 @@ this.BX.Up = this.BX.Up || {};
 	      var treeTitle = inputTitle.value.trim();
 	      var warningMessage = BX('warningMessage');
 	      if (treeTitle !== '') {
-	        this.addTree(treeTitle).then(function (result) {
-	          if (result === false) {
-	            ModalWindow.render();
-	          }
-	          inputTitle.value = '';
-	          _this2.reload();
-	        })["catch"](function (error) {
-	          console.error('Error adding tree:', error);
-	        });
+	        if (treeTitle.length > 70) {
+	          warningMessage.textContent = 'Tree title is too long!';
+	          console.error('Tree title is too long');
+	        } else {
+	          this.addTree(treeTitle).then(function (result) {
+	            if (result === false) {
+	              ModalWindow.render();
+	            }
+	            inputTitle.value = '';
+	            _this2.reload();
+	          })["catch"](function (error) {
+	            console.error('Error adding tree:', error);
+	          });
+	        }
 	      } else {
 	        warningMessage.textContent = 'Please enter a tree title!';
 	        console.error('Tree title is empty');
