@@ -46,6 +46,7 @@ class PersonService
 			'WEIGHT' => $person->getWeight(),
 			'HEIGHT' => $person->getHeight(),
 			'EDUCATION_LEVEL' => $person->getEducationLevel(),
+			'HASH' => hash('sha256',$person->getGender() . '_' . $person->getName() . '_' . $person->getSurname())
 		];
 
 		$ids = [];
@@ -168,7 +169,8 @@ class PersonService
 											  'WEIGHT',
 											  'HEIGHT',
 											  'EDUCATION_LEVEL',
-											  'TREE_DATA_' => 'TREE_DATA'
+											  'TREE_DATA_' => 'TREE_DATA',
+											  'HASH'
 										  ])->whereIn('TREE_ID', $treeIds)->exec()->fetchAll();
 
 
@@ -190,6 +192,7 @@ class PersonService
 				(float)$personData['WEIGHT'],
 				(float)$personData['HEIGHT'],
 				$personData['EDUCATION_LEVEL'],
+				$personData['HASH']
 			);
 			$person->setId((int)$personData['ID']);
 

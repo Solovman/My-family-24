@@ -46,18 +46,19 @@ CREATE TABLE up_family_tree
 
 CREATE TABLE up_person
 (
-	ID              INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	ID              INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	IMAGE_ID        INT                                                         DEFAULT 0,
-	NAME            VARCHAR(50) NULL,
-	SURNAME         VARCHAR(50) NULL,
+	NAME            VARCHAR(50)  NULL,
+	SURNAME         VARCHAR(50)  NULL,
 	BIRTH_DATE      DATE,
 	DEATH_DATE      DATE,
 	GENDER          ENUM ('male', 'female'),
 	WEIGHT          FLOAT                                                       DEFAULT NULL,
 	HEIGHT          FLOAT                                                       DEFAULT NULL,
 	EDUCATION_LEVEL ENUM ('without education', 'school', 'secondary', 'higher') DEFAULT NULL,
-	TREE_ID         INT         NOT NULL,
-	ACTIVE          BOOL                                                        DEFAULT FALSE
+	TREE_ID         INT          NOT NULL,
+	ACTIVE          BOOL                                                        DEFAULT FALSE,
+	HASH            VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE up_relation_person_parent
