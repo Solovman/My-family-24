@@ -179,6 +179,20 @@ export class CreationTree
 
 				sender.editUI.show(self.nodeList.persons[0].id, false);
 
+				const saveButton = document.querySelector('[data-edit-from-save]');
+				const inputName = document.querySelector('[data-binding="name"]');
+				const inputSurname = document.querySelector('[data-binding="surname"]');
+
+				if(self.nodeList.persons[0].name === ' ' && self.nodeList.persons[0].surname === ' ')
+				{
+					inputName.value = '';
+					inputSurname.value = '';
+					inputName.placeholder = 'Введите имя';
+					inputSurname.placeholder = 'Введите фамилию';
+
+					saveButton.disabled = true;
+				}
+
 				document.querySelectorAll('input').forEach(input => {
 					BX.bind(input, 'input', (event) => {
 						event.target.value = event.target.value.replace(/[<>\/]/g, '');
@@ -193,8 +207,7 @@ export class CreationTree
 					event.target.dataset.btnChecked = !!event.target.checked;
 				})
 
-				const saveButton = document.querySelector('[data-edit-from-save]');
-				const inputName = document.querySelector('[data-binding="name"]');
+
 				inputName.addEventListener('input', (el) => {
 					saveButton.disabled = inputName.value.length <= 0;
 				})
@@ -312,12 +325,30 @@ export class CreationTree
 		})
 
 		family.on('click', function(sender, args){
+			sender.editUI.show(args.node.id, false);
+
+			const saveButton = document.querySelector('[data-edit-from-save]');
+			const inputName = document.querySelector('[data-binding="name"]');
+			const inputSurname = document.querySelector('[data-binding="surname"]');
+
+			if (self.nodeList.persons.length === 1) {
+
+				if(self.nodeList.persons[0].name === ' ' && self.nodeList.persons[0].surname === ' ')
+				{
+					inputName.value = '';
+					inputSurname.value = '';
+					inputName.placeholder = 'Введите имя';
+					inputSurname.placeholder = 'Введите фамилию';
+
+					saveButton.disabled = true;
+				}
+			}
+
 			let statusRequest = CreatedNode.requestCreationNode(args.node.id, family, onUpdateNodeAdded, onUpdatePerson, self);
 
 			onUpdateNodeAdded = statusRequest[0];
 			onUpdatePerson = statusRequest[1];
 
-			sender.editUI.show(args.node.id, false);
 
 			document.querySelectorAll('input').forEach(input => {
 				BX.bind(input, 'input', (event) => {
@@ -333,8 +364,6 @@ export class CreationTree
 				event.target.dataset.btnChecked = !!event.target.checked;
 			})
 
-			const saveButton = document.querySelector('[data-edit-from-save]');
-			const inputName = document.querySelector('[data-binding="name"]');
 			inputName.addEventListener('input', (el) => {
 				saveButton.disabled = inputName.value.length <= 0;
 			})

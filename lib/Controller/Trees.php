@@ -71,13 +71,25 @@ class Trees extends Engine\Controller
 				"0",
 				1,
 				'/local/modules/up.tree/images/user_default.png',
-				'Enter your name',
-				'Enter your surname',
+				" ",
+				" ",
 				null,
 				null,
 				'',
 				(int)$newTreeId,
+				null,
+				null,
+				null,
+				null,
+				PersonService::generatePersonHash([
+					'name' => null,
+					'surname' => null,
+					'gender' => null,
+					'birthDate' => null
+				])
 			);
+
+
 
 			PersonService::addPerson(
 				$initialNode,

@@ -12,7 +12,7 @@ class Person implements Entity
 	public string $active;
 	public int $imageId;
 	public string $photo;
-	public string $name;
+	public ?string $name;
 	public ?string $surname;
 	public ?string $birthDate;
 	public ?string $deathDate;
@@ -116,7 +116,7 @@ class Person implements Entity
 		$this->imageId = $imageId;
 	}
 
-	public function getName(): string
+	public function getName(): ?string
 	{
 		return $this->name;
 	}

@@ -798,6 +798,16 @@ this.BX.Up = this.BX.Up || {};
 	      family.on('init', function (sender, args) {
 	        if (self.nodeList.persons.length === 1) {
 	          sender.editUI.show(self.nodeList.persons[0].id, false);
+	          var saveButton = document.querySelector('[data-edit-from-save]');
+	          var inputName = document.querySelector('[data-binding="name"]');
+	          var inputSurname = document.querySelector('[data-binding="surname"]');
+	          if (self.nodeList.persons[0].name === ' ' && self.nodeList.persons[0].surname === ' ') {
+	            inputName.value = '';
+	            inputSurname.value = '';
+	            inputName.placeholder = 'Введите имя';
+	            inputSurname.placeholder = 'Введите фамилию';
+	            saveButton.disabled = true;
+	          }
 	          document.querySelectorAll('input').forEach(function (input) {
 	            BX.bind(input, 'input', function (event) {
 	              event.target.value = event.target.value.replace(/[<>\/]/g, '');
@@ -808,8 +818,6 @@ this.BX.Up = this.BX.Up || {};
 	          checkedInput.addEventListener('click', function (event) {
 	            event.target.dataset.btnChecked = !!event.target.checked;
 	          });
-	          var saveButton = document.querySelector('[data-edit-from-save]');
-	          var inputName = document.querySelector('[data-binding="name"]');
 	          inputName.addEventListener('input', function (el) {
 	            saveButton.disabled = inputName.value.length <= 0;
 	          });
@@ -880,10 +888,22 @@ this.BX.Up = this.BX.Up || {};
 	        }
 	      });
 	      family.on('click', function (sender, args) {
+	        sender.editUI.show(args.node.id, false);
+	        var saveButton = document.querySelector('[data-edit-from-save]');
+	        var inputName = document.querySelector('[data-binding="name"]');
+	        var inputSurname = document.querySelector('[data-binding="surname"]');
+	        if (self.nodeList.persons.length === 1) {
+	          if (self.nodeList.persons[0].name === ' ' && self.nodeList.persons[0].surname === ' ') {
+	            inputName.value = '';
+	            inputSurname.value = '';
+	            inputName.placeholder = 'Введите имя';
+	            inputSurname.placeholder = 'Введите фамилию';
+	            saveButton.disabled = true;
+	          }
+	        }
 	        var statusRequest = CreatedNode.requestCreationNode(args.node.id, family, onUpdateNodeAdded, onUpdatePerson, self);
 	        onUpdateNodeAdded = statusRequest[0];
 	        onUpdatePerson = statusRequest[1];
-	        sender.editUI.show(args.node.id, false);
 	        document.querySelectorAll('input').forEach(function (input) {
 	          BX.bind(input, 'input', function (event) {
 	            event.target.value = event.target.value.replace(/[<>\/]/g, '');
@@ -894,8 +914,6 @@ this.BX.Up = this.BX.Up || {};
 	        checkedInput.addEventListener('click', function (event) {
 	          event.target.dataset.btnChecked = !!event.target.checked;
 	        });
-	        var saveButton = document.querySelector('[data-edit-from-save]');
-	        var inputName = document.querySelector('[data-binding="name"]');
 	        inputName.addEventListener('input', function (el) {
 	          saveButton.disabled = inputName.value.length <= 0;
 	        });

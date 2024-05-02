@@ -46,7 +46,12 @@ class PersonService
 			'WEIGHT' => $person->getWeight(),
 			'HEIGHT' => $person->getHeight(),
 			'EDUCATION_LEVEL' => $person->getEducationLevel(),
-			'HASH' => self::generatePersonHash($person),
+			'HASH' => self::generatePersonHash([
+				'name' => $person->getName(),
+				'gender' => $person->getGender(),
+				'surname' => $person->getSurname(),
+				'birthDate' => $person->getBirthDate()
+			]),
 		];
 
 		$ids = [];
@@ -217,7 +222,12 @@ class PersonService
 			'HEIGHT' => $updatablePerson->getHeight(),
 			'EDUCATION_LEVEL' => $updatablePerson->getEducationLevel(),
 			'TREE_ID' => $updatablePerson->getTreeId(),
-			'HASH' => self::generatePersonHash($updatablePerson)
+			'HASH' => self::generatePersonHash([
+				'name' => $updatablePerson->getName(),
+				'gender' => $updatablePerson->getGender(),
+				'surname' => $updatablePerson->getSurname(),
+				'birthDate' => $updatablePerson->getBirthDate()
+			])
 		];
 
 		$result = PersonTable::update($id, $personData);
@@ -294,16 +304,16 @@ class PersonService
 		return $treeId === $treeIdUpdated;
 	}
 
-	public static function generatePersonHash($person): string
+	public static function generatePersonHash(array $person): string
 	{
 		return hash('sha256',
-					$person->getGender()
+					$person['gender']
 					. '_'
-					. $person->getName()
+					. $person['name']
 					. '_'
-					. $person->getSurname()
+					. $person['surname']
 					. '_'
-					. $person->getBirthDate()
+					. $person['birthDate']
 		);
 	}
 }
