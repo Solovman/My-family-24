@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Up\Tree\Controller;
+
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\Engine;
@@ -10,6 +11,7 @@ use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Message;
+use Up\Tree\Model\ChatTable;
 use Up\Tree\Services\Repository\MessageService;
 
 class Messages extends Engine\Controller
@@ -24,8 +26,20 @@ class Messages extends Engine\Controller
 		return MessageService::getLastMessages($chatId);
 	}
 
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
 	public static function getMessagesAction(int $chatId): array
 	{
+		global $USER;
+		$userId = (int)$USER->GetID();
+
+		if(!MessageService::isUserChatParticipant($chatId , $userId))
+		{
+			return [];
+		}
 
 		$messages = MessageService::getMessagesByChatId($chatId);
 
