@@ -59,9 +59,9 @@ For correct export to pdf, enter the terminal:
 node node_modules/@balkangraph/export-service/app.js
 ```
 
-Going to the directory `${doc_root}/local/modules/up.tree`
+Going to the directory `${doc_root}/local/modules/up.tree` in the terminal
 
-Run command:
+You must install node.js and then run the command:
 ```
 npm install
 ```
