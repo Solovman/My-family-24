@@ -161,7 +161,7 @@ $APPLICATION->setAdditionalCSS('style.css');
 						<td><?= GetMessage('EMAIL') ?><?
 							if ($arResult["EMAIL_REQUIRED"]): ?><span class="starrequired">*</span><?
 							endif ?></td>
-						<td><input type="text" name="EMAIL" maxlength="50" value="<?
+						<td><input type="text" name="EMAIL" maxlength="254" value="<?
 							echo $arResult["arUser"]["EMAIL"] ?>"/></td>
 					</tr>
 					<?
