@@ -152,10 +152,8 @@ class SearchService
 			}
 		}
 
+		/**Старый вариант поиска:*/
 
-		/**
-		 * Старый вариант поиска:
-		*/
 		/*
 		$matchPersonList = [];
 		 foreach ($personList as $person)
