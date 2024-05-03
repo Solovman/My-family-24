@@ -55,11 +55,13 @@ export class CreationTree
 		Requests.loadNodes(id).then(nodeList => {
 			this.nodeList = nodeList;
 
+			let newStyles = document.createElement('style');
+			let menuRemoveStyles = document.createElement('style');
+			document.head.append(newStyles);
+			document.head.append(menuRemoveStyles);
+
 			this.nodeList.persons.forEach(person => {
 				person.active = person.active !== '0';
-
-				let newStyles = document.createElement('style')
-				document.head.append(newStyles);
 
 				if (person.active) {
 					newStyles.innerHTML = `svg.hugo [data-n-id="${person.id}"].node>rect {
@@ -74,6 +76,17 @@ export class CreationTree
 					}
 				}
 			})
+
+			if (this.nodeList.persons.length === 1) {
+				menuRemoveStyles.innerHTML = `[data-ctrl-n-menu-id="${this.nodeList.persons[0].id}"] {
+							display: none;
+						}`
+			} else {
+				menuRemoveStyles.innerHTML = `[data-ctrl-n-menu-id="${this.nodeList.persons[0].id}"] {
+							display: block;
+						}`
+			}
+
 
 			this.render();
 		});
@@ -140,7 +153,6 @@ export class CreationTree
 			}
 		});
 
-
 		family.nodeMenuUI.on('show', function(sender, args){
 			args.menu = {
 				remove: {
@@ -161,8 +173,8 @@ export class CreationTree
 		let onUpdateNodeAdded = false;
 		let onUpdatePerson = false;
 
-		// let id = this.nodeList.persons[0].id;
-		//
+		//let id = this.nodeList.persons[0].id;
+
 		// family.onInit(() => {
 		// 	let root = Helper.getRootOf(family.getNode(id), family);
 		// 	family.config.roots = [root.id];
@@ -174,9 +186,9 @@ export class CreationTree
 		// 	family.draw();
 		// });
 
+
 		family.on('init', function (sender, args) {
 			if (self.nodeList.persons.length === 1) {
-
 				sender.editUI.show(self.nodeList.persons[0].id, false);
 
 				const saveButton = document.querySelector('[data-edit-from-save]');
@@ -206,7 +218,6 @@ export class CreationTree
 				checkedInput.addEventListener('click', (event) => {
 					event.target.dataset.btnChecked = !!event.target.checked;
 				})
-
 
 				inputName.addEventListener('input', (el) => {
 					saveButton.disabled = inputName.value.length <= 0;

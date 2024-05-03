@@ -700,10 +700,12 @@ this.BX.Up = this.BX.Up || {};
 	      var id = parseInt(window.location.href.match(/\d+/));
 	      Requests.loadNodes(id).then(function (nodeList) {
 	        _this2.nodeList = nodeList;
+	        var newStyles = document.createElement('style');
+	        var menuRemoveStyles = document.createElement('style');
+	        document.head.append(newStyles);
+	        document.head.append(menuRemoveStyles);
 	        _this2.nodeList.persons.forEach(function (person) {
 	          person.active = person.active !== '0';
-	          var newStyles = document.createElement('style');
-	          document.head.append(newStyles);
 	          if (person.active) {
 	            newStyles.innerHTML = "svg.hugo [data-n-id=\"".concat(person.id, "\"].node>rect {\n\t\t\t\t\t\t\tfill: #FFE13E\n\t\t\t\t\t\t}");
 	          } else {
@@ -712,6 +714,11 @@ this.BX.Up = this.BX.Up || {};
 	            }
 	          }
 	        });
+	        if (_this2.nodeList.persons.length === 1) {
+	          menuRemoveStyles.innerHTML = "[data-ctrl-n-menu-id=\"".concat(_this2.nodeList.persons[0].id, "\"] {\n\t\t\t\t\t\t\tdisplay: none;\n\t\t\t\t\t\t}");
+	        } else {
+	          menuRemoveStyles.innerHTML = "[data-ctrl-n-menu-id=\"".concat(_this2.nodeList.persons[0].id, "\"] {\n\t\t\t\t\t\t\tdisplay: block;\n\t\t\t\t\t\t}");
+	        }
 	        _this2.render();
 	      });
 	    }
@@ -782,8 +789,8 @@ this.BX.Up = this.BX.Up || {};
 	      var onUpdateNodeAdded = false;
 	      var onUpdatePerson = false;
 
-	      // let id = this.nodeList.persons[0].id;
-	      //
+	      //let id = this.nodeList.persons[0].id;
+
 	      // family.onInit(() => {
 	      // 	let root = Helper.getRootOf(family.getNode(id), family);
 	      // 	family.config.roots = [root.id];
