@@ -303,6 +303,8 @@ export class Statistics {o
 			labelCanvas.style.left = '20%';
 		}
 
+		containerCanvas.innerHTML = '';
+
 		BX.append(labelCanvas, containerCanvas);
 		BX.append(canvas, containerCanvas);
 
@@ -335,7 +337,6 @@ export class Statistics {o
 
 			};
 		}
-
 
 		new Chart(canvas, {
 			type: type,

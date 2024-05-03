@@ -345,6 +345,7 @@ this.BX.Up = this.BX.Up || {};
 	      if (label === 'Статистика по уровню образования') {
 	        labelCanvas.style.left = '20%';
 	      }
+	      containerCanvas.innerHTML = '';
 	      BX.append(labelCanvas, containerCanvas);
 	      BX.append(canvas, containerCanvas);
 	      if (type === 'doughnut' || type === 'pie') {
