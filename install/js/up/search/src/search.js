@@ -91,33 +91,53 @@ export class Search
 		<div class="select-box">
 			<div class="select-container">
 				<div class="select-box__current" tabindex="1">
-					${this.trees.map(item => `
+					${this.trees.length !== 0 ? `
+						${this.trees.map(item => `
 						<div class="select-box__value">
 							<input class="select-box__input" type="radio" id="${item.id}" value="${item.id}" name="trees" checked="checked"/>
 							<p id="tree${item.id}" class="select-box__input-text">${item.title}</p>
 						</div>
 					`).join('')}
-				
+					` : `
+						<div class="select-box__value">
+							<input class="select-box__input" type="radio" name="trees" checked="checked"/>
+							<p class="select-box__input-text">Нет деревьев</p>
+						</div>
+					`}
 					<img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true"/>
 				</div>
 				<ul class="select-box__list">
-					${this.trees.map(item => `
+					${this.trees.length !== 0 ? `
+						${this.trees.map(item => `
 						<li>
 							<label class="select-box__option" for="${item.id}" aria-hidden="aria-hidden">${item.title}</label>
 						</li>
 					 `).join('')}
+					` : `
+						<li>
+							<label class="select-box__option" aria-hidden="aria-hidden">Нет деревьев</label>
+						</li>
+					`}
 				</ul>
 			</div>
 			<button id="search-relatives" class="search__btn">Поиск</button>
 		</div>`
 
 		const textInfo = Tag.render`
-		<h2 class="search__heading">Выберите дерево, по которому хотите сделать поиск</h2>
+			<h2 class="search__heading">Выберите дерево, по которому хотите сделать поиск</h2>
 		`;
 
 		BX.append(textInfo, this.rootNode);
 
 		BX.append(select, this.rootNode);
+
+		if (this.trees.length !== 0) {
+			BX('text-search').innerHTML = 'Нажмите на кнопку "Поиск"';
+			BX('search-relatives').disabled = false;
+		} else {
+			BX('text-search').innerHTML = 'Отсутствуют деревья с подтвержденным пользовательским соглашением. Подробнее в <a class="search-doc" href="#">документации</a>';
+			BX('search-relatives').disabled = true;
+		}
 	}
 
 	renderListUser()

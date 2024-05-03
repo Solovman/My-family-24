@@ -22,6 +22,15 @@ body {
 	text-align: end;
 }
 
+.search-doc {
+	color: #00ceaa;
+	transition: color .3s ease-in-out;
+}
+
+.search-doc:hover {
+	color: #ff6068;
+}
+
 @media (min-width: 768px) {
 	.select-box {
 		width: 70%;
@@ -164,8 +173,17 @@ body {
 	font-size: 23px;
 	font-family: 'MorningBreeze', sans-serif, Helvetica;
 	color: #fff;
+	transition: background-color .3s ease-in-out;
 }
 
+.search__btn:hover {
+	background-color: #00ce90;
+}
+
+.search__btn:disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
 
 .notFound {
 	position: absolute;
