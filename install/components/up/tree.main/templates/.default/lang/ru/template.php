@@ -1,4 +1,20 @@
 <?php
 
-
 $MESS['UP_HEADING_ADD_PERSON'] = "Добавить нового человека";
+$MESS['UP_PERSON_FORM_NAME'] = "Имя";
+$MESS['UP_PERSON_FORM_SURNAME'] = "Фамилия";
+$MESS['UP_PERSON_FORM_BIRTH_DATE'] = "Дата рождения";
+$MESS['UP_PERSON_FORM_DEATH_DATE'] = "Дата смерти";
+$MESS['UP_PERSON_FORM_HEIGHT'] = "Рост";
+$MESS['UP_PERSON_FORM_WEIGHT'] = "Вес";
+$MESS['UP_PERSON_FORM_EDUCATION_LEVEL'] = "Уровень образования";
+$MESS['UP_PERSON_FORM_EDUCATION_LEVEL_WITHOUT'] = "Без образования";
+$MESS['UP_PERSON_FORM_EDUCATION_LEVEL_SCHOOL'] = "Школьное";
+$MESS['UP_PERSON_FORM_EDUCATION_LEVEL_SECONDARY'] = "Среднее";
+$MESS['UP_PERSON_FORM_EDUCATION_LEVEL_HIGHER'] = "Высшее";
+$MESS['UP_PERSON_FORM_GENDER'] = "Пол";
+$MESS['UP_PERSON_FORM_GENDER_MALE'] = "Мужской";
+$MESS['UP_PERSON_FORM_GENDER_FEMALE'] = "Женский";
+$MESS['UP_PERSON_FORM_MARK'] = "Отметить";
+$MESS['UP_PERSON_FORM_SAVE'] = "Сохранить";
+$MESS['UP_PERSON_FORM_CLOSE'] = "Отменить";

@@ -25,29 +25,29 @@ export class Family
 				titleBinding: "name",
 				photoBinding: "photo",
 				addMore: null,
-				cancelBtn: 'Close',
-				saveAndCloseBtn: 'Save',
+				cancelBtn: BX.message('UP_PERSON_FORM_CLOSE'),
+				saveAndCloseBtn: BX.message('UP_PERSON_FORM_SAVE'),
 				generateElementsFromFields: false,
 				buttons: {
 					share: null,
 					remove: null,
 				},
 				elements: [
-					{type: 'textbox', label: 'Name', binding: 'name'},
-					{type: 'textbox', label: 'Surname', binding: 'surname'},
+					{type: 'textbox', label: BX.message('UP_PERSON_FORM_NAME'), binding: 'name'},
+					{type: 'textbox', label: BX.message('UP_PERSON_FORM_SURNAME'), binding: 'surname'},
 					[
-						{type: 'date', label: 'Date Of Birth', binding: 'birthDate'},
-						{type: 'date', label: 'Date Of Death', binding: 'deathDate'}
+						{type: 'date', label: BX.message('UP_PERSON_FORM_BIRTH_DATE'), binding: 'birthDate'},
+						{type: 'date', label: BX.message('UP_PERSON_FORM_DEATH_DATE'), binding: 'deathDate'}
 					],
 					[
-						{type: 'textbox', label: 'Weight', binding: 'weight'},
-						{type: 'textbox', label: 'Height', binding: 'height'}
+						{type: 'textbox', label: BX.message('UP_PERSON_FORM_WEIGHT'), binding: 'weight'},
+						{type: 'textbox', label: BX.message('UP_PERSON_FORM_HEIGHT'), binding: 'height'}
 					],
 					[
 						{
 							type: 'select',
-							options: [{value: 'male', text: 'Male'}, {value: 'female', text: 'Female'}],
-							label: 'Gender',
+							options: [{value: 'male', text: BX.message('UP_PERSON_FORM_GENDER_MALE')}, {value: 'female', text: BX.message('UP_PERSON_FORM_GENDER_FEMALE')}],
+							label: BX.message('UP_PERSON_FORM_GENDER'),
 							binding: 'gender'
 						},
 					],
@@ -55,16 +55,16 @@ export class Family
 						{
 							type: 'select',
 							options: [
-								{value: 'without education', text: 'Without education'},
-								{value: 'school', text: 'School'},
-								{value: 'secondary', text: 'Secondary'},
-								{value: 'higher', text: 'Higher'},
+								{value: 'without education', text: BX.message('UP_PERSON_FORM_EDUCATION_LEVEL_WITHOUT')},
+								{value: 'school', text: BX.message('UP_PERSON_FORM_EDUCATION_LEVEL_SCHOOL')},
+								{value: 'secondary', text: BX.message('UP_PERSON_FORM_EDUCATION_LEVEL_SECONDARY')},
+								{value: 'higher', text: BX.message('UP_PERSON_FORM_EDUCATION_LEVEL_HIGHER')},
 							],
-							label: 'Education Level',
+							label: BX.message('UP_PERSON_FORM_EDUCATION_LEVEL'),
 							binding: 'education'
 						},
 					],
-					{ type: 'checkbox', label: 'Important', binding: 'active' }
+					{ type: 'checkbox', label: BX.message('UP_PERSON_FORM_MARK'), binding: 'active' }
 				]
 			},
 		});
