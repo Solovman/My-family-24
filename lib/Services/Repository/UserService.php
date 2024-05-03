@@ -64,4 +64,23 @@ class UserService
 			'surname' => $data->getLastName()
 		];
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static function updateUserImagesByAvatarId(int $avatarId): bool
+	{
+		global $USER;
+
+		$userId = (int) $USER->GetID();
+
+		$result = UserTable::update($userId, ['PERSONAL_PHOTO' => $avatarId]);
+
+		if (!$result->isSuccess())
+		{
+			return false;
+		}
+
+		return true;
+	}
 }

@@ -2,6 +2,18 @@
 	padding: 0 30px;
 }
 
+.errortext {
+	display: inline-block;
+	margin-bottom: 30px;
+	background-color: #f8d7da !important;
+	border: 1px solid #fd6a75 !important;
+	color: #ff6d69 !important;
+	padding: 10px !important;
+	border-radius: 5px !important;
+	font-size: 1.2em;
+	text-align: center;
+}
+
 .data-table {
 	width: 100%;
 }

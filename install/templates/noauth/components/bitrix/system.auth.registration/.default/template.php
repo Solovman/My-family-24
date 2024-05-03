@@ -27,7 +27,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
 			<noindex>
 
-				<div id="bx_register_error" style="display:none"><?php ShowError("error")?></div>
+				<div class="errortext" id="bx_register_error" style="display:none"><?php ShowError("error")?></div>
 
 				<div id="bx_register_resend"></div>
 				<div class="main__tabs-nav">
