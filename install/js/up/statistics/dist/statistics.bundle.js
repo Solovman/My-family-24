@@ -334,6 +334,7 @@ this.BX.Up = this.BX.Up || {};
 	      var containerCanvas = document.createElement('div');
 	      var canvas = document.createElement('canvas');
 	      var labelCanvas = document.createElement('h2');
+	      var options;
 	      labelCanvas.textContent = label;
 	      BX.addClass(labelCanvas, 'heading-graphs');
 	      BX.addClass(containerCanvas, 'container-canvas');
@@ -346,6 +347,33 @@ this.BX.Up = this.BX.Up || {};
 	      }
 	      BX.append(labelCanvas, containerCanvas);
 	      BX.append(canvas, containerCanvas);
+	      if (type === 'doughnut' || type === 'pie') {
+	        options = {
+	          plugins: {
+	            legend: {
+	              display: false
+	            }
+	          },
+	          scales: {
+	            y: {
+	              display: false
+	            }
+	          }
+	        };
+	      } else {
+	        options = {
+	          plugins: {
+	            legend: {
+	              display: false
+	            }
+	          },
+	          scales: {
+	            y: {
+	              beginAtZero: true
+	            }
+	          }
+	        };
+	      }
 	      new Chart(canvas, {
 	        type: type,
 	        data: {
@@ -357,18 +385,7 @@ this.BX.Up = this.BX.Up || {};
 	            backgroundColor: backgroundColor
 	          }]
 	        },
-	        options: {
-	          plugins: {
-	            legend: {
-	              display: false
-	            }
-	          },
-	          scales: {
-	            y: {
-	              beginAtZero: true
-	            }
-	          }
-	        }
+	        options: options
 	      });
 	      BX.append(containerCanvas, this.rootNode);
 	    }

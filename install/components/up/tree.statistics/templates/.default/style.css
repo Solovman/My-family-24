@@ -26,7 +26,7 @@ h2 {
 .heading-graphs {
 	position: absolute;
 	top: 0;
-	left: 28%;
+	left: 26%;
 	font-size: 32px !important;
 }
 
@@ -75,21 +75,6 @@ h2 {
 	text-align: end;
 }
 
-@media (min-width: 768px) {
-	.select-box {
-		width: 70%;
-	}
-}
-@media (min-width: 992px) {
-	.select-box {
-		width: 50%;
-	}
-}
-@media (min-width: 1200px) {
-	.select-box {
-		width: 100%;
-	}
-}
 .select-box__current {
 	position: relative;
 	box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
@@ -288,5 +273,31 @@ h2 {
 @keyframes check {
 	100% {
 		stroke-dashoffset: 4.5px;
+	}
+}
+
+@media (min-width: 768px) {
+	.select-box {
+		width: 70%;
+	}
+}
+@media (min-width: 992px) {
+	.select-box {
+		width: 50%;
+	}
+}
+@media (min-width: 1200px) {
+	.select-box {
+		width: 100%;
+	}
+}
+
+
+@media (min-width: 1700px) {
+	.container-canvas {
+		width: 40%;
+	}
+	.heading-graphs {
+		left: 28%;
 	}
 }

@@ -287,6 +287,7 @@ export class Statistics {o
 		const containerCanvas = document.createElement('div');
 		const canvas = document.createElement('canvas');
 		const labelCanvas = document.createElement('h2');
+		let options;
 
 		labelCanvas.textContent = label;
 		BX.addClass(labelCanvas, 'heading-graphs');
@@ -305,6 +306,37 @@ export class Statistics {o
 		BX.append(labelCanvas, containerCanvas);
 		BX.append(canvas, containerCanvas);
 
+		if (type === 'doughnut' || type === 'pie') {
+			options = {
+				plugins: {
+					legend: {
+						display: false,
+					},
+				},
+				scales: {
+					y: {
+						display: false,
+					},
+				},
+
+			};
+		} else {
+			options = {
+				plugins: {
+					legend: {
+						display: false,
+					},
+				},
+				scales: {
+					y: {
+						beginAtZero: true
+					},
+				},
+
+			};
+		}
+
+
 		new Chart(canvas, {
 			type: type,
 			data: {
@@ -316,18 +348,7 @@ export class Statistics {o
 					backgroundColor: backgroundColor,
 				}]
 			},
-			options: {
-				plugins: {
-					legend: {
-						display: false,
-					},
-				},
-				scales: {
-					y: {
-						beginAtZero: true
-					}
-				},
-			},
+			options: options
 
 		});
 
