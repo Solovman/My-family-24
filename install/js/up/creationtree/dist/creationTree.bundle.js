@@ -838,7 +838,7 @@ this.BX.Up = this.BX.Up || {};
 	          BX.append(textWarning, warningName);
 	          form.enctype = "multipart/form-data";
 	          form.action = '/tree/{id}/';
-	          var formFile = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<label class=\"input-file\">\n\t\t\t\t\t<span class=\"input-file-text\" type=\"text\"></span>\n\t\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"photo\">\n\t\t\t\t\t<span class=\"input-file-btn\">\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B</span>\n\t\t\t\t</label>\n\t\t\t\t"])));
+	          var formFile = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<label class=\"input-file\">\n\t\t\t\t\t<span class=\"input-file-text\" type=\"text\">jpeg, jpg, gif, png</span>\n\t\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"photo\">\n\t\t\t\t\t<span class=\"input-file-btn\">\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B</span>\n\t\t\t\t</label>\n\t\t\t\t"])));
 	          editForm.append(formFile);
 	          BX('photoName').addEventListener('change', function () {
 	            var file = this.files[0];
@@ -874,7 +874,7 @@ this.BX.Up = this.BX.Up || {};
 	            BX.append(textWarning, warningName);
 	            form.enctype = "multipart/form-data";
 	            form.action = '/tree/{id}/';
-	            var formFile = main_core.Tag.render(_templateObject4 || (_templateObject4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t<label class=\"input-file\">\n\t\t\t\t\t\t<span class=\"input-file-text\" type=\"text\"></span>\n\t\t\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"photo\">\n\t\t\t\t\t\t<span class=\"input-file-btn\">\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B</span>\n\t\t\t\t\t</label>\n\t\t\t\t\t"])));
+	            var formFile = main_core.Tag.render(_templateObject4 || (_templateObject4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t<label class=\"input-file\">\n\t\t\t\t\t\t<span class=\"input-file-text\" type=\"text\">jpeg, jpg, gif, png</span>\n\t\t\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"photo\">\n\t\t\t\t\t\t<span class=\"input-file-btn\">\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B</span>\n\t\t\t\t\t</label>\n\t\t\t\t\t"])));
 	            editForm.append(formFile);
 	            BX('photoName').addEventListener('change', function () {
 	              var file = this.files[0];
@@ -931,7 +931,7 @@ this.BX.Up = this.BX.Up || {};
 	        BX.append(textWarning, warningName);
 	        form.enctype = "multipart/form-data";
 	        form.action = '/tree/{id}/';
-	        var formFile = main_core.Tag.render(_templateObject6 || (_templateObject6 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<label class=\"input-file\">\n\t\t\t\t\t<span class=\"input-file-text\" type=\"text\"></span>\n\t\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"photo\">\n\t\t\t\t\t<span class=\"input-file-btn\">\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B</span>\n\t\t\t\t</label>\n\t\t\t"])));
+	        var formFile = main_core.Tag.render(_templateObject6 || (_templateObject6 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<label class=\"input-file\">\n\t\t\t\t\t<span class=\"input-file-text\" type=\"text\">jpeg, jpg, gif, png</span>\n\t\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"photo\">\n\t\t\t\t\t<span class=\"input-file-btn\">\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B</span>\n\t\t\t\t</label>\n\t\t\t"])));
 	        editForm.append(formFile);
 	        BX('photoName').addEventListener('change', function () {
 	          var file = this.files[0];

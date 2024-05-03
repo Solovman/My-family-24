@@ -243,7 +243,7 @@ export class CreationTree
 				form.action = '/tree/{id}/';
 				const formFile = Tag.render`
 				<label class="input-file">
-					<span class="input-file-text" type="text"></span>
+					<span class="input-file-text" type="text">jpeg, jpg, gif, png</span>
 					<input id="photoName" type="file" name="photo">
 					<span class="input-file-btn">Выберите файл</span>
 				</label>
@@ -303,7 +303,7 @@ export class CreationTree
 					form.action = '/tree/{id}/';
 					const formFile = Tag.render`
 					<label class="input-file">
-						<span class="input-file-text" type="text"></span>
+						<span class="input-file-text" type="text">jpeg, jpg, gif, png</span>
 						<input id="photoName" type="file" name="photo">
 						<span class="input-file-btn">Выберите файл</span>
 					</label>
@@ -394,7 +394,7 @@ export class CreationTree
 			form.action = '/tree/{id}/';
 			const formFile = Tag.render`
 				<label class="input-file">
-					<span class="input-file-text" type="text"></span>
+					<span class="input-file-text" type="text">jpeg, jpg, gif, png</span>
 					<input id="photoName" type="file" name="photo">
 					<span class="input-file-btn">Выберите файл</span>
 				</label>

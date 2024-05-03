@@ -130,6 +130,7 @@ button:disabled {
 	display: block;
 	overflow: hidden;
 	float: left;
+	font-size: 17px;
 	box-sizing: border-box;
 	width: 59%;
 	border-radius: 6px 0px 0 6px;
@@ -174,6 +175,10 @@ button:disabled {
 	height: 0;
 }
 
-/*svg.hugo [data-n-id="2"].node.male>rect {*/
-/*	fill: red !important;*/
-/*}*/
+.file-format {
+	font-size: 18px;
+}
+
+.bft-checkbox {
+	font-size: 18px;
+}
