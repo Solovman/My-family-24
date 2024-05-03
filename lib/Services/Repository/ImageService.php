@@ -10,6 +10,7 @@ use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Up\Tree\Entity\Image;
 use Up\Tree\Model\FileTable;
+use Up\Tree\Model\UserTable;
 
 class ImageService
 {
@@ -47,5 +48,19 @@ class ImageService
 		}
 
 		return '/upload/' . $imageName->getSubdir(). '/' . $imageName->getFileName();
+	}
+
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function getAvatars(): array
+	{
+		return FileTable::query()
+							->setSelect(['ID', 'FILE_NAME'])
+							->setFilter(['SUBDIR' => 'avatars'])
+							->exec()
+							->fetchAll();
 	}
 }
