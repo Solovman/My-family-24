@@ -486,6 +486,10 @@ body {
 	text-align: center;
 	color: white;
 	transition: 0.15s ease-in-out;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	font-size: 18px;
+	line-height: 20px;
+	font-weight: 400;
 	opacity: 0;
 	width: 100%;
 	max-width: 100vw;
