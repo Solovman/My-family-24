@@ -15,7 +15,29 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
 		if (!empty($arResult['ERROR_MESSAGE']))
 		{
-			ShowMessage($arResult['ERROR_MESSAGE']);
+
+			global $APPLICATION;
+			/** @global CMain $APPLICATION */
+			global $APPLICATION;
+
+			if(!is_array($arResult['ERROR_MESSAGE']))
+				$arMess=Array("MESSAGE" => $arResult['ERROR_MESSAGE'], "TYPE" => "ERROR");
+
+			if($arResult['ERROR_MESSAGE']["MESSAGE"] <> "")
+			{
+				$APPLICATION->IncludeComponent(
+					"bitrix:system.show_message",
+					".default",
+					Array(
+						"MESSAGE"=> $arResult['ERROR_MESSAGE']["MESSAGE"],
+						"STYLE" => ($arResult['ERROR_MESSAGE']["TYPE"]=="OK"?"notetext":"errortext"),
+					),
+					null,
+					array(
+						"HIDE_ICONS" => "Y"
+					)
+				);
+			}
 		}
 		?>
 		<div class="main__tabs-nav">

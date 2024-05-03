@@ -13,4 +13,5 @@ $MESS["AUTH_SECURE_NOTE"] = "Перед отправкой формы автор
 $MESS["AUTH_NONSECURE_NOTE"] = "Пароль будет отправлен в открытом виде. Включите JavaScript в браузере, чтобы зашифровать пароль перед отправкой.";
 $MESS ['UP_FAMILY_TREE_INPUT_LOGIN'] = "Введите E-mail";
 $MESS ['UP_FAMILY_TREE_INPUT_PASSWORD'] = "Введите пароль";
+$MESS ['UP_FAMILY_TREE_ERROR'] = "Неврная почта или пароль";
 ?>
