@@ -76,7 +76,7 @@ export class Chat
 		this.listChats.forEach(chat => {
 			const chats = Tag.render `
 				<div data-id-chat="${chat.id}" id="chat${chat.id}" class="discussion chat-list">
-					<div class="photo" style="background-image: url(/local/modules/up.tree/images/tree-account.png);"></div>
+					<div class="photo" style="background-image: url(/local/modules/up.tree/images/avatars/default.png);"></div>
 						<div class="desc-contact">
 						<p class="name">${Number(currentUserId) === chat.authorId ? BX.util.htmlspecialchars(chat.recipientName) : BX.util.htmlspecialchars(chat.authorName)}</p>
 						<p id="lastMassage${chat.id}" class="message"></p>
@@ -178,7 +178,7 @@ export class Chat
 					</div>`
 				:
 				`<div class="message">
-					<div class="photo" style="background-image: url(/local/modules/up.tree/images/tree-account.png);"></div>
+					<div class="photo" style="background-image: url(/local/modules/up.tree/images/avatars/default.png);"></div>
 					<p class="text">  
 							<span class="text-message">${BX.util.htmlspecialchars(message.message)}</span> 
 							<span class="date-message">${Helper.dateFormat(message.createdAt)}</span> 

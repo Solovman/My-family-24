@@ -115,5 +115,29 @@ $DB->query("
 }
 });
 
+__treeMigrate(10, static function ($updater, $DB)
+{
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query("
+      INSERT INTO b_file (ID, TIMESTAMP_X, MODULE_ID, HEIGHT, WIDTH, FILE_SIZE, CONTENT_TYPE, SUBDIR, FILE_NAME, ORIGINAL_NAME, DESCRIPTION, HANDLER_ID, EXTERNAL_ID) 
+      VALUES 
+      (2, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/f_1.svg', NULL, NULL, NULL, NULL),
+      (3, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/f_2.svg', NULL, NULL, NULL, NULL),
+      (4, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/f_3.svg', NULL, NULL, NULL, NULL),
+      (5, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/f_4.svg', NULL, NULL, NULL, NULL),
+      (6, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/f_5.svg', NULL, NULL, NULL, NULL),
+      (7, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/f_6.svg', NULL, NULL, NULL, NULL),
+      (8, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/m_1.svg', NULL, NULL, NULL, NULL),
+      (9, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/m_2.svg', NULL, NULL, NULL, NULL),
+      (10, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/m_3.svg', NULL, NULL, NULL, NULL),
+      (11, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/m_4.svg', NULL, NULL, NULL, NULL),
+      (12, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/m_5.svg', NULL, NULL, NULL, NULL),
+      (13, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/m_6.svg', NULL, NULL, NULL, NULL),
+      (14, NULL, NULL, NULL, NULL, NULL, 'IMAGE', NULL, '/local/modules/up.tree/images/avatars/default.png', NULL, NULL, NULL, NULL);
+    ");
+	}
+});
+
 // TODO: for makefile
 //exec('C:\"Program Files"\nodejs\node.exe C:\OSPanel\domains\dev.tree\local\modules\up.tree\node_modules\@balkangraph\export-service\app.js');
