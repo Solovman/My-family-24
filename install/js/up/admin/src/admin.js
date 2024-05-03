@@ -156,8 +156,8 @@ export class Admin {
 
 					Requests.addSubscription(subscription).then(result => {
 						this.loadListSub();
-						document.querySelector('.popup-window').remove();
-						document.querySelector('.popup-window-overlay').remove();
+						document.querySelector('.popup-ModalWindow').remove();
+						document.querySelector('.popup-ModalWindow-overlay').remove();
 					});
 				});
 			});
@@ -273,8 +273,8 @@ export class Admin {
 
 					Requests.addPurchase(purchase).then(result => {
 						this.loadListPurchase();
-						document.querySelector('.popup-window').remove();
-						document.querySelector('.popup-window-overlay').remove();
+						document.querySelector('.popup-ModalWindow').remove();
+						document.querySelector('.popup-ModalWindow-overlay').remove();
 					});
 				});
 			});
@@ -380,8 +380,8 @@ export class Admin {
 
 					Requests.addPurchaseUser(userId, purchaseId).then(result => {
 						this.loadListUserPurchase();
-						document.querySelector('.popup-window').remove();
-						document.querySelector('.popup-window-overlay').remove();
+						document.querySelector('.popup-ModalWindow').remove();
+						document.querySelector('.popup-ModalWindow-overlay').remove();
 					});
 				});
 			});

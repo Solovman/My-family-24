@@ -1656,8 +1656,8 @@ export interface CoreChartOptions<TType extends ChartType> extends ParsingOption
   onResize(chart: Chart, size: { width: number; height: number }): void;
 
   /**
-   * Override the window's default devicePixelRatio.
-   * @default window.devicePixelRatio
+   * Override the ModalWindow's default devicePixelRatio.
+   * @default ModalWindow.devicePixelRatio
    */
   devicePixelRatio: number;
 

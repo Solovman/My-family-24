@@ -25,7 +25,6 @@ $APPLICATION->setAdditionalCSS('style.css');
 	<div class="container">
 		<div class="profile">
 			<div id="data-profile"></div>
-
 		</div>
 	</div>
 

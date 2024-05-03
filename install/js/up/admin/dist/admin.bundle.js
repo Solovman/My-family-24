@@ -789,8 +789,8 @@ this.BX.Up = this.BX.Up || {};
 	            };
 	            Requests.addSubscription(subscription).then(function (result) {
 	              _this2.loadListSub();
-	              document.querySelector('.popup-window').remove();
-	              document.querySelector('.popup-window-overlay').remove();
+	              document.querySelector('.popup-ModalWindow').remove();
+	              document.querySelector('.popup-ModalWindow-overlay').remove();
 	            });
 	          });
 	        });
@@ -870,8 +870,8 @@ this.BX.Up = this.BX.Up || {};
 	            };
 	            Requests.addPurchase(purchase).then(function (result) {
 	              _this3.loadListPurchase();
-	              document.querySelector('.popup-window').remove();
-	              document.querySelector('.popup-window-overlay').remove();
+	              document.querySelector('.popup-ModalWindow').remove();
+	              document.querySelector('.popup-ModalWindow-overlay').remove();
 	            });
 	          });
 	        });
@@ -945,8 +945,8 @@ this.BX.Up = this.BX.Up || {};
 	            var purchaseId = Number(BX('purchaseId').value);
 	            Requests.addPurchaseUser(userId, purchaseId).then(function (result) {
 	              _this5.loadListUserPurchase();
-	              document.querySelector('.popup-window').remove();
-	              document.querySelector('.popup-window-overlay').remove();
+	              document.querySelector('.popup-ModalWindow').remove();
+	              document.querySelector('.popup-ModalWindow-overlay').remove();
 	            });
 	          });
 	        });
