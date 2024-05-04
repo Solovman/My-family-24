@@ -10,13 +10,10 @@ use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
-use Bitrix\Main\Type\Date;
 use Exception;
-use Up\Tree\Entity\Image;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\UserSubscriptionTable;
 use Up\Tree\Services\Repository\PersonService;
-use Bitrix\Main\Type\DateTime;
 use Up\Tree\Entity\Tree;
 use Up\Tree\Services\Repository\SearchService;
 use Up\Tree\Services\Repository\SubscriptionsService;
@@ -57,7 +54,9 @@ class Trees extends Engine\Controller
 
 		$subscriptionId = (int)SubscriptionsService::getSubscriptionIdByUserId($userId);
 
-		$countTrees = (int)UserSubscriptionsService::getCountTreesByUserId($userId);
+		$countTrees = UserSubscriptionsService::getCountTreesByUserId($userId);
+		$countNodes = UserSubscriptionsService::getCountNodesByUserId($userId);
+
 		$numberTreesOnSubscription = (int)SubscriptionsService::getNumberTreesById($subscriptionId);
 
 		if ($numberTreesOnSubscription > $countTrees || $numberTreesOnSubscription === 0)
@@ -97,9 +96,10 @@ class Trees extends Engine\Controller
 				'init'
 			);
 
-			$countTrees += 1;
+			++$countTrees;
+			++$countNodes;
 
-			UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees]);
+			UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees, 'COUNT_NODES' => $countNodes]);
 
 			return true;
 		}
@@ -121,10 +121,10 @@ class Trees extends Engine\Controller
 
 			if (TreeService::checkTreeBelongsToUser((int)$id))
 			{
-				$countTrees = (int)UserSubscriptionsService::getCountTreesByUserId($userId);
+				$countTrees = UserSubscriptionsService::getCountTreesByUserId($userId);
 
 				TreeService::removeTreeById((int)$id);
-				$countTrees -= 1;
+				--$countTrees;
 
 				UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees]);
 			}
