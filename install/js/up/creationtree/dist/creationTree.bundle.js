@@ -692,6 +692,9 @@ this.BX.Up = this.BX.Up || {};
 	    setTimeout(function () {
 	      _this.reload();
 	    }, 300);
+	    document.addEventListener('contextmenu', function (event) {
+	      event.preventDefault(); // отменяем стандартное действие браузера
+	    });
 	  }
 	  babelHelpers.createClass(CreationTree, [{
 	    key: "reload",

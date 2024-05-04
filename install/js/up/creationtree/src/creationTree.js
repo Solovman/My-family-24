@@ -47,6 +47,9 @@ export class CreationTree
 			this.reload();
 		}, 300)
 
+		document.addEventListener('contextmenu', function(event) {
+			event.preventDefault();
+		});
 	}
 
 	reload()
