@@ -680,6 +680,7 @@ this.BX.Up = this.BX.Up || {};
 	    }
 	    this.nodeList = [];
 	    this.isHandlerAdded = false;
+	    this.isFirstLoad = false;
 	    var buttonJSON = BX('json');
 	    BX.bind(buttonJSON, 'click', function () {
 	      _this.nodeList.persons.forEach(function (person) {
@@ -693,7 +694,7 @@ this.BX.Up = this.BX.Up || {};
 	      _this.reload();
 	    }, 300);
 	    document.addEventListener('contextmenu', function (event) {
-	      event.preventDefault(); // отменяем стандартное действие браузера
+	      event.preventDefault();
 	    });
 	  }
 	  babelHelpers.createClass(CreationTree, [{
@@ -805,50 +806,53 @@ this.BX.Up = this.BX.Up || {};
 	      // 	family.draw();
 	      // });
 
-	      family.on('init', function (sender, args) {
-	        if (self.nodeList.persons.length === 1) {
-	          sender.editUI.show(self.nodeList.persons[0].id, false);
-	          var saveButton = document.querySelector('[data-edit-from-save]');
-	          var inputName = document.querySelector('[data-binding="name"]');
-	          var inputSurname = document.querySelector('[data-binding="surname"]');
-	          if (self.nodeList.persons[0].name === ' ' && self.nodeList.persons[0].surname === ' ') {
-	            inputName.value = '';
-	            inputSurname.value = '';
-	            inputName.placeholder = 'Введите имя';
-	            inputSurname.placeholder = 'Введите фамилию';
-	            saveButton.disabled = true;
-	          }
-	          document.querySelectorAll('input').forEach(function (input) {
-	            BX.bind(input, 'input', function (event) {
-	              event.target.value = event.target.value.replace(/[<>\/]/g, '');
+	      if (!this.isFirstLoad) {
+	        this.isFirstLoad = true;
+	        family.on('init', function (sender, args) {
+	          if (self.nodeList.persons.length === 1) {
+	            sender.editUI.show(self.nodeList.persons[0].id, false);
+	            var saveButton = document.querySelector('[data-edit-from-save]');
+	            var inputName = document.querySelector('[data-binding="name"]');
+	            var inputSurname = document.querySelector('[data-binding="surname"]');
+	            if (self.nodeList.persons[0].name === ' ' && self.nodeList.persons[0].surname === ' ') {
+	              inputName.value = '';
+	              inputSurname.value = '';
+	              inputName.placeholder = 'Введите имя';
+	              inputSurname.placeholder = 'Введите фамилию';
+	              saveButton.disabled = true;
+	            }
+	            document.querySelectorAll('input').forEach(function (input) {
+	              BX.bind(input, 'input', function (event) {
+	                event.target.value = event.target.value.replace(/[<>\/]/g, '');
+	              });
 	            });
-	          });
-	          var checkedInput = document.querySelector('.bft-checkbox input');
-	          checkedInput.dataset.btnChecked = !!checkedInput.checked;
-	          checkedInput.addEventListener('click', function (event) {
-	            event.target.dataset.btnChecked = !!event.target.checked;
-	          });
-	          inputName.addEventListener('input', function (el) {
-	            saveButton.disabled = inputName.value.length <= 0;
-	          });
-	          var statusRequest = CreatedNode.requestCreationNode(self.nodeList.persons[0].id, family, onUpdateNodeAdded, onUpdatePerson, self);
-	          onUpdateNodeAdded = statusRequest[0];
-	          onUpdatePerson = statusRequest[1];
-	          var form = document.querySelector('.bft-edit-form');
-	          var editForm = document.querySelector('.bft-form-fieldset');
-	          var warningName = document.querySelector('[data-bft-edit-from-btns]');
-	          var textWarning = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"warning-text\">*\u041F\u043E\u043B\u0435 \"\u0438\u043C\u044F\" \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u043C</div>\n\t\t\t\t\t"])));
-	          BX.append(textWarning, warningName);
-	          form.enctype = "multipart/form-data";
-	          form.action = '/tree/{id}/';
-	          var formFile = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<label class=\"input-file\">\n\t\t\t\t\t<span class=\"input-file-text\" type=\"text\">jpeg, jpg, gif, png</span>\n\t\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"photo\">\n\t\t\t\t\t<span class=\"input-file-btn\">\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B</span>\n\t\t\t\t</label>\n\t\t\t\t"])));
-	          editForm.append(formFile);
-	          BX('photoName').addEventListener('change', function () {
-	            var file = this.files[0];
-	            document.querySelector('.input-file-text').innerHTML = file.name;
-	          });
-	        }
-	      });
+	            var checkedInput = document.querySelector('.bft-checkbox input');
+	            checkedInput.dataset.btnChecked = !!checkedInput.checked;
+	            checkedInput.addEventListener('click', function (event) {
+	              event.target.dataset.btnChecked = !!event.target.checked;
+	            });
+	            inputName.addEventListener('input', function (el) {
+	              saveButton.disabled = inputName.value.length <= 0;
+	            });
+	            var statusRequest = CreatedNode.requestCreationNode(self.nodeList.persons[0].id, family, onUpdateNodeAdded, onUpdatePerson, self);
+	            onUpdateNodeAdded = statusRequest[0];
+	            onUpdatePerson = statusRequest[1];
+	            var form = document.querySelector('.bft-edit-form');
+	            var editForm = document.querySelector('.bft-form-fieldset');
+	            var warningName = document.querySelector('[data-bft-edit-from-btns]');
+	            var textWarning = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t\t<div class=\"warning-text\">*\u041F\u043E\u043B\u0435 \"\u0438\u043C\u044F\" \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u043C</div>\n\t\t\t\t\t"])));
+	            BX.append(textWarning, warningName);
+	            form.enctype = "multipart/form-data";
+	            form.action = '/tree/{id}/';
+	            var formFile = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<label class=\"input-file\">\n\t\t\t\t\t<span class=\"input-file-text\" type=\"text\">jpeg, jpg, gif, png</span>\n\t\t\t\t\t<input id=\"photoName\" type=\"file\" name=\"photo\">\n\t\t\t\t\t<span class=\"input-file-btn\">\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B</span>\n\t\t\t\t</label>\n\t\t\t\t"])));
+	            editForm.append(formFile);
+	            BX('photoName').addEventListener('change', function () {
+	              var file = this.files[0];
+	              document.querySelector('.input-file-text').innerHTML = file.name;
+	            });
+	          }
+	        });
+	      }
 	      family.on('updated', function (sender, args) {
 	        if (args.addNodesData.length !== 0) {
 	          if (typeof args.addNodesData[0].id === 'string') {
