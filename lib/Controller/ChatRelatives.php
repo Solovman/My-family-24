@@ -82,6 +82,10 @@ class ChatRelatives extends Engine\Controller
 				return false;
 			}
 		}
+		else
+		{
+			$recipientId = 1;
+		}
 
 		try {
 			return ChatService::addChat($recipientId, $authorId, $isAdmin);
