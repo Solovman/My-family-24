@@ -238,7 +238,8 @@ class SearchService
 										  'ID',
 										  'NAME',
 										  'LAST_NAME',
-										  'EMAIL'
+										  'EMAIL',
+										  'FILE_NAME' => 'USER_DATA.FILE_NAME'
 									  ])->whereIn('ID', $userIds)
 										->exec()
 										->fetchAll();

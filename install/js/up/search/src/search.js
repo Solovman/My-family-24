@@ -159,7 +159,7 @@ export class Search
 					  <main class="leaderboard__profiles">
 						${usersWithChats.map(({ user, chatExists }) => `
 						  <article class="leaderboard__profile">
-							<img src="/local/modules/up.tree/images/avatars/default.png" alt="user" class="leaderboard__picture">
+							<img src="${user.FILE_NAME}" alt="user" class="leaderboard__picture">
 							<span class="leaderboard__name">
 								<span>User: ${BX.util.htmlspecialchars(user.NAME) + ' ' + BX.util.htmlspecialchars(user.LAST_NAME)}</span>
 							 	 <span class="leaderboard__persons">
