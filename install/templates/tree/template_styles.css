@@ -53,6 +53,7 @@ ul {
 	left:0;
 	right:0;
 	width: 4%;
+	height: 100%;
 	min-height: 96.5%;
 	background-color: #00ceaa;
 	z-index: 10;
