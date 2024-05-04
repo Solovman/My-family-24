@@ -43,7 +43,8 @@ this.BX.Up = this.BX.Up || {};
 	        BX.ajax.runAction('up:tree.chatRelatives.addMessages', {
 	          data: {
 	            recipientId: recipientId,
-	            message: message
+	            message: message,
+	            isAdmin: 0
 	          }
 	        }).then(function (response) {
 	          resolve(response.data);

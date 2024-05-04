@@ -14,6 +14,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 <div class="my-container">
 	<div class="section">
+		<button id="help" class="send-problem">Сообщить о проблеме</button>
 		<div class="chat__container">
 			<div class="discussions" id="chat-container"></div>
 			<div class="chat">

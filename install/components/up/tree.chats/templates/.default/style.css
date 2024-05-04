@@ -20,15 +20,21 @@ body {
 	flex-direction: column;
 }
 
+.section {
+	display: flex;
+	flex-direction: column;
+}
+
 .send-problem {
-	background-color: transparent;
-	border: 2px solid #fff;
+	background-color: #00ceaa;
+	border: none;
 	border-radius: 5px;
 	font-family: 'MorningBreeze', sans-serif, Helvetica;
 	color: #fff;
-	width: 52%;
 	font-size: 23px;
-	margin: auto 30px 30px 30px;
+	margin-left: auto;
+	margin-bottom: 20px;
+	display: none;
 	cursor: pointer;
 }
 

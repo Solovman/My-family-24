@@ -66,4 +66,36 @@ export class Requests
 				});
 		});
 	}
+
+	static addChatAdmin(message, isAdmin)
+	{
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.chatRelatives.addMessages', {
+				data: {
+					recipientId: 1,
+					message: message,
+					isAdmin: Number(isAdmin)
+				}
+			})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
+
+	static getIdChatWithAdmin()
+	{
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.chatRelatives.getIdChatWithAdmin')
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
 }
