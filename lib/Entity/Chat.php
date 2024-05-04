@@ -9,8 +9,10 @@ class Chat
 	public ?int $id;
 	public int $authorId;
 	public string $authorName;
+	public string $authorFileName;
 	public int $recipientId;
 	public string $recipientName;
+	public string $recipientFileName;
 
 	public ?string $createdAt;
 
@@ -21,16 +23,20 @@ class Chat
 	public function __construct(
 		$authorId,
 		$authorName,
+		$authorFileName,
 		$recipientId,
 		$recipientName,
+		$recipientFileName,
 		$createdAt,
 		$id = null,
 	)
 	{
 		$this->authorId = $authorId;
 		$this->authorName = $authorName;
+		$this->authorFileName = $authorFileName;
 		$this->recipientId = $recipientId;
 		$this->recipientName = $recipientName;
+		$this->recipientFileName = $recipientFileName;
 		$this->createdAt = $createdAt;
 		$this->id = $id;
 	}

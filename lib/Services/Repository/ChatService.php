@@ -28,8 +28,10 @@ class ChatService
 				'AUTHOR_ID', 'RECIPIENT_ID',
 				'AUTHOR_DATA_NAME' => 'AUTHOR_DATA.NAME',
 				'AUTHOR_DATA_SURNAME' => 'AUTHOR_DATA.LAST_NAME',
+				'AUTHOR_DATA_FILE_NAME' => 'AUTHOR_DATA.USER_DATA.FILE_NAME',
 				'RECIPIENT_DATA_NAME' => 'RECIPIENT_DATA.NAME',
 				'RECIPIENT_DATA_SURNAME' => 'RECIPIENT_DATA.LAST_NAME',
+				'RECIPIENT_DATA_FILE_NAME' => 'RECIPIENT_DATA.USER_DATA.FILE_NAME',
 				'CREATED_AT'])
 			->setFilter(['LOGIC' => 'OR', 'RECIPIENT_ID' => $recipientId, 'AUTHOR_ID' => $recipientId])
 			->exec();
@@ -40,8 +42,10 @@ class ChatService
 			$chatsList[] = new Chat(
 				$result->getAuthorId(),
 				$result->getAuthorData()->getName() . ' ' . $result->getAuthorData()->getLastName(),
+				$result->getAuthorData()->getUserData()->getFileName(),
 				$result->getRecipientId(),
 				$result->getRecipientData()->getName() . ' ' . $result->getRecipientData()->getLastName(),
+				$result->getRecipientData()->getUserData()->getFileName(),
 				$result->getCreatedAt()->format('Y-m-d H:i:s'),
 				$result->getId()
 			);

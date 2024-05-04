@@ -1,4 +1,7 @@
 <?php
+
+global $USER;
+
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 /**
@@ -53,6 +56,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 		UP_TREE_CHATS_HELPER_SEP : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_SEP")?>',
 		UP_TREE_CHATS_HELPER_OCT : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_OCT")?>',
 		UP_TREE_CHATS_HELPER_NOV : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_NOV")?>',
-		UP_TREE_CHATS_HELPER_DEC : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_DEC")?>'
+		UP_TREE_CHATS_HELPER_DEC : '<?=GetMessageJS("UP_TREE_CHATS_HELPER_DEC")?>',
+		USER_ID : '<?= (int) $USER->GetID() ?>'
 	});
 </script>

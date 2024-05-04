@@ -40,13 +40,15 @@ class ChatRelatives extends Engine\Controller
 
 		$authorId = (int) $USER->GetID();
 
-		if (!self::addChatAction($recipientId, $authorId))
+		$chatId = self::addChatAction($recipientId, $authorId);
+
+		if (!$chatId)
 		{
 			return false;
 		}
 
 		$messageResult = new Message(
-			self::addChatAction($recipientId, $authorId),
+			$chatId,
 			$authorId,
 			$message
 		);

@@ -89,8 +89,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 							  <circle fill="#ff6068" cx="22" cy="10" r="2"/>
 							  <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
 							</svg>
-					</span>
+						</span>
 						<input class="bx-auth-input form-control main__input-form" type="password" placeholder="<?= GetMessage('UP_FAMILY_TREE_INPUT_PASSWORD') ?>" name="USER_PASSWORD" maxlength="255" autocomplete="off" />
+
 						<?php if($arResult["SECURE_AUTH"]):?>
 							<span class="bx-auth-secure" id="bx_auth_secure" title="<?= GetMessage("AUTH_SECURE_NOTE")?>" style="display:none">
 					<div class="bx-auth-secure-icon"></div>

@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Up\Tree\Services\Repository;
 
 use Bitrix\Main\ArgumentException;
-use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\ObjectPropertyException;
-use Bitrix\Main\Security\Password;
 use Bitrix\Main\SystemException;
-use Bitrix\Main\Type\DateTime;
 use Exception;
 use Up\Tree\Entity\User;
 use Up\Tree\Model\UserTable;
@@ -82,5 +79,28 @@ class UserService
 		}
 
 		return true;
+	}
+
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getUserFileName(): array
+	{
+		global $USER;
+
+		$userId = (int) $USER->GetID();
+
+		$avatars = UserTable::query()
+			->setSelect(['FILE_NAME' => 'USER_DATA.FILE_NAME'])
+			->setFilter(['ID' => $userId])
+			->exec()
+			->fetchObject();
+
+		return [
+			'ID' => $avatars->getUserData()->getId(),
+			'FILE_NAME' => $avatars->getUserData()->getFileName()
+		];
 	}
 }

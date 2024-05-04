@@ -12,7 +12,6 @@ import {UsersTable} from "./table/usersTable";
 
 export class Admin {
 	constructor(options = {}) {
-		v
 		if (Type.isStringFilled(options.rootNodeId)) {
 			this.rootNodeId = options.rootNodeId;
 		} else {

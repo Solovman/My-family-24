@@ -41,16 +41,21 @@ export class Account
 		const btnOpenMenu = BX('open-menu-icon');
 
 		BX.bind(btnOpenMenu, 'click', () => {
-			Window.render();
+			Requests.getAvatars().then(list => {
+				Window.render(list);
+			})
 		})
 	}
 
 	render()
 	{
-		const data = Tag.render`
+		Requests.getUserFileName().then(file => {
+			this.rootNode.innerHTML = '';
+
+			const data = Tag.render`
 			<div class="profile-container">
 				<div class="image">
-					<img id="user-icon" src="/local/modules/up.tree/images/tree-account.png" alt="Фото профиля">
+					<img data-id-file="${file.ID}" id="user-icon" src="${file.FILE_NAME}" alt="Фото профиля">
 					<div class="caption">
 						<button id="open-menu-icon" class="lupa">
 							<svg height="50px" width="50px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -76,8 +81,10 @@ export class Account
 			</div>
 		`;
 
-		this.rootNode.append(data);
+			this.rootNode.append(data);
 
-		this.setEvents();
+			this.setEvents();
+		})
+
 	}
 }

@@ -151,3 +151,92 @@ input[type="reset"]:hover {
 	border: none;
 	cursor: pointer;
 }
+
+.avatars__img {
+	width: 100%;
+}
+
+.avatars__btn {
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+}
+
+#avatars__list {
+	display: flex !important;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.popup-window {
+	width: 41%;
+	border-radius: 5px;
+}
+
+.avatars__item {
+	width: 16%;
+	margin-bottom: 20px;
+}
+
+.avatars__item:not(:last-child) {
+	margin-right: 20px;
+}
+
+.avatars__item:nth-of-type(5n) {
+	margin-right: 0;
+}
+
+.avatars__choose {
+	margin-bottom: 20px;
+	font-size: 35px;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	text-align: center;
+	color: #000;
+}
+
+.avatars__choose-container {
+	display: flex !important;
+	flex-direction: column;
+	align-items: center;
+}
+
+#avatars__save {
+	position: relative;
+	padding: 13px 44px;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+	background-color: #00ceaa;
+	color: #FFFFFF;
+	border: none;
+	font-size: 25px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#spinner-save {
+	position: absolute;
+	left: 7%;
+	top: 26%;
+	width: 25px;
+	height: 25px;
+	display: none;
+}
+
+#avatars__save:disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+#avatars__save:disabled #spinner-save {
+	display: block;
+}
+
+.is-active {
+	border: 5px solid #00ceaa;
+	border-radius: 50%;
+}
+
+.article__active {
+	position: absolute;
+	display: none;
+}
