@@ -336,6 +336,16 @@ label {
 	color: #777;
 }
 
+#headerIcon {
+	width: 50px !important;
+	height: 50px !important;
+	max-height: none;
+}
+
+.name__link {
+	display: inline-block !important;
+}
+
 @media (max-width: 1200px) {
 	.header__svg {
 		width: 20px;

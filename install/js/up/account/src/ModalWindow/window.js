@@ -23,7 +23,6 @@ export class Window
 
 					const userNowAvatarId = BX('user-icon').dataset.idFile;
 
-
 					const icons = document.querySelectorAll('.avatars__btn');
 					const btnSave = BX('avatars__save');
 					const iconsAvatar = document.querySelectorAll('.avatars__btn');
@@ -74,6 +73,11 @@ export class Window
 							new Account({
 								rootNodeId: 'data-profile',
 							})
+
+							BX('headerIcon').src = document.querySelector(`img[data-id-avatar="${avatarId}"]`).src;
+
+							console.log(document.querySelector(`[data-id-avatar="${avatarId}"]`));
+
 							btnSave.disabled = false;
 							this.destroy();
 						})
