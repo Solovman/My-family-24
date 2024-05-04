@@ -24,6 +24,17 @@
 	text-align: center;
 }
 
+.password-container {
+	position: relative;
+}
+
+.eye-icon{
+	position: absolute !important;
+	right: 2% !important;
+	top: 16%
+
+}
+
 .data-table {
 	width: 100%;
 }

@@ -9,6 +9,17 @@
 p {
 	margin: 0;
 }
+
+.password-container {
+	position: relative;
+}
+
+.eye-icon{
+	position: absolute !important;
+	right: 2% !important;
+	top: 16%
+
+}
 .errortext {
 		display: inline-block;
 		margin-bottom: 30px;
