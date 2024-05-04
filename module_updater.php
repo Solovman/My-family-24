@@ -139,5 +139,13 @@ __treeMigrate(10, static function ($updater, $DB)
 	}
 });
 
+__treeMigrate(11, static function($updater, $DB) {
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query(
+			"UPDATE b_user SET PERSONAL_PHOTO = 14 WHERE ID = 1;"
+		);
+	}
+});
 // TODO: for makefile
 //exec('C:\"Program Files"\nodejs\node.exe C:\OSPanel\domains\dev.tree\local\modules\up.tree\node_modules\@balkangraph\export-service\app.js');
