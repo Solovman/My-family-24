@@ -14,6 +14,7 @@ use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\DateTime;
 use Up\Tree\Entity\Tree;
 use Up\Tree\Model\TreeTable;
+use Up\Tree\Model\UserSubscriptionTable;
 
 class TreeService
 {
@@ -192,6 +193,12 @@ class TreeService
 		TreeTable::delete($id);
 
 		$deletePersonsQuery = "DELETE FROM up_person WHERE TREE_ID = $id";
+
+
+		global $USER;
+		$userId = $USER->GetID();
+
+		UserSubscriptionTable::update($userId, ['COUNT_NODES' => 0]);
 
 		$connection->queryExecute($deletePersonsQuery);
 
