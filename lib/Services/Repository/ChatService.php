@@ -32,6 +32,7 @@ class ChatService
 				'RECIPIENT_DATA_NAME' => 'RECIPIENT_DATA.NAME',
 				'RECIPIENT_DATA_SURNAME' => 'RECIPIENT_DATA.LAST_NAME',
 				'RECIPIENT_DATA_FILE_NAME' => 'RECIPIENT_DATA.USER_DATA.FILE_NAME',
+				'IS_ADMIN',
 				'CREATED_AT'])
 			->setFilter(['LOGIC' => 'OR', 'RECIPIENT_ID' => $recipientId, 'AUTHOR_ID' => $recipientId])
 			->exec();
@@ -46,6 +47,7 @@ class ChatService
 				$result->getRecipientId(),
 				$result->getRecipientData()->getName() . ' ' . $result->getRecipientData()->getLastName(),
 				$result->getRecipientData()->getUserData()->getFileName(),
+				$result->getIsAdmin(),
 				$result->getCreatedAt()->format('Y-m-d H:i:s'),
 				$result->getId()
 			);
@@ -58,11 +60,12 @@ class ChatService
 	 * @throws SqlException
 	 * @throws Exception
 	 */
-	public static function addChat(int $recipientId, int $authorId): int|array
+	public static function addChat(int $recipientId, int $authorId, int $isAdmin): int|array
 	{
 		$chatData = [
 			"AUTHOR_ID" => $authorId,
 			"RECIPIENT_ID" => $recipientId,
+			"IS_ADMIN" => $isAdmin
 		];
 
 		$result = ChatTable::add($chatData);
@@ -93,4 +96,24 @@ class ChatService
 		return $result !== null;
 	}
 
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getIdChatWithAdmin(): int|bool
+	{
+		$chatId = ChatTable::query()
+			->setSelect(['ID'])
+			->setFilter(['IS_ADMIN' => 1])
+			->exec()
+			->fetchObject();
+
+		if (!$chatId)
+		{
+			return false;
+		}
+
+		return $chatId->getId();
+	}
 }

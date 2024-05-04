@@ -23,7 +23,6 @@ class ChatRelatives extends Engine\Controller
 	 */
 	public static function getChatsAction(): array
 	{
-
 		$chats = ChatService::getChatsForCurrentUser();
 
 		return [
@@ -34,13 +33,13 @@ class ChatRelatives extends Engine\Controller
 	/**
 	 * @throws SqlException
 	 */
-	public static function addMessagesAction(int $recipientId, string $message): bool
+	public static function addMessagesAction(int $recipientId, string $message, int $isAdmin): bool
 	{
 		global $USER;
 
 		$authorId = (int) $USER->GetID();
 
-		$chatId = self::addChatAction($recipientId, $authorId);
+		$chatId = self::addChatAction($recipientId, $authorId, $isAdmin);
 
 		if (!$chatId)
 		{
@@ -63,27 +62,29 @@ class ChatRelatives extends Engine\Controller
 		}
 	}
 
-	private static function addChatAction(int $recipientId, int $authorId): bool|int
+	private static function addChatAction(int $recipientId, int $authorId, int $isAdmin): bool|int
 	{
-
-		$treesIds = TreeService::getTreesByUserNotSecure();
-
-		$matchListPersonsUsers = SearchService::getFoundUserInfo($treesIds)['foundUsers'];
-
-		$userIds = [];
-
-		foreach ($matchListPersonsUsers as $user)
+		if ($isAdmin !== 1)
 		{
-			$userIds[] = (int) $user['ID'];
-		}
+			$treesIds = TreeService::getTreesByUserNotSecure();
 
-		if (!in_array($recipientId, $userIds, true))
-		{
-			return false;
+			$matchListPersonsUsers = SearchService::getFoundUserInfo($treesIds)['foundUsers'];
+
+			$userIds = [];
+
+			foreach ($matchListPersonsUsers as $user)
+			{
+				$userIds[] = (int) $user['ID'];
+			}
+
+			if (!in_array($recipientId, $userIds, true))
+			{
+				return false;
+			}
 		}
 
 		try {
-			return ChatService::addChat($recipientId, $authorId);
+			return ChatService::addChat($recipientId, $authorId, $isAdmin);
 		}
 		catch (SqlException)
 		{
@@ -99,5 +100,15 @@ class ChatRelatives extends Engine\Controller
 	public static function searchChatByRecipientIdAction(int $recipientId): bool
 	{
 		return ChatService::searchChatByRecipientId($recipientId);
+	}
+
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function getIdChatWithAdminAction(): int|bool
+	{
+		return ChatService::getIdChatWithAdmin();
 	}
 }

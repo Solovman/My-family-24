@@ -1,3 +1,7 @@
+::-ms-reveal {
+	display: none;
+}
+
 .content {
 	padding: 0 30px;
 }

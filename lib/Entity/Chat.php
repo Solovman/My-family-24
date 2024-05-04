@@ -13,6 +13,7 @@ class Chat
 	public int $recipientId;
 	public string $recipientName;
 	public string $recipientFileName;
+	public int $isAdmin;
 
 	public ?string $createdAt;
 
@@ -27,6 +28,7 @@ class Chat
 		$recipientId,
 		$recipientName,
 		$recipientFileName,
+		$isAdmin,
 		$createdAt,
 		$id = null,
 	)
@@ -37,6 +39,7 @@ class Chat
 		$this->recipientId = $recipientId;
 		$this->recipientName = $recipientName;
 		$this->recipientFileName = $recipientFileName;
+		$this->isAdmin = $isAdmin;
 		$this->createdAt = $createdAt;
 		$this->id = $id;
 	}
