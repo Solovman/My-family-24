@@ -108,9 +108,11 @@ class TreeService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getTreesByUserId(int $userId): array
+	public static function getTreesByUserId(int $userId, $pageNumber, $pageSize): array
 	{
 		$trees = [];
+
+		$offset = ($pageNumber - 1) * $pageSize;
 
 		$treeData = TreeTable::query()->setSelect(
 				[
@@ -124,8 +126,11 @@ class TreeService
 			)->setFilter(
 				[
 					'USER_ID' => $userId,
-				]
-			)->exec()->fetchAll();
+				],
+			)
+			->setLimit($pageSize)
+			->setOffset($offset)
+			->exec()->fetchAll();
 
 		foreach ($treeData as $treeItem)
 		{

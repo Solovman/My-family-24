@@ -33,9 +33,10 @@ export class TreeList
 				this.handleAddTreeButtonClick();
 			}
 		});
-		this.reload();
+
+		this.reload(1);
 	}
-	handleAddTreeButtonClick() {
+	handleAddTreeButtonClick(pageNumber) {
 
 		const inputTitle = BX('treeTitleInput');
 		const treeTitle = inputTitle.value.trim();
@@ -58,7 +59,7 @@ export class TreeList
 					}
 
 					inputTitle.value = '';
-					this.reload();
+					this.reload(pageNumber);
 				}).catch((error) => {
 					console.error('Error adding tree:', error);
 				});
@@ -69,14 +70,14 @@ export class TreeList
 		}
 	}
 
-	handleRemoveTreeButtonClick(element) {
+	handleRemoveTreeButtonClick(element, pageNumber) {
 		const treeId = parseInt(element.id.match(/\d+/));
 		if (treeId !== '') {
 			const confirmDelete = confirm("Are you sure you want to remove the tree?");
 			if (confirmDelete) {
 				this.removeTree(treeId)
 					.then(() => {
-						this.reload();
+						this.reload(pageNumber);
 					})
 					.catch((error) => {
 						console.error('Error when deleting a tree:', error);
@@ -85,23 +86,23 @@ export class TreeList
 		}
 	}
 
-	reload()
+	reload(pageNumber)
 	{
-		this.loadList()
+		this.loadList(pageNumber)
 			.then(treeList => {
 				this.treeList = treeList;
 				this.render();
 			});
 	}
 
-	loadList()
+	loadList(pageNumber)
 	{
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction(
 					'up:tree.trees.getTrees',
 					{
 						data: {
-							apiKey: 'very_secret_key',
+							pageNumber: pageNumber
 						}
 					})
 				.then((responce) => {
@@ -149,6 +150,23 @@ export class TreeList
 		});
 	}
 
+	renderButtonPagination(countPage = 1)
+	{
+		const btnContainer = Tag.render`
+			<div style="text-align: center"></div>
+		`;
+
+		for (let i = 1; i <= countPage; i++) {
+			const btn = Tag.render`
+				<button class="btn-pagination">${countPage}</button>
+			`;
+
+			BX.append(btn, btnContainer);
+		}
+
+		BX.append(btnContainer, this.rootNode);
+	}
+
 	render()
 	{
 		this.rootNode.innerHTML = '';
@@ -181,8 +199,6 @@ export class TreeList
 					<h2 class="no-tree">У вас нет созданных деревьев</h2>
 				</div>` : ''}
 		</div>`;
-
-		console.log(this.treeList);
 
 		this.treeList.forEach(trees => {
 			const treeNode = Tag.render`
@@ -278,6 +294,7 @@ export class TreeList
 				Modal.render(data)
 			})
 		})
-	}
 
+		this.renderButtonPagination();
+	}
 }

@@ -18,13 +18,10 @@ class SubscriptionsService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getList($pageNumber, $pageSize): array
+	public static function getList(): array
 	{
-		$offset = ($pageNumber - 1) * $pageSize;
 		$subscriptions = SubscriptionTable::query()
 			->setSelect(['ID', 'LEVEL', 'PRICE', 'NUMBER_TREES', 'NUMBER_NODES', 'CUSTOMIZATION', 'IS_ACTIVE'])
-			->setLimit($pageSize)
-			->setOffset($offset)
 			->exec();
 
 		$resultSubscriptions = [];

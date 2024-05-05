@@ -98,20 +98,14 @@ export class Admin {
 		})
 	}
 
-	loadListSub(page= 1) {
-		Requests.getListSubscription(page).then(list => {
+	loadListSub() {
+		Requests.getListSubscription().then(list => {
 			this.rootNode.innerHTML = '';
 			this.listSub = list;
 
 			BX('add').style.display = 'inline-block';
 
 			const btns = document.querySelectorAll('.admin__btn');
-			const paginationBtn = Tag.render`
-				<div class="pagination-container">
-					<button class="pagination-btn">1</button>
-					<button class="pagination-btn">2</button>
-				</div>
-			`;
 
 			btns.forEach(btn => {
 				BX.removeClass(btn, 'btn-active');

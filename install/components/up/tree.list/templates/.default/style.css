@@ -264,3 +264,13 @@ svg {
 	font-size: 24px;
 	color: #000000;
 }
+
+.btn-pagination {
+	padding: 4px 15px;
+	background-color: #00ceaa;
+	font-size: 20px;
+	color: #ffffff;
+	border: none;
+	border-radius: 5px;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+}

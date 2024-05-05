@@ -24,10 +24,9 @@ class Admin extends Engine\Controller
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public static function getListSubscriptionAction($pageNumber = 1): array
+	public static function getListSubscriptionAction(): array
 	{
-		$pageSize = 2;
-		$result = SubscriptionsService::getList($pageNumber, $pageSize);
+		$result = SubscriptionsService::getList($pageNumber);
 
 		return [
 			'listSubscription'  => $result
