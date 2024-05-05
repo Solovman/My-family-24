@@ -3,7 +3,9 @@
 		<div class="center">
 			<div class="article-card">
 				<div class="content">
-					<p class="title">Sriniz Template</p>
+					<div style="title-price">
+						<div class="title">Sriniz Template<br> Цена: 13$</div>
+					</div>
 					<div class="field filed-purchase">
 						<button class="subscriptions__purchase-button has-tooltip">
 							<svg class="subscriptions__purchase-svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +26,9 @@
 		<div class="center">
 			<div class="article-card">
 				<div class="content">
-					<p class="title">Multiple Templates Family</p>
+					<div style="title-price">
+						<p class="title">Multiple Templates Family<br> Цена: 12$</p>
+					</div>
 					<div class="field filed-purchase">
 						<button class="subscriptions__purchase-button has-tooltip">
 							<svg class="subscriptions__purchase-svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +49,9 @@
 		<div class="center">
 			<div class="article-card">
 				<div class="content">
-					<p class="title">Royal Family Tree</p>
+					<div style="title-price">
+						<p class="title">Royal Family Tree<br> Цена: 11$</p>
+					</div>
 					<div class="field filed-purchase">
 						<button class="subscriptions__purchase-button has-tooltip">
 							<svg class="subscriptions__purchase-svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +72,9 @@
 		<div class="center">
 			<div class="article-card">
 				<div class="content">
-					<p class="title">Dark Theme</p>
+					<div style="title-price">
+						<p class="title">Dark Theme<br>Цена: 5$</p>
+					</div>
 					<div class="field filed-purchase">
 						<button class="subscriptions__purchase-button has-tooltip">
 							<svg class="subscriptions__purchase-svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
