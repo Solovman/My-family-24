@@ -259,3 +259,8 @@ svg {
 #security-save:disabled .text-light {
 	display: block;
 }
+
+.no-tree {
+	font-size: 24px;
+	color: #000000;
+}
