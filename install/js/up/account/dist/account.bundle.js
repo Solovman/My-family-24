@@ -148,7 +148,6 @@ this.BX.Up = this.BX.Up || {};
 	                new Account({
 	                  rootNodeId: 'data-profile'
 	                });
-	                console.log(avatarId);
 	                BX('headerIcon').src = document.querySelector("img[data-id-avatar=\"".concat(avatarId, "\"]")).src;
 	                console.log(document.querySelector("[data-id-avatar=\"".concat(avatarId, "\"]")));
 	                btnSave.disabled = false;

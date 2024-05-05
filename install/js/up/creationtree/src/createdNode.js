@@ -203,8 +203,6 @@ export class CreatedNode
 				height = null;
 			}
 
-			console.log(surname);
-
 			if (active) {
 				active = '1'
 			} else {

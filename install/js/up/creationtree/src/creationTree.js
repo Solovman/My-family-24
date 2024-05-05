@@ -91,7 +91,6 @@ export class CreationTree
 						}`
 			}
 
-
 			this.render();
 		});
 	}
@@ -251,12 +250,12 @@ export class CreationTree
 					form.enctype = "multipart/form-data";
 					form.action = '/tree/{id}/';
 					const formFile = Tag.render`
-				<label class="input-file">
-					<span class="input-file-text" type="text">jpeg, jpg, gif, png</span>
-					<input id="photoName" type="file" name="photo">
-					<span class="input-file-btn">Выберите файл</span>
-				</label>
-				`;
+						<label class="input-file">
+							<span class="input-file-text" type="text">jpeg, jpg, gif, png</span>
+							<input id="photoName" type="file" name="photo">
+							<span class="input-file-btn">Выберите файл</span>
+						</label>
+						`;
 
 					editForm.append(formFile);
 
@@ -268,7 +267,6 @@ export class CreationTree
 				}
 			})
 		}
-
 
 		family.on('updated', function (sender, args) {
 			if (args.addNodesData.length !== 0) {
@@ -339,9 +337,10 @@ export class CreationTree
 						}
 					})
 
-					family.editUI.on('hide', function () {
-						self.reload();
-					})
+					//
+					// family.editUI.on('hide', function () {
+					// 	self.reload();
+					// })
 				}
 			}
 		})
