@@ -50,7 +50,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 			<div class="bx-auth-title"><?= GetMessage("AUTH_TITLE")?></div>
 		<?php endif?>
 
-		<form class="main__form" name="form_auth" method="post" target="_top" action="<?='/account' . $arResult["AUTH_URL"]?>">
+		<form class="main__form" name="form_auth" method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
 			<input type="hidden" name="AUTH_FORM" value="Y" />
 			<input type="hidden" name="TYPE" value="AUTH" />
 			<?php if ($arResult["BACKURL"] <> ''):?>

@@ -34,7 +34,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 					<a class="main__tabs-button main__tabs-button_login" href="/" data-tab="tab_1"><?= GetMessage('AUTH_AUTHORIZE') ?></a>
 					<a class="main__tabs-button main__tabs-button_register _active" href="<?=$arResult["AUTH_URL"]?>" rel="nofollow"><?=GetMessage("AUTH_REGISTER")?></a><br/>
 				</div>
-				<form id="tab_2" class="main__form main__tabs-item" method="post" action="<?='/account' . $arResult["AUTH_URL"]?>" name="bform" enctype="multipart/form-data">
+				<form id="tab_2" class="main__form main__tabs-item" method="post" action="<?=$arResult["AUTH_URL"]?>" name="bform" enctype="multipart/form-data">
 					<input type="hidden" name="AUTH_FORM" value="Y" />
 					<input type="hidden" name="TYPE" value="REGISTRATION" />
 
