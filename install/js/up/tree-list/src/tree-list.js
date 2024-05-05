@@ -164,6 +164,14 @@ export class TreeList
 			BX.append(btn, btnContainer);
 		}
 
+		const btnsPagination = document.querySelectorAll('.btn-pagination');
+
+		btnsPagination.forEach(btn => {
+			BX.bind(btn, 'click', () => {
+
+			})
+		})
+
 		BX.append(btnContainer, this.rootNode);
 	}
 

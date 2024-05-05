@@ -114,7 +114,6 @@ export class Admin {
 			BX.addClass(BX('sub'), 'btn-active');
 
 			BX.append(SubscriptionTable.render(list), this.rootNode);
-			BX.append(paginationBtn, this.rootNode);
 
 			document.querySelectorAll('.pagination-btn').forEach(btn => {
 				BX.bind(btn, 'click', () => {

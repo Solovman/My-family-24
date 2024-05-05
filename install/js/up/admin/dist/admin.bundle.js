@@ -760,7 +760,6 @@ this.BX.Up = this.BX.Up || {};
 	        });
 	        BX.addClass(BX('sub'), 'btn-active');
 	        BX.append(SubscriptionTable.render(list), _this2.rootNode);
-	        BX.append(paginationBtn, _this2.rootNode);
 	        document.querySelectorAll('.pagination-btn').forEach(function (btn) {
 	          BX.bind(btn, 'click', function () {
 	            _this2.loadListSub(Number(btn.textContent));

@@ -275,6 +275,10 @@ this.BX.Up = this.BX.Up || {};
 	        var btn = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<button class=\"btn-pagination\">", "</button>\n\t\t\t"])), countPage);
 	        BX.append(btn, btnContainer);
 	      }
+	      var btnsPagination = document.querySelectorAll('.btn-pagination');
+	      btnsPagination.forEach(function (btn) {
+	        BX.bind(btn, 'click', function () {});
+	      });
 	      BX.append(btnContainer, this.rootNode);
 	    }
 	  }, {
