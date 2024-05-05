@@ -717,24 +717,26 @@ this.BX.Up = this.BX.Up || {};
 	      var id = parseInt(window.location.href.match(/\d+/));
 	      Requests.loadNodes(id).then(function (nodeList) {
 	        _this2.nodeList = nodeList;
-	        var newStyles = document.createElement('style');
 	        var menuRemoveStyles = document.createElement('style');
-	        document.head.append(newStyles);
-	        document.head.append(menuRemoveStyles);
 	        _this2.nodeList.persons.forEach(function (person) {
+	          var newStyles = document.createElement('style');
 	          person.active = person.active !== '0';
 	          if (person.active) {
 	            newStyles.innerHTML = "svg.hugo [data-n-id=\"".concat(person.id, "\"].node>rect {\n\t\t\t\t\t\t\tfill: #FFE13E\n\t\t\t\t\t\t}");
+	            document.head.append(newStyles);
 	          } else {
 	            if (person.gender.length !== 0) {
 	              newStyles.innerHTML = "svg.hugo [data-n-id=\"".concat(person.id, "\"].node>rect {\n\t\t\t\t\t\t\tfill: url(#hugo_grad_").concat(person.gender, ")\n\t\t\t\t\t\t}");
+	              document.head.append(newStyles);
 	            }
 	          }
 	        });
 	        if (_this2.nodeList.persons.length === 1) {
 	          menuRemoveStyles.innerHTML = "[data-ctrl-n-menu-id=\"".concat(_this2.nodeList.persons[0].id, "\"] {\n\t\t\t\t\t\t\tdisplay: none;\n\t\t\t\t\t\t}");
+	          document.head.append(menuRemoveStyles);
 	        } else {
 	          menuRemoveStyles.innerHTML = "[data-ctrl-n-menu-id=\"".concat(_this2.nodeList.persons[0].id, "\"] {\n\t\t\t\t\t\t\tdisplay: block;\n\t\t\t\t\t\t}");
+	          document.head.append(menuRemoveStyles);
 	        }
 	        _this2.render();
 	      });
@@ -911,6 +913,7 @@ this.BX.Up = this.BX.Up || {};
 	                sender.editUI.hide();
 	              }
 	            });
+
 	            //
 	            // family.editUI.on('hide', function () {
 	            // 	self.reload();

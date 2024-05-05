@@ -59,36 +59,41 @@ export class CreationTree
 		Requests.loadNodes(id).then(nodeList => {
 			this.nodeList = nodeList;
 
-			let newStyles = document.createElement('style');
 			let menuRemoveStyles = document.createElement('style');
-			document.head.append(newStyles);
-			document.head.append(menuRemoveStyles);
 
 			this.nodeList.persons.forEach(person => {
+				let newStyles = document.createElement('style');
 				person.active = person.active !== '0';
 
 				if (person.active) {
 					newStyles.innerHTML = `svg.hugo [data-n-id="${person.id}"].node>rect {
 							fill: #FFE13E
 						}`
+					document.head.append(newStyles);
 				}
 				else {
 					if (person.gender.length !== 0) {
 						newStyles.innerHTML = `svg.hugo [data-n-id="${person.id}"].node>rect {
 							fill: url(#hugo_grad_${person.gender})
 						}`
+						document.head.append(newStyles);
 					}
 				}
 			})
 
 			if (this.nodeList.persons.length === 1) {
+
 				menuRemoveStyles.innerHTML = `[data-ctrl-n-menu-id="${this.nodeList.persons[0].id}"] {
 							display: none;
 						}`
+
+				document.head.append(menuRemoveStyles);
 			} else {
 				menuRemoveStyles.innerHTML = `[data-ctrl-n-menu-id="${this.nodeList.persons[0].id}"] {
 							display: block;
 						}`
+
+				document.head.append(menuRemoveStyles);
 			}
 
 			this.render();
