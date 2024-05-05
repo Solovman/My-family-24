@@ -35,6 +35,7 @@ export class Family
 				elements: [
 					{type: 'textbox', label: BX.message('UP_PERSON_FORM_NAME'), binding: 'name'},
 					{type: 'textbox', label: BX.message('UP_PERSON_FORM_SURNAME'), binding: 'surname'},
+					{type: 'textbox', label: BX.message('UP_PERSON_FORM_PATRONYMIC'), binding: 'patronymic'},
 					[
 						{type: 'date', label: BX.message('UP_PERSON_FORM_BIRTH_DATE'), binding: 'birthDate'},
 						{type: 'date', label: BX.message('UP_PERSON_FORM_DEATH_DATE'), binding: 'deathDate'}

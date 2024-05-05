@@ -72,6 +72,7 @@ class Trees extends Engine\Controller
 				'/local/modules/up.tree/images/user_default.png',
 				" ",
 				" ",
+				" ",
 				null,
 				null,
 				'',

@@ -7,7 +7,6 @@ use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
-use Bitrix\Main\Type\Date;
 use CFile;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\UserSubscriptionTable;
@@ -53,6 +52,7 @@ class Node extends Engine\Controller
 			"",
 			str_replace(['<', '>', '/'], '', $person['name']),
 			str_replace(['<', '>', '/'], '', $person['surname']),
+			str_replace(['<', '>', '/'], '', $person['patronymic']),
 			$person['birthDate'],
 			$person['deathDate'],
 			$person['gender'],
@@ -101,6 +101,7 @@ class Node extends Engine\Controller
 			'',
 			str_replace(['<', '>', '/'], '', $updatablePerson['name']),
 			str_replace(['<', '>', '/'], '', $updatablePerson['surname']),
+			str_replace(['<', '>', '/'], '', $updatablePerson['patronymic']),
 			$updatablePerson['birthDate'],
 			$updatablePerson['deathDate'],
 			$updatablePerson['gender'],

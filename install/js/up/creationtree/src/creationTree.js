@@ -200,13 +200,16 @@ export class CreationTree
 					const saveButton = document.querySelector('[data-edit-from-save]');
 					const inputName = document.querySelector('[data-binding="name"]');
 					const inputSurname = document.querySelector('[data-binding="surname"]');
+					const inputPatronymic = document.querySelector('[data-binding="patronymic"]');
 
-					if(self.nodeList.persons[0].name === ' ' && self.nodeList.persons[0].surname === ' ')
+					if(self.nodeList.persons[0].name === ' ' && self.nodeList.persons[0].surname === ' ' && self.nodeList.persons[0].patronymic)
 					{
 						inputName.value = '';
 						inputSurname.value = '';
+						inputPatronymic.value = '';
 						inputName.placeholder = 'Введите имя';
 						inputSurname.placeholder = 'Введите фамилию';
+						inputPatronymic.placeholder = 'Введите отчество';
 
 						saveButton.disabled = true;
 					}

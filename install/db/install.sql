@@ -50,6 +50,7 @@ CREATE TABLE up_person
 	IMAGE_ID        INT                                                         DEFAULT 0,
 	NAME            VARCHAR(50)  NULL,
 	SURNAME         VARCHAR(50)  NULL,
+	PATRONYMIC      VARCHAR(50)  NULL,
 	BIRTH_DATE      DATE,
 	DEATH_DATE      DATE,
 	GENDER          ENUM ('male', 'female'),

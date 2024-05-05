@@ -3,6 +3,7 @@
 $MESS['UP_HEADING_ADD_PERSON'] = "Add new person";
 $MESS['UP_PERSON_FORM_NAME'] = "Name";
 $MESS['UP_PERSON_FORM_SURNAME'] = "Surname";
+$MESS['UP_PERSON_FORM_PATRONYMIC'] = "Patronymic";
 $MESS['UP_PERSON_FORM_BIRTH_DATE'] = "Birth date";
 $MESS['UP_PERSON_FORM_DEATH_DATE'] = "Death date";
 $MESS['UP_PERSON_FORM_HEIGHT'] = "Height";
