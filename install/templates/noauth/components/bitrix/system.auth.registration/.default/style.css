@@ -108,7 +108,7 @@ tr {
 	justify-content: center;
 	padding: 20px;
 	border-radius: 10px;
-	margin: 8% 4% 3% auto;
+	margin: 3% 4% 0 auto;
 	background-color: #ffffff;
 	width: 32%;
 }
@@ -145,10 +145,6 @@ tr {
 
 .main__tabs-button_login {
 	margin-right: 15px;
-}
-
-.footer {
-	margin-top: 7% !important;
 }
 
 .main__tabs-button._active {
