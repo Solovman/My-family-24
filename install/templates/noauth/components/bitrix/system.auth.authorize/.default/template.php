@@ -6,7 +6,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
 <div class="content">
 	<section class="main__container">
-		<h1 class="main__heading">Family Tree</h1>
+		<h1 class="main__heading">Family Tree 24</h1>
 		<?php
 		if (!empty($arParams["~AUTH_RESULT"]))
 		{
