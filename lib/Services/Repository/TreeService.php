@@ -108,7 +108,7 @@ class TreeService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getTreesByUserId(int $userId, $pageNumber, $pageSize): array
+	public static function getTreesByUserId(int $userId, $pageNumber = null, $pageSize = null): array
 	{
 		$trees = [];
 
