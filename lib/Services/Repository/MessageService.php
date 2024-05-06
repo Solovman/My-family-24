@@ -12,7 +12,7 @@ use Up\Tree\Entity\Message;
 use Up\Tree\Model\ChatTable;
 use Up\Tree\Model\MessageTable;
 use Bitrix\Main\DB\SqlException;
-
+use Up\Tree\Services\QueryHelperService;
 
 class MessageService
 {
@@ -48,14 +48,23 @@ class MessageService
 		];
 
 		$result = MessageTable::add($messageData);
-		if ($result->isSuccess())
-		{
-			return $result->getId();
-		}
 
-		throw new SqlException("Error adding a message");
+		$messageId = QueryHelperService::checkQueryResult($result, true);
+
+		if ($messageId === false)
+		{
+			throw new SqlException("Error adding a message");
+		}
+		return $messageId;
+
+
 	}
 
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
 	public static function getMessagesByChatId(int $chatId): array
 	{
 		$messages = MessageTable::query()

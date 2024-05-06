@@ -17,6 +17,7 @@ use Up\Tree\Model\MarriedTable;
 use Up\Tree\Model\PersonParentTable;
 use Up\Tree\Model\PersonTable;
 use Up\Tree\Model\TreeTable;
+use Up\Tree\Services\QueryHelperService;
 
 class PersonService
 {
@@ -238,12 +239,7 @@ class PersonService
 			FileTable::delete($lastImageId);
 		}
 
-		if (!$result->isSuccess())
-		{
-			return false;
-		}
-
-		return true;
+		return QueryHelperService::checkQueryResult($result);
 	}
 
 	/**

@@ -14,6 +14,7 @@ use Up\Tree\Model\SubscriptionTable;
 use Up\Tree\Model\UserSinglePurchaseTable;
 use Up\Tree\Model\UserSubscriptionTable;
 use Up\Tree\Model\UserTable;
+use Up\Tree\Services\QueryHelperService;
 
 class AdminService
 {
@@ -29,12 +30,7 @@ class AdminService
 		{
 			$result = SubscriptionTable::update($id, ['IS_ACTIVE' => $active]);
 
-			if (!$result->isSuccess())
-			{
-				return false;
-			}
-
-			return true;
+			return QueryHelperService::checkQueryResult($result);
 		}
 
 		return false;
@@ -51,12 +47,7 @@ class AdminService
 		{
 			$result = UserTable::update($userId, ['ACTIVE' => $active]);
 
-			if (!$result->isSuccess())
-			{
-				return false;
-			}
-
-			return true;
+			return QueryHelperService::checkQueryResult($result);
 		}
 
 		return false;
@@ -80,12 +71,7 @@ class AdminService
 				'CUSTOMIZATION' => $subscription->customization
 			]);
 
-			if (!$result->isSuccess())
-			{
-				return false;
-			}
-
-			return true;
+			return QueryHelperService::checkQueryResult($result);
 		}
 
 		return false;
@@ -107,12 +93,7 @@ class AdminService
 				'PRICE' => $purchase->price,
 			]);
 
-			if (!$result->isSuccess())
-			{
-				return false;
-			}
-
-			return true;
+			return QueryHelperService::checkQueryResult($result);
 		}
 
 		return false;
@@ -134,13 +115,7 @@ class AdminService
 				'CUSTOMIZATION' => $subscription->customization
 			]);
 
-			if (!$result->isSuccess())
-			{
-				return false;
-
-			}
-
-			return $result->getId();
+			return QueryHelperService::checkQueryResult($result, true);
 		}
 
 		return false;
@@ -161,13 +136,7 @@ class AdminService
 				'PRICE' => $purchase->price,
 			]);
 
-			if (!$result->isSuccess())
-			{
-				return false;
-
-			}
-
-			return $result->getId();
+			return QueryHelperService::checkQueryResult($result, true);
 		}
 
 		return false;
@@ -190,12 +159,7 @@ class AdminService
 				"SUBSCRIPTION_ID" => $userSubscription->subscriptionId,
 			]);
 
-			if (!$result->isSuccess())
-			{
-				return false;
-			}
-
-			return true;
+			return QueryHelperService::checkQueryResult($result);
 		}
 
 		return false;

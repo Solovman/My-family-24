@@ -10,6 +10,7 @@ use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\User;
 use Up\Tree\Model\UserTable;
+use Up\Tree\Services\QueryHelperService;
 
 class UserService
 {
@@ -72,13 +73,8 @@ class UserService
 		$userId = (int) $USER->GetID();
 
 		$result = UserTable::update($userId, ['PERSONAL_PHOTO' => $avatarId]);
-
-		if (!$result->isSuccess())
-		{
-			return false;
-		}
-
-		return true;
+		
+		return QueryHelperService::checkQueryResult($result);
 	}
 
 	/**

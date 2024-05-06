@@ -13,6 +13,7 @@ use Up\Tree\Entity\Person;
 use Up\Tree\Model\PersonTable;
 use Up\Tree\Model\TreeTable;
 use Up\Tree\Model\UserTable;
+use Up\Tree\Services\QueryHelperService;
 
 class SearchService
 {
@@ -39,7 +40,7 @@ class SearchService
 			$treesIdsForCurrentUser[] = $treId;
 		}
 
-		$treIds = SearchService::getNotSecureTreeIds();
+		$treIds = self::getNotSecureTreeIds();
 
 		if ($treIds === null)
 		{
@@ -154,28 +155,6 @@ class SearchService
 			}
 		}
 
-		/**Старый вариант поиска:*/
-
-		/*
-		$matchPersonList = [];
-		 foreach ($personList as $person)
-		 {
-		 	foreach ($allPersonList as $allPerson)
-		 	{
-		 		if (
-		 			$person->getGender() === $allPerson->getGender() &&
-		 			$person->getName() === $allPerson->getName() &&
-		 			$person->getSurname() === $allPerson->getSurname() //&&
-		 			//$person->getBirthDate()->getTimestamp() === $allPerson->getBirthDate()->getTimestamp() //&&
-		 			//$person->getDeathDate()->getTimestamp() === $allPerson->getDeathDate()->getTimestamp()
-		 		)
-		 		{
-		 			$matchPersonList[] =  $allPerson;
-		 		}
-		 	}
-		 }
-		*/
-
 		return $matchPersonList;
 	}
 
@@ -261,11 +240,6 @@ class SearchService
 	{
 		$result = TreeTable::update($id, ['IS_SECURITY' => $securityStatus]);
 
-		if (!$result->isSuccess())
-		{
-			return false;
-		}
-
-		return true;
+		return QueryHelperService::checkQueryResult($result);
 	}
 }

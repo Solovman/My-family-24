@@ -11,6 +11,7 @@ use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Chat;
 use Up\Tree\Model\ChatTable;
+use Up\Tree\Services\QueryHelperService;
 
 class ChatService
 {
@@ -69,11 +70,14 @@ class ChatService
 		];
 
 		$result = ChatTable::add($chatData);
-		if ($result->isSuccess()) {
-			return $result->getId();
-		}
 
-		throw new SqlException("Error adding a chat");
+		$chatId = QueryHelperService::checkQueryResult($result, true);
+
+		if ($chatId === false)
+		{
+			throw new SqlException("Error adding a chat");
+		}
+		return $chatId;
 	}
 
 	/**
@@ -109,11 +113,6 @@ class ChatService
 			->exec()
 			->fetchObject();
 
-		if (!$chatId)
-		{
-			return false;
-		}
-
-		return $chatId->getId();
+		return QueryHelperService::checkQueryResult($chatId, true);
 	}
 }

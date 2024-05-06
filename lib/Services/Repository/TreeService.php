@@ -15,6 +15,7 @@ use Bitrix\Main\Type\DateTime;
 use Up\Tree\Entity\Tree;
 use Up\Tree\Model\TreeTable;
 use Up\Tree\Model\UserSubscriptionTable;
+use Up\Tree\Services\QueryHelperService;
 
 class TreeService
 {
@@ -32,12 +33,14 @@ class TreeService
 		];
 
 		$result = TreeTable::add($treeData);
-		if ($result->isSuccess())
-		{
-			return $result->getId();
-		}
 
-		throw new SqlException("Error creating tree");
+		$treeId = QueryHelperService::checkQueryResult($result, true);
+
+		if ($treeId === false)
+		{
+			throw new SqlException("Error creating tree");
+		}
+		return $treeId;
 	}
 
 	/**

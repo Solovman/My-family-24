@@ -96,7 +96,7 @@ class SubscriptionsService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getSubscriptionIdByUserId(int $userId)
+	public static function getSubscriptionIdByUserId(int $userId): int
 	{
 		$subscription = UserSubscriptionTable::query()
 			->setSelect(['SUBSCRIPTION_ID'])
