@@ -117,26 +117,31 @@ class Node extends Engine\Controller
 		{
 			return PersonService::updatePersonById($id, (int)$updatablePerson['lastImageId'], $node);
 		}
+
 		return false;
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function uploadFileAction(): array
 	{
 		$file = $_FILES['photo'];
 
 		$maxSize = 2 * 1024 * 1024;
+
 		$error = CFile::CheckImageFile($file, $maxSize);
 
-		if ($error != '')
+		if ($error !== '')
 		{
-			die('uploading error: ' . $error);
+			throw new Exception('Ошибка загрузки: ' . $error);
 		}
 
 		$fileId = CFile::SaveFile($file, 'upload_tree');
 
 		if (!$fileId)
 		{
-			die('Cannot save file');
+			throw new Exception('Не удалось сохранить файл');
 		}
 
 		return ['fileId' => $fileId];
@@ -152,7 +157,7 @@ class Node extends Engine\Controller
 			PersonService::removePersonById($id);
 
 			$userId = (int) $USER->GetID();
-			$countNodesByUser = (int) UserSubscriptionsService::getCountNodesByUserId($userId);
+			$countNodesByUser = UserSubscriptionsService::getCountNodesByUserId($userId);
 
 			--$countNodesByUser;
 

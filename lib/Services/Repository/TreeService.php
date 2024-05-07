@@ -204,7 +204,6 @@ class TreeService
 
 		$deletePersonsQuery = "DELETE FROM up_person WHERE TREE_ID = $id";
 
-
 		global $USER;
 		$userId = $USER->GetID();
 
