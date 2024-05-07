@@ -128,33 +128,20 @@ class StatisticService
 	 */
 	public static function getEducationCountByTreeId(int $treeId): array
 	{
-		$withoutEducationCount = PersonTable::query()
-							   ->addSelect(new ExpressionField('COUNT_WITHOUT_EDUCATION', 'COUNT(*)'))
-							   ->setFilter(['LOGIC' => 'AND', 'TREE_ID' => $treeId, 'EDUCATION_LEVEL' => 'without education'])
-							   ->exec()
-							   ->fetch();
+		$counts = [];
 
-		$schoolCount = PersonTable::query()
-								 ->addSelect(new ExpressionField('COUNT_SCHOOL', 'COUNT(*)'))
-								 ->setFilter(['LOGIC' => 'AND', 'TREE_ID' => $treeId, 'EDUCATION_LEVEL' => 'school'])
-								 ->exec()
-								 ->fetch();
+		$result = PersonTable::query()
+							 ->addSelect('EDUCATION_LEVEL')
+							 ->addSelect(new ExpressionField('COUNT', 'COUNT(*)'))
+							 ->setFilter(['TREE_ID' => $treeId])
+							 ->addGroup('EDUCATION_LEVEL')
+							 ->exec();
 
-		$secondaryCount = PersonTable::query()
-								  ->addSelect(new ExpressionField('COUNT_SECONDARY', 'COUNT(*)'))
-								  ->setFilter(['LOGIC' => 'AND', 'TREE_ID' => $treeId, 'EDUCATION_LEVEL' => 'secondary'])
-								  ->exec()
-								  ->fetch();
+		while ($row = $result->fetch())
+		{
+			$counts[$row['EDUCATION_LEVEL']] = $row['COUNT'];
+		}
 
-		$higherCount = PersonTable::query()
-								  ->addSelect(new ExpressionField('COUNT_HIGHER', 'COUNT(*)'))
-								  ->setFilter(['LOGIC' => 'AND', 'TREE_ID' => $treeId, 'EDUCATION_LEVEL' => 'higher'])
-								  ->exec()
-								  ->fetch();
-
-		return ['without education' => $withoutEducationCount['COUNT_WITHOUT_EDUCATION'],
-				'school' => $schoolCount['COUNT_SCHOOL'],
-				'secondary' => $secondaryCount['COUNT_SECONDARY'],
-				'higher' => $higherCount['COUNT_HIGHER'],];
+		return $counts;
 	}
 }
