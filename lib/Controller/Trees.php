@@ -87,7 +87,8 @@ class Trees extends Engine\Controller
 					'name' => null,
 					'surname' => null,
 					'gender' => null,
-					'birthDate' => null
+					'birthDate' => null,
+					'deathDate' => null
 				])
 			);
 

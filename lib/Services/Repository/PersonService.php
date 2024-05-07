@@ -49,7 +49,8 @@ class PersonService
 				'name' => $person->getName(),
 				'gender' => $person->getGender(),
 				'surname' => $person->getSurname(),
-				'birthDate' => $person->getBirthDate()
+				'birthDate' => $person->getBirthDate(),
+				'deathDate' => $person->getDeathDate()
 			]),
 		];
 
@@ -228,7 +229,8 @@ class PersonService
 				'name' => $updatablePerson->getName(),
 				'gender' => $updatablePerson->getGender(),
 				'surname' => $updatablePerson->getSurname(),
-				'birthDate' => $updatablePerson->getBirthDate()
+				'birthDate' => $updatablePerson->getBirthDate(),
+				'deathDate' => $updatablePerson->getDeathDate()
 			])
 		];
 
@@ -311,6 +313,8 @@ class PersonService
 					. $person['surname']
 					. '_'
 					. $person['birthDate']
+					. '_'
+					. $person['deathDate']
 		);
 	}
 }
