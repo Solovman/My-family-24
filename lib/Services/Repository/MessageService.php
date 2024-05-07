@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Up\Tree\Services\Repository;
 
+use Exception;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
-use Exception;
 use Up\Tree\Entity\Message;
 use Up\Tree\Model\ChatTable;
 use Up\Tree\Model\MessageTable;
@@ -68,7 +68,14 @@ class MessageService
 	public static function getMessagesByChatId(int $chatId): array
 	{
 		$messages = MessageTable::query()
-			->setSelect(['ID', 'CHAT_ID', 'AUTHOR_ID', 'MESSAGE', 'CREATED_AT', 'AUTHOR_DATA_NAME' => 'AUTHOR_DATA.NAME'])
+			->setSelect([
+				'ID',
+				'CHAT_ID',
+				'AUTHOR_ID',
+				'MESSAGE',
+				'CREATED_AT',
+				'AUTHOR_DATA_NAME' => 'AUTHOR_DATA.NAME'
+						])
 			->setFilter(['CHAT_ID' => $chatId])
 			->exec();
 
@@ -94,16 +101,26 @@ class MessageService
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public static function isUserChatParticipant(int $currentChatId , int $userId): bool
+	public static function isUserChatParticipant(int $currentChatId): bool
 	{
-		$chatIds = ChatTable::query()->setSelect(['ID'])
-							->setFilter(['LOGIC' => 'OR', 'RECIPIENT_ID' => $userId, 'AUTHOR_ID' => $userId])
-							->exec()
-							->fetchAll();
+		global $USER;
+		$userId = (int)$USER->GetID();
+
+		$chatIds = ChatTable::query()
+			->setSelect(['ID'])
+			->setFilter([
+							'LOGIC' => 'OR',
+							'RECIPIENT_ID' => $userId,
+							'AUTHOR_ID' => $userId
+						])
+			->exec()
+			->fetchAll();
+
 		$idsForCurrentUser = [];
+
 		foreach ($chatIds as $chatId)
 		{
-			$idsForCurrentUser[] = (int)$chatId['ID'];
+			$idsForCurrentUser[] = (int) $chatId['ID'];
 		}
 
 		return in_array($currentChatId, $idsForCurrentUser, true);
