@@ -25,17 +25,23 @@ class ChatService
 		global $USER;
 		$recipientId = (int)$USER->GetID();
 		$chats = ChatTable::query()
-			->setSelect(['ID',
-				'AUTHOR_ID', 'RECIPIENT_ID',
-				'AUTHOR_DATA_NAME' => 'AUTHOR_DATA.NAME',
-				'AUTHOR_DATA_SURNAME' => 'AUTHOR_DATA.LAST_NAME',
-				'AUTHOR_DATA_FILE_NAME' => 'AUTHOR_DATA.USER_DATA.FILE_NAME',
-				'RECIPIENT_DATA_NAME' => 'RECIPIENT_DATA.NAME',
-				'RECIPIENT_DATA_SURNAME' => 'RECIPIENT_DATA.LAST_NAME',
-				'RECIPIENT_DATA_FILE_NAME' => 'RECIPIENT_DATA.USER_DATA.FILE_NAME',
-				'IS_ADMIN',
-				'CREATED_AT'])
-			->setFilter(['LOGIC' => 'OR', 'RECIPIENT_ID' => $recipientId, 'AUTHOR_ID' => $recipientId])
+			->setSelect([
+							'ID',
+							'AUTHOR_ID', 'RECIPIENT_ID',
+							'AUTHOR_DATA_NAME' => 'AUTHOR_DATA.NAME',
+							'AUTHOR_DATA_SURNAME' => 'AUTHOR_DATA.LAST_NAME',
+							'AUTHOR_DATA_FILE_NAME' => 'AUTHOR_DATA.USER_DATA.FILE_NAME',
+							'RECIPIENT_DATA_NAME' => 'RECIPIENT_DATA.NAME',
+							'RECIPIENT_DATA_SURNAME' => 'RECIPIENT_DATA.LAST_NAME',
+							'RECIPIENT_DATA_FILE_NAME' => 'RECIPIENT_DATA.USER_DATA.FILE_NAME',
+							'IS_ADMIN',
+							'CREATED_AT'
+						])
+			->setFilter([
+							'LOGIC' => 'OR',
+							'RECIPIENT_ID' => $recipientId,
+							'AUTHOR_ID' => $recipientId
+						])
 			->exec();
 
 		$chatsList = [];

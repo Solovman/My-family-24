@@ -144,6 +144,6 @@ class StatisticService
 			$deathTimestamp = $currentTimestamp;
 		}
 
-		return (int)floor(($deathTimestamp - $birthTimestamp) / (365.25 * 24 * 60 * 60));
+		return (int) floor(($deathTimestamp - $birthTimestamp) / (365.25 * 24 * 60 * 60));
 	}
 }

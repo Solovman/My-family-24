@@ -224,7 +224,10 @@ class AdminService
 
 		if ($USER->IsAdmin())
 		{
-			UserSinglePurchaseTable::delete(['USER_ID' => $userId, 'SINGLE_PURCHASE_ID' => $purchaseId]);
+			UserSinglePurchaseTable::delete([
+												'USER_ID' => $userId,
+												'SINGLE_PURCHASE_ID' => $purchaseId
+											]);
 		}
 
 		return false;

@@ -21,7 +21,13 @@ class UserService
 	public static function getList(): array
 	{
 		$users = UserTable::query()
-			->setSelect(['ID', 'EMAIL', 'NAME', 'LAST_NAME', 'ACTIVE'])
+			->setSelect([
+							'ID',
+							'EMAIL',
+							'NAME',
+							'LAST_NAME',
+							'ACTIVE'
+						])
 			->exec();
 
 		$usersList = [];
@@ -52,7 +58,10 @@ class UserService
 		$userId = (int) $USER->GetID();
 
 		$data = UserTable::query()
-			->setSelect(['NAME', 'LAST_NAME'])
+			->setSelect([
+							'NAME',
+							'LAST_NAME'
+						])
 			->setFilter(['ID' => $userId])
 			->exec()
 			->fetchObject();
@@ -73,7 +82,7 @@ class UserService
 		$userId = (int) $USER->GetID();
 
 		$result = UserTable::update($userId, ['PERSONAL_PHOTO' => $avatarId]);
-		
+
 		return QueryHelperService::checkQueryResult($result);
 	}
 

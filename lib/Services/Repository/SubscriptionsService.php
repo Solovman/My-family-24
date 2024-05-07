@@ -21,7 +21,15 @@ class SubscriptionsService
 	public static function getList(): array
 	{
 		$subscriptions = SubscriptionTable::query()
-			->setSelect(['ID', 'LEVEL', 'PRICE', 'NUMBER_TREES', 'NUMBER_NODES', 'CUSTOMIZATION', 'IS_ACTIVE'])
+			->setSelect([
+				'ID',
+				'LEVEL',
+				'PRICE',
+				'NUMBER_TREES',
+				'NUMBER_NODES',
+				'CUSTOMIZATION',
+				'IS_ACTIVE'
+						])
 			->exec();
 
 		$resultSubscriptions = [];

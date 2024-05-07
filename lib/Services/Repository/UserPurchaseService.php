@@ -8,7 +8,7 @@ use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Up\Tree\Entity\UserPurchase;
-use \Up\Tree\Model\UserSinglePurchaseTable;
+use Up\Tree\Model\UserSinglePurchaseTable;
 
 class UserPurchaseService
 {
@@ -20,7 +20,10 @@ class UserPurchaseService
 	public static function getList(): array
 	{
 		$userPurchase = UserSinglePurchaseTable::query()
-			->setSelect(['USER_ID', 'SINGLE_PURCHASE_ID'])
+			->setSelect([
+							'USER_ID',
+							'SINGLE_PURCHASE_ID'
+						])
 			->exec();
 
 		$resultUserPurchase = [];

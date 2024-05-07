@@ -43,7 +43,10 @@ class PurchaseService
 		$purchasesIds = self::getPurchaseIdsByUserId((int)$userId);
 
 		return PurchaseTable::query()
-							->setSelect(['ID', 'TITLE'])
+							->setSelect([
+											'ID',
+											'TITLE'
+										])
 							->setFilter(['ID' => $purchasesIds])
 							->exec()
 							->fetchAll();
@@ -57,7 +60,11 @@ class PurchaseService
 	public static function getPurchases(): array
 	{
 		return PurchaseTable::query()
-							->setSelect(['ID', 'TITLE', 'PRICE'])
+							->setSelect([
+											'ID',
+											'TITLE',
+											'PRICE'
+										])
 							->exec()
 							->fetchAll();
 	}
