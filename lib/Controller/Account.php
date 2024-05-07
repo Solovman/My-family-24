@@ -5,6 +5,7 @@ namespace Up\Tree\Controller;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
+use Exception;
 use Up\Tree\Services\Repository\ImageService;
 use Up\Tree\Services\Repository\SubscriptionsService;
 use Up\Tree\Services\Repository\UserService;
@@ -43,7 +44,7 @@ class Account extends Engine\Controller
 	}
 
 	/**
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function updateUserImagesByAvatarIdAction(int $avatarId): bool
 	{

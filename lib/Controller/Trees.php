@@ -54,12 +54,12 @@ class Trees extends Engine\Controller
 
 		$userId = (int)$USER->GetID();
 
-		$subscriptionId = (int)SubscriptionsService::getSubscriptionIdByUserId($userId);
+		$subscriptionId = SubscriptionsService::getSubscriptionIdByUserId($userId);
 
 		$countTrees = UserSubscriptionsService::getCountTreesByUserId($userId);
 		$countNodes = UserSubscriptionsService::getCountNodesByUserId($userId);
 
-		$numberTreesOnSubscription = (int)SubscriptionsService::getNumberTreesById($subscriptionId);
+		$numberTreesOnSubscription = SubscriptionsService::getNumberTreesById($subscriptionId);
 
 		if ($numberTreesOnSubscription > $countTrees || $numberTreesOnSubscription === 0)
 		{

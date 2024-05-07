@@ -8,6 +8,7 @@ use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use CFile;
+use Exception;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\UserSubscriptionTable;
 use \Up\Tree\Services\Repository\PersonService;
@@ -39,8 +40,7 @@ class Node extends Engine\Controller
 
 	/**
 	 * @throws SqlException
-	 * @throws ObjectException
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function addAction(array $person, array $personConnectedIds, string $relationType): bool
 	{
@@ -65,15 +65,16 @@ class Node extends Engine\Controller
 
 		$userId = (int) $USER->GetID();
 
-		$numberNodesLimit = (int) SubscriptionsService::getNumberNodesById(1);
-		$countNodesByUser = (int) UserSubscriptionsService::getCountNodesByUserId($userId);
+		$numberNodesLimit = SubscriptionsService::getNumberNodesById(1);
+		$countNodesByUser = UserSubscriptionsService::getCountNodesByUserId($userId);
 
 		if ($countNodesByUser < $numberNodesLimit)
 		{
-			try {
+			try
+			{
 				PersonService::addPerson($node, $personConnectedIds, $relationType);
 
-				$countNodesByUser += 1;
+				++$countNodesByUser;
 
 				UserSubscriptionTable::update($userId, ['COUNT_NODES' => $countNodesByUser]);
 			}
@@ -90,7 +91,7 @@ class Node extends Engine\Controller
 
 	/**
 	 * @throws ObjectException
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function updateAction(int $id, array $updatablePerson): bool
 	{
@@ -142,7 +143,7 @@ class Node extends Engine\Controller
 	}
 
 	/**
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function removeAction(int $id):void
 	{
@@ -153,7 +154,7 @@ class Node extends Engine\Controller
 			$userId = (int) $USER->GetID();
 			$countNodesByUser = (int) UserSubscriptionsService::getCountNodesByUserId($userId);
 
-			$countNodesByUser -= 1;
+			--$countNodesByUser;
 
 			UserSubscriptionTable::update($userId, ['COUNT_NODES' => $countNodesByUser]);
 		}

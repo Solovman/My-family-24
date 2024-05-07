@@ -52,7 +52,8 @@ class ChatRelatives extends Engine\Controller
 			$message
 		);
 
-		try {
+		try
+		{
 			MessageService::addMessage($messageResult);
 			return true;
 		}
@@ -62,6 +63,12 @@ class ChatRelatives extends Engine\Controller
 		}
 	}
 
+	/**
+	 * @throws ArgumentException
+	 * @throws SqlException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
 	private static function addChatAction(int $recipientId, int $authorId, int $isAdmin): bool|int
 	{
 		if ($isAdmin !== 1)
@@ -87,7 +94,8 @@ class ChatRelatives extends Engine\Controller
 			$recipientId = 1;
 		}
 
-		try {
+		try
+		{
 			return ChatService::addChat($recipientId, $authorId, $isAdmin);
 		}
 		catch (SqlException)
