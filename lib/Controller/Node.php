@@ -117,13 +117,9 @@ class Node extends Engine\Controller
 		{
 			return PersonService::updatePersonById($id, (int)$updatablePerson['lastImageId'], $node);
 		}
-
 		return false;
 	}
 
-	/**
-	 * @throws Exception
-	 */
 	public function uploadFileAction(): array
 	{
 		$file = $_FILES['photo'];
@@ -132,7 +128,7 @@ class Node extends Engine\Controller
 
 		$error = CFile::CheckImageFile($file, $maxSize);
 
-		if ($error !== '')
+		if ($error != '')
 		{
 			throw new Exception('Ошибка загрузки: ' . $error);
 		}
