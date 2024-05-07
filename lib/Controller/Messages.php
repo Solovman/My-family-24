@@ -32,10 +32,7 @@ class Messages extends Engine\Controller
 	 */
 	public static function getMessagesAction(int $chatId): array
 	{
-		global $USER;
-		$userId = (int)$USER->GetID();
-
-		if(!MessageService::isUserChatParticipant($chatId , $userId))
+		if(!MessageService::isUserChatParticipant($chatId))
 		{
 			return [];
 		}
