@@ -11,7 +11,6 @@ use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Message;
-use Up\Tree\Model\ChatTable;
 use Up\Tree\Services\Repository\MessageService;
 
 class Messages extends Engine\Controller

@@ -26,7 +26,7 @@ class Admin extends Engine\Controller
 	 */
 	public static function getListSubscriptionAction(): array
 	{
-		$result = SubscriptionsService::getList($pageNumber);
+		$result = SubscriptionsService::getList();
 
 		return [
 			'listSubscription'  => $result
@@ -129,6 +129,9 @@ class Admin extends Engine\Controller
 		return AdminService::updateSubscription($subscription);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public static function updatePurchaseAction(array $newPurchase): bool
 	{
 		$purchase = new Purchase(
