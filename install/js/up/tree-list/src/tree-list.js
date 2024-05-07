@@ -34,26 +34,10 @@ export class TreeList
 			}
 		});
 
-		const params = new URLSearchParams(window.location.search);
-		const pageNow = params.get('page') ? params.get('page') : 1;
 
-		this.countPage = 1;
-
-		if (pageNow === 1) {
-			this.loadList(2).then(result => {
-				if (result.length !== 0 ) {
-					this.countPage = 2;
-				}
-				this.reload(Number(pageNow));
-			})
-		} else {
-			this.reload(Number(pageNow));
-		}
-
-		console.log(this.countPage);
-
+		this.reload();
 	}
-	handleAddTreeButtonClick(pageNumber) {
+	handleAddTreeButtonClick() {
 
 		const inputTitle = BX('treeTitleInput');
 		const treeTitle = inputTitle.value.trim();
@@ -76,7 +60,7 @@ export class TreeList
 					}
 
 					inputTitle.value = '';
-					this.reload(pageNumber);
+					this.reload();
 				}).catch((error) => {
 					console.error('Error adding tree:', error);
 				});
@@ -87,14 +71,14 @@ export class TreeList
 		}
 	}
 
-	handleRemoveTreeButtonClick(element, pageNumber) {
+	handleRemoveTreeButtonClick(element) {
 		const treeId = parseInt(element.id.match(/\d+/));
 		if (treeId !== '') {
 			const confirmDelete = confirm("Are you sure you want to remove the tree?");
 			if (confirmDelete) {
 				this.removeTree(treeId)
 					.then(() => {
-						this.reload(pageNumber);
+						this.reload();
 					})
 					.catch((error) => {
 						console.error('Error when deleting a tree:', error);
@@ -103,25 +87,20 @@ export class TreeList
 		}
 	}
 
-	reload(pageNumber)
+	reload()
 	{
-		this.loadList(pageNumber)
+		this.loadList()
 			.then(treeList => {
 				this.treeList = treeList;
-				this.render(pageNumber);
+				this.render();
 			});
 	}
 
-	loadList(pageNumber)
+	loadList()
 	{
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction(
-					'up:tree.trees.getTrees',
-					{
-						data: {
-							page: Number(pageNumber)
-						}
-					})
+					'up:tree.trees.getTrees')
 				.then((responce) => {
 					const treeList = responce.data.trees;
 					resolve(treeList);
@@ -167,52 +146,7 @@ export class TreeList
 		});
 	}
 
-	renderButtonPagination(countPage)
-	{
-		const btnContainer = Tag.render`
-			<div style="text-align: center"></div>
-		`;
-
-		const params = new URLSearchParams(window.location.search);
-		const currentPage = Number(params.get('page')) === 0 ? 1 : Number(params.get('page'));
-
-		const startPage = currentPage - 1 > 0 ? currentPage - 1 : 1;
-		const endPage = currentPage + 1 <= countPage ? currentPage + 1 : countPage;
-
-		for (let i = startPage; i <= endPage; i++) {
-			const btn = Tag.render`
-				<button data-page="${i}" class="btn-pagination">${i}</button>
-			`;
-
-			BX.append(btn, btnContainer);
-		}
-
-		BX.append(btnContainer, this.rootNode);
-
-		const btnsPagination = document.querySelectorAll('.btn-pagination');
-
-		btnsPagination.forEach(btn => {
-			BX.bind(btn, 'click', (event) => {
-				const page = Number(event.target.getAttribute('data-page'));
-				history.pushState(null, '', '?page=' + page);
-
-				const params = new URLSearchParams(window.location.search);
-				const pageNow = Number(params.get('page'));
-
-				this.loadList(pageNow + 1).then(result => {
-					if (result.length !== 0 ) {
-						this.countPage = pageNow + 1;
-
-						localStorage.setItem('page', this.countPage);
-					}
-
-					this.reload(page);
-				})
-			})
-		})
-	}
-
-	render(pageNow)
+	render()
 	{
 		this.rootNode.innerHTML = '';
 
@@ -338,20 +272,6 @@ export class TreeList
 				const data = this.treeList.find(item => item.id === Number(treeId));
 				Modal.render(data)
 			})
-		})
-
-		this.renderButtonPagination(this.countPage);
-
-		const btnsPagination = document.querySelectorAll('.btn-pagination');
-
-		btnsPagination.forEach(btn => {
-			const page = Number(btn.getAttribute('data-page'));
-
-			BX.removeClass(btn, 'active-page');
-
-			if (pageNow === page) {
-				BX.addClass(btn, 'active-page');
-			}
 		})
 	}
 }

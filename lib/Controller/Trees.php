@@ -33,13 +33,9 @@ class Trees extends Engine\Controller
 	{
 		global $USER;
 
-		$pageSize = 1;
-
 		$userId = (int) $USER->GetID();
 
-		$pageNumber = isset($_REQUEST['page']) ? (int)$_REQUEST['page'] : 1;
-
-		$trees = TreeService::getTreesByUserId((int)$userId, $pageNumber, $pageSize);
+		$trees = TreeService::getTreesByUserId($userId);
 
 		return [
 			'trees' => $trees,

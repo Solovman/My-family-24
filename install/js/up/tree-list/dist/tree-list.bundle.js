@@ -137,7 +137,7 @@ this.BX.Up = this.BX.Up || {};
 	  return Modal;
 	}();
 
-	var _templateObject$1, _templateObject2, _templateObject3, _templateObject4;
+	var _templateObject$1, _templateObject2;
 	var TreeList = /*#__PURE__*/function () {
 	  function TreeList() {
 	    var _this = this;
@@ -163,24 +163,11 @@ this.BX.Up = this.BX.Up || {};
 	        _this.handleAddTreeButtonClick();
 	      }
 	    });
-	    var params = new URLSearchParams(window.location.search);
-	    var pageNow = params.get('page') ? params.get('page') : 1;
-	    this.countPage = 1;
-	    if (pageNow === 1) {
-	      this.loadList(2).then(function (result) {
-	        if (result.length !== 0) {
-	          _this.countPage = 2;
-	        }
-	        _this.reload(Number(pageNow));
-	      });
-	    } else {
-	      this.reload(Number(pageNow));
-	    }
-	    console.log(this.countPage);
+	    this.reload();
 	  }
 	  babelHelpers.createClass(TreeList, [{
 	    key: "handleAddTreeButtonClick",
-	    value: function handleAddTreeButtonClick(pageNumber) {
+	    value: function handleAddTreeButtonClick() {
 	      var _this2 = this;
 	      var inputTitle = BX('treeTitleInput');
 	      var treeTitle = inputTitle.value.trim();
@@ -198,7 +185,7 @@ this.BX.Up = this.BX.Up || {};
 	              ModalWindow.render();
 	            }
 	            inputTitle.value = '';
-	            _this2.reload(pageNumber);
+	            _this2.reload();
 	          })["catch"](function (error) {
 	            console.error('Error adding tree:', error);
 	          });
@@ -210,14 +197,14 @@ this.BX.Up = this.BX.Up || {};
 	    }
 	  }, {
 	    key: "handleRemoveTreeButtonClick",
-	    value: function handleRemoveTreeButtonClick(element, pageNumber) {
+	    value: function handleRemoveTreeButtonClick(element) {
 	      var _this3 = this;
 	      var treeId = parseInt(element.id.match(/\d+/));
 	      if (treeId !== '') {
 	        var confirmDelete = confirm("Are you sure you want to remove the tree?");
 	        if (confirmDelete) {
 	          this.removeTree(treeId).then(function () {
-	            _this3.reload(pageNumber);
+	            _this3.reload();
 	          })["catch"](function (error) {
 	            console.error('Error when deleting a tree:', error);
 	          });
@@ -226,22 +213,18 @@ this.BX.Up = this.BX.Up || {};
 	    }
 	  }, {
 	    key: "reload",
-	    value: function reload(pageNumber) {
+	    value: function reload() {
 	      var _this4 = this;
-	      this.loadList(pageNumber).then(function (treeList) {
+	      this.loadList().then(function (treeList) {
 	        _this4.treeList = treeList;
-	        _this4.render(pageNumber);
+	        _this4.render();
 	      });
 	    }
 	  }, {
 	    key: "loadList",
-	    value: function loadList(pageNumber) {
+	    value: function loadList() {
 	      return new Promise(function (resolve, reject) {
-	        BX.ajax.runAction('up:tree.trees.getTrees', {
-	          data: {
-	            page: Number(pageNumber)
-	          }
-	        }).then(function (responce) {
+	        BX.ajax.runAction('up:tree.trees.getTrees').then(function (responce) {
 	          var treeList = responce.data.trees;
 	          resolve(treeList);
 	        })["catch"](function (error) {
@@ -280,51 +263,20 @@ this.BX.Up = this.BX.Up || {};
 	      });
 	    }
 	  }, {
-	    key: "renderButtonPagination",
-	    value: function renderButtonPagination(countPage) {
-	      var _this5 = this;
-	      var btnContainer = main_core.Tag.render(_templateObject$1 || (_templateObject$1 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<div style=\"text-align: center\"></div>\n\t\t"])));
-	      var params = new URLSearchParams(window.location.search);
-	      var currentPage = Number(params.get('page')) === 0 ? 1 : Number(params.get('page'));
-	      var startPage = currentPage - 1 > 0 ? currentPage - 1 : 1;
-	      var endPage = currentPage + 1 <= countPage ? currentPage + 1 : countPage;
-	      for (var i = startPage; i <= endPage; i++) {
-	        var btn = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<button data-page=\"", "\" class=\"btn-pagination\">", "</button>\n\t\t\t"])), i, i);
-	        BX.append(btn, btnContainer);
-	      }
-	      BX.append(btnContainer, this.rootNode);
-	      var btnsPagination = document.querySelectorAll('.btn-pagination');
-	      btnsPagination.forEach(function (btn) {
-	        BX.bind(btn, 'click', function (event) {
-	          var page = Number(event.target.getAttribute('data-page'));
-	          history.pushState(null, '', '?page=' + page);
-	          var params = new URLSearchParams(window.location.search);
-	          var pageNow = Number(params.get('page'));
-	          _this5.loadList(pageNow + 1).then(function (result) {
-	            if (result.length !== 0) {
-	              _this5.countPage = pageNow + 1;
-	              localStorage.setItem('page', _this5.countPage);
-	            }
-	            _this5.reload(page);
-	          });
-	        });
-	      });
-	    }
-	  }, {
 	    key: "render",
-	    value: function render(pageNow) {
-	      var _this6 = this;
+	    value: function render() {
+	      var _this5 = this;
 	      this.rootNode.innerHTML = '';
-	      var treeContainerNode = main_core.Tag.render(_templateObject3 || (_templateObject3 = babelHelpers.taggedTemplateLiteral(["\n\t\t<div class=\"columns cards-container\">\n\t\t\t", "\n\t\t</div>"])), this.treeList.length === 0 ? "\n\t\t\t\t<div style=\"text-align: center\">\n\t\t\t\t\t<svg style=\"margin-bottom: 10px\" width=\"100px\" height=\"100px\" id=\"_\u0421\u043B\u043E\u0439_2\" data-name=\"\u0421\u043B\u043E\u0439 2\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24.81 22.76\">\n\t\t\t\t\t\t<defs>\n\t\t\t\t\t\t\t<style>\n\t\t\t\t\t\t\t\t.cls-tree {\n\t\t\t\t\t\t\t\tfill: #00ceaa;\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t</style>\n\t\t\t\t\t\t</defs>\n\t\t\t\t\t\t<g id=\"_\u0421\u043B\u043E\u0439_1\" data-name=\"\u0421\u043B\u043E\u0439 1\">\n\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t<rect class=\"cls-tree\" x=\"7.33\" y=\"15.96\" width=\"2\" height=\"6.8\" rx=\".36\" ry=\".36\"/>\n\t\t\t\t\t\t\t\t<path class=\"cls-tree\" d=\"m12.49,16.94H4.2c-2.3,0-4.2-1.87-4.2-4.2,0-1.24.53-2.38,1.44-3.19-.18-.48-.28-1.01-.28-1.52,0-1.77,1.09-3.31,2.71-3.94.2-2.3,2.12-4.1,4.48-4.1s4.27,1.8,4.5,4.1c1.59.61,2.71,2.15,2.71,3.94,0,.53-.1,1.04-.28,1.52.91.78,1.44,1.95,1.44,3.19-.03,2.33-1.92,4.2-4.22,4.2Z\"/>\n\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t</g>\n\t\t\t\t\t\t<g id=\"_\u0421\u043B\u043E\u0439_1-2\" data-name=\"\u0421\u043B\u043E\u0439 1\">\n\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t<rect class=\"cls-tree\" x=\"19.59\" y=\"18.97\" width=\"1.11\" height=\"3.79\" rx=\".2\" ry=\".2\"/>\n\t\t\t\t\t\t\t\t<path class=\"cls-tree\" d=\"m22.46,19.52h-4.62c-1.28,0-2.34-1.04-2.34-2.34,0-.69.3-1.32.8-1.77-.1-.27-.15-.56-.15-.84,0-.99.61-1.84,1.51-2.2.11-1.28,1.18-2.28,2.49-2.28s2.38,1,2.51,2.28c.89.34,1.51,1.2,1.51,2.2,0,.3-.06.58-.15.84.51.44.8,1.08.8,1.77-.01,1.3-1.07,2.34-2.35,2.34Z\"/>\n\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t</g>\n\t\t\t\t\t</svg>\n\t\t\t\t\t<h2 class=\"no-tree\">\u0423 \u0432\u0430\u0441 \u043D\u0435\u0442 \u0441\u043E\u0437\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u0435\u0440\u0435\u0432\u044C\u0435\u0432</h2>\n\t\t\t\t</div>" : '');
+	      var treeContainerNode = main_core.Tag.render(_templateObject$1 || (_templateObject$1 = babelHelpers.taggedTemplateLiteral(["\n\t\t<div class=\"columns cards-container\">\n\t\t\t", "\n\t\t</div>"])), this.treeList.length === 0 ? "\n\t\t\t\t<div style=\"text-align: center\">\n\t\t\t\t\t<svg style=\"margin-bottom: 10px\" width=\"100px\" height=\"100px\" id=\"_\u0421\u043B\u043E\u0439_2\" data-name=\"\u0421\u043B\u043E\u0439 2\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24.81 22.76\">\n\t\t\t\t\t\t<defs>\n\t\t\t\t\t\t\t<style>\n\t\t\t\t\t\t\t\t.cls-tree {\n\t\t\t\t\t\t\t\tfill: #00ceaa;\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t</style>\n\t\t\t\t\t\t</defs>\n\t\t\t\t\t\t<g id=\"_\u0421\u043B\u043E\u0439_1\" data-name=\"\u0421\u043B\u043E\u0439 1\">\n\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t<rect class=\"cls-tree\" x=\"7.33\" y=\"15.96\" width=\"2\" height=\"6.8\" rx=\".36\" ry=\".36\"/>\n\t\t\t\t\t\t\t\t<path class=\"cls-tree\" d=\"m12.49,16.94H4.2c-2.3,0-4.2-1.87-4.2-4.2,0-1.24.53-2.38,1.44-3.19-.18-.48-.28-1.01-.28-1.52,0-1.77,1.09-3.31,2.71-3.94.2-2.3,2.12-4.1,4.48-4.1s4.27,1.8,4.5,4.1c1.59.61,2.71,2.15,2.71,3.94,0,.53-.1,1.04-.28,1.52.91.78,1.44,1.95,1.44,3.19-.03,2.33-1.92,4.2-4.22,4.2Z\"/>\n\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t</g>\n\t\t\t\t\t\t<g id=\"_\u0421\u043B\u043E\u0439_1-2\" data-name=\"\u0421\u043B\u043E\u0439 1\">\n\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t<rect class=\"cls-tree\" x=\"19.59\" y=\"18.97\" width=\"1.11\" height=\"3.79\" rx=\".2\" ry=\".2\"/>\n\t\t\t\t\t\t\t\t<path class=\"cls-tree\" d=\"m22.46,19.52h-4.62c-1.28,0-2.34-1.04-2.34-2.34,0-.69.3-1.32.8-1.77-.1-.27-.15-.56-.15-.84,0-.99.61-1.84,1.51-2.2.11-1.28,1.18-2.28,2.49-2.28s2.38,1,2.51,2.28c.89.34,1.51,1.2,1.51,2.2,0,.3-.06.58-.15.84.51.44.8,1.08.8,1.77-.01,1.3-1.07,2.34-2.35,2.34Z\"/>\n\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t</g>\n\t\t\t\t\t</svg>\n\t\t\t\t\t<h2 class=\"no-tree\">\u0423 \u0432\u0430\u0441 \u043D\u0435\u0442 \u0441\u043E\u0437\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u0435\u0440\u0435\u0432\u044C\u0435\u0432</h2>\n\t\t\t\t</div>" : '');
 	      this.treeList.forEach(function (trees) {
-	        var treeNode = main_core.Tag.render(_templateObject4 || (_templateObject4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"columns is-multiline\">\n\t\t\t\t\t<div class=\"column is-two-fifth\">\n\t\t\t\t\t\t<div class=\"card\" style=\"background: ", "\">\n\t\t\t\t\t\t\t\t<header class=\"card-header is-size-4\">\n\t\t\t\t\t\t\t\t<div style=\"display: flex; flex-direction:row; align-items: center; width:100%;\">\n\t\t\t\t\t\t\t\t\t<a href=\"/tree/", "/\" class=\"card-header-title\" style=\"color:white\">\n\t\t\t\t\t\t\t\t\t\t\t", "\n\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t<input class=\"tree-card\" type=\"hidden\" name=\"treeId\" value=\"", "\" id=\"treeId", "\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown\">\n\t\t\t\t\t\t\t\t\t\t\t<button data-btn-menu=\"", "\" class=\"dropbtn\">\n\t\t\t\t\t\t\t\t\t\t\t\t<svg data-btn-menu=\"", "\" width=\"20px\" height=\"20px\" viewBox=\"0 0 16 16\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"#fff\" class=\"bi bi-three-dots-vertical\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t  <path data-btn-menu=\"", "\" d=\"M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t<div data-btn-menu-content=\"", "\" class=\"dropdown-content\">\n\t\t\t\t\t\t\t\t\t\t\t\t<button id=\"button", "\" type=\"button\" class=\"card-header-icon delTreeButton\" aria-label=\"delete task\" data-tree-id=\"", "\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span id=\"span", "\" class=\"icon disabled\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<?xml version=\"1.0\" ?>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<svg class=\"icon\" enable-background=\"new 0 0 40 40\" version=\"1.1\" viewBox=\"0 0 40 40\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<path fill=\"black\" d=\"M28,40H11.8c-3.3,0-5.9-2.7-5.9-5.9V16c0-0.6,0.4-1,1-1s1,0.4,1,1v18.1c0,2.2,1.8,3.9,3.9,3.9H28c2.2,0,3.9-1.8,3.9-3.9V16   c0-0.6,0.4-1,1-1s1,0.4,1,1v18.1C33.9,37.3,31.2,40,28,40z\"/></g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<g><path fill=\"black\" d=\"M33.3,4.9h-7.6C25.2,2.1,22.8,0,19.9,0s-5.3,2.1-5.8,4.9H6.5c-2.3,0-4.1,1.8-4.1,4.1S4.2,13,6.5,13h26.9   c2.3,0,4.1-1.8,4.1-4.1S35.6,4.9,33.3,4.9z M19.9,2c1.8,0,3.3,1.2,3.7,2.9h-7.5C16.6,3.2,18.1,2,19.9,2z M33.3,11H6.5   c-1.1,0-2.1-0.9-2.1-2.1c0-1.1,0.9-2.1,2.1-2.1h26.9c1.1,0,2.1,0.9,2.1,2.1C35.4,10.1,34.5,11,33.3,11z\"/></g><g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<path fill=\"black\" d=\"M12.9,35.1c-0.6,0-1-0.4-1-1V17.4c0-0.6,0.4-1,1-1s1,0.4,1,1v16.7C13.9,34.6,13.4,35.1,12.9,35.1z\"/></g><g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<path fill=\"black\" d=\"M26.9,35.1c-0.6,0-1-0.4-1-1V17.4c0-0.6,0.4-1,1-1s1,0.4,1,1v16.7C27.9,34.6,27.4,35.1,26.9,35.1z\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</g><g><path fill=\"black\"  d=\"M19.9,35.1c-0.6,0-1-0.4-1-1V17.4c0-0.6,0.4-1,1-1s1,0.4,1,1v16.7C20.9,34.6,20.4,35.1,19.9,35.1z\"/></g></svg>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span id=\"delete", "\">", "</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t<button data-btn-tree = \"", "\" class=\"card-header-icon action-tree\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<svg data-btn-tree = \"", "\" width=\"20px\" height=\"20px\" viewBox=\"0 0 1024 1024\" class=\"icon\"  version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<path data-btn-tree = \"", "\" d=\"M182.52 146.2h585.14v256h73.15V73.06H109.38v877.71h256v-73.14H182.52z\" fill=\"#0F1F3C\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<path data-btn-tree = \"", "\" d=\"M255.67 219.34h438.86v73.14H255.67zM255.67 365.63h365.71v73.14H255.67zM255.67 511.91H475.1v73.14H255.67zM775.22 458.24L439.04 794.42l-0.52 154.64 155.68 0.52L930.38 613.4 775.22 458.24z m51.72 155.16l-25.43 25.43-51.73-51.72 25.44-25.44 51.72 51.73z m-77.14 77.15L620.58 819.77l-51.72-51.72 129.22-129.22 51.72 51.72zM511.91 876.16l0.17-51.34 5.06-5.06 51.72 51.72-4.85 4.85-52.1-0.17z\" fill=\"#0F1F3C\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span data-btn-tree = \"", "\">", "</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</header>\n\t\t\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t\t\t<span class=\"card-footer-item is-size-6\">\n\t\t\t\t\t\t\t\t\t\t<div style=\"font-size: 1.2em; color:white\"><strong style=\"color:white\">", "</strong> ", "</div>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</footer>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t<?php\n\t\t\t\t\tendforeach; ?>\n\t\t\t\t</div>\n\t\t\t"])), trees.color, trees.id, BX.util.htmlspecialchars(trees.title), trees.id, trees.id, trees.id, trees.id, trees.id, trees.id, trees.id, trees.id, trees.id, trees.id, BX.message('UP_TREE_LIST_DELETE_TREE'), trees.id, trees.id, trees.id, trees.id, trees.id, BX.message('UP_TREE_LIST_USER_AGREEMENT'), BX.message('UP_TREE_LIST_CREATED_AT'), BX.date.format('d F Y', trees.createdAt));
+	        var treeNode = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"columns is-multiline\">\n\t\t\t\t\t<div class=\"column is-two-fifth\">\n\t\t\t\t\t\t<div class=\"card\" style=\"background: ", "\">\n\t\t\t\t\t\t\t\t<header class=\"card-header is-size-4\">\n\t\t\t\t\t\t\t\t<div style=\"display: flex; flex-direction:row; align-items: center; width:100%;\">\n\t\t\t\t\t\t\t\t\t<a href=\"/tree/", "/\" class=\"card-header-title\" style=\"color:white\">\n\t\t\t\t\t\t\t\t\t\t\t", "\n\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t<input class=\"tree-card\" type=\"hidden\" name=\"treeId\" value=\"", "\" id=\"treeId", "\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown\">\n\t\t\t\t\t\t\t\t\t\t\t<button data-btn-menu=\"", "\" class=\"dropbtn\">\n\t\t\t\t\t\t\t\t\t\t\t\t<svg data-btn-menu=\"", "\" width=\"20px\" height=\"20px\" viewBox=\"0 0 16 16\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"#fff\" class=\"bi bi-three-dots-vertical\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t  <path data-btn-menu=\"", "\" d=\"M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t<div data-btn-menu-content=\"", "\" class=\"dropdown-content\">\n\t\t\t\t\t\t\t\t\t\t\t\t<button id=\"button", "\" type=\"button\" class=\"card-header-icon delTreeButton\" aria-label=\"delete task\" data-tree-id=\"", "\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span id=\"span", "\" class=\"icon disabled\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<?xml version=\"1.0\" ?>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<svg class=\"icon\" enable-background=\"new 0 0 40 40\" version=\"1.1\" viewBox=\"0 0 40 40\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<path fill=\"black\" d=\"M28,40H11.8c-3.3,0-5.9-2.7-5.9-5.9V16c0-0.6,0.4-1,1-1s1,0.4,1,1v18.1c0,2.2,1.8,3.9,3.9,3.9H28c2.2,0,3.9-1.8,3.9-3.9V16   c0-0.6,0.4-1,1-1s1,0.4,1,1v18.1C33.9,37.3,31.2,40,28,40z\"/></g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<g><path fill=\"black\" d=\"M33.3,4.9h-7.6C25.2,2.1,22.8,0,19.9,0s-5.3,2.1-5.8,4.9H6.5c-2.3,0-4.1,1.8-4.1,4.1S4.2,13,6.5,13h26.9   c2.3,0,4.1-1.8,4.1-4.1S35.6,4.9,33.3,4.9z M19.9,2c1.8,0,3.3,1.2,3.7,2.9h-7.5C16.6,3.2,18.1,2,19.9,2z M33.3,11H6.5   c-1.1,0-2.1-0.9-2.1-2.1c0-1.1,0.9-2.1,2.1-2.1h26.9c1.1,0,2.1,0.9,2.1,2.1C35.4,10.1,34.5,11,33.3,11z\"/></g><g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<path fill=\"black\" d=\"M12.9,35.1c-0.6,0-1-0.4-1-1V17.4c0-0.6,0.4-1,1-1s1,0.4,1,1v16.7C13.9,34.6,13.4,35.1,12.9,35.1z\"/></g><g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<path fill=\"black\" d=\"M26.9,35.1c-0.6,0-1-0.4-1-1V17.4c0-0.6,0.4-1,1-1s1,0.4,1,1v16.7C27.9,34.6,27.4,35.1,26.9,35.1z\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</g><g><path fill=\"black\"  d=\"M19.9,35.1c-0.6,0-1-0.4-1-1V17.4c0-0.6,0.4-1,1-1s1,0.4,1,1v16.7C20.9,34.6,20.4,35.1,19.9,35.1z\"/></g></svg>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span id=\"delete", "\">", "</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t<button data-btn-tree = \"", "\" class=\"card-header-icon action-tree\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<svg data-btn-tree = \"", "\" width=\"20px\" height=\"20px\" viewBox=\"0 0 1024 1024\" class=\"icon\"  version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<path data-btn-tree = \"", "\" d=\"M182.52 146.2h585.14v256h73.15V73.06H109.38v877.71h256v-73.14H182.52z\" fill=\"#0F1F3C\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<path data-btn-tree = \"", "\" d=\"M255.67 219.34h438.86v73.14H255.67zM255.67 365.63h365.71v73.14H255.67zM255.67 511.91H475.1v73.14H255.67zM775.22 458.24L439.04 794.42l-0.52 154.64 155.68 0.52L930.38 613.4 775.22 458.24z m51.72 155.16l-25.43 25.43-51.73-51.72 25.44-25.44 51.72 51.73z m-77.14 77.15L620.58 819.77l-51.72-51.72 129.22-129.22 51.72 51.72zM511.91 876.16l0.17-51.34 5.06-5.06 51.72 51.72-4.85 4.85-52.1-0.17z\" fill=\"#0F1F3C\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span data-btn-tree = \"", "\">", "</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</header>\n\t\t\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t\t\t<span class=\"card-footer-item is-size-6\">\n\t\t\t\t\t\t\t\t\t\t<div style=\"font-size: 1.2em; color:white\"><strong style=\"color:white\">", "</strong> ", "</div>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</footer>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t<?php\n\t\t\t\t\tendforeach; ?>\n\t\t\t\t</div>\n\t\t\t"])), trees.color, trees.id, BX.util.htmlspecialchars(trees.title), trees.id, trees.id, trees.id, trees.id, trees.id, trees.id, trees.id, trees.id, trees.id, trees.id, BX.message('UP_TREE_LIST_DELETE_TREE'), trees.id, trees.id, trees.id, trees.id, trees.id, BX.message('UP_TREE_LIST_USER_AGREEMENT'), BX.message('UP_TREE_LIST_CREATED_AT'), BX.date.format('d F Y', trees.createdAt));
 	        treeContainerNode.appendChild(treeNode);
 	      });
 	      this.rootNode.appendChild(treeContainerNode);
 	      var removeButtons = document.querySelectorAll('.delTreeButton');
 	      removeButtons.forEach(function (button) {
 	        button.addEventListener('click', function (event) {
-	          _this6.handleRemoveTreeButtonClick(event.target);
+	          _this5.handleRemoveTreeButtonClick(event.target);
 	        });
 	      });
 	      var dropbtn = document.querySelectorAll('.dropbtn');
@@ -346,20 +298,11 @@ this.BX.Up = this.BX.Up || {};
 	        BX.bind(btn, 'click', function (event) {
 	          var treeId = event.target.dataset.btnTree;
 	          console.log(event.target);
-	          var data = _this6.treeList.find(function (item) {
+	          var data = _this5.treeList.find(function (item) {
 	            return item.id === Number(treeId);
 	          });
 	          Modal.render(data);
 	        });
-	      });
-	      this.renderButtonPagination(this.countPage);
-	      var btnsPagination = document.querySelectorAll('.btn-pagination');
-	      btnsPagination.forEach(function (btn) {
-	        var page = Number(btn.getAttribute('data-page'));
-	        BX.removeClass(btn, 'active-page');
-	        if (pageNow === page) {
-	          BX.addClass(btn, 'active-page');
-	        }
 	      });
 	    }
 	  }]);
