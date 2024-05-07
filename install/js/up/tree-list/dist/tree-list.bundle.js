@@ -163,7 +163,20 @@ this.BX.Up = this.BX.Up || {};
 	        _this.handleAddTreeButtonClick();
 	      }
 	    });
-	    this.reload(1);
+	    var params = new URLSearchParams(window.location.search);
+	    var pageNow = params.get('page') ? params.get('page') : 1;
+	    this.countPage = 1;
+	    if (pageNow === 1) {
+	      this.loadList(2).then(function (result) {
+	        if (result.length !== 0) {
+	          _this.countPage = 2;
+	        }
+	        _this.reload(Number(pageNow));
+	      });
+	    } else {
+	      this.reload(Number(pageNow));
+	    }
+	    console.log(this.countPage);
 	  }
 	  babelHelpers.createClass(TreeList, [{
 	    key: "handleAddTreeButtonClick",
@@ -217,7 +230,7 @@ this.BX.Up = this.BX.Up || {};
 	      var _this4 = this;
 	      this.loadList(pageNumber).then(function (treeList) {
 	        _this4.treeList = treeList;
-	        _this4.render();
+	        _this4.render(pageNumber);
 	      });
 	    }
 	  }, {
@@ -226,7 +239,7 @@ this.BX.Up = this.BX.Up || {};
 	      return new Promise(function (resolve, reject) {
 	        BX.ajax.runAction('up:tree.trees.getTrees', {
 	          data: {
-	            pageNumber: pageNumber
+	            page: Number(pageNumber)
 	          }
 	        }).then(function (responce) {
 	          var treeList = responce.data.trees;
@@ -268,23 +281,39 @@ this.BX.Up = this.BX.Up || {};
 	    }
 	  }, {
 	    key: "renderButtonPagination",
-	    value: function renderButtonPagination() {
-	      var countPage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+	    value: function renderButtonPagination(countPage) {
+	      var _this5 = this;
 	      var btnContainer = main_core.Tag.render(_templateObject$1 || (_templateObject$1 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<div style=\"text-align: center\"></div>\n\t\t"])));
-	      for (var i = 1; i <= countPage; i++) {
-	        var btn = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<button class=\"btn-pagination\">", "</button>\n\t\t\t"])), countPage);
+	      var params = new URLSearchParams(window.location.search);
+	      var currentPage = Number(params.get('page')) === 0 ? 1 : Number(params.get('page'));
+	      var startPage = currentPage - 1 > 0 ? currentPage - 1 : 1;
+	      var endPage = currentPage + 1 <= countPage ? currentPage + 1 : countPage;
+	      for (var i = startPage; i <= endPage; i++) {
+	        var btn = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<button data-page=\"", "\" class=\"btn-pagination\">", "</button>\n\t\t\t"])), i, i);
 	        BX.append(btn, btnContainer);
 	      }
+	      BX.append(btnContainer, this.rootNode);
 	      var btnsPagination = document.querySelectorAll('.btn-pagination');
 	      btnsPagination.forEach(function (btn) {
-	        BX.bind(btn, 'click', function () {});
+	        BX.bind(btn, 'click', function (event) {
+	          var page = Number(event.target.getAttribute('data-page'));
+	          history.pushState(null, '', '?page=' + page);
+	          var params = new URLSearchParams(window.location.search);
+	          var pageNow = Number(params.get('page'));
+	          _this5.loadList(pageNow + 1).then(function (result) {
+	            if (result.length !== 0) {
+	              _this5.countPage = pageNow + 1;
+	              localStorage.setItem('page', _this5.countPage);
+	            }
+	            _this5.reload(page);
+	          });
+	        });
 	      });
-	      BX.append(btnContainer, this.rootNode);
 	    }
 	  }, {
 	    key: "render",
-	    value: function render() {
-	      var _this5 = this;
+	    value: function render(pageNow) {
+	      var _this6 = this;
 	      this.rootNode.innerHTML = '';
 	      var treeContainerNode = main_core.Tag.render(_templateObject3 || (_templateObject3 = babelHelpers.taggedTemplateLiteral(["\n\t\t<div class=\"columns cards-container\">\n\t\t\t", "\n\t\t</div>"])), this.treeList.length === 0 ? "\n\t\t\t\t<div style=\"text-align: center\">\n\t\t\t\t\t<svg style=\"margin-bottom: 10px\" width=\"100px\" height=\"100px\" id=\"_\u0421\u043B\u043E\u0439_2\" data-name=\"\u0421\u043B\u043E\u0439 2\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24.81 22.76\">\n\t\t\t\t\t\t<defs>\n\t\t\t\t\t\t\t<style>\n\t\t\t\t\t\t\t\t.cls-tree {\n\t\t\t\t\t\t\t\tfill: #00ceaa;\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t</style>\n\t\t\t\t\t\t</defs>\n\t\t\t\t\t\t<g id=\"_\u0421\u043B\u043E\u0439_1\" data-name=\"\u0421\u043B\u043E\u0439 1\">\n\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t<rect class=\"cls-tree\" x=\"7.33\" y=\"15.96\" width=\"2\" height=\"6.8\" rx=\".36\" ry=\".36\"/>\n\t\t\t\t\t\t\t\t<path class=\"cls-tree\" d=\"m12.49,16.94H4.2c-2.3,0-4.2-1.87-4.2-4.2,0-1.24.53-2.38,1.44-3.19-.18-.48-.28-1.01-.28-1.52,0-1.77,1.09-3.31,2.71-3.94.2-2.3,2.12-4.1,4.48-4.1s4.27,1.8,4.5,4.1c1.59.61,2.71,2.15,2.71,3.94,0,.53-.1,1.04-.28,1.52.91.78,1.44,1.95,1.44,3.19-.03,2.33-1.92,4.2-4.22,4.2Z\"/>\n\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t</g>\n\t\t\t\t\t\t<g id=\"_\u0421\u043B\u043E\u0439_1-2\" data-name=\"\u0421\u043B\u043E\u0439 1\">\n\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t<rect class=\"cls-tree\" x=\"19.59\" y=\"18.97\" width=\"1.11\" height=\"3.79\" rx=\".2\" ry=\".2\"/>\n\t\t\t\t\t\t\t\t<path class=\"cls-tree\" d=\"m22.46,19.52h-4.62c-1.28,0-2.34-1.04-2.34-2.34,0-.69.3-1.32.8-1.77-.1-.27-.15-.56-.15-.84,0-.99.61-1.84,1.51-2.2.11-1.28,1.18-2.28,2.49-2.28s2.38,1,2.51,2.28c.89.34,1.51,1.2,1.51,2.2,0,.3-.06.58-.15.84.51.44.8,1.08.8,1.77-.01,1.3-1.07,2.34-2.35,2.34Z\"/>\n\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t</g>\n\t\t\t\t\t</svg>\n\t\t\t\t\t<h2 class=\"no-tree\">\u0423 \u0432\u0430\u0441 \u043D\u0435\u0442 \u0441\u043E\u0437\u0434\u0430\u043D\u043D\u044B\u0445 \u0434\u0435\u0440\u0435\u0432\u044C\u0435\u0432</h2>\n\t\t\t\t</div>" : '');
 	      this.treeList.forEach(function (trees) {
@@ -295,7 +324,7 @@ this.BX.Up = this.BX.Up || {};
 	      var removeButtons = document.querySelectorAll('.delTreeButton');
 	      removeButtons.forEach(function (button) {
 	        button.addEventListener('click', function (event) {
-	          _this5.handleRemoveTreeButtonClick(event.target);
+	          _this6.handleRemoveTreeButtonClick(event.target);
 	        });
 	      });
 	      var dropbtn = document.querySelectorAll('.dropbtn');
@@ -317,13 +346,21 @@ this.BX.Up = this.BX.Up || {};
 	        BX.bind(btn, 'click', function (event) {
 	          var treeId = event.target.dataset.btnTree;
 	          console.log(event.target);
-	          var data = _this5.treeList.find(function (item) {
+	          var data = _this6.treeList.find(function (item) {
 	            return item.id === Number(treeId);
 	          });
 	          Modal.render(data);
 	        });
 	      });
-	      this.renderButtonPagination();
+	      this.renderButtonPagination(this.countPage);
+	      var btnsPagination = document.querySelectorAll('.btn-pagination');
+	      btnsPagination.forEach(function (btn) {
+	        var page = Number(btn.getAttribute('data-page'));
+	        BX.removeClass(btn, 'active-page');
+	        if (pageNow === page) {
+	          BX.addClass(btn, 'active-page');
+	        }
+	      });
 	    }
 	  }]);
 	  return TreeList;

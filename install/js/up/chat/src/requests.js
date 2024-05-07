@@ -98,4 +98,21 @@ export class Requests
 				});
 		});
 	}
+
+	static getParticipantsByChatId(chatId)
+	{
+		return new Promise((resolve, reject) => {
+			BX.ajax.runAction('up:tree.chatRelatives.getParticipantsByChatId', {
+				data: {
+					chatId: chatId
+				}
+			})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
 }

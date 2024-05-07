@@ -123,4 +123,23 @@ class ChatRelatives extends Engine\Controller
 	{
 		return ChatService::getIdChatWithAdmin();
 	}
+
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function getParticipantsByChatIdAction(int $chatId): array|bool
+	{
+		global $USER;
+
+		$userId = (int) $USER->GetID();
+
+		if (!MessageService::isUserChatParticipant($chatId, $userId))
+		{
+			return false;
+		}
+
+		return ChatService::getParticipantsByChatId($chatId);
+	}
 }

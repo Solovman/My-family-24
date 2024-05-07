@@ -29,15 +29,17 @@ class Trees extends Engine\Controller
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public function getTreesAction($pageNumber = 1): array
+	public function getTreesAction(): array
 	{
 		global $USER;
 
-		$pageSize = 6;
+		$pageSize = 1;
 
 		$userId = (int) $USER->GetID();
 
-		$trees = TreeService::getTreesByUserId($userId, $pageNumber, $pageSize);
+		$pageNumber = isset($_REQUEST['page']) ? (int)$_REQUEST['page'] : 1;
+
+		$trees = TreeService::getTreesByUserId((int)$userId, $pageNumber, $pageSize);
 
 		return [
 			'trees' => $trees,

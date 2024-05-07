@@ -43,6 +43,85 @@ export class Chat
 		this.isHandler = false;
 		this.isHandlerAdmin = false;
 
+
+		this.ws = new WebSocket('ws://localhost:3000');
+
+		this.ws.onopen = () => {
+			const userId = BX.message('USER_ID');
+
+			this.ws.send(JSON.stringify({ type: 'userId', userId: userId }));
+
+			console.log('WebSocket connection established and user ID sent');
+		};
+
+		this.ws.onclose = () => console.log('disconnected');
+
+		this.ws.onmessage = (event) => {
+			Requests.getParticipantsByChatId(Number(JSON.parse(event.data).chatId)).then(result => {
+				if (result) {
+					const data = JSON.parse(event.data);
+					const userIdNow = Number(BX.message('USER_ID'));
+
+					const chatContainerId = Number(this.messagesContainer.dataset.chatId);
+
+					if (userIdNow === result.authorId || userIdNow === result.recipientId)
+					{
+						if (chatContainerId === data.chatId) {
+							const pathFileName = document.querySelector(`[data-icon-chat="${data.chatId}"]`);
+
+							const message = Tag.render`
+								${Number(userIdNow) === Number(data.userId) ? `
+								<div class="message text-only">
+									<div class="response">
+										<p class="text">
+											<span class="text-message">${BX.util.htmlspecialchars(data.text)}</span> 
+											<span class="date-message">${Helper.dateFormat(new Date())}</span> 
+										</p
+									</div>
+								</div>
+								` :
+										`
+								<div class="message">
+									<div class="photo" style="background-image: url(${pathFileName.dataset.pathFile});"></div>
+									<p class="text">  
+										<span class="text-message">${BX.util.htmlspecialchars(data.text)}</span> 
+										<span class="date-message">${Helper.dateFormat(new Date())}</span> 
+									</p
+								</div>
+								`}
+							
+								`;
+
+							BX.append(message, this.messagesContainer);
+
+							const messageLast = document.querySelectorAll('.lastMessage');
+
+							messageLast.forEach(mess => {
+								const idChat = Number(mess.id.match(/\d+$/)[0]);
+
+								if (idChat === data.chatId) {
+									mess.textContent = data.text;
+								}
+							})
+
+							this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+						}
+						else {
+							const message = document.querySelectorAll('.lastMessage');
+
+							message.forEach(mess => {
+								const idChat = Number(mess.id.match(/\d+$/)[0]);
+
+								if (idChat === data.chatId) {
+									mess.textContent = data.text;
+								}
+							})
+						}
+					}
+				}
+			})
+		}
+
 		this.reload();
 	}
 
@@ -72,7 +151,6 @@ export class Chat
 
 	render()
 	{
-
 		this.rootNode.innerHTML = '';
 
 		const currentUserId = BX.message('USER_ID');
@@ -86,7 +164,7 @@ export class Chat
 						 url(${Number(currentUserId) === chat.authorId ? BX.util.htmlspecialchars(chat.recipientFileName) : BX.util.htmlspecialchars(chat.authorFileName)});"></div>
 							<div class="desc-contact">
 							<p class="name">${Number(currentUserId) === chat.authorId ? BX.util.htmlspecialchars(chat.recipientName) : BX.util.htmlspecialchars(chat.authorName)}</p>
-							<p id="lastMassage${chat.id}" class="message"></p>
+							<p id="lastMassage${chat.id}" class="message lastMessage"></p>
 						</div>
 					</div>` 
 				: `
@@ -96,7 +174,7 @@ export class Chat
 						 url(/local/modules/up.tree/images/profile.svg)"></div>
 							<div class="desc-contact">
 							<p class="name">Администратор</p>
-							<p id="lastMassage${chat.id}" class="message"></p>
+							<p id="lastMassage${chat.id}" class="message lastMessage"></p>
 						</div>
 					</div>
 				`}
@@ -120,6 +198,8 @@ export class Chat
 			BX.bind(BX(`chat${chat.id}`), 'click', (event) => {
 				this.messagesContainer.innerHTML = '';
 				BX('footer-send').innerHTML = '';
+
+				this.messagesContainer.dataset.chatId = chat.id;
 
 				BX('input-message').style.display = 'block';
 
@@ -167,15 +247,24 @@ export class Chat
 				{
 					this.isHandler = true;
 
-					console.log(this.isHandler);
 					BX.bind(BX(`send${chat.id}`),'click', (event) => {
 						event.preventDefault();
 						const textMessage = BX('input-message').value;
 
+						const message = {
+							userId: Number(BX.message('USER_ID')),
+							authorId: chat.authorId,
+							recipientId: chat.recipientId,
+							chatId: chat.id,
+							text: BX('input-message').value
+						};
+
 						Requests.addMessages(chat.id, textMessage).then(result => {
 							BX('input-message').value = '';
 							BX(`lastMassage${chat.id}`).textContent = textMessage;
-							this.loadMessages(chat.id);
+
+							this.ws.send(JSON.stringify(message));
+							//this.loadMessages(chat.id);
 						});
 					})
 				}

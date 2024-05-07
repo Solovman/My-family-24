@@ -115,4 +115,24 @@ class ChatService
 
 		return QueryHelperService::checkQueryResult($chatId, true);
 	}
+
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function getParticipantsByChatId(int $chatId): array
+	{
+		$participants = ChatTable::query()
+			->setSelect(['AUTHOR_ID', 'RECIPIENT_ID'])
+			->setFilter(['ID' => $chatId])
+			->exec()
+			->fetchObject();
+
+
+		return [
+			'authorId' => $participants->getAuthorId(),
+			'recipientId' => $participants->getRecipientId()
+		];
+	}
 }
