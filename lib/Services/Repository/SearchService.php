@@ -166,8 +166,9 @@ class SearchService
 	public static function getNotSecureTreeIds(): ?array
 	{
 		$treeData = TreeTable::query()->setSelect(['ID'])
-									  ->setFilter(
-			['IS_SECURITY' => False])->exec()->fetchAll();
+									  ->setFilter(['IS_SECURITY' => False])
+									  ->exec()
+									  ->fetchAll();
 
 		if (!$treeData)
 		{

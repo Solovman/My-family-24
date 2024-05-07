@@ -46,12 +46,12 @@ class PersonService
 			'HEIGHT' => $person->getHeight(),
 			'EDUCATION_LEVEL' => $person->getEducationLevel(),
 			'HASH' => self::generatePersonHash([
-				'name' => $person->getName(),
-				'gender' => $person->getGender(),
-				'surname' => $person->getSurname(),
-				'birthDate' => $person->getBirthDate(),
-				'deathDate' => $person->getDeathDate()
-			]),
+												   'name' => $person->getName(),
+												   'gender' => $person->getGender(),
+												   'surname' => $person->getSurname(),
+												   'birthDate' => $person->getBirthDate(),
+												   'deathDate' => $person->getDeathDate()
+											   ]),
 		];
 
 		$ids = [];
@@ -216,22 +216,20 @@ class PersonService
 			'NAME' => $updatablePerson->getName(),
 			'SURNAME' => $updatablePerson->getSurname(),
 			'PATRONYMIC' => $updatablePerson->getPatronymic(),
-			'BIRTH_DATE' => $updatablePerson->getBirthDate() ? new Date($updatablePerson->getBirthDate(), 'Y-m-d')
-				: null,
-			'DEATH_DATE' => $updatablePerson->getDeathDate() ? new Date($updatablePerson->getDeathDate(), 'Y-m-d')
-				: null,
+			'BIRTH_DATE' => $updatablePerson->getBirthDate() ? new Date($updatablePerson->getBirthDate(), 'Y-m-d') : null,
+			'DEATH_DATE' => $updatablePerson->getDeathDate() ? new Date($updatablePerson->getDeathDate(), 'Y-m-d') : null,
 			'GENDER' => $updatablePerson->getGender(),
 			'WEIGHT' => $updatablePerson->getWeight(),
 			'HEIGHT' => $updatablePerson->getHeight(),
 			'EDUCATION_LEVEL' => $updatablePerson->getEducationLevel(),
 			'TREE_ID' => $updatablePerson->getTreeId(),
 			'HASH' => self::generatePersonHash([
-				'name' => $updatablePerson->getName(),
-				'gender' => $updatablePerson->getGender(),
-				'surname' => $updatablePerson->getSurname(),
-				'birthDate' => $updatablePerson->getBirthDate(),
-				'deathDate' => $updatablePerson->getDeathDate()
-			])
+												   'name' => $updatablePerson->getName(),
+												   'gender' => $updatablePerson->getGender(),
+												   'surname' => $updatablePerson->getSurname(),
+												   'birthDate' => $updatablePerson->getBirthDate(),
+												   'deathDate' => $updatablePerson->getDeathDate()
+											   ])
 		];
 
 		$result = PersonTable::update($id, $personData);
@@ -268,7 +266,8 @@ class PersonService
 	 */
 	public static function getImageName(int $personID): string
 	{
-		$imageID = PersonTable::query()->setSelect(['IMAGE_ID'])
+		$imageID = PersonTable::query()
+			->setSelect(['IMAGE_ID'])
 			->setFilter(['ID' => $personID])
 			->exec()
 			->fetchObject();
@@ -278,7 +277,8 @@ class PersonService
 
 	public static function getImageId(int $personId): int
 	{
-		$imageId = PersonTable::query()->setSelect(['IMAGE_ID'])
+		$imageId = PersonTable::query()
+			->setSelect(['IMAGE_ID'])
 			->setFilter(['ID' => $personId])
 			->exec()
 			->fetchObject();
@@ -293,10 +293,11 @@ class PersonService
 	 */
 	public static function checkPersonInTree(int $personId, int $treeIdUpdated): bool
 	{
-		$treeId = PersonTable::query()->setSelect(['TREE_ID'])
-							  ->setFilter(['ID' => $personId])
-							  ->exec()
-							  ->fetchAll();
+		$treeId = PersonTable::query()
+			->setSelect(['TREE_ID'])
+			->setFilter(['ID' => $personId])
+			->exec()
+			->fetchAll();
 
 		$treeId = (int)$treeId[0]['TREE_ID'];
 
@@ -324,12 +325,12 @@ class PersonService
 			null,
 			null,
 			self::generatePersonHash([
-												  'name' => null,
-												  'surname' => null,
-												  'gender' => null,
-												  'birthDate' => null,
-												  'deathDate' => null
-											  ])
+										 'name' => null,
+										 'surname' => null,
+										 'gender' => null,
+										 'birthDate' => null,
+										 'deathDate' => null
+									 ])
 		);
 
 		self::addPerson(

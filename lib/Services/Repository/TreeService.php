@@ -51,7 +51,13 @@ class TreeService
 	 */
 	public static function getTree(int $userId, int $treeId): ?Tree
 	{
-		$treeData = TreeTable::query()->setSelect(['ID', 'TITLE', 'USER_ID', 'CREATED_AT', 'COLOR'])
+		$treeData = TreeTable::query()->setSelect([
+													  'ID',
+													  'TITLE',
+													  'USER_ID',
+													  'CREATED_AT',
+													  'COLOR'
+												  ])
 									  ->setFilter(['USER_ID' => $userId, 'ID'=> $treeId])
 									  ->exec()
 									  ->fetch();
