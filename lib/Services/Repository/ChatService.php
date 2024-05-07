@@ -105,7 +105,7 @@ class ChatService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getIdChatWithAdmin(): int|bool
+	public static function getIdChatWithAdmin(): bool|int
 	{
 		$chatId = ChatTable::query()
 			->setSelect(['ID'])
@@ -113,7 +113,13 @@ class ChatService
 			->exec()
 			->fetchObject();
 
-		return QueryHelperService::checkQueryResult($chatId, true);
+
+		if (!$chatId)
+		{
+			return false;
+		}
+
+		return $chatId->getId();
 	}
 
 	/**
