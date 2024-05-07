@@ -35,9 +35,9 @@ class Trees extends Engine\Controller
 
 		$pageSize = 6;
 
-		$userId = $USER->GetID();
+		$userId = (int) $USER->GetID();
 
-		$trees = TreeService::getTreesByUserId((int)$userId, $pageNumber, $pageSize);
+		$trees = TreeService::getTreesByUserId($userId, $pageNumber, $pageSize);
 
 		return [
 			'trees' => $trees,
@@ -65,40 +65,11 @@ class Trees extends Engine\Controller
 		{
 			$randomColor = RandomService::getRandomGradientColorString();
 			$newTree = new Tree($treeTitle, $userId, '', $randomColor);
+
 			TreeService::addTree($newTree);
-			$newTreeId = $DB->LastID();
+			$newTreeId = (int) $DB->LastID();
 
-			$initialNode = new Person(
-				"0",
-				1,
-				'/local/modules/up.tree/images/user_default.png',
-				" ",
-				" ",
-				" ",
-				null,
-				null,
-				'',
-				(int)$newTreeId,
-				null,
-				null,
-				null,
-				null,
-				PersonService::generatePersonHash([
-					'name' => null,
-					'surname' => null,
-					'gender' => null,
-					'birthDate' => null,
-					'deathDate' => null
-				])
-			);
-
-
-
-			PersonService::addPerson(
-				$initialNode,
-				[0],
-				'init'
-			);
+			PersonService::addInitPerson($newTreeId);
 
 			++$countTrees;
 			++$countNodes;

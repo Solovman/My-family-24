@@ -115,7 +115,7 @@ class TreeService
 	{
 		$trees = [];
 
-		$offset = ($pageNumber - 1) * $pageSize;
+		$offset = ((int)$pageNumber - 1) * $pageSize;
 
 		$treeData = TreeTable::query()->setSelect(
 				[

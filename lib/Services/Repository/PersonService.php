@@ -303,6 +303,42 @@ class PersonService
 		return $treeId === $treeIdUpdated;
 	}
 
+	/**
+	 * @throws SqlException
+	 */
+	public static function addInitPerson(int $treeId): void
+	{
+		$initialNode = new Person(
+			"0",
+			1,
+			'/local/modules/up.tree/images/user_default.png',
+			" ",
+			" ",
+			" ",
+			null,
+			null,
+			'',
+			$treeId,
+			null,
+			null,
+			null,
+			null,
+			self::generatePersonHash([
+												  'name' => null,
+												  'surname' => null,
+												  'gender' => null,
+												  'birthDate' => null,
+												  'deathDate' => null
+											  ])
+		);
+
+		self::addPerson(
+			$initialNode,
+			[0],
+			'init'
+		);
+	}
+
 	public static function generatePersonHash(array $person): string
 	{
 		return hash('sha256',
