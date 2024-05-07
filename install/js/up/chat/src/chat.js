@@ -134,9 +134,9 @@ export class Chat
 				if (!chatId) {
 					BX('help').style.display = 'block'
 				}
-			})
 
-			this.render();
+				this.render();
+			})
 		});
 	}
 
@@ -157,7 +157,7 @@ export class Chat
 
 		this.listChats.forEach(chat => {
 			const chats = Tag.render `
-				${chat.isAdmin === 0 ? `
+				${chat.isAdmin === 0 || Number(BX.message('USER_ID')) === 1 ? `
 					<div data-id-chat="${chat.id}" id="chat${chat.id}" class="discussion chat-list">
 						<div data-icon-chat="${chat.id}" data-path-file="${Number(currentUserId) === chat.authorId ? BX.util.htmlspecialchars(chat.recipientFileName) : BX.util.htmlspecialchars(chat.authorFileName)}" class="photo" style="
 						background-image:
@@ -234,7 +234,7 @@ export class Chat
 
 					const nameUser = BX('name-user');
 
-					if (chat.isAdmin === 0) {
+					if (chat.isAdmin === 0 || Number(BX.message('USER_ID')) === 1) {
 						nameUser.textContent = Number(currentUserId) === chat.authorId ? BX.util.htmlspecialchars(chat.recipientName) : BX.util.htmlspecialchars(chat.authorName);
 					} else {
 						nameUser.textContent = 'Администратор';
@@ -387,7 +387,11 @@ export class Chat
 					BX('name-user').textContent = 'Администратор';
 
 					Requests.getIdChatWithAdmin().then(chatId => {
-						this.loadMessages(chatId);
+						if (chatId) {
+							this.loadMessages(chatId);
+						} else {
+							spinner.remove();
+						}
 					})
 				}
 			})
@@ -415,7 +419,7 @@ export class Chat
 					</div>`
 				:
 				`<div class="message">
-					<div class="photo" style="background-image: url(${pathFileName.dataset.pathFile});"></div>
+					<div class="photo" style="background-image: url(${pathFileName.dataset.pathFile ? pathFileName.dataset.pathFile : '/local/modules/up.tree/images/profile.svg'});"></div>
 					<p class="text">  
 							<span class="text-message">${BX.util.htmlspecialchars(message.message)}</span> 
 							<span class="date-message">${Helper.dateFormat(message.createdAt)}</span> 
