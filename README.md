@@ -84,3 +84,5 @@ For websocket to work, go to the directory `${doc_root}/local/modules/up.tree` i
 ```
 node server
 ```
+Create trees, look for relatives, communicate:
+![myFamily.png](screenshots%2FmyFamily.png)
