@@ -11,7 +11,9 @@ use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Image;
 use Up\Tree\Model\FileTable;
+use Up\Tree\Model\UserTable;
 use Up\Tree\Services\QueryHelperService;
+
 
 class ImageService
 {
