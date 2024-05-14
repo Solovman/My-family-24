@@ -53,6 +53,7 @@ ul {
 	left:0;
 	right:0;
 	width: 4%;
+	height: 100%;
 	min-height: 96.5%;
 	background-color: #00ceaa;
 	z-index: 10;
@@ -333,6 +334,16 @@ label {
 
 .white-preview div.btn-container i.fa-moon-o{
 	color: #777;
+}
+
+#headerIcon {
+	width: 50px !important;
+	height: 50px !important;
+	max-height: none;
+}
+
+.name__link {
+	display: inline-block !important;
 }
 
 @media (max-width: 1200px) {

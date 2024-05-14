@@ -1,3 +1,13 @@
+::-ms-clear {
+	width : 0;
+	height: 0;
+}
+
+::-ms-reveal {
+	width : 0;
+	height: 0;
+}
+
 .content {
 	padding: 0 30px;
 }
@@ -12,6 +22,17 @@
 	border-radius: 5px !important;
 	font-size: 1.2em;
 	text-align: center;
+}
+
+.password-container {
+	position: relative;
+}
+
+.eye-icon{
+	position: absolute !important;
+	right: 2% !important;
+	top: 16%
+
 }
 
 .data-table {
@@ -87,7 +108,7 @@ tr {
 	justify-content: center;
 	padding: 20px;
 	border-radius: 10px;
-	margin: 8% 4% 3% auto;
+	margin: 3% 4% 0 auto;
 	background-color: #ffffff;
 	width: 32%;
 }
@@ -124,10 +145,6 @@ tr {
 
 .main__tabs-button_login {
 	margin-right: 15px;
-}
-
-.footer {
-	margin-top: 7% !important;
 }
 
 .main__tabs-button._active {

@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "@balkangraph/export-service": "^1.4.7"
+    "@balkangraph/export-service": "^1.4.7",
+    "mysql2": "^3.9.7",
+    "uuid": "^9.0.1",
+    "ws": "^8.17.0"
   }
 }

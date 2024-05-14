@@ -12,13 +12,18 @@ use Up\Tree\Model\UserSubscriptionTable;
 
 class UserSubscriptionsService
 {
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
 	public static function getCountTreesByUserId(int $userId): int
 	{
 		$countTrees = UserSubscriptionTable::query()
-													->setSelect(['COUNT_TREES'])
-													->setFilter(['USER_ID' => $userId])
-													->exec()
-													->fetchObject();
+			->setSelect(['COUNT_TREES'])
+			->setFilter(['USER_ID' => $userId])
+			->exec()
+			->fetchObject();
 
 		if ($countTrees === null)
 		{
@@ -27,13 +32,18 @@ class UserSubscriptionsService
 		return $countTrees->getCountTrees();
 	}
 
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
 	public static function getCountNodesByUserId(int $userId):int
 	{
 		$countNodes = UserSubscriptionTable::query()
-													->setSelect(['COUNT_NODES'])
-													->setFilter(['USER_ID' => $userId])
-													->exec()
-													->fetchObject();
+			->setSelect(['COUNT_NODES'])
+			->setFilter(['USER_ID' => $userId])
+			->exec()
+			->fetchObject();
 
 		return $countNodes->getCountNodes();
 	}
@@ -46,7 +56,14 @@ class UserSubscriptionsService
 	public static function getList(): array
 	{
 		$userSubscriptions = UserSubscriptionTable::query()
-			->setSelect(['USER_ID', 'SUBSCRIPTION_ID', 'COUNT_TREES', 'COUNT_NODES', 'SUBSCRIPTION_BUY_TIME', 'IS_ACTIVE'])
+			->setSelect([
+				'USER_ID',
+				'SUBSCRIPTION_ID',
+				'COUNT_TREES',
+				'COUNT_NODES',
+				'SUBSCRIPTION_BUY_TIME',
+				'IS_ACTIVE'
+						])
 			->exec();
 
 		$resultSubscriptions = [];

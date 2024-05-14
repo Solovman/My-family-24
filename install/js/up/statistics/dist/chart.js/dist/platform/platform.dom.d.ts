@@ -1,5 +1,5 @@
 /**
- * Platform class for charts that can access the DOM and global window/document properties
+ * Platform class for charts that can access the DOM and global ModalWindow/document properties
  * @extends BasePlatform
  */
 export default class DomPlatform extends BasePlatform {

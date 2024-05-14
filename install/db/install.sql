@@ -50,6 +50,7 @@ CREATE TABLE up_person
 	IMAGE_ID        INT                                                         DEFAULT 0,
 	NAME            VARCHAR(50)  NULL,
 	SURNAME         VARCHAR(50)  NULL,
+	PATRONYMIC      VARCHAR(50)  NULL,
 	BIRTH_DATE      DATE,
 	DEATH_DATE      DATE,
 	GENDER          ENUM ('male', 'female'),
@@ -80,6 +81,7 @@ CREATE TABLE up_chat
 	ID           INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	AUTHOR_ID    INT NOT NULL,
 	RECIPIENT_ID INT NOT NULL,
+	IS_ADMIN     BOOL DEFAULT FALSE,
 	CREATED_AT   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

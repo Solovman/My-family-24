@@ -159,11 +159,11 @@ export class Search
 					  <main class="leaderboard__profiles">
 						${usersWithChats.map(({ user, chatExists }) => `
 						  <article class="leaderboard__profile">
-							<img src="/local/modules/up.tree/images/avatars/default.png" alt="user" class="leaderboard__picture">
+							<img src="${user.FILE_NAME}" alt="user" class="leaderboard__picture">
 							<span class="leaderboard__name">
-								<span>User: ${BX.util.htmlspecialchars(user.NAME) + ' ' + BX.util.htmlspecialchars(user.LAST_NAME)}</span>
+								<span>${BX.message('UP_TREE_SEARCH_USER')}: ${BX.util.htmlspecialchars(user.NAME) + ' ' + BX.util.htmlspecialchars(user.LAST_NAME)}</span>
 							 	 <span class="leaderboard__persons">
-									<span class="heading-persons">Found relatives:</span>
+									<span class="heading-persons">${BX.message('UP_TREE_SEARCH_FOUND_RELATIVES')}:</span>
 										${this.usersPersons.foundPersons.filter(person => person.userId === Number(user.ID)).map(person => `
 										  <p class="persons-info">${person.name + ' ' + person.surname};</p>
 										`).join('')}

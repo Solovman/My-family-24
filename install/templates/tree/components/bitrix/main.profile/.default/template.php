@@ -25,7 +25,6 @@ $APPLICATION->setAdditionalCSS('style.css');
 	<div class="container">
 		<div class="profile">
 			<div id="data-profile"></div>
-
 		</div>
 	</div>
 
@@ -304,10 +303,7 @@ $APPLICATION->setAdditionalCSS('style.css');
 				</div>
 			<?
 			endif; ?>
-			<?
-			// ******************** /User properties ***************************************************?>
-			<p style="text-align: center; font-size: 1.2em"><?php echo $arResult["GROUP_POLICY"]["PASSWORD_REQUIREMENTS"]; ?></p>
-			<p style="text-align: center;"> <!-- Центрирование содержимого -->
+			<p style="text-align: center;">
 				<input type="submit" name="save" value="<?= (($arResult["ID"] > 0) ? GetMessage("MAIN_SAVE") : GetMessage("MAIN_ADD")) ?>">
 				&nbsp;&nbsp;
 				<input type="reset" value="<?= GetMessage('MAIN_RESET'); ?>">

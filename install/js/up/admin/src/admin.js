@@ -12,7 +12,6 @@ import {UsersTable} from "./table/usersTable";
 
 export class Admin {
 	constructor(options = {}) {
-		v
 		if (Type.isStringFilled(options.rootNodeId)) {
 			this.rootNodeId = options.rootNodeId;
 		} else {
@@ -99,20 +98,14 @@ export class Admin {
 		})
 	}
 
-	loadListSub(page= 1) {
-		Requests.getListSubscription(page).then(list => {
+	loadListSub() {
+		Requests.getListSubscription().then(list => {
 			this.rootNode.innerHTML = '';
 			this.listSub = list;
 
 			BX('add').style.display = 'inline-block';
 
 			const btns = document.querySelectorAll('.admin__btn');
-			const paginationBtn = Tag.render`
-				<div class="pagination-container">
-					<button class="pagination-btn">1</button>
-					<button class="pagination-btn">2</button>
-				</div>
-			`;
 
 			btns.forEach(btn => {
 				BX.removeClass(btn, 'btn-active');
@@ -121,7 +114,6 @@ export class Admin {
 			BX.addClass(BX('sub'), 'btn-active');
 
 			BX.append(SubscriptionTable.render(list), this.rootNode);
-			BX.append(paginationBtn, this.rootNode);
 
 			document.querySelectorAll('.pagination-btn').forEach(btn => {
 				BX.bind(btn, 'click', () => {
@@ -156,8 +148,8 @@ export class Admin {
 
 					Requests.addSubscription(subscription).then(result => {
 						this.loadListSub();
-						document.querySelector('.popup-window').remove();
-						document.querySelector('.popup-window-overlay').remove();
+						document.querySelector('.popup-ModalWindow').remove();
+						document.querySelector('.popup-ModalWindow-overlay').remove();
 					});
 				});
 			});
@@ -273,8 +265,8 @@ export class Admin {
 
 					Requests.addPurchase(purchase).then(result => {
 						this.loadListPurchase();
-						document.querySelector('.popup-window').remove();
-						document.querySelector('.popup-window-overlay').remove();
+						document.querySelector('.popup-ModalWindow').remove();
+						document.querySelector('.popup-ModalWindow-overlay').remove();
 					});
 				});
 			});
@@ -380,8 +372,8 @@ export class Admin {
 
 					Requests.addPurchaseUser(userId, purchaseId).then(result => {
 						this.loadListUserPurchase();
-						document.querySelector('.popup-window').remove();
-						document.querySelector('.popup-window-overlay').remove();
+						document.querySelector('.popup-ModalWindow').remove();
+						document.querySelector('.popup-ModalWindow-overlay').remove();
 					});
 				});
 			});

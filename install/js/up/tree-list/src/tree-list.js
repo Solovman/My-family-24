@@ -33,6 +33,8 @@ export class TreeList
 				this.handleAddTreeButtonClick();
 			}
 		});
+
+
 		this.reload();
 	}
 	handleAddTreeButtonClick() {
@@ -98,12 +100,7 @@ export class TreeList
 	{
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction(
-					'up:tree.trees.getTrees',
-					{
-						data: {
-							apiKey: 'very_secret_key',
-						}
-					})
+					'up:tree.trees.getTrees')
 				.then((responce) => {
 					const treeList = responce.data.trees;
 					resolve(treeList);
@@ -153,8 +150,34 @@ export class TreeList
 	{
 		this.rootNode.innerHTML = '';
 
-		const treeContainerNode = Tag.render`<div class="columns cards-container"></div>`;
-
+		const treeContainerNode = Tag.render`
+		<div class="columns cards-container">
+			${this.treeList.length === 0 ? `
+				<div style="text-align: center">
+					<svg style="margin-bottom: 10px" width="100px" height="100px" id="_Слой_2" data-name="Слой 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.81 22.76">
+						<defs>
+							<style>
+								.cls-tree {
+								fill: #00ceaa;
+								}
+							</style>
+						</defs>
+						<g id="_Слой_1" data-name="Слой 1">
+							<g>
+								<rect class="cls-tree" x="7.33" y="15.96" width="2" height="6.8" rx=".36" ry=".36"/>
+								<path class="cls-tree" d="m12.49,16.94H4.2c-2.3,0-4.2-1.87-4.2-4.2,0-1.24.53-2.38,1.44-3.19-.18-.48-.28-1.01-.28-1.52,0-1.77,1.09-3.31,2.71-3.94.2-2.3,2.12-4.1,4.48-4.1s4.27,1.8,4.5,4.1c1.59.61,2.71,2.15,2.71,3.94,0,.53-.1,1.04-.28,1.52.91.78,1.44,1.95,1.44,3.19-.03,2.33-1.92,4.2-4.22,4.2Z"/>
+							</g>
+						</g>
+						<g id="_Слой_1-2" data-name="Слой 1">
+							<g>
+								<rect class="cls-tree" x="19.59" y="18.97" width="1.11" height="3.79" rx=".2" ry=".2"/>
+								<path class="cls-tree" d="m22.46,19.52h-4.62c-1.28,0-2.34-1.04-2.34-2.34,0-.69.3-1.32.8-1.77-.1-.27-.15-.56-.15-.84,0-.99.61-1.84,1.51-2.2.11-1.28,1.18-2.28,2.49-2.28s2.38,1,2.51,2.28c.89.34,1.51,1.2,1.51,2.2,0,.3-.06.58-.15.84.51.44.8,1.08.8,1.77-.01,1.3-1.07,2.34-2.35,2.34Z"/>
+							</g>
+						</g>
+					</svg>
+					<h2 class="no-tree">У вас нет созданных деревьев</h2>
+				</div>` : ''}
+		</div>`;
 
 		this.treeList.forEach(trees => {
 			const treeNode = Tag.render`
@@ -251,5 +274,4 @@ export class TreeList
 			})
 		})
 	}
-
 }

@@ -18,13 +18,18 @@ class SubscriptionsService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getList($pageNumber, $pageSize): array
+	public static function getList(): array
 	{
-		$offset = ($pageNumber - 1) * $pageSize;
 		$subscriptions = SubscriptionTable::query()
-			->setSelect(['ID', 'LEVEL', 'PRICE', 'NUMBER_TREES', 'NUMBER_NODES', 'CUSTOMIZATION', 'IS_ACTIVE'])
-			->setLimit($pageSize)
-			->setOffset($offset)
+			->setSelect([
+				'ID',
+				'LEVEL',
+				'PRICE',
+				'NUMBER_TREES',
+				'NUMBER_NODES',
+				'CUSTOMIZATION',
+				'IS_ACTIVE'
+						])
 			->exec();
 
 		$resultSubscriptions = [];
@@ -99,7 +104,7 @@ class SubscriptionsService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getSubscriptionIdByUserId(int $userId)
+	public static function getSubscriptionIdByUserId(int $userId): int
 	{
 		$subscription = UserSubscriptionTable::query()
 			->setSelect(['SUBSCRIPTION_ID'])
@@ -111,10 +116,10 @@ class SubscriptionsService
 			return 1;
 		}
 
-		return $subscription->getSubscriptionId();
+		return (int) $subscription->getSubscriptionId();
 	}
 
-	public static function getNumberTreesById(int $id)
+	public static function getNumberTreesById(int $id): int
 	{
 		$numberTrees = SubscriptionTable::query()
 			->setSelect(['NUMBER_TREES'])
@@ -122,14 +127,15 @@ class SubscriptionsService
 			->exec()
 			->fetchObject();
 
-		if ($numberTrees === null) {
+		if ($numberTrees === null)
+		{
 			return 1;
 		}
 
-		return $numberTrees->getNumberTrees();
+		return (int) $numberTrees->getNumberTrees();
 	}
 
-	public static function getNumberNodesById(int $id)
+	public static function getNumberNodesById(int $id): int
 	{
 		$numberTrees = SubscriptionTable::query()
 			->setSelect(['NUMBER_NODES'])
@@ -137,7 +143,7 @@ class SubscriptionsService
 			->exec()
 			->fetchObject();
 
-		return $numberTrees->getNumberNodes();
+		return (int) $numberTrees->getNumberNodes();
 	}
 }
 

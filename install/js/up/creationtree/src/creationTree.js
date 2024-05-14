@@ -31,7 +31,8 @@ export class CreationTree
 
 		this.nodeList = [];
 
-		this.isHandlerAdded = false
+		this.isHandlerAdded = false;
+		this.isFirstLoad = false;
 
 		const buttonJSON = BX('json');
 		BX.bind(buttonJSON, 'click', () => {
@@ -47,6 +48,9 @@ export class CreationTree
 			this.reload();
 		}, 300)
 
+		document.addEventListener('contextmenu', function(event) {
+			event.preventDefault();
+		});
 	}
 
 	reload()
@@ -55,38 +59,42 @@ export class CreationTree
 		Requests.loadNodes(id).then(nodeList => {
 			this.nodeList = nodeList;
 
-			let newStyles = document.createElement('style');
 			let menuRemoveStyles = document.createElement('style');
-			document.head.append(newStyles);
-			document.head.append(menuRemoveStyles);
 
 			this.nodeList.persons.forEach(person => {
+				let newStyles = document.createElement('style');
 				person.active = person.active !== '0';
 
 				if (person.active) {
 					newStyles.innerHTML = `svg.hugo [data-n-id="${person.id}"].node>rect {
 							fill: #FFE13E
 						}`
+					document.head.append(newStyles);
 				}
 				else {
 					if (person.gender.length !== 0) {
 						newStyles.innerHTML = `svg.hugo [data-n-id="${person.id}"].node>rect {
 							fill: url(#hugo_grad_${person.gender})
 						}`
+						document.head.append(newStyles);
 					}
 				}
 			})
 
 			if (this.nodeList.persons.length === 1) {
+
 				menuRemoveStyles.innerHTML = `[data-ctrl-n-menu-id="${this.nodeList.persons[0].id}"] {
 							display: none;
 						}`
+
+				document.head.append(menuRemoveStyles);
 			} else {
 				menuRemoveStyles.innerHTML = `[data-ctrl-n-menu-id="${this.nodeList.persons[0].id}"] {
 							display: block;
 						}`
-			}
 
+				document.head.append(menuRemoveStyles);
+			}
 
 			this.render();
 		});
@@ -186,78 +194,84 @@ export class CreationTree
 		// 	family.draw();
 		// });
 
+		if (!this.isFirstLoad) {
+			this.isFirstLoad = true;
+			family.on('init', function (sender, args) {
+				if (self.nodeList.persons.length === 1) {
 
-		family.on('init', function (sender, args) {
-			if (self.nodeList.persons.length === 1) {
-				sender.editUI.show(self.nodeList.persons[0].id, false);
+					sender.editUI.show(self.nodeList.persons[0].id, false);
 
-				const saveButton = document.querySelector('[data-edit-from-save]');
-				const inputName = document.querySelector('[data-binding="name"]');
-				const inputSurname = document.querySelector('[data-binding="surname"]');
+					const saveButton = document.querySelector('[data-edit-from-save]');
+					const inputName = document.querySelector('[data-binding="name"]');
+					const inputSurname = document.querySelector('[data-binding="surname"]');
+					const inputPatronymic = document.querySelector('[data-binding="patronymic"]');
 
-				if(self.nodeList.persons[0].name === ' ' && self.nodeList.persons[0].surname === ' ')
-				{
-					inputName.value = '';
-					inputSurname.value = '';
-					inputName.placeholder = 'Введите имя';
-					inputSurname.placeholder = 'Введите фамилию';
+					if(self.nodeList.persons[0].name === ' ' && self.nodeList.persons[0].surname === ' ' && self.nodeList.persons[0].patronymic)
+					{
+						inputName.value = '';
+						inputSurname.value = '';
+						inputPatronymic.value = '';
+						inputName.placeholder = 'Введите имя';
+						inputSurname.placeholder = 'Введите фамилию';
+						inputPatronymic.placeholder = 'Введите отчество';
 
-					saveButton.disabled = true;
-				}
+						saveButton.disabled = true;
+					}
 
-				document.querySelectorAll('input').forEach(input => {
-					BX.bind(input, 'input', (event) => {
-						event.target.value = event.target.value.replace(/[<>\/]/g, '');
+					document.querySelectorAll('input').forEach(input => {
+						BX.bind(input, 'input', (event) => {
+							event.target.value = event.target.value.replace(/[<>\/]/g, '');
+						})
 					})
-				})
 
-				const checkedInput = document.querySelector('.bft-checkbox input')
+					const checkedInput = document.querySelector('.bft-checkbox input')
 
-				checkedInput.dataset.btnChecked = !!checkedInput.checked;
+					checkedInput.dataset.btnChecked = !!checkedInput.checked;
 
-				checkedInput.addEventListener('click', (event) => {
-					event.target.dataset.btnChecked = !!event.target.checked;
-				})
+					checkedInput.addEventListener('click', (event) => {
+						event.target.dataset.btnChecked = !!event.target.checked;
+					})
 
-				inputName.addEventListener('input', (el) => {
-					saveButton.disabled = inputName.value.length <= 0;
-				})
+					inputName.addEventListener('input', (el) => {
+						saveButton.disabled = inputName.value.length <= 0;
+					})
 
-				let statusRequest = CreatedNode.requestCreationNode(self.nodeList.persons[0].id, family, onUpdateNodeAdded, onUpdatePerson, self);
+					let statusRequest = CreatedNode.requestCreationNode(self.nodeList.persons[0].id, family, onUpdateNodeAdded, onUpdatePerson, self);
 
-				onUpdateNodeAdded = statusRequest[0];
-				onUpdatePerson = statusRequest[1];
+					onUpdateNodeAdded = statusRequest[0];
+					onUpdatePerson = statusRequest[1];
 
-				const form = document.querySelector('.bft-edit-form');
-				const editForm = document.querySelector('.bft-form-fieldset');
+					const form = document.querySelector('.bft-edit-form');
+					const editForm = document.querySelector('.bft-form-fieldset');
 
-				const warningName = document.querySelector('[data-bft-edit-from-btns]');
+					const warningName = document.querySelector('[data-bft-edit-from-btns]');
 
-				const textWarning = Tag.render`
+					const textWarning = Tag.render`
 						<div class="warning-text">*Поле "имя" является обязательным</div>
 					`;
 
-				BX.append(textWarning, warningName);
+					BX.append(textWarning, warningName);
 
-				form.enctype = "multipart/form-data";
-				form.action = '/tree/{id}/';
-				const formFile = Tag.render`
-				<label class="input-file">
-					<span class="input-file-text" type="text">jpeg, jpg, gif, png</span>
-					<input id="photoName" type="file" name="photo">
-					<span class="input-file-btn">Выберите файл</span>
-				</label>
-				`;
+					form.enctype = "multipart/form-data";
+					form.action = '/tree/{id}/';
+					const formFile = Tag.render`
+						<label class="input-file">
+							<span class="input-file-text" type="text">jpeg, jpg, gif, png</span>
+							<input id="photoName" type="file" name="photo">
+							<span class="input-file-btn">Выберите файл</span>
+						</label>
+						`;
 
-				editForm.append(formFile);
+					editForm.append(formFile);
 
-				BX('photoName').addEventListener('change', function(){
-						let file = this.files[0];
-						document.querySelector('.input-file-text').innerHTML = file.name;
-					}
-				);
-			}
-		})
+					BX('photoName').addEventListener('change', function(){
+							let file = this.files[0];
+							document.querySelector('.input-file-text').innerHTML = file.name;
+						}
+					);
+				}
+			})
+		}
 
 		family.on('updated', function (sender, args) {
 			if (args.addNodesData.length !== 0) {
@@ -328,9 +342,10 @@ export class CreationTree
 						}
 					})
 
-					family.editUI.on('hide', function () {
-						self.reload();
-					})
+					//
+					// family.editUI.on('hide', function () {
+					// 	self.reload();
+					// })
 				}
 			}
 		})

@@ -1,30 +1,11 @@
 <?php
 
-//require 'vendor/autoload.php';
-
 use Bitrix\Main\Application;
 use Bitrix\Main\DB\Connection;
 use Bitrix\Main\Request;
 use Bitrix\Main\Web\Uri;
 use Up\Tree\Model\UserSubscriptionTable;
-
-
-//$text1 = "Karina Demchinko";
-//
-//$text2 = "Karina Demchenko";
-//
-//$simhash = new \Tga\SimHash\SimHash();
-//$extractor = new \Tga\SimHash\Extractor\SimpleTextExtractor();
-//$comparator = new Tga\SimHash\Comparator\GaussianComparator(1);
-//
-//$fp1 = $simhash->hash($extractor->extract($text1), \Tga\SimHash\SimHash::SIMHASH_32);
-//$fp2 = $simhash->hash($extractor->extract($text2), \Tga\SimHash\SimHash::SIMHASH_32);
-
-//var_dump($fp1->getBinary());
-//var_dump($fp2->getBinary());
-//
-//var_dump($comparator->compare($fp1, $fp2));
-
+use Up\Tree\Model\UserTable;
 
 function request(): Request
 {
@@ -52,9 +33,11 @@ function OnBeforeUserRegisterHandler(&$arFields): void
 function DoBeforeUserLoginHandler(&$arFields): void
 {
 	$userLogin = $_POST["USER_LOGIN"];
+
 	if (isset($userLogin))
 	{
 		$isEmail = strpos($userLogin,"@");
+
 		if ($isEmail>0)
 		{
 			$arFilter = Array("EMAIL"=>$userLogin);
@@ -62,18 +45,27 @@ function DoBeforeUserLoginHandler(&$arFields): void
 			if($res = $rsUsers->Fetch())
 			{
 				if($res["EMAIL"]==$arFields["LOGIN"])
+				{
 					$arFields["LOGIN"] = $res["LOGIN"];
+				}
 			}
 		}
 	}
 }
 
+/**
+ * @throws Exception
+ */
 function OnAfterUserRegisterHandler(&$arFields): void
 {
 	if ($arFields['USER_ID'] > 0) {
 		global $USER;
 		$userId = (int) $USER->GetID();
+
 		UserSubscriptionTable::add(['USER_ID' => $userId]);
+
+		UserTable::update($userId, ['PERSONAL_PHOTO' => 14]);
+
 		$request = \request();
 		$uriString = $request->getRequestUri();
 

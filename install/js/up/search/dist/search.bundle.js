@@ -43,7 +43,8 @@ this.BX.Up = this.BX.Up || {};
 	        BX.ajax.runAction('up:tree.chatRelatives.addMessages', {
 	          data: {
 	            recipientId: recipientId,
-	            message: message
+	            message: message,
+	            isAdmin: 0
 	          }
 	        }).then(function (response) {
 	          resolve(response.data);
@@ -262,7 +263,7 @@ this.BX.Up = this.BX.Up || {};
 	          var list = main_core.Tag.render(_templateObject4 || (_templateObject4 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t\t  <main class=\"leaderboard__profiles\">\n\t\t\t\t\t\t", "\n\t\t\t\t\t  </main>\n\t\t\t\t\t"])), usersWithChats.map(function (_ref2) {
 	            var user = _ref2.user,
 	              chatExists = _ref2.chatExists;
-	            return "\n\t\t\t\t\t\t  <article class=\"leaderboard__profile\">\n\t\t\t\t\t\t\t<img src=\"/local/modules/up.tree/images/avatars/default.png\" alt=\"user\" class=\"leaderboard__picture\">\n\t\t\t\t\t\t\t<span class=\"leaderboard__name\">\n\t\t\t\t\t\t\t\t<span>User: ".concat(BX.util.htmlspecialchars(user.NAME) + ' ' + BX.util.htmlspecialchars(user.LAST_NAME), "</span>\n\t\t\t\t\t\t\t \t <span class=\"leaderboard__persons\">\n\t\t\t\t\t\t\t\t\t<span class=\"heading-persons\">Found relatives:</span>\n\t\t\t\t\t\t\t\t\t\t").concat(_this3.usersPersons.foundPersons.filter(function (person) {
+	            return "\n\t\t\t\t\t\t  <article class=\"leaderboard__profile\">\n\t\t\t\t\t\t\t<img src=\"".concat(user.FILE_NAME, "\" alt=\"user\" class=\"leaderboard__picture\">\n\t\t\t\t\t\t\t<span class=\"leaderboard__name\">\n\t\t\t\t\t\t\t\t<span>").concat(BX.message('UP_TREE_SEARCH_USER'), ": ").concat(BX.util.htmlspecialchars(user.NAME) + ' ' + BX.util.htmlspecialchars(user.LAST_NAME), "</span>\n\t\t\t\t\t\t\t \t <span class=\"leaderboard__persons\">\n\t\t\t\t\t\t\t\t\t<span class=\"heading-persons\">").concat(BX.message('UP_TREE_SEARCH_FOUND_RELATIVES'), ":</span>\n\t\t\t\t\t\t\t\t\t\t").concat(_this3.usersPersons.foundPersons.filter(function (person) {
 	              return person.userId === Number(user.ID);
 	            }).map(function (person) {
 	              return "\n\t\t\t\t\t\t\t\t\t\t  <p class=\"persons-info\">".concat(person.name + ' ' + person.surname, ";</p>\n\t\t\t\t\t\t\t\t\t\t");

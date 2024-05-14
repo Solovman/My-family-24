@@ -20,19 +20,45 @@ class StatisticService
 	 */
 	public static function getGenderCountByTreeId(int $treeId): array
 	{
-		$menCount = PersonTable::query()
-							   ->addSelect(new ExpressionField('COUNT_MALE', 'COUNT(*)'))
-							   ->setFilter(['LOGIC' => 'AND', 'TREE_ID' => $treeId, 'GENDER' => 'male'])
-							   ->exec()
-							   ->fetch();
+		$counts = [];
 
-		$womenCount = PersonTable::query()
-								 ->addSelect(new ExpressionField('COUNT_FEMALE', 'COUNT(*)'))
-								 ->setFilter(['LOGIC' => 'AND', 'TREE_ID' => $treeId, 'GENDER' => 'female'])
-								 ->exec()
-								 ->fetch();
+		$result = PersonTable::query()
+							 ->addSelect('GENDER')
+							 ->addSelect(new ExpressionField('COUNT', 'COUNT(*)'))
+							 ->setFilter(['TREE_ID' => $treeId])
+							 ->addGroup('GENDER')
+							 ->exec();
 
-		return ['male' => $menCount['COUNT_MALE'], 'female' => $womenCount['COUNT_FEMALE']];
+		while ($row = $result->fetch())
+		{
+			$counts[$row['GENDER']] = $row['COUNT'];
+		}
+
+		return $counts;
+	}
+
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getEducationCountByTreeId(int $treeId): array
+	{
+		$counts = [];
+
+		$result = PersonTable::query()
+							 ->addSelect('EDUCATION_LEVEL')
+							 ->addSelect(new ExpressionField('COUNT', 'COUNT(*)'))
+							 ->setFilter(['TREE_ID' => $treeId])
+							 ->addGroup('EDUCATION_LEVEL')
+							 ->exec();
+
+		while ($row = $result->fetch())
+		{
+			$counts[$row['EDUCATION_LEVEL']] = $row['COUNT'];
+		}
+
+		return $counts;
 	}
 
 	/**
@@ -118,43 +144,6 @@ class StatisticService
 			$deathTimestamp = $currentTimestamp;
 		}
 
-		return (int)floor(($deathTimestamp - $birthTimestamp) / (365.25 * 24 * 60 * 60));
-	}
-
-	/**
-	 * @throws ArgumentException
-	 * @throws ObjectPropertyException
-	 * @throws SystemException
-	 */
-	public static function getEducationCountByTreeId(int $treeId): array
-	{
-		$withoutEducationCount = PersonTable::query()
-							   ->addSelect(new ExpressionField('COUNT_WITHOUT_EDUCATION', 'COUNT(*)'))
-							   ->setFilter(['LOGIC' => 'AND', 'TREE_ID' => $treeId, 'EDUCATION_LEVEL' => 'without education'])
-							   ->exec()
-							   ->fetch();
-
-		$schoolCount = PersonTable::query()
-								 ->addSelect(new ExpressionField('COUNT_SCHOOL', 'COUNT(*)'))
-								 ->setFilter(['LOGIC' => 'AND', 'TREE_ID' => $treeId, 'EDUCATION_LEVEL' => 'school'])
-								 ->exec()
-								 ->fetch();
-
-		$secondaryCount = PersonTable::query()
-								  ->addSelect(new ExpressionField('COUNT_SECONDARY', 'COUNT(*)'))
-								  ->setFilter(['LOGIC' => 'AND', 'TREE_ID' => $treeId, 'EDUCATION_LEVEL' => 'secondary'])
-								  ->exec()
-								  ->fetch();
-
-		$higherCount = PersonTable::query()
-								  ->addSelect(new ExpressionField('COUNT_HIGHER', 'COUNT(*)'))
-								  ->setFilter(['LOGIC' => 'AND', 'TREE_ID' => $treeId, 'EDUCATION_LEVEL' => 'higher'])
-								  ->exec()
-								  ->fetch();
-
-		return ['without education' => $withoutEducationCount['COUNT_WITHOUT_EDUCATION'],
-				'school' => $schoolCount['COUNT_SCHOOL'],
-				'secondary' => $secondaryCount['COUNT_SECONDARY'],
-				'higher' => $higherCount['COUNT_HIGHER'],];
+		return (int) floor(($deathTimestamp - $birthTimestamp) / (365.25 * 24 * 60 * 60));
 	}
 }

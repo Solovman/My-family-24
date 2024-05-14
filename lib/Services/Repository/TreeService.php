@@ -14,6 +14,8 @@ use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\DateTime;
 use Up\Tree\Entity\Tree;
 use Up\Tree\Model\TreeTable;
+use Up\Tree\Model\UserSubscriptionTable;
+use Up\Tree\Services\QueryHelperService;
 
 class TreeService
 {
@@ -31,12 +33,14 @@ class TreeService
 		];
 
 		$result = TreeTable::add($treeData);
-		if ($result->isSuccess())
-		{
-			return $result->getId();
-		}
 
-		throw new SqlException("Error creating tree");
+		$treeId = QueryHelperService::checkQueryResult($result, true);
+
+		if ($treeId === false)
+		{
+			throw new SqlException("Error creating tree");
+		}
+		return $treeId;
 	}
 
 	/**
@@ -47,7 +51,13 @@ class TreeService
 	 */
 	public static function getTree(int $userId, int $treeId): ?Tree
 	{
-		$treeData = TreeTable::query()->setSelect(['ID', 'TITLE', 'USER_ID', 'CREATED_AT', 'COLOR'])
+		$treeData = TreeTable::query()->setSelect([
+													  'ID',
+													  'TITLE',
+													  'USER_ID',
+													  'CREATED_AT',
+													  'COLOR'
+												  ])
 									  ->setFilter(['USER_ID' => $userId, 'ID'=> $treeId])
 									  ->exec()
 									  ->fetch();
@@ -123,8 +133,9 @@ class TreeService
 			)->setFilter(
 				[
 					'USER_ID' => $userId,
-				]
-			)->exec()->fetchAll();
+				],
+			)
+			->exec()->fetchAll();
 
 		foreach ($treeData as $treeItem)
 		{
@@ -192,6 +203,11 @@ class TreeService
 		TreeTable::delete($id);
 
 		$deletePersonsQuery = "DELETE FROM up_person WHERE TREE_ID = $id";
+
+		global $USER;
+		$userId = $USER->GetID();
+
+		UserSubscriptionTable::update($userId, ['COUNT_NODES' => 0]);
 
 		$connection->queryExecute($deletePersonsQuery);
 

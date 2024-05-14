@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Up\Tree\Services\Repository;
 
 use Bitrix\Main\ArgumentException;
-use Bitrix\Main\DB\SqlException;
 use Bitrix\Main\ObjectPropertyException;
-use Bitrix\Main\Security\Password;
 use Bitrix\Main\SystemException;
-use Bitrix\Main\Type\DateTime;
 use Exception;
 use Up\Tree\Entity\User;
 use Up\Tree\Model\UserTable;
+use Up\Tree\Services\QueryHelperService;
 
 class UserService
 {
@@ -23,7 +21,13 @@ class UserService
 	public static function getList(): array
 	{
 		$users = UserTable::query()
-			->setSelect(['ID', 'EMAIL', 'NAME', 'LAST_NAME', 'ACTIVE'])
+			->setSelect([
+							'ID',
+							'EMAIL',
+							'NAME',
+							'LAST_NAME',
+							'ACTIVE'
+						])
 			->exec();
 
 		$usersList = [];
@@ -54,7 +58,10 @@ class UserService
 		$userId = (int) $USER->GetID();
 
 		$data = UserTable::query()
-			->setSelect(['NAME', 'LAST_NAME'])
+			->setSelect([
+							'NAME',
+							'LAST_NAME'
+						])
 			->setFilter(['ID' => $userId])
 			->exec()
 			->fetchObject();
@@ -76,11 +83,29 @@ class UserService
 
 		$result = UserTable::update($userId, ['PERSONAL_PHOTO' => $avatarId]);
 
-		if (!$result->isSuccess())
-		{
-			return false;
-		}
+		return QueryHelperService::checkQueryResult($result);
+	}
 
-		return true;
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getUserFileName(): array
+	{
+		global $USER;
+
+		$userId = (int) $USER->GetID();
+
+		$avatars = UserTable::query()
+			->setSelect(['FILE_NAME' => 'USER_DATA.FILE_NAME'])
+			->setFilter(['ID' => $userId])
+			->exec()
+			->fetchObject();
+
+		return [
+			'ID' => $avatars->getUserData()->getId(),
+			'FILE_NAME' => $avatars->getUserData()->getFileName()
+		];
 	}
 }

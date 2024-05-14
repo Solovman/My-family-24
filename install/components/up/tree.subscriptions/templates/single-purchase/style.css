@@ -3,6 +3,12 @@
 	justify-content: center;
 }
 
+.title-price{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
 .center {
 	display: flex;
 	align-items: center;
@@ -68,7 +74,7 @@
 	font-size: 23px;
 	color: #fff;
 	line-height: 23px;
-	width: 55%;
+	/*width: 55%;*/
 }
 
 .subscriptions__purchase {
@@ -104,7 +110,7 @@
 
 .subscriptions__purchase-svg {
 	position: absolute;
-	left: 7%;
+	left: 18%;
 	top: 27%;
 }
 
@@ -114,4 +120,8 @@
 
 .tooltip-purchase {
 	width: 115% !important;
+}
+
+.buy-text {
+	margin-left: 12px;
 }

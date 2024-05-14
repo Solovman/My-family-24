@@ -24,10 +24,9 @@ class Admin extends Engine\Controller
 	 * @throws SystemException
 	 * @throws ArgumentException
 	 */
-	public static function getListSubscriptionAction($pageNumber = 1): array
+	public static function getListSubscriptionAction(): array
 	{
-		$pageSize = 2;
-		$result = SubscriptionsService::getList($pageNumber, $pageSize);
+		$result = SubscriptionsService::getList();
 
 		return [
 			'listSubscription'  => $result
@@ -130,6 +129,9 @@ class Admin extends Engine\Controller
 		return AdminService::updateSubscription($subscription);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public static function updatePurchaseAction(array $newPurchase): bool
 	{
 		$purchase = new Purchase(

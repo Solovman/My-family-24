@@ -13,6 +13,7 @@ use Up\Tree\Entity\Person;
 use Up\Tree\Model\PersonTable;
 use Up\Tree\Model\TreeTable;
 use Up\Tree\Model\UserTable;
+use Up\Tree\Services\QueryHelperService;
 
 class SearchService
 {
@@ -39,7 +40,7 @@ class SearchService
 			$treesIdsForCurrentUser[] = $treId;
 		}
 
-		$treIds = SearchService::getNotSecureTreeIds();
+		$treIds = self::getNotSecureTreeIds();
 
 		if ($treIds === null)
 		{
@@ -60,6 +61,7 @@ class SearchService
 													   'IMAGE_ID',
 													   'NAME',
 													   'SURNAME',
+													   'PATRONYMIC',
 													   'BIRTH_DATE',
 													   'DEATH_DATE',
 													   'GENDER',
@@ -82,6 +84,7 @@ class SearchService
 				PersonService::getImageName((int)$personData['ID']),
 				$personData['NAME'],
 				$personData['SURNAME'],
+				$personData['PATRONYMIC'],
 				$personData['BIRTH_DATE'] ? $personData['BIRTH_DATE']->format('Y-m-d') : null,
 				$personData['DEATH_DATE'] ? $personData['DEATH_DATE']->format('Y-m-d') : null,
 				$personData['GENDER'],
@@ -152,28 +155,6 @@ class SearchService
 			}
 		}
 
-		/**Старый вариант поиска:*/
-
-		/*
-		$matchPersonList = [];
-		 foreach ($personList as $person)
-		 {
-		 	foreach ($allPersonList as $allPerson)
-		 	{
-		 		if (
-		 			$person->getGender() === $allPerson->getGender() &&
-		 			$person->getName() === $allPerson->getName() &&
-		 			$person->getSurname() === $allPerson->getSurname() //&&
-		 			//$person->getBirthDate()->getTimestamp() === $allPerson->getBirthDate()->getTimestamp() //&&
-		 			//$person->getDeathDate()->getTimestamp() === $allPerson->getDeathDate()->getTimestamp()
-		 		)
-		 		{
-		 			$matchPersonList[] =  $allPerson;
-		 		}
-		 	}
-		 }
-		*/
-
 		return $matchPersonList;
 	}
 
@@ -185,8 +166,9 @@ class SearchService
 	public static function getNotSecureTreeIds(): ?array
 	{
 		$treeData = TreeTable::query()->setSelect(['ID'])
-									  ->setFilter(
-			['IS_SECURITY' => False])->exec()->fetchAll();
+									  ->setFilter(['IS_SECURITY' => False])
+									  ->exec()
+									  ->fetchAll();
 
 		if (!$treeData)
 		{
@@ -238,7 +220,8 @@ class SearchService
 										  'ID',
 										  'NAME',
 										  'LAST_NAME',
-										  'EMAIL'
+										  'EMAIL',
+										  'FILE_NAME' => 'USER_DATA.FILE_NAME'
 									  ])->whereIn('ID', $userIds)
 										->exec()
 										->fetchAll();
@@ -258,11 +241,6 @@ class SearchService
 	{
 		$result = TreeTable::update($id, ['IS_SECURITY' => $securityStatus]);
 
-		if (!$result->isSuccess())
-		{
-			return false;
-		}
-
-		return true;
+		return QueryHelperService::checkQueryResult($result);
 	}
 }

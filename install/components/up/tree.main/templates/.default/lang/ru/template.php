@@ -3,6 +3,7 @@
 $MESS['UP_HEADING_ADD_PERSON'] = "Добавить нового человека";
 $MESS['UP_PERSON_FORM_NAME'] = "Имя";
 $MESS['UP_PERSON_FORM_SURNAME'] = "Фамилия";
+$MESS['UP_PERSON_FORM_PATRONYMIC'] = "Отчество";
 $MESS['UP_PERSON_FORM_BIRTH_DATE'] = "Дата рождения";
 $MESS['UP_PERSON_FORM_DEATH_DATE'] = "Дата смерти";
 $MESS['UP_PERSON_FORM_HEIGHT'] = "Рост";

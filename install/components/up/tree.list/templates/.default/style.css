@@ -259,3 +259,27 @@ svg {
 #security-save:disabled .text-light {
 	display: block;
 }
+
+.no-tree {
+	font-size: 24px;
+	color: #000000;
+}
+
+.btn-pagination {
+	padding: 4px 15px;
+	background-color: transparent;
+	border: 1px solid #00ceaa;
+	font-size: 20px;
+	color: #000000;
+	border-radius: 5px;
+	font-family: 'MorningBreeze', sans-serif, Helvetica;
+}
+
+.active-page {
+	background-color: #00ceaa;
+	color: #ffffff;
+}
+
+.btn-pagination:not(:last-child) {
+	margin-right: 10px;
+}

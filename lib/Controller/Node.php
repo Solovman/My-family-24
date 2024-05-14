@@ -7,8 +7,8 @@ use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
-use Bitrix\Main\Type\Date;
 use CFile;
+use Exception;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\UserSubscriptionTable;
 use \Up\Tree\Services\Repository\PersonService;
@@ -40,8 +40,7 @@ class Node extends Engine\Controller
 
 	/**
 	 * @throws SqlException
-	 * @throws ObjectException
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function addAction(array $person, array $personConnectedIds, string $relationType): bool
 	{
@@ -53,6 +52,7 @@ class Node extends Engine\Controller
 			"",
 			str_replace(['<', '>', '/'], '', $person['name']),
 			str_replace(['<', '>', '/'], '', $person['surname']),
+			str_replace(['<', '>', '/'], '', $person['patronymic']),
 			$person['birthDate'],
 			$person['deathDate'],
 			$person['gender'],
@@ -65,15 +65,16 @@ class Node extends Engine\Controller
 
 		$userId = (int) $USER->GetID();
 
-		$numberNodesLimit = (int) SubscriptionsService::getNumberNodesById(1);
-		$countNodesByUser = (int) UserSubscriptionsService::getCountNodesByUserId($userId);
+		$numberNodesLimit = SubscriptionsService::getNumberNodesById(1);
+		$countNodesByUser = UserSubscriptionsService::getCountNodesByUserId($userId);
 
 		if ($countNodesByUser < $numberNodesLimit)
 		{
-			try {
+			try
+			{
 				PersonService::addPerson($node, $personConnectedIds, $relationType);
 
-				$countNodesByUser += 1;
+				++$countNodesByUser;
 
 				UserSubscriptionTable::update($userId, ['COUNT_NODES' => $countNodesByUser]);
 			}
@@ -90,7 +91,7 @@ class Node extends Engine\Controller
 
 	/**
 	 * @throws ObjectException
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function updateAction(int $id, array $updatablePerson): bool
 	{
@@ -101,6 +102,7 @@ class Node extends Engine\Controller
 			'',
 			str_replace(['<', '>', '/'], '', $updatablePerson['name']),
 			str_replace(['<', '>', '/'], '', $updatablePerson['surname']),
+			str_replace(['<', '>', '/'], '', $updatablePerson['patronymic']),
 			$updatablePerson['birthDate'],
 			$updatablePerson['deathDate'],
 			$updatablePerson['gender'],
@@ -123,25 +125,26 @@ class Node extends Engine\Controller
 		$file = $_FILES['photo'];
 
 		$maxSize = 2 * 1024 * 1024;
+
 		$error = CFile::CheckImageFile($file, $maxSize);
 
 		if ($error != '')
 		{
-			die('uploading error: ' . $error);
+			throw new Exception('Ошибка загрузки: ' . $error);
 		}
 
 		$fileId = CFile::SaveFile($file, 'upload_tree');
 
 		if (!$fileId)
 		{
-			die('Cannot save file');
+			throw new Exception('Не удалось сохранить файл');
 		}
 
 		return ['fileId' => $fileId];
 	}
 
 	/**
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function removeAction(int $id):void
 	{
@@ -150,9 +153,9 @@ class Node extends Engine\Controller
 			PersonService::removePersonById($id);
 
 			$userId = (int) $USER->GetID();
-			$countNodesByUser = (int) UserSubscriptionsService::getCountNodesByUserId($userId);
+			$countNodesByUser = UserSubscriptionsService::getCountNodesByUserId($userId);
 
-			$countNodesByUser -= 1;
+			--$countNodesByUser;
 
 			UserSubscriptionTable::update($userId, ['COUNT_NODES' => $countNodesByUser]);
 		}

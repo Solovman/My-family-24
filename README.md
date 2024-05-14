@@ -79,3 +79,10 @@ After that also add a symbolic link:
 ```
 mklink /d C:\OSPanel\domains\dev.tree\local\modules\up.tree\node_modules\@balkangraph\export-service\upload C:\OSPanel\domains\dev.tree\upload
 ```
+
+For websocket to work, go to the directory `${doc_root}/local/modules/up.tree` in the terminal and enter:
+```
+node server
+```
+Create trees, look for relatives, communicate:
+![myFamily.png](screenshots%2FmyFamily.png)

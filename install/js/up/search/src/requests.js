@@ -42,7 +42,8 @@ export class Requests
 			BX.ajax.runAction('up:tree.chatRelatives.addMessages', {
 					data: {
 						recipientId: recipientId,
-						message: message
+						message: message,
+						isAdmin: 0
 					}
 				})
 				.then((response) => {

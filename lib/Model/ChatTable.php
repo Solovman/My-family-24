@@ -71,6 +71,13 @@ class ChatTable extends DataManager
 					'title' => Loc::getMessage('CHAT_ENTITY_RECIPIENT_ID_FIELD')
 				]
 			),
+			new IntegerField(
+				'IS_ADMIN',
+				[
+					'default' => 0,
+					'title' => Loc::getMessage('PERSON_ENTITY_ACTIVE_FIELD')
+				]
+			),
 			new DatetimeField(
 				'CREATED_AT',
 				[

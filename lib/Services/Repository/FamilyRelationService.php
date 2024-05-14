@@ -7,7 +7,6 @@ namespace Up\Tree\Services\Repository;
 
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
-use Bitrix\Main\ORM\Query\Query;
 use Bitrix\Main\SystemException;
 use Exception;
 use Bitrix\Main\DB\SqlException;
@@ -15,6 +14,7 @@ use Up\Tree\Entity\FamilyRelation;
 use Up\Tree\Entity\FamilyRelationMarried;
 use Up\Tree\Model\MarriedTable;
 use Up\Tree\Model\PersonParentTable;
+use Up\Tree\Services\QueryHelperService;
 
 class FamilyRelationService
 {
@@ -30,12 +30,14 @@ class FamilyRelationService
 		];
 
 		$result = PersonParentTable::add($relationData);
-		if ($result->isSuccess())
-		{
-			return $result->getId();
-		}
 
-		throw new SqlException("Error adding a relationship");
+		$relationId = QueryHelperService::checkQueryResult($result, true);
+
+		if ($relationId === false)
+		{
+			throw new SqlException("Error adding a relationship");
+		}
+		return $relationId;
 	}
 
 	/**
@@ -50,12 +52,13 @@ class FamilyRelationService
 
 		$result = MarriedTable::add($relationData);
 
-		if ($result->isSuccess())
-		{
-			return $result->getId();
-		}
+		$relationId = QueryHelperService::checkQueryResult($result, true);
 
-		throw new SqlException("Error adding a relationship");
+		if ($relationId === false)
+		{
+			throw new SqlException("Error adding a relationship");
+		}
+		return $relationId;
 	}
 
 	/**
@@ -66,10 +69,13 @@ class FamilyRelationService
 	public static function getFamilyRelationByPersonsIds(array $ids): array
 	{
 		$relations = PersonParentTable::query()
-								  ->setSelect(['PARENT_ID', 'CHILD_ID'])
-								  ->whereIn('CHILD_ID', $ids)
-								  ->exec()
-								  ->fetchAll();
+			->setSelect([
+							'PARENT_ID',
+							'CHILD_ID'
+						])
+			->whereIn('CHILD_ID', $ids)
+			->exec()
+			->fetchAll();
 
 		$relationList = [];
 		foreach ($relations as $relationData)
@@ -86,10 +92,13 @@ class FamilyRelationService
 	 * @throws ObjectPropertyException
 	 * @throws SystemException
 	 */
-	public static function getFamilyMarriedRelationById(array $ids)
+	public static function getFamilyMarriedRelationById(array $ids): array
 	{
 		$relations = MarriedTable::query()
-			->setSelect(['PERSON_ID', 'PARTNER_ID'])
+			->setSelect([
+							'PERSON_ID',
+							'PARTNER_ID'
+						])
 			->whereIn('PERSON_ID', $ids)
 			->exec()
 			->fetchAll();

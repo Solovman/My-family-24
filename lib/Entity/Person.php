@@ -14,6 +14,7 @@ class Person implements Entity
 	public string $photo;
 	public ?string $name;
 	public ?string $surname;
+	public ?string $patronymic;
 	public ?string $birthDate;
 	public ?string $deathDate;
 	public string $gender;
@@ -30,6 +31,7 @@ class Person implements Entity
 	 * @param $photo
 	 * @param $name
 	 * @param $surname
+	 * @param $patronymic
 	 * @param string|null $birthDate
 	 * @param string|null $deathDate
 	 * @param $gender
@@ -42,6 +44,7 @@ class Person implements Entity
 		$photo,
 		$name,
 		$surname,
+		$patronymic,
 		?string $birthDate,
 		?string $deathDate,
 		$gender,
@@ -58,6 +61,7 @@ class Person implements Entity
 		$this->photo = $photo;
 		$this->name = $name;
 		$this->surname = $surname;
+		$this->patronymic = $patronymic;
 		$this->birthDate = $birthDate;
 		$this->deathDate = $deathDate;
 		$this->gender = $gender;
@@ -201,5 +205,10 @@ class Person implements Entity
 	public function getEducationLevel(): ?string
 	{
 		return $this->education;
+	}
+
+	public function getPatronymic(): ?string
+	{
+		return $this->patronymic;
 	}
 }

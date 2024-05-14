@@ -11,7 +11,6 @@ use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Message;
-use Up\Tree\Model\ChatTable;
 use Up\Tree\Services\Repository\MessageService;
 
 class Messages extends Engine\Controller
@@ -33,10 +32,7 @@ class Messages extends Engine\Controller
 	 */
 	public static function getMessagesAction(int $chatId): array
 	{
-		global $USER;
-		$userId = (int)$USER->GetID();
-
-		if(!MessageService::isUserChatParticipant($chatId , $userId))
+		if(!MessageService::isUserChatParticipant($chatId))
 		{
 			return [];
 		}

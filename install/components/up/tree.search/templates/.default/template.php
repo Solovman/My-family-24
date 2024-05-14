@@ -34,4 +34,8 @@ CJSCore::Init(['popup']);
 			rootSearchId: 'search-area-user',
 		});
 	});
+	BX.message({
+		UP_TREE_SEARCH_USER : '<?=GetMessageJS("UP_TREE_SEARCH_USER")?>',
+		UP_TREE_SEARCH_FOUND_RELATIVES : '<?=GetMessageJS("UP_TREE_SEARCH_FOUND_RELATIVES")?>',
+	});
 </script>

@@ -11,6 +11,7 @@ use Bitrix\Main\SystemException;
 use Exception;
 use Up\Tree\Entity\Chat;
 use Up\Tree\Model\ChatTable;
+use Up\Tree\Services\QueryHelperService;
 
 class ChatService
 {
@@ -24,14 +25,23 @@ class ChatService
 		global $USER;
 		$recipientId = (int)$USER->GetID();
 		$chats = ChatTable::query()
-			->setSelect(['ID',
-				'AUTHOR_ID', 'RECIPIENT_ID',
-				'AUTHOR_DATA_NAME' => 'AUTHOR_DATA.NAME',
-				'AUTHOR_DATA_SURNAME' => 'AUTHOR_DATA.LAST_NAME',
-				'RECIPIENT_DATA_NAME' => 'RECIPIENT_DATA.NAME',
-				'RECIPIENT_DATA_SURNAME' => 'RECIPIENT_DATA.LAST_NAME',
-				'CREATED_AT'])
-			->setFilter(['LOGIC' => 'OR', 'RECIPIENT_ID' => $recipientId, 'AUTHOR_ID' => $recipientId])
+			->setSelect([
+							'ID',
+							'AUTHOR_ID', 'RECIPIENT_ID',
+							'AUTHOR_DATA_NAME' => 'AUTHOR_DATA.NAME',
+							'AUTHOR_DATA_SURNAME' => 'AUTHOR_DATA.LAST_NAME',
+							'AUTHOR_DATA_FILE_NAME' => 'AUTHOR_DATA.USER_DATA.FILE_NAME',
+							'RECIPIENT_DATA_NAME' => 'RECIPIENT_DATA.NAME',
+							'RECIPIENT_DATA_SURNAME' => 'RECIPIENT_DATA.LAST_NAME',
+							'RECIPIENT_DATA_FILE_NAME' => 'RECIPIENT_DATA.USER_DATA.FILE_NAME',
+							'IS_ADMIN',
+							'CREATED_AT'
+						])
+			->setFilter([
+							'LOGIC' => 'OR',
+							'RECIPIENT_ID' => $recipientId,
+							'AUTHOR_ID' => $recipientId
+						])
 			->exec();
 
 		$chatsList = [];
@@ -40,8 +50,11 @@ class ChatService
 			$chatsList[] = new Chat(
 				$result->getAuthorId(),
 				$result->getAuthorData()->getName() . ' ' . $result->getAuthorData()->getLastName(),
+				$result->getAuthorData()->getUserData()->getFileName(),
 				$result->getRecipientId(),
 				$result->getRecipientData()->getName() . ' ' . $result->getRecipientData()->getLastName(),
+				$result->getRecipientData()->getUserData()->getFileName(),
+				$result->getIsAdmin(),
 				$result->getCreatedAt()->format('Y-m-d H:i:s'),
 				$result->getId()
 			);
@@ -54,19 +67,23 @@ class ChatService
 	 * @throws SqlException
 	 * @throws Exception
 	 */
-	public static function addChat(int $recipientId, int $authorId): int|array
+	public static function addChat(int $recipientId, int $authorId, int $isAdmin): int|array
 	{
 		$chatData = [
 			"AUTHOR_ID" => $authorId,
 			"RECIPIENT_ID" => $recipientId,
+			"IS_ADMIN" => $isAdmin
 		];
 
 		$result = ChatTable::add($chatData);
-		if ($result->isSuccess()) {
-			return $result->getId();
-		}
 
-		throw new SqlException("Error adding a chat");
+		$chatId = QueryHelperService::checkQueryResult($result, true);
+
+		if ($chatId === false)
+		{
+			throw new SqlException("Error adding a chat");
+		}
+		return $chatId;
 	}
 
 	/**
@@ -89,4 +106,45 @@ class ChatService
 		return $result !== null;
 	}
 
+	/**
+	 * @throws ArgumentException
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 */
+	public static function getIdChatWithAdmin(): bool|int
+	{
+		$chatId = ChatTable::query()
+			->setSelect(['ID'])
+			->setFilter(['IS_ADMIN' => 1])
+			->exec()
+			->fetchObject();
+
+
+		if (!$chatId)
+		{
+			return false;
+		}
+
+		return $chatId->getId();
+	}
+
+	/**
+	 * @throws ObjectPropertyException
+	 * @throws SystemException
+	 * @throws ArgumentException
+	 */
+	public static function getParticipantsByChatId(int $chatId): array
+	{
+		$participants = ChatTable::query()
+			->setSelect(['AUTHOR_ID', 'RECIPIENT_ID'])
+			->setFilter(['ID' => $chatId])
+			->exec()
+			->fetchObject();
+
+
+		return [
+			'authorId' => $participants->getAuthorId(),
+			'recipientId' => $participants->getRecipientId()
+		];
+	}
 }

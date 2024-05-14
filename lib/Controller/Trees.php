@@ -10,13 +10,10 @@ use Bitrix\Main\Engine;
 use Bitrix\Main\ObjectException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
-use Bitrix\Main\Type\Date;
 use Exception;
-use Up\Tree\Entity\Image;
 use Up\Tree\Entity\Person;
 use Up\Tree\Model\UserSubscriptionTable;
 use Up\Tree\Services\Repository\PersonService;
-use Bitrix\Main\Type\DateTime;
 use Up\Tree\Entity\Tree;
 use Up\Tree\Services\Repository\SearchService;
 use Up\Tree\Services\Repository\SubscriptionsService;
@@ -36,9 +33,9 @@ class Trees extends Engine\Controller
 	{
 		global $USER;
 
-		$userId = $USER->GetID();
+		$userId = (int) $USER->GetID();
 
-		$trees = TreeService::getTreesByUserId((int)$userId);
+		$trees = TreeService::getTreesByUserId($userId);
 
 		return [
 			'trees' => $trees,
@@ -55,51 +52,27 @@ class Trees extends Engine\Controller
 
 		$userId = (int)$USER->GetID();
 
-		$subscriptionId = (int)SubscriptionsService::getSubscriptionIdByUserId($userId);
+		$subscriptionId = SubscriptionsService::getSubscriptionIdByUserId($userId);
 
-		$countTrees = (int)UserSubscriptionsService::getCountTreesByUserId($userId);
-		$numberTreesOnSubscription = (int)SubscriptionsService::getNumberTreesById($subscriptionId);
+		$countTrees = UserSubscriptionsService::getCountTreesByUserId($userId);
+		$countNodes = UserSubscriptionsService::getCountNodesByUserId($userId);
+
+		$numberTreesOnSubscription = SubscriptionsService::getNumberTreesById($subscriptionId);
 
 		if ($numberTreesOnSubscription > $countTrees || $numberTreesOnSubscription === 0)
 		{
 			$randomColor = RandomService::getRandomGradientColorString();
 			$newTree = new Tree($treeTitle, $userId, '', $randomColor);
+
 			TreeService::addTree($newTree);
-			$newTreeId = $DB->LastID();
+			$newTreeId = (int) $DB->LastID();
 
-			$initialNode = new Person(
-				"0",
-				1,
-				'/local/modules/up.tree/images/user_default.png',
-				" ",
-				" ",
-				null,
-				null,
-				'',
-				(int)$newTreeId,
-				null,
-				null,
-				null,
-				null,
-				PersonService::generatePersonHash([
-					'name' => null,
-					'surname' => null,
-					'gender' => null,
-					'birthDate' => null
-				])
-			);
+			PersonService::addInitPerson($newTreeId);
 
+			++$countTrees;
+			++$countNodes;
 
-
-			PersonService::addPerson(
-				$initialNode,
-				[0],
-				'init'
-			);
-
-			$countTrees += 1;
-
-			UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees]);
+			UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees, 'COUNT_NODES' => $countNodes]);
 
 			return true;
 		}
@@ -121,10 +94,10 @@ class Trees extends Engine\Controller
 
 			if (TreeService::checkTreeBelongsToUser((int)$id))
 			{
-				$countTrees = (int)UserSubscriptionsService::getCountTreesByUserId($userId);
+				$countTrees = UserSubscriptionsService::getCountTreesByUserId($userId);
 
 				TreeService::removeTreeById((int)$id);
-				$countTrees -= 1;
+				--$countTrees;
 
 				UserSubscriptionTable::update($userId, ['COUNT_TREES' => $countTrees]);
 			}

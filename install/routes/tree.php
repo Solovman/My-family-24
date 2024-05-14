@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 use Bitrix\Main\Routing\Controllers\PublicPageController;
 use \Bitrix\Main\Routing\RoutingConfigurator;
+use \Up\Tree\Controller\Node;
 
 return function (RoutingConfigurator $routes)
 {
 	$routes->get('/tree/{id}/', new PublicPageController('/local/modules/up.tree/views/tree-main.php'));
 
-	$routes->post('/tree/{id}/', [\Up\Tree\Controller\Node::class, 'uploadFile']);
+	$routes->post('/tree/{id}/', [Node::class, 'uploadFile']);
 
 	$routes->get('/subscriptions/', new PublicPageController('/local/modules/up.tree/views/tree-subscriptions.php'));
 
+	$routes->get('/', new PublicPageController('/local/modules/up.tree/views/tree-list.php'));
 	$routes->get('/', new PublicPageController('/local/modules/up.tree/views/tree-list.php'));
 
 	$routes->get('/account/', new PublicPageController('/local/modules/up.tree/views/tree-account.php'));

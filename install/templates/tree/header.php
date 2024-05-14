@@ -3,6 +3,8 @@
 
 declare(strict_types=1);
 
+use \Up\Tree\Services\Repository\UserService;
+
 /**
  * @var CMain $APPLICATION
  */
@@ -242,7 +244,7 @@ $currentUrl = request()->getRequestUri();
 							<div class="header__icon">
 								<span class="header__icon-name">
 									<a href="/account/" class="name__link" style="display:flex; align-items: baseline; gap: 5pt">
-										<img src="/local/modules/up.tree/images/profile.svg" alt="My profile">
+										<img id="headerIcon" src="<?= UserService::getUserFileName()['FILE_NAME'] ?>" alt="My profile">
 										<?= htmlspecialcharsEx($USER->GetFirstName()) . ' ' .  htmlspecialcharsEx($USER->GetLastName())?: GetMessage('UP_HEADER_ICON_NAME') ?>
 									</a>
 								</span>
